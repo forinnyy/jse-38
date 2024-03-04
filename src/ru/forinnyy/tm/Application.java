@@ -3,6 +3,7 @@ package ru.forinnyy.tm;
 import ru.forinnyy.tm.constant.ArgumentConst;
 
 public class Application {
+    
     public static void main(String[] args) {
         processArguments(args);
     }
