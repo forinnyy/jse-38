@@ -4,7 +4,7 @@
 
 * Name: Pavel Forinnyy
 
-* E-mail: forinny@gmail.com
+* E-mail: forinnyy@gmail.com
 
 ## SOFTWARE
 
