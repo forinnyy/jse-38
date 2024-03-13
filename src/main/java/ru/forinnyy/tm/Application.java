@@ -39,7 +39,7 @@ public class Application {
 
     public static void showVersion() {
         System.out.println("[VERSION]");
-        System.out.println("1.2.0");
+        System.out.println("1.5.0");
     }
 
     public static void showAbout() {

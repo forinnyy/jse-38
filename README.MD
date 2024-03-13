@@ -20,8 +20,15 @@
 
 * **SSD**: 256gb
 
+## PROGRAMM BUILD
+
+```zsh
+mvn clean install
+```
+
 ## PROGRAM RUN
 
 ```zsh
 java -jar ./task-manager.jar
 ```
+
