@@ -20,7 +20,7 @@
 
 * **SSD**: 256gb
 
-## PROGRAMM BUILD
+## PROGRAM BUILD
 
 ```zsh
 mvn clean install
