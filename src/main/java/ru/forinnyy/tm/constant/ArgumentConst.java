@@ -8,6 +8,8 @@ public final class ArgumentConst {
 
     public static final String VERSION = "-v";
 
+    public static final String INFO = "-i";
+
     private ArgumentConst() {
     }
 

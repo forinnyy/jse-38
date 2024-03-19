@@ -4,6 +4,8 @@ import ru.forinnyy.tm.constant.ArgumentConst;
 import ru.forinnyy.tm.constant.CommandConst;
 import ru.forinnyy.tm.util.TerminalUtil;
 
+import static ru.forinnyy.tm.util.FormatUtil.formatBytes;
+
 public class Application {
     
     public static void main(String[] args) {
@@ -36,6 +38,23 @@ public class Application {
         System.exit(1);
     }
 
+    private static void showSystemInfo() {
+        System.out.println("[SYSTEM INFO]");
+        final int processorCount = Runtime.getRuntime().availableProcessors();
+        System.out.println("PROCESSORS: " + processorCount);
+
+        final long maxMemory = Runtime.getRuntime().maxMemory();
+        final long totalMemory = Runtime.getRuntime().totalMemory();
+        final long freeMemory = Runtime.getRuntime().freeMemory();
+        final long usedMemory = totalMemory - freeMemory;
+
+        System.out.println("MAX MEMORY: " + formatBytes(maxMemory));
+        System.out.println("TOTAL MEMORY: " + formatBytes(totalMemory));
+        System.out.println("FREE MEMORY: " + formatBytes(freeMemory));
+        System.out.println("USED MEMORY: " + formatBytes(usedMemory));
+
+    }
+
     private static void showErrorCommand() {
         System.out.println("[ERROR]");
         System.err.println("The program command is not correct...");
@@ -51,6 +70,9 @@ public class Application {
                 break;
             case ArgumentConst.HELP:
                 showHelp();
+                break;
+            case ArgumentConst.INFO:
+                showSystemInfo();
                 break;
             default:
                 showErrorArgument();
@@ -71,6 +93,9 @@ public class Application {
             case CommandConst.EXIT:
                 exit();
                 break;
+            case CommandConst.INFO:
+                showSystemInfo();
+                break;
             default:
                 showErrorCommand();
         }
@@ -78,7 +103,7 @@ public class Application {
 
     private static void showVersion() {
         System.out.println("[VERSION]");
-        System.out.println("1.6.0");
+        System.out.println("1.7.0");
     }
 
     private static void showAbout() {
@@ -92,6 +117,7 @@ public class Application {
         System.out.printf("%s, %s - Show version info.\n", CommandConst.VERSION, ArgumentConst.VERSION);
         System.out.printf("%s, %s - Show developer info.\n", CommandConst.ABOUT, ArgumentConst.ABOUT);
         System.out.printf("%s, %s - Show command list.\n", CommandConst.HELP, ArgumentConst.HELP);
+        System.out.printf("%s, %s - Show system info.\n", CommandConst.INFO, ArgumentConst.INFO);
         System.out.printf("%s - Close application.\n", CommandConst.EXIT);
     }
 
