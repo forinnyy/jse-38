@@ -52,7 +52,6 @@ public class Application {
         System.out.println("TOTAL MEMORY: " + formatBytes(totalMemory));
         System.out.println("FREE MEMORY: " + formatBytes(freeMemory));
         System.out.println("USED MEMORY: " + formatBytes(usedMemory));
-
     }
 
     private static void showErrorCommand() {
