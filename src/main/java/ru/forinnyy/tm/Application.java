@@ -1,12 +1,17 @@
 package ru.forinnyy.tm;
 
+import ru.forinnyy.tm.api.ICommandRepository;
 import ru.forinnyy.tm.constant.ArgumentConst;
 import ru.forinnyy.tm.constant.CommandConst;
+import ru.forinnyy.tm.model.Command;
+import ru.forinnyy.tm.repository.CommandRepository;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 import static ru.forinnyy.tm.util.FormatUtil.formatBytes;
 
-public class Application {
+public final class Application {
+
+    private static final ICommandRepository COMMAND_REPOSITORY = new CommandRepository();
     
     public static void main(String[] args) {
         processArguments(args);
@@ -102,7 +107,7 @@ public class Application {
 
     private static void showVersion() {
         System.out.println("[VERSION]");
-        System.out.println("1.7.0");
+        System.out.println("1.8.0");
     }
 
     private static void showAbout() {
@@ -113,11 +118,7 @@ public class Application {
 
     private static void showHelp() {
         System.out.println("[HELP]");
-        System.out.printf("%s, %s - Show version info.\n", CommandConst.VERSION, ArgumentConst.VERSION);
-        System.out.printf("%s, %s - Show developer info.\n", CommandConst.ABOUT, ArgumentConst.ABOUT);
-        System.out.printf("%s, %s - Show command list.\n", CommandConst.HELP, ArgumentConst.HELP);
-        System.out.printf("%s, %s - Show system info.\n", CommandConst.INFO, ArgumentConst.INFO);
-        System.out.printf("%s - Close application.\n", CommandConst.EXIT);
+        for (Command command: COMMAND_REPOSITORY.getCommands()) System.out.println(command);
     }
 
 }
