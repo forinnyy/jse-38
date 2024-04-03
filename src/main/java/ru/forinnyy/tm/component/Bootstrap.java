@@ -1,13 +1,14 @@
 package ru.forinnyy.tm.component;
 
-import ru.forinnyy.tm.api.ICommandController;
-import ru.forinnyy.tm.api.ICommandRepository;
-import ru.forinnyy.tm.api.ICommandService;
+import ru.forinnyy.tm.api.*;
 import ru.forinnyy.tm.constant.ArgumentConst;
 import ru.forinnyy.tm.constant.CommandConst;
 import ru.forinnyy.tm.controller.CommandController;
+import ru.forinnyy.tm.controller.ProjectController;
 import ru.forinnyy.tm.repository.CommandRepository;
+import ru.forinnyy.tm.repository.ProjectRepository;
 import ru.forinnyy.tm.service.CommandService;
+import ru.forinnyy.tm.service.ProjectService;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class Bootstrap {
@@ -17,6 +18,12 @@ public final class Bootstrap {
     private final ICommandService commandService = new CommandService(commandRepository);
 
     private final ICommandController commandController = new CommandController(commandService);
+
+    private final IProjectRepository projectRepository = new ProjectRepository();
+
+    private final IProjectService projectService = new ProjectService(projectRepository);
+
+    private final IProjectController projectController = new ProjectController(projectService);
 
     private void processCommands() {
         System.out.println("*** *** WELCOME TO TASK MANAGER *** ***");
@@ -56,8 +63,8 @@ public final class Bootstrap {
         }
     }
 
-    private void processCommand(final String arg) {
-        switch (arg) {
+    private void processCommand(final String argument) {
+        switch (argument) {
             case CommandConst.VERSION:
                 commandController.showVersion();
                 break;
@@ -72,6 +79,15 @@ public final class Bootstrap {
                 break;
             case CommandConst.INFO:
                 commandController.showSystemInfo();
+                break;
+            case CommandConst.PROJECT_LIST:
+                projectController.showProjects();
+                break;
+            case CommandConst.PROJECT_CREATE:
+                projectController.createProject();
+                break;
+            case CommandConst.PROJECT_CLEAR:
+                projectController.clearProjects();
                 break;
             default:
                 commandController.showErrorCommand();

@@ -12,6 +12,12 @@ public final class CommandConst {
 
     public static final String EXIT = "exit";
 
+    public static final String PROJECT_LIST = "project-list";
+
+    public static final String PROJECT_CREATE = "project-create";
+
+    public static final String PROJECT_CLEAR = "project-clear";
+
     private CommandConst() {
     }
 

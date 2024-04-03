@@ -47,7 +47,7 @@ public final class CommandController implements ICommandController {
     @Override
     public void showVersion() {
         System.out.println("[VERSION]");
-        System.out.println("1.9.0");
+        System.out.println("1.10.0");
     }
 
     @Override

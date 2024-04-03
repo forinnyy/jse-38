@@ -17,8 +17,17 @@ public final class CommandRepository implements ICommandRepository {
 
     private static final Command EXIT = new Command(CommandConst.EXIT, null, "Close application.");
 
+    private static final Command PROJECT_LIST = new Command(CommandConst.PROJECT_LIST, null, "Show project list.");
+
+    private static final Command PROJECT_CREATE = new Command(CommandConst.PROJECT_CREATE, null, "Create new project.");
+
+    private static final Command PROJECT_CLEAR = new Command(CommandConst.PROJECT_CLEAR, null, "Delete all projects.");
+
+
     private static final Command[] COMMANDS = new Command[] {
-            HELP, ABOUT, VERSION, INFO, EXIT
+            HELP, ABOUT, VERSION, INFO,
+            PROJECT_LIST, PROJECT_CREATE, PROJECT_CLEAR,
+            EXIT
     };
 
     public Command[] getCommands() {
