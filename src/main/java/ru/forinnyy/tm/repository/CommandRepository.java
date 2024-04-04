@@ -23,10 +23,16 @@ public final class CommandRepository implements ICommandRepository {
 
     private static final Command PROJECT_CLEAR = new Command(CommandConst.PROJECT_CLEAR, null, "Delete all projects.");
 
+    private static final Command TASK_LIST = new Command(CommandConst.TASK_LIST, null, "Show task list.");
+
+    private static final Command TASK_CREATE = new Command(CommandConst.TASK_CREATE, null, "Create new task.");
+
+    private static final Command TASK_CLEAR = new Command(CommandConst.TASK_CLEAR, null, "Clear all tasks.");
 
     private static final Command[] COMMANDS = new Command[] {
             HELP, ABOUT, VERSION, INFO,
             PROJECT_LIST, PROJECT_CREATE, PROJECT_CLEAR,
+            TASK_CLEAR, TASK_CREATE, TASK_LIST,
             EXIT
     };
 

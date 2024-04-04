@@ -18,6 +18,12 @@ public final class CommandConst {
 
     public static final String PROJECT_CLEAR = "project-clear";
 
+    public static final String TASK_LIST = "task-list";
+
+    public static final String TASK_CREATE = "task-create";
+
+    public static final String TASK_CLEAR = "task-clear";
+
     private CommandConst() {
     }
 

@@ -15,4 +15,5 @@ public final class CommandService implements ICommandService {
     public Command[] getCommands() {
         return commandRepository.getCommands();
     }
+
 }
