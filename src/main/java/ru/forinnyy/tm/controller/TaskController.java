@@ -10,7 +10,7 @@ public class TaskController implements ru.forinnyy.tm.api.ITaskController {
 
     private final ITaskService taskService;
 
-    public TaskController(ITaskService taskService) {
+    public TaskController(final ITaskService taskService) {
         this.taskService = taskService;
     }
 
