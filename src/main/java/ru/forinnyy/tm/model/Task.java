@@ -1,12 +1,14 @@
 package ru.forinnyy.tm.model;
 
+import java.util.UUID;
+
 public final class Task {
 
-    private String id;
+    private String id = UUID.randomUUID().toString();
 
-    private String name;
+    private String name = "";
 
-    private String description;
+    private String description = "";
 
     public Task() {
     }

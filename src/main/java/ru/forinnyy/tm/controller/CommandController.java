@@ -4,7 +4,7 @@ import ru.forinnyy.tm.api.ICommandController;
 import ru.forinnyy.tm.api.ICommandService;
 import ru.forinnyy.tm.model.Command;
 
-import static ru.forinnyy.tm.util.FormatUtil.formatBytes;
+import static ru.forinnyy.tm.util.NumberUtil.formatBytes;
 
 public final class CommandController implements ICommandController {
 
@@ -47,7 +47,7 @@ public final class CommandController implements ICommandController {
     @Override
     public void showVersion() {
         System.out.println("[VERSION]");
-        System.out.println("1.10.0");
+        System.out.println("1.11.0");
     }
 
     @Override
