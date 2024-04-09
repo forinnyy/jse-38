@@ -34,10 +34,65 @@ public class TaskService implements ITaskService {
     public Task create(final String name, final String description) {
         if (name == null || name.isEmpty()) return null;
         if (description == null || description.isEmpty()) return null;
-        final Task task = new Task();
+        return taskRepository.create(name, description);
+    }
+
+    @Override
+    public Task create(String name) {
+        if (name == null || name.isEmpty()) return null;
+        return taskRepository.create(name);
+    }
+
+    @Override
+    public Task findOneById(String id) {
+        if (id == null || id.isEmpty()) return null;
+        return taskRepository.findOneById(id);
+    }
+
+    @Override
+    public Task findOneByIndex(Integer index) {
+        if (index == null || index < 0) return null;
+        return taskRepository.findOneByIndex(index);
+    }
+
+    @Override
+    public Task remove(Task project) {
+        if (project == null) return null;
+        return taskRepository.remove(project);
+    }
+
+    @Override
+    public Task removeById(String id) {
+        if (id == null || id.isEmpty()) return null;
+        return taskRepository.removeById(id);
+    }
+
+    @Override
+    public Task removeByIndex(Integer index) {
+        if (index == null || index < 0) return null;
+        return taskRepository.removeByIndex(index);
+    }
+
+    @Override
+    public Task updateById(String id, String name, String description) {
+        if (id == null || id.isEmpty()) return null;
+        if (name == null || name.isEmpty()) return null;
+        final Task task = findOneById(id);
+        if (task == null) return null;
         task.setName(name);
         task.setDescription(description);
-        return add(task);
+        return task;
+    }
+
+    @Override
+    public Task updateByIndex(Integer index, String name, String description) {
+        if (index == null || index < 0) return null;
+        if (name == null || name.isEmpty()) return null;
+        final Task task = findOneByIndex(index);
+        if (task == null) return null;
+        task.setName(name);
+        task.setDescription(description);
+        return task;
     }
 
 }

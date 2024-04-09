@@ -107,6 +107,42 @@ public final class Bootstrap {
             case CommandConst.TASK_LIST:
                 taskController.showTasks();
                 break;
+            case CommandConst.PROJECT_SHOW_BY_INDEX:
+                projectController.showProjectByIndex();
+                break;
+            case CommandConst.PROJECT_SHOW_BY_ID:
+                projectController.showProjectById();
+                break;
+            case CommandConst.PROJECT_UPDATE_BY_INDEX:
+                projectController.updateProjectByIndex();
+                break;
+            case CommandConst.PROJECT_UPDATE_BY_ID:
+                projectController.updateProjectById();
+                break;
+            case CommandConst.PROJECT_REMOVE_BY_INDEX:
+                projectController.removeProjectByIndex();
+                break;
+            case CommandConst.PROJECT_REMOVE_BY_ID:
+                projectController.removeProjectById();
+                break;
+            case CommandConst.TASK_SHOW_BY_INDEX:
+                taskController.showTaskByIndex();
+                break;
+            case CommandConst.TASK_SHOW_BY_ID:
+                taskController.showTaskById();
+                break;
+            case CommandConst.TASK_UPDATE_BY_INDEX:
+                taskController.updateTaskByIndex();
+                break;
+            case CommandConst.TASK_UPDATE_BY_ID:
+                taskController.updateTaskById();
+                break;
+            case CommandConst.TASK_REMOVE_BY_INDEX:
+                taskController.removeTaskByIndex();
+                break;
+            case CommandConst.TASK_REMOVE_BY_ID:
+                taskController.removeTaskById();
+                break;
             default:
                 commandController.showErrorCommand();
         }

@@ -20,13 +20,16 @@ public final class ProjectService implements IProjectService {
     }
 
     @Override
+    public Project create(String name) {
+        if (name == null || name.isEmpty()) return null;
+        return projectRepository.create(name);
+    }
+
+    @Override
     public Project create(final String name, final String description) {
         if (name == null || name.isEmpty()) return null;
         if (description == null || description.isEmpty()) return null;
-        final Project project = new Project();
-        project.setName(name);
-        project.setDescription(description);
-        return add(project);
+        return projectRepository.create(name, description);
     }
 
     @Override
@@ -38,6 +41,57 @@ public final class ProjectService implements IProjectService {
     @Override
     public void clear() {
         projectRepository.clear();
+    }
+
+    @Override
+    public Project findOneById(String id) {
+        if (id == null || id.isEmpty()) return null;
+        return projectRepository.findOneById(id);
+    }
+
+    @Override
+    public Project findOneByIndex(Integer index) {
+        if (index == null || index < 0) return null;
+        return projectRepository.findOneByIndex(index);
+    }
+
+    @Override
+    public Project remove(Project project) {
+        if (project == null) return null;
+        return projectRepository.remove(project);
+    }
+
+    @Override
+    public Project removeById(String id) {
+        if (id == null || id.isEmpty()) return null;
+        return projectRepository.removeById(id);
+    }
+
+    @Override
+    public Project removeByIndex(Integer index) {
+        if (index == null || index < 0) return null;
+        return projectRepository.removeByIndex(index);
+    }
+
+    @Override
+    public Project updateById(final String id, final String name, final String description) {
+        if (id == null || id.isEmpty()) return null;
+        if (name == null || name.isEmpty()) return null;
+        final Project project = findOneById(id);
+        if (project == null) return null;
+        project.setName(name);
+        project.setDescription(description);
+        return project;
+    }
+
+    @Override
+    public Project updateByIndex(final Integer index, final String name, final String description) {
+        if (index == null || index < 0) return null;
+        if (name == null || name.isEmpty()) return null;
+        final Project project = findOneByIndex(index);
+        project.setName(name);
+        project.setDescription(description);
+        return project;
     }
 
 }

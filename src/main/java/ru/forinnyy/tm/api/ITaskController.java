@@ -8,4 +8,16 @@ public interface ITaskController {
 
     void createTask();
 
+    void removeTaskById();
+
+    void removeTaskByIndex();
+
+    void showTaskById();
+
+    void showTaskByIndex();
+
+    void updateTaskById();
+
+    void updateTaskByIndex();
+
 }
