@@ -22,6 +22,11 @@ public final class ProjectRepository implements IProjectRepository {
     }
 
     @Override
+    public int getSize() {
+        return projects.size();
+    }
+
+    @Override
     public Project create(final String name) {
         final Project project = new Project();
         project.setName(name);

@@ -20,4 +20,16 @@ public interface ITaskController {
 
     void updateTaskByIndex();
 
+    void startTaskById();
+
+    void startTaskByIndex();
+
+    void completeTaskById();
+
+    void completeTaskByIndex();
+
+    void changeTaskStatusById();
+
+    void changeTaskStatusByIndex();
+
 }

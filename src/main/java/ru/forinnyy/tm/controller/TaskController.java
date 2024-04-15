@@ -1,10 +1,11 @@
 package ru.forinnyy.tm.controller;
 
 import ru.forinnyy.tm.api.ITaskService;
-import ru.forinnyy.tm.model.Project;
+import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.util.TerminalUtil;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class TaskController implements ru.forinnyy.tm.api.ITaskController {
@@ -32,6 +33,7 @@ public class TaskController implements ru.forinnyy.tm.api.ITaskController {
         System.out.println("ID: " + task.getId());
         System.out.println("NAME: " + task.getName());
         System.out.println("DESCRIPTION: " + task.getDescription());
+        System.out.println("STATUS: " + Status.toName(task.getStatus()));
     }
 
     @Override
@@ -125,6 +127,74 @@ public class TaskController implements ru.forinnyy.tm.api.ITaskController {
         System.out.println("ENTER DESCRIPTION:");
         final String description = TerminalUtil.nextLine();
         final Task task = taskService.updateByIndex(index, name, description);
+        if (task == null) System.out.println("[FAIL]");
+        else System.out.println("[OK]");
+    }
+
+    @Override
+    public void startTaskById() {
+        System.out.println("[START TASK BY ID]");
+        System.out.println("ENTER ID:");
+        final String id = TerminalUtil.nextLine();
+        final Task task = taskService.changeTaskStatusById(id, Status.IN_PROGRESS);
+        if (task == null) System.out.println("[FAIL]");
+        else System.out.println("[OK]");
+    }
+
+    @Override
+    public void startTaskByIndex() {
+        System.out.println("[START TASK BY INDEX]");
+        System.out.println("ENTER INDEX:");
+        final Integer index = TerminalUtil.nextNumber() - 1;
+        final Task task = taskService.changeTaskStatusByIndex(index, Status.IN_PROGRESS);
+        if (task == null) System.out.println("[FAIL]");
+        else System.out.println("[OK]");
+    }
+
+    @Override
+    public void completeTaskById() {
+        System.out.println("[COMPLETE TASK BY ID]");
+        System.out.println("ENTER ID:");
+        final String id = TerminalUtil.nextLine();
+        final Task task = taskService.changeTaskStatusById(id, Status.COMPLETED);
+        if (task == null) System.out.println("[FAIL]");
+        else System.out.println("[OK]");
+    }
+
+    @Override
+    public void completeTaskByIndex() {
+        System.out.println("[COMPLETE TASK BY INDEX]");
+        System.out.println("ENTER INDEX:");
+        final Integer index = TerminalUtil.nextNumber() - 1;
+        final Task task = taskService.changeTaskStatusByIndex(index, Status.COMPLETED);
+        if (task == null) System.out.println("[FAIL]");
+        else System.out.println("[OK]");
+    }
+
+    @Override
+    public void changeTaskStatusById() {
+        System.out.println("[CHANGE TASK STATUS BY ID]");
+        System.out.println("ENTER ID:");
+        final String id = TerminalUtil.nextLine();
+        System.out.println("ENTER STATUS");
+        System.out.println(Arrays.toString(Status.values()));
+        final String statusValue = TerminalUtil.nextLine();
+        final Status status = Status.toStatus(statusValue);
+        final Task task = taskService.changeTaskStatusById(id, status);
+        if (task == null) System.out.println("[FAIL]");
+        else System.out.println("[OK]");
+    }
+
+    @Override
+    public void changeTaskStatusByIndex() {
+        System.out.println("[CHANGE TASK STATUS BY INDEX]");
+        System.out.println("ENTER INDEX:");
+        final Integer index = TerminalUtil.nextNumber() - 1;
+        System.out.println("ENTER STATUS");
+        System.out.println(Arrays.toString(Status.values()));
+        final String statusValue = TerminalUtil.nextLine();
+        final Status status = Status.toStatus(statusValue);
+        final Task task = taskService.changeTaskStatusByIndex(index, status);
         if (task == null) System.out.println("[FAIL]");
         else System.out.println("[OK]");
     }

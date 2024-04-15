@@ -1,9 +1,7 @@
 package ru.forinnyy.tm.repository;
 
 import ru.forinnyy.tm.api.ITaskRepository;
-import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Task;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +18,11 @@ public final class TaskRepository implements ITaskRepository {
     public Task add(final Task task) {
         tasks.add(task);
         return task;
+    }
+
+    @Override
+    public int getSize() {
+        return tasks.size();
     }
 
     @Override

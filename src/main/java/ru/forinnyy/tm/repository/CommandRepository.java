@@ -35,6 +35,18 @@ public final class CommandRepository implements ICommandRepository {
 
     private static final Command PROJECT_REMOVE_BY_ID = new Command(CommandConst.PROJECT_REMOVE_BY_ID, null, "Remove project by id.");
 
+    private static final Command PROJECT_CHANGE_STATUS_BY_INDEX = new Command(CommandConst.PROJECT_CHANGE_STATUS_BY_INDEX, null, "Change project status by index.");
+
+    private static final Command PROJECT_CHANGE_STATUS_BY_ID = new Command(CommandConst.PROJECT_CHANGE_STATUS_BY_ID, null, "Change project status by id.");
+
+    private static final Command PROJECT_START_BY_INDEX = new Command(CommandConst.PROJECT_START_BY_INDEX, null, "Start project by index.");
+
+    private static final Command PROJECT_START_BY_ID = new Command(CommandConst.PROJECT_START_BY_ID, null, "Start project by id.");
+
+    private static final Command PROJECT_COMPLETE_BY_INDEX = new Command(CommandConst.PROJECT_COMPLETE_BY_INDEX, null, "Complete project by index.");
+
+    private static final Command PROJECT_COMPLETE_BY_ID = new Command(CommandConst.PROJECT_COMPLETE_BY_ID, null, "Complete project by id.");
+
     private static final Command TASK_LIST = new Command(CommandConst.TASK_LIST, null, "Show task list.");
 
     private static final Command TASK_CREATE = new Command(CommandConst.TASK_CREATE, null, "Create new task.");
@@ -53,16 +65,32 @@ public final class CommandRepository implements ICommandRepository {
 
     private static final Command TASK_REMOVE_BY_ID = new Command(CommandConst.TASK_REMOVE_BY_ID, null, "Remove task by id.");
 
+    private static final Command TASK_CHANGE_STATUS_BY_INDEX = new Command(CommandConst.TASK_CHANGE_STATUS_BY_INDEX, null, "Change task status by index.");
+
+    private static final Command TASK_CHANGE_STATUS_BY_ID = new Command(CommandConst.TASK_CHANGE_STATUS_BY_ID, null, "Change task status by id.");
+
+    private static final Command TASK_START_BY_INDEX = new Command(CommandConst.TASK_START_BY_INDEX, null, "Start task by index.");
+
+    private static final Command TASK_START_BY_ID = new Command(CommandConst.TASK_START_BY_ID, null, "Start task by id.");
+
+    private static final Command TASK_COMPLETE_BY_INDEX = new Command(CommandConst.TASK_COMPLETE_BY_INDEX, null, "Complete task by index.");
+
+    private static final Command TASK_COMPLETE_BY_ID = new Command(CommandConst.TASK_COMPLETE_BY_ID, null, "Complete task by id.");
+
     private static final Command[] COMMANDS = new Command[] {
             HELP, ABOUT, VERSION, INFO, EXIT,
 
             PROJECT_LIST, PROJECT_CREATE, PROJECT_CLEAR,
             PROJECT_SHOW_BY_INDEX, PROJECT_SHOW_BY_ID, PROJECT_UPDATE_BY_INDEX,
             PROJECT_UPDATE_BY_ID, PROJECT_REMOVE_BY_INDEX, PROJECT_REMOVE_BY_ID,
+            PROJECT_CHANGE_STATUS_BY_INDEX, PROJECT_CHANGE_STATUS_BY_ID, PROJECT_START_BY_INDEX,
+            PROJECT_START_BY_ID, PROJECT_COMPLETE_BY_INDEX, PROJECT_COMPLETE_BY_ID,
 
             TASK_CLEAR, TASK_CREATE, TASK_LIST,
             TASK_SHOW_BY_INDEX, TASK_SHOW_BY_ID, TASK_UPDATE_BY_INDEX,
-            TASK_UPDATE_BY_ID, TASK_REMOVE_BY_INDEX, TASK_REMOVE_BY_ID
+            TASK_UPDATE_BY_ID, TASK_REMOVE_BY_INDEX, TASK_REMOVE_BY_ID,
+            TASK_CHANGE_STATUS_BY_INDEX, TASK_CHANGE_STATUS_BY_ID, TASK_START_BY_INDEX,
+            TASK_START_BY_ID, TASK_COMPLETE_BY_INDEX, TASK_COMPLETE_BY_ID
     };
 
     public Command[] getCommands() {

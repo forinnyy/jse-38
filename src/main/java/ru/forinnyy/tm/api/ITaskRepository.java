@@ -12,6 +12,8 @@ public interface ITaskRepository {
 
     void clear();
 
+    int getSize();
+
     Task create(String name);
 
     Task create(String name, String description);
@@ -25,6 +27,5 @@ public interface ITaskRepository {
     Task removeById(String id);
 
     Task removeByIndex(Integer index);
-
 
 }

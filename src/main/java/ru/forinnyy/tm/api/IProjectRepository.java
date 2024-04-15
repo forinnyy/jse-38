@@ -12,6 +12,8 @@ public interface IProjectRepository {
 
     void clear();
 
+    int getSize();
+
     Project create(String name);
 
     Project create(String name, String description);

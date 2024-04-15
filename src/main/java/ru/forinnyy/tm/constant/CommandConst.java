@@ -30,6 +30,18 @@ public final class CommandConst {
 
     public static final String PROJECT_REMOVE_BY_ID = "project-remove-by-id";
 
+    public static final String PROJECT_CHANGE_STATUS_BY_INDEX = "project-change-status-by-index";
+
+    public static final String PROJECT_CHANGE_STATUS_BY_ID = "project-change-status-by-id";
+
+    public static final String PROJECT_START_BY_INDEX = "project-start-by-index";
+
+    public static final String PROJECT_START_BY_ID = "project-start-by-id";
+
+    public static final String PROJECT_COMPLETE_BY_INDEX = "project-complete-by-index";
+
+    public static final String PROJECT_COMPLETE_BY_ID = "project-complete-by-id";
+
     public static final String TASK_LIST = "task-list";
 
     public static final String TASK_CREATE = "task-create";
@@ -47,6 +59,18 @@ public final class CommandConst {
     public static final String TASK_REMOVE_BY_INDEX = "task-remove-by-index";
 
     public static final String TASK_REMOVE_BY_ID = "task-remove-by-id";
+
+    public static final String TASK_CHANGE_STATUS_BY_INDEX = "task-change-status-by-index";
+
+    public static final String TASK_CHANGE_STATUS_BY_ID = "task-change-status-by-id";
+
+    public static final String TASK_START_BY_INDEX = "task-start-by-index";
+
+    public static final String TASK_START_BY_ID = "task-start-by-id";
+
+    public static final String TASK_COMPLETE_BY_INDEX = "task-complete-by-index";
+
+    public static final String TASK_COMPLETE_BY_ID = "task-complete-by-id";
 
     private CommandConst() {
     }

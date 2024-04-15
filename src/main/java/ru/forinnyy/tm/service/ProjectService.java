@@ -2,6 +2,7 @@ package ru.forinnyy.tm.service;
 
 import ru.forinnyy.tm.api.IProjectRepository;
 import ru.forinnyy.tm.api.IProjectService;
+import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.model.Project;
 
 import java.util.List;
@@ -85,12 +86,36 @@ public final class ProjectService implements IProjectService {
     }
 
     @Override
+    public int getSize() {
+        return projectRepository.getSize();
+    }
+
+    @Override
     public Project updateByIndex(final Integer index, final String name, final String description) {
         if (index == null || index < 0) return null;
         if (name == null || name.isEmpty()) return null;
         final Project project = findOneByIndex(index);
         project.setName(name);
         project.setDescription(description);
+        return project;
+    }
+
+    @Override
+    public Project changeProjectStatusById(String id, Status status) {
+        if (id == null || id.isEmpty()) return null;
+        final Project project = findOneById(id);
+        if (project == null) return null;
+        project.setStatus(status);
+        return project;
+    }
+
+    @Override
+    public Project changeProjectStatusByIndex(Integer index, Status status) {
+        if (index == null || index < 0) return null;
+        if (index >= projectRepository.getSize()) return null;
+        final Project project = findOneByIndex(index);
+        if (project == null) return null;
+        project.setStatus(status);
         return project;
     }
 

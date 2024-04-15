@@ -2,6 +2,7 @@ package ru.forinnyy.tm.service;
 
 import ru.forinnyy.tm.api.ITaskRepository;
 import ru.forinnyy.tm.api.ITaskService;
+import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.model.Task;
 
 import java.util.List;
@@ -18,6 +19,11 @@ public class TaskService implements ITaskService {
     public Task add(final Task task) {
         if (task == null ) return null;
         return taskRepository.add(task);
+    }
+
+    @Override
+    public int getSize() {
+        return taskRepository.getSize();
     }
 
     @Override
@@ -92,6 +98,25 @@ public class TaskService implements ITaskService {
         if (task == null) return null;
         task.setName(name);
         task.setDescription(description);
+        return task;
+    }
+
+    @Override
+    public Task changeTaskStatusById(String id, Status status) {
+        if (id == null || id.isEmpty()) return null;
+        final Task task = findOneById(id);
+        if (task == null) return null;
+        task.setStatus(status);
+        return task;
+    }
+
+    @Override
+    public Task changeTaskStatusByIndex(Integer index, Status status) {
+        if (index == null || index < 0) return null;
+        if (index >= taskRepository.getSize()) return null;
+        final Task task = findOneByIndex(index);
+        if (task == null) return null;
+        task.setStatus(status);
         return task;
     }
 

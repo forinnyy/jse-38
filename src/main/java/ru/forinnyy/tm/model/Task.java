@@ -1,5 +1,7 @@
 package ru.forinnyy.tm.model;
 
+import ru.forinnyy.tm.enumerated.Status;
+
 import java.util.UUID;
 
 public final class Task {
@@ -9,6 +11,8 @@ public final class Task {
     private String name = "";
 
     private String description = "";
+
+    private Status status = Status.NOT_STARTED;
 
     public Task() {
     }
@@ -37,4 +41,11 @@ public final class Task {
         this.description = description;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }

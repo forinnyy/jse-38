@@ -20,4 +20,16 @@ public interface IProjectController {
 
     void updateProjectByIndex();
 
+    void startProjectById();
+
+    void startProjectByIndex();
+
+    void completeProjectById();
+
+    void completeProjectByIndex();
+
+    void changeProjectStatusById();
+
+    void changeProjectStatusByIndex();
+
 }

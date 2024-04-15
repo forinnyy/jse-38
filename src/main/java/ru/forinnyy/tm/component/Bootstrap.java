@@ -125,6 +125,24 @@ public final class Bootstrap {
             case CommandConst.PROJECT_REMOVE_BY_ID:
                 projectController.removeProjectById();
                 break;
+            case CommandConst.PROJECT_CHANGE_STATUS_BY_INDEX:
+                projectController.changeProjectStatusByIndex();
+                break;
+            case CommandConst.PROJECT_CHANGE_STATUS_BY_ID:
+                projectController.changeProjectStatusById();
+                break;
+            case CommandConst.PROJECT_START_BY_INDEX:
+                projectController.startProjectByIndex();
+                break;
+            case CommandConst.PROJECT_START_BY_ID:
+                projectController.startProjectById();
+                break;
+            case CommandConst.PROJECT_COMPLETE_BY_INDEX:
+                projectController.completeProjectByIndex();
+                break;
+            case CommandConst.PROJECT_COMPLETE_BY_ID:
+                projectController.completeProjectById();
+                break;
             case CommandConst.TASK_SHOW_BY_INDEX:
                 taskController.showTaskByIndex();
                 break;
@@ -142,6 +160,24 @@ public final class Bootstrap {
                 break;
             case CommandConst.TASK_REMOVE_BY_ID:
                 taskController.removeTaskById();
+                break;
+            case CommandConst.TASK_CHANGE_STATUS_BY_INDEX:
+                taskController.changeTaskStatusByIndex();
+                break;
+            case CommandConst.TASK_CHANGE_STATUS_BY_ID:
+                taskController.changeTaskStatusById();
+                break;
+            case CommandConst.TASK_START_BY_INDEX:
+                taskController.startTaskByIndex();
+                break;
+            case CommandConst.TASK_START_BY_ID:
+                taskController.startTaskById();
+                break;
+            case CommandConst.TASK_COMPLETE_BY_INDEX:
+                taskController.completeTaskByIndex();
+                break;
+            case CommandConst.TASK_COMPLETE_BY_ID:
+                taskController.completeTaskById();
                 break;
             default:
                 commandController.showErrorCommand();
