@@ -3,6 +3,8 @@ package ru.forinnyy.tm.api;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.model.Task;
 
+import java.util.List;
+
 public interface ITaskService extends ITaskRepository {
 
     Task updateById(String id, String name, String description);

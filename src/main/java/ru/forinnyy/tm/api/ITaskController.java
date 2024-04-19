@@ -16,6 +16,8 @@ public interface ITaskController {
 
     void showTaskByIndex();
 
+    void showTaskByProjectId();
+
     void updateTaskById();
 
     void updateTaskByIndex();

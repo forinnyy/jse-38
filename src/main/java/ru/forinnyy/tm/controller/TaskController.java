@@ -18,13 +18,9 @@ public class TaskController implements ru.forinnyy.tm.api.ITaskController {
 
     @Override
     public void showTasks() {
-        System.out.println("[SHOW TASKS]");
+        System.out.println("[TASK LIST]");
         final List<Task> tasks = taskService.findAll();
-        int index = 1;
-        for (final Task task: tasks) {
-            System.out.println(index + ". " + task.getName());
-            index++;
-        }
+        renderTasks(tasks);
         System.out.println("[OK]");
     }
 
@@ -34,6 +30,7 @@ public class TaskController implements ru.forinnyy.tm.api.ITaskController {
         System.out.println("NAME: " + task.getName());
         System.out.println("DESCRIPTION: " + task.getDescription());
         System.out.println("STATUS: " + Status.toName(task.getStatus()));
+        System.out.println("PROJECT ID: " + task.getProjectId());
     }
 
     @Override
@@ -100,6 +97,25 @@ public class TaskController implements ru.forinnyy.tm.api.ITaskController {
             return;
         }
         showTask(task);
+        System.out.println("[OK]");
+    }
+
+    private void renderTasks(final List<Task> tasks) {
+        int index = 1;
+        for (final Task task: tasks) {
+            if (task == null) continue;
+            System.out.println(index + ". " + task.getName());
+            index++;
+        }
+    }
+
+    @Override
+    public void showTaskByProjectId() {
+        System.out.println("[TASK LIST BY PROJECT ID]");
+        System.out.println("ENTER PROJECT ID:");
+        final String projectId = TerminalUtil.nextLine();
+        final List<Task> tasks = taskService.findAllByProjectId(projectId);
+        renderTasks(tasks);
         System.out.println("[OK]");
     }
 

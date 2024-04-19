@@ -15,6 +15,16 @@ public final class TaskRepository implements ITaskRepository {
     }
 
     @Override
+    public List<Task> findAllByProjectId(String projectId) {
+        final List<Task> result = new ArrayList<>();
+        for (final Task task: tasks) {
+            if (task.getProjectId() == null) continue;
+            if (task.getProjectId().equals(projectId)) result.add(task);
+        }
+        return result;
+    }
+
+    @Override
     public Task add(final Task task) {
         tasks.add(task);
         return task;

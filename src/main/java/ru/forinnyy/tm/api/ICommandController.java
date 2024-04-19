@@ -14,4 +14,6 @@ public interface ICommandController {
 
     void showHelp();
 
+    void showWelcome();
+
 }

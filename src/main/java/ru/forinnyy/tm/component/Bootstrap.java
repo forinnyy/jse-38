@@ -5,12 +5,16 @@ import ru.forinnyy.tm.constant.ArgumentConst;
 import ru.forinnyy.tm.constant.CommandConst;
 import ru.forinnyy.tm.controller.CommandController;
 import ru.forinnyy.tm.controller.ProjectController;
+import ru.forinnyy.tm.controller.ProjectTaskController;
 import ru.forinnyy.tm.controller.TaskController;
+import ru.forinnyy.tm.enumerated.Status;
+import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.repository.CommandRepository;
 import ru.forinnyy.tm.repository.ProjectRepository;
 import ru.forinnyy.tm.repository.TaskRepository;
 import ru.forinnyy.tm.service.CommandService;
 import ru.forinnyy.tm.service.ProjectService;
+import ru.forinnyy.tm.service.ProjectTaskService;
 import ru.forinnyy.tm.service.TaskService;
 import ru.forinnyy.tm.util.TerminalUtil;
 
@@ -22,17 +26,35 @@ public final class Bootstrap {
 
     private final ICommandController commandController = new CommandController(commandService);
 
-    private final IProjectRepository projectRepository = new ProjectRepository();
-
-    private final IProjectService projectService = new ProjectService(projectRepository);
-
-    private final IProjectController projectController = new ProjectController(projectService);
-
     private final ITaskRepository taskRepository = new TaskRepository();
 
     private final ITaskService taskService = new TaskService(taskRepository);
 
     private final ITaskController taskController = new TaskController(taskService);
+
+    private final IProjectRepository projectRepository = new ProjectRepository();
+
+    private final IProjectService projectService = new ProjectService(projectRepository);
+
+    private final IProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
+
+    private final IProjectTaskController projectTaskController = new ProjectTaskController(projectTaskService);
+
+    private final IProjectController projectController = new ProjectController(projectService, projectTaskService);
+
+    public static void close() {
+        System.exit(0);
+    }
+
+    private void initDemoData() {
+        projectService.add(new Project("TEST PROJECT", Status.IN_PROGRESS));
+        projectService.add(new Project("DEMO PROJECT", Status.NOT_STARTED));
+        projectService.add(new Project("ALPHA PROJECT", Status.IN_PROGRESS));
+        projectService.add(new Project("BETA PROJECT", Status.COMPLETED));
+
+        taskService.create("MEGA TASK");
+        taskService.create("BETA TASK");
+    }
 
     private void processCommands() {
         System.out.println("*** *** WELCOME TO TASK MANAGER *** ***");
@@ -179,14 +201,25 @@ public final class Bootstrap {
             case CommandConst.TASK_COMPLETE_BY_ID:
                 taskController.completeTaskById();
                 break;
+            case CommandConst.TASK_BIND_TO_PROJECT:
+                projectTaskController.bindTaskToProject();
+                break;
+            case CommandConst.TASK_UNBIND_FROM_PROJECT:
+                projectTaskController.unbindTaskToProject();
+                break;
             default:
                 commandController.showErrorCommand();
         }
     }
 
-    public void run(final String... args) {
-        processArguments(args);
-        processCommands();
+    public void run() {
+        initDemoData();
+        commandController.showWelcome();
+        while (!Thread.currentThread().isInterrupted()) {
+            System.out.println("ENTER COMMAND:");
+            final String command = TerminalUtil.nextLine();
+            processCommand(command);
+        }
     }
 
 }

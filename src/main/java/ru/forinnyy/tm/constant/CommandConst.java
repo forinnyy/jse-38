@@ -72,6 +72,10 @@ public final class CommandConst {
 
     public static final String TASK_COMPLETE_BY_ID = "task-complete-by-id";
 
+    public static final String TASK_BIND_TO_PROJECT = "task-bind-to-project";
+
+    public static final String TASK_UNBIND_FROM_PROJECT = "task-unbind-from-project";
+
     private CommandConst() {
     }
 

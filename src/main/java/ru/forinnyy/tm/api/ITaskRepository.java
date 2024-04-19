@@ -8,6 +8,8 @@ public interface ITaskRepository {
 
     List<Task> findAll();
 
+    List<Task> findAllByProjectId(String projectId);
+
     Task add(Task task);
 
     void clear();

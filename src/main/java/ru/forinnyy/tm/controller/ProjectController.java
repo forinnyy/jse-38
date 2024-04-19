@@ -2,6 +2,7 @@ package ru.forinnyy.tm.controller;
 
 import ru.forinnyy.tm.api.IProjectController;
 import ru.forinnyy.tm.api.IProjectService;
+import ru.forinnyy.tm.api.IProjectTaskService;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.util.TerminalUtil;
@@ -13,8 +14,11 @@ public final class ProjectController implements IProjectController {
 
     private final IProjectService projectService;
 
-    public ProjectController(final IProjectService projectService) {
+    private final IProjectTaskService projectTaskService;
+
+    public ProjectController(IProjectService projectService, IProjectTaskService projectTaskService) {
         this.projectService = projectService;
+        this.projectTaskService = projectTaskService;
     }
 
     @Override
@@ -43,8 +47,12 @@ public final class ProjectController implements IProjectController {
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
         final Project project = projectService.removeById(id);
-        if (project == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        if (project == null) {
+            System.out.println("[FAIL]");
+            return;
+        }
+        projectTaskService.removeProjectById(project.getId());
+        System.out.println("[OK]");
     }
 
     @Override
@@ -53,8 +61,12 @@ public final class ProjectController implements IProjectController {
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() -1;
         final Project project = projectService.removeByIndex(index);
-        if (project == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        if (project == null) {
+            System.out.println("[FAIL]");
+            return;
+        }
+        projectTaskService.removeProjectById(project.getId());
+        System.out.println("[OK]");
     }
 
     @Override

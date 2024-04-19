@@ -77,6 +77,10 @@ public final class CommandRepository implements ICommandRepository {
 
     private static final Command TASK_COMPLETE_BY_ID = new Command(CommandConst.TASK_COMPLETE_BY_ID, null, "Complete task by id.");
 
+    private static final Command TASK_BIND_TO_PROJECT = new Command(CommandConst.TASK_BIND_TO_PROJECT, null, "Bind task to project.");
+
+    private static final Command TASK_UNBIND_FROM_PROJECT = new Command(CommandConst.TASK_UNBIND_FROM_PROJECT, null, "Unbind task from project.");
+
     private static final Command[] COMMANDS = new Command[] {
             HELP, ABOUT, VERSION, INFO, EXIT,
 
@@ -90,7 +94,9 @@ public final class CommandRepository implements ICommandRepository {
             TASK_SHOW_BY_INDEX, TASK_SHOW_BY_ID, TASK_UPDATE_BY_INDEX,
             TASK_UPDATE_BY_ID, TASK_REMOVE_BY_INDEX, TASK_REMOVE_BY_ID,
             TASK_CHANGE_STATUS_BY_INDEX, TASK_CHANGE_STATUS_BY_ID, TASK_START_BY_INDEX,
-            TASK_START_BY_ID, TASK_COMPLETE_BY_INDEX, TASK_COMPLETE_BY_ID
+            TASK_START_BY_ID, TASK_COMPLETE_BY_INDEX, TASK_COMPLETE_BY_ID,
+
+            TASK_BIND_TO_PROJECT, TASK_UNBIND_FROM_PROJECT
     };
 
     public Command[] getCommands() {

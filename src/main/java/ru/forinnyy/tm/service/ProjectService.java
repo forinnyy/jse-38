@@ -75,6 +75,11 @@ public final class ProjectService implements IProjectService {
     }
 
     @Override
+    public boolean existsById(String projectId) {
+        return projectRepository.existsById(projectId);
+    }
+
+    @Override
     public Project updateById(final String id, final String name, final String description) {
         if (id == null || id.isEmpty()) return null;
         if (name == null || name.isEmpty()) return null;

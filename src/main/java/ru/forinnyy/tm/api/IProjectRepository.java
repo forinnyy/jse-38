@@ -28,4 +28,6 @@ public interface IProjectRepository {
 
     Project removeByIndex(Integer index);
 
+    boolean existsById(String projectId);
+
 }

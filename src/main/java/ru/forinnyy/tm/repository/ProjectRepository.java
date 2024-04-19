@@ -22,6 +22,12 @@ public final class ProjectRepository implements IProjectRepository {
     }
 
     @Override
+    public boolean existsById(String projectId) {
+        final Project project = findOneById(projectId);
+        return (project != null);
+    }
+
+    @Override
     public int getSize() {
         return projects.size();
     }

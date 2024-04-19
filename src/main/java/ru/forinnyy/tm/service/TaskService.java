@@ -5,6 +5,7 @@ import ru.forinnyy.tm.api.ITaskService;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.model.Task;
 
+import java.util.Collections;
 import java.util.List;
 
 public class TaskService implements ITaskService {
@@ -34,6 +35,12 @@ public class TaskService implements ITaskService {
     @Override
     public List<Task> findAll() {
         return taskRepository.findAll();
+    }
+
+    @Override
+    public List<Task> findAllByProjectId(String projectId) {
+        if (projectId == null || projectId.isEmpty()) return Collections.emptyList();
+        return taskRepository.findAllByProjectId(projectId);
     }
 
     @Override

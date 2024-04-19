@@ -17,6 +17,11 @@ public final class Project {
     public Project() {
     }
 
+    public Project(String name, Status status) {
+        this.name = name;
+        this.status = status;
+    }
+
     public String getId() {
         return id;
     }

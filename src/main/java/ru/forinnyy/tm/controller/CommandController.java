@@ -3,6 +3,7 @@ package ru.forinnyy.tm.controller;
 import ru.forinnyy.tm.api.ICommandController;
 import ru.forinnyy.tm.api.ICommandService;
 import ru.forinnyy.tm.model.Command;
+import ru.forinnyy.tm.util.TerminalUtil;
 
 import static ru.forinnyy.tm.util.NumberUtil.formatBytes;
 
@@ -19,6 +20,10 @@ public final class CommandController implements ICommandController {
         System.out.println("[ERROR]");
         System.err.println("The program arguments are not correct...");
         System.exit(1);
+    }
+
+    public void showWelcome() {
+        System.out.println("*** *** WELCOME TO TASK MANAGER *** ***");
     }
 
     @Override
@@ -47,7 +52,7 @@ public final class CommandController implements ICommandController {
     @Override
     public void showVersion() {
         System.out.println("[VERSION]");
-        System.out.println("1.12.0");
+        System.out.println("1.13.0");
     }
 
     @Override
