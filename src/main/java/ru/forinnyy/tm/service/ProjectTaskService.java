@@ -1,8 +1,8 @@
 package ru.forinnyy.tm.service;
 
-import ru.forinnyy.tm.api.IProjectRepository;
-import ru.forinnyy.tm.api.IProjectTaskService;
-import ru.forinnyy.tm.api.ITaskRepository;
+import ru.forinnyy.tm.api.repository.IProjectRepository;
+import ru.forinnyy.tm.api.service.IProjectTaskService;
+import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.model.Task;
 
 import java.util.List;

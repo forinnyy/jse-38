@@ -1,4 +1,4 @@
-package ru.forinnyy.tm.api;
+package ru.forinnyy.tm.api.service;
 
 import ru.forinnyy.tm.model.Task;
 

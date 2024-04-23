@@ -1,10 +1,12 @@
 package ru.forinnyy.tm.service;
 
-import ru.forinnyy.tm.api.IProjectRepository;
-import ru.forinnyy.tm.api.IProjectService;
+import ru.forinnyy.tm.api.repository.IProjectRepository;
+import ru.forinnyy.tm.api.service.IProjectService;
+import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.model.Project;
 
+import java.util.Comparator;
 import java.util.List;
 
 public final class ProjectService implements IProjectService {
@@ -18,6 +20,19 @@ public final class ProjectService implements IProjectService {
     @Override
     public List<Project> findAll() {
         return projectRepository.findAll();
+    }
+
+    @Override
+    public List<Project> findAll(Sort sort) {
+        if (sort == null) return findAll();
+        final Comparator<Project> comparator = sort.getComparator();
+        return findAll(comparator);
+    }
+
+    @Override
+    public List<Project> findAll(Comparator<Project> comparator) {
+        if (comparator == null) return findAll();
+        return projectRepository.findAll(comparator);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package ru.forinnyy.tm.service;
 
-import ru.forinnyy.tm.api.ICommandRepository;
-import ru.forinnyy.tm.api.ICommandService;
+import ru.forinnyy.tm.api.repository.ICommandRepository;
+import ru.forinnyy.tm.api.service.ICommandService;
 import ru.forinnyy.tm.model.Command;
 
 public final class CommandService implements ICommandService {

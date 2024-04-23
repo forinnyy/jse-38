@@ -1,7 +1,7 @@
 package ru.forinnyy.tm.controller;
 
-import ru.forinnyy.tm.api.IProjectTaskController;
-import ru.forinnyy.tm.api.IProjectTaskService;
+import ru.forinnyy.tm.api.controller.IProjectTaskController;
+import ru.forinnyy.tm.api.service.IProjectTaskService;
 import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.util.TerminalUtil;
 

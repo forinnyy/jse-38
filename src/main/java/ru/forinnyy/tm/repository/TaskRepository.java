@@ -1,8 +1,9 @@
 package ru.forinnyy.tm.repository;
 
-import ru.forinnyy.tm.api.ITaskRepository;
+import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.model.Task;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public final class TaskRepository implements ITaskRepository {
@@ -12,6 +13,13 @@ public final class TaskRepository implements ITaskRepository {
     @Override
     public List<Task> findAll() {
         return tasks;
+    }
+
+    @Override
+    public List<Task> findAll(final Comparator<Task> comparator) {
+        final List<Task> result = new ArrayList<>(tasks);
+        result.sort(comparator);
+        return result;
     }
 
     @Override

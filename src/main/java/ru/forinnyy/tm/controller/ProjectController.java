@@ -1,8 +1,9 @@
 package ru.forinnyy.tm.controller;
 
-import ru.forinnyy.tm.api.IProjectController;
-import ru.forinnyy.tm.api.IProjectService;
-import ru.forinnyy.tm.api.IProjectTaskService;
+import ru.forinnyy.tm.api.controller.IProjectController;
+import ru.forinnyy.tm.api.service.IProjectService;
+import ru.forinnyy.tm.api.service.IProjectTaskService;
+import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.util.TerminalUtil;
@@ -24,10 +25,15 @@ public final class ProjectController implements IProjectController {
     @Override
     public void showProjects() {
         System.out.println("[SHOW PROJECTS]");
+        System.out.println("ENTER SORT:");
+        System.out.println(Arrays.toString(Sort.values()));
+        final String sortType = TerminalUtil.nextLine();
+        final Sort sort = Sort.toSort(sortType);
         final List<Project> projects = projectService.findAll();
         int index = 1;
         for (final Project project: projects) {
-            System.out.println(index + ". " + project.getName());
+            if (project == null) continue;
+            System.out.println(index + ". " + project);
             index++;
         }
         System.out.println("[OK]");

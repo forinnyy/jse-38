@@ -1,6 +1,6 @@
 package ru.forinnyy.tm.repository;
 
-import ru.forinnyy.tm.api.ICommandRepository;
+import ru.forinnyy.tm.api.repository.ICommandRepository;
 import ru.forinnyy.tm.constant.ArgumentConst;
 import ru.forinnyy.tm.constant.CommandConst;
 import ru.forinnyy.tm.model.Command;

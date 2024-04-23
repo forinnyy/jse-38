@@ -1,4 +1,4 @@
-package ru.forinnyy.tm.api;
+package ru.forinnyy.tm.api.controller;
 
 public interface ICommandController {
 

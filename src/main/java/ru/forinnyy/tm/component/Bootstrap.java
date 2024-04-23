@@ -1,6 +1,16 @@
 package ru.forinnyy.tm.component;
 
-import ru.forinnyy.tm.api.*;
+import ru.forinnyy.tm.api.controller.ICommandController;
+import ru.forinnyy.tm.api.controller.IProjectController;
+import ru.forinnyy.tm.api.controller.IProjectTaskController;
+import ru.forinnyy.tm.api.controller.ITaskController;
+import ru.forinnyy.tm.api.repository.ICommandRepository;
+import ru.forinnyy.tm.api.repository.IProjectRepository;
+import ru.forinnyy.tm.api.repository.ITaskRepository;
+import ru.forinnyy.tm.api.service.ICommandService;
+import ru.forinnyy.tm.api.service.IProjectService;
+import ru.forinnyy.tm.api.service.IProjectTaskService;
+import ru.forinnyy.tm.api.service.ITaskService;
 import ru.forinnyy.tm.constant.ArgumentConst;
 import ru.forinnyy.tm.constant.CommandConst;
 import ru.forinnyy.tm.controller.CommandController;

@@ -1,11 +1,13 @@
 package ru.forinnyy.tm.service;
 
-import ru.forinnyy.tm.api.ITaskRepository;
-import ru.forinnyy.tm.api.ITaskService;
+import ru.forinnyy.tm.api.repository.ITaskRepository;
+import ru.forinnyy.tm.api.service.ITaskService;
+import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.model.Task;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class TaskService implements ITaskService {
@@ -35,6 +37,19 @@ public class TaskService implements ITaskService {
     @Override
     public List<Task> findAll() {
         return taskRepository.findAll();
+    }
+
+    @Override
+    public List<Task> findAll(Comparator<Task> comparator) {
+        if (comparator == null) return findAll();
+        return taskRepository.findAll(comparator);
+    }
+
+    @Override
+    public List<Task> findAll(Sort sort) {
+        if (sort == null) return findAll();
+        final Comparator<Task> comparator = sort.getComparator();
+        return findAll(comparator);
     }
 
     @Override

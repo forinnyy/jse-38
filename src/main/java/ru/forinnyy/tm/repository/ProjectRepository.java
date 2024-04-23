@@ -1,9 +1,10 @@
 package ru.forinnyy.tm.repository;
 
-import ru.forinnyy.tm.api.IProjectRepository;
+import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.model.Project;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public final class ProjectRepository implements IProjectRepository {
@@ -13,6 +14,13 @@ public final class ProjectRepository implements IProjectRepository {
     @Override
     public List<Project> findAll() {
         return projects;
+    }
+
+    @Override
+    public List<Project> findAll(final Comparator<Project> comparator) {
+        final List<Project> result = new ArrayList<>(projects);
+        result.sort(comparator);
+        return result;
     }
 
     @Override

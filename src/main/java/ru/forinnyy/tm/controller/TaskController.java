@@ -1,6 +1,8 @@
 package ru.forinnyy.tm.controller;
 
-import ru.forinnyy.tm.api.ITaskService;
+import ru.forinnyy.tm.api.service.ITaskService;
+import ru.forinnyy.tm.api.controller.ITaskController;
+import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.util.TerminalUtil;
@@ -8,7 +10,7 @@ import ru.forinnyy.tm.util.TerminalUtil;
 import java.util.Arrays;
 import java.util.List;
 
-public class TaskController implements ru.forinnyy.tm.api.ITaskController {
+public class TaskController implements ITaskController {
 
     private final ITaskService taskService;
 
@@ -19,7 +21,11 @@ public class TaskController implements ru.forinnyy.tm.api.ITaskController {
     @Override
     public void showTasks() {
         System.out.println("[TASK LIST]");
-        final List<Task> tasks = taskService.findAll();
+        System.out.println("ENTER SORT:");
+        System.out.println(Arrays.toString(Sort.values()));
+        final String sortType = TerminalUtil.nextLine();
+        final Sort sort = Sort.toSort(sortType);
+        final List<Task> tasks = taskService.findAll(sort);
         renderTasks(tasks);
         System.out.println("[OK]");
     }

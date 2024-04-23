@@ -1,10 +1,12 @@
 package ru.forinnyy.tm.model;
 
+import ru.forinnyy.tm.api.model.IWBS;
 import ru.forinnyy.tm.enumerated.Status;
 
+import java.util.Date;
 import java.util.UUID;
 
-public final class Project {
+public final class Project implements IWBS {
 
     private String id = UUID.randomUUID().toString();
 
@@ -14,12 +16,24 @@ public final class Project {
 
     private Status status = Status.NOT_STARTED;
 
+    private Date created = new Date();
+
     public Project() {
     }
 
     public Project(String name, Status status) {
         this.name = name;
         this.status = status;
+    }
+
+    @Override
+    public Date getCreated() {
+        return created;
+    }
+
+    @Override
+    public void setCreated(Date created) {
+        this.created = created;
     }
 
     public String getId() {
