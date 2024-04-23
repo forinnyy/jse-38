@@ -29,11 +29,11 @@ public final class ProjectController implements IProjectController {
         System.out.println(Arrays.toString(Sort.values()));
         final String sortType = TerminalUtil.nextLine();
         final Sort sort = Sort.toSort(sortType);
-        final List<Project> projects = projectService.findAll();
+        final List<Project> projects = projectService.findAll(sort);
         int index = 1;
         for (final Project project: projects) {
             if (project == null) continue;
-            System.out.println(index + ". " + project);
+            System.out.println(index + ". " + project.getName());
             index++;
         }
         System.out.println("[OK]");
