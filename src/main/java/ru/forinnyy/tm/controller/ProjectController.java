@@ -5,6 +5,8 @@ import ru.forinnyy.tm.api.service.IProjectService;
 import ru.forinnyy.tm.api.service.IProjectTaskService;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.enumerated.Status;
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
+import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.util.TerminalUtil;
 
@@ -47,7 +49,7 @@ public final class ProjectController implements IProjectController {
     }
 
     @Override
-    public void removeProjectById() {
+    public void removeProjectById() throws AbstractFieldException, AbstractEntityException {
         System.out.println("[REMOVE PROJECT BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
@@ -56,7 +58,7 @@ public final class ProjectController implements IProjectController {
     }
 
     @Override
-    public void removeProjectByIndex() {
+    public void removeProjectByIndex() throws AbstractFieldException, AbstractEntityException {
         System.out.println("[REMOVE PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() -1;
@@ -65,7 +67,7 @@ public final class ProjectController implements IProjectController {
     }
 
     @Override
-    public void showProjectById() {
+    public void showProjectById() throws AbstractFieldException {
         System.out.println("[SHOW PROJECT BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
@@ -74,7 +76,7 @@ public final class ProjectController implements IProjectController {
     }
 
     @Override
-    public void showProjectByIndex() {
+    public void showProjectByIndex() throws AbstractFieldException {
         System.out.println("[SHOW PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() -1;
@@ -83,7 +85,7 @@ public final class ProjectController implements IProjectController {
     }
 
     @Override
-    public void updateProjectById() {
+    public void updateProjectById() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[SHOW PROJECT BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
@@ -95,7 +97,7 @@ public final class ProjectController implements IProjectController {
     }
 
     @Override
-    public void updateProjectByIndex() {
+    public void updateProjectByIndex() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[SHOW PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() -1;
@@ -107,7 +109,7 @@ public final class ProjectController implements IProjectController {
     }
 
     @Override
-    public void startProjectById() {
+    public void startProjectById() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[START PROJECT BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
@@ -115,7 +117,7 @@ public final class ProjectController implements IProjectController {
     }
 
     @Override
-    public void startProjectByIndex() {
+    public void startProjectByIndex() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[START PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;
@@ -123,7 +125,7 @@ public final class ProjectController implements IProjectController {
     }
 
     @Override
-    public void completeProjectById() {
+    public void completeProjectById() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[COMPLETE PROJECT BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
@@ -131,7 +133,7 @@ public final class ProjectController implements IProjectController {
     }
 
     @Override
-    public void completeProjectByIndex() {
+    public void completeProjectByIndex() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[COMPLETE PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;
@@ -139,7 +141,7 @@ public final class ProjectController implements IProjectController {
     }
 
     @Override
-    public void changeProjectStatusById() {
+    public void changeProjectStatusById() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[CHANGE PROJECT STATUS BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
@@ -151,7 +153,7 @@ public final class ProjectController implements IProjectController {
     }
 
     @Override
-    public void changeProjectStatusByIndex() {
+    public void changeProjectStatusByIndex() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[CHANGE PROJECT STATUS BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;
@@ -163,7 +165,7 @@ public final class ProjectController implements IProjectController {
     }
 
     @Override
-    public void createProject() {
+    public void createProject() throws AbstractFieldException {
         System.out.println("[CREATE PROJECT]");
         System.out.println("ENTER NAME: ");
         final String name = TerminalUtil.nextLine();

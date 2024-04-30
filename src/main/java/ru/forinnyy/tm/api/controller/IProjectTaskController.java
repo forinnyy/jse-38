@@ -1,9 +1,12 @@
 package ru.forinnyy.tm.api.controller;
 
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
+import ru.forinnyy.tm.exception.field.AbstractFieldException;
+
 public interface IProjectTaskController {
 
-    void bindTaskToProject();
+    void bindTaskToProject() throws AbstractEntityException, AbstractFieldException;
 
-    void unbindTaskToProject();
+    void unbindTaskToProject() throws AbstractEntityException, AbstractFieldException;
 
 }

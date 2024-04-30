@@ -13,7 +13,7 @@ public interface TerminalUtil {
         return SCANNER.nextLine();
     }
 
-    static Integer nextNumber() {
+    static Integer nextNumber() throws NumberIncorrectException {
         final String value = nextLine();
         try {
             return Integer.parseInt(value);

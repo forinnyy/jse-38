@@ -3,8 +3,10 @@ package ru.forinnyy.tm.service;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.api.service.IProjectTaskService;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
 import ru.forinnyy.tm.exception.entity.TaskNotFoundException;
+import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.ProjectIdEmptyException;
 import ru.forinnyy.tm.exception.field.TaskIdEmptyException;
 import ru.forinnyy.tm.model.Task;
@@ -23,7 +25,7 @@ public class ProjectTaskService implements IProjectTaskService {
     }
 
     @Override
-    public Task bindTaskToProject(String projectId, String taskId) {
+    public Task bindTaskToProject(String projectId, String taskId) throws AbstractFieldException, AbstractEntityException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
         if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();
@@ -34,7 +36,7 @@ public class ProjectTaskService implements IProjectTaskService {
     }
 
     @Override
-    public void removeProjectById(String projectId) {
+    public void removeProjectById(String projectId) throws AbstractFieldException, AbstractEntityException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();
         final List<Task> tasks = taskRepository.findAllByProjectId(projectId);
@@ -43,7 +45,7 @@ public class ProjectTaskService implements IProjectTaskService {
     }
 
     @Override
-    public Task unbindTaskFromProject(String projectId, String taskId) {
+    public Task unbindTaskFromProject(String projectId, String taskId) throws AbstractFieldException, AbstractEntityException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
         if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();

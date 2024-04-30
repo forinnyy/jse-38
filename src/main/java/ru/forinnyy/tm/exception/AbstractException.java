@@ -1,6 +1,6 @@
 package ru.forinnyy.tm.exception;
 
-public abstract class AbstractException extends RuntimeException {
+public abstract class AbstractException extends Exception {
 
     public AbstractException() {
     }

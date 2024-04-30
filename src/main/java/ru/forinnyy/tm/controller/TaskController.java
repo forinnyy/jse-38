@@ -4,6 +4,8 @@ import ru.forinnyy.tm.api.service.ITaskService;
 import ru.forinnyy.tm.api.controller.ITaskController;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.enumerated.Status;
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
+import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.util.TerminalUtil;
 
@@ -45,7 +47,7 @@ public class TaskController implements ITaskController {
     }
 
     @Override
-    public void createTask() {
+    public void createTask() throws AbstractFieldException {
         System.out.println("[CREATE TASK]");
         System.out.println("[ENTER NAME]");
         final String name = TerminalUtil.nextLine();
@@ -55,7 +57,7 @@ public class TaskController implements ITaskController {
     }
 
     @Override
-    public void removeTaskById() {
+    public void removeTaskById() throws AbstractFieldException {
         System.out.println("[REMOVE TASK BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
@@ -63,7 +65,7 @@ public class TaskController implements ITaskController {
     }
 
     @Override
-    public void removeTaskByIndex() {
+    public void removeTaskByIndex() throws AbstractFieldException {
         System.out.println("[REMOVE TASK BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() -1;
@@ -71,7 +73,7 @@ public class TaskController implements ITaskController {
     }
 
     @Override
-    public void showTaskById() {
+    public void showTaskById() throws AbstractFieldException {
         System.out.println("[SHOW TASK BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
@@ -80,7 +82,7 @@ public class TaskController implements ITaskController {
     }
 
     @Override
-    public void showTaskByIndex() {
+    public void showTaskByIndex() throws AbstractFieldException {
         System.out.println("[SHOW TASK BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() -1;
@@ -107,7 +109,7 @@ public class TaskController implements ITaskController {
     }
 
     @Override
-    public void updateTaskById() {
+    public void updateTaskById() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[SHOW TASK BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
@@ -119,7 +121,7 @@ public class TaskController implements ITaskController {
     }
 
     @Override
-    public void updateTaskByIndex() {
+    public void updateTaskByIndex() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[SHOW TASK BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() -1;
@@ -131,7 +133,7 @@ public class TaskController implements ITaskController {
     }
 
     @Override
-    public void startTaskById() {
+    public void startTaskById() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[START TASK BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
@@ -139,7 +141,7 @@ public class TaskController implements ITaskController {
     }
 
     @Override
-    public void startTaskByIndex() {
+    public void startTaskByIndex() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[START TASK BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;
@@ -147,7 +149,7 @@ public class TaskController implements ITaskController {
     }
 
     @Override
-    public void completeTaskById() {
+    public void completeTaskById() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[COMPLETE TASK BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
@@ -155,7 +157,7 @@ public class TaskController implements ITaskController {
     }
 
     @Override
-    public void completeTaskByIndex() {
+    public void completeTaskByIndex() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[COMPLETE TASK BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;
@@ -163,7 +165,7 @@ public class TaskController implements ITaskController {
     }
 
     @Override
-    public void changeTaskStatusById() {
+    public void changeTaskStatusById() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[CHANGE TASK STATUS BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
@@ -175,7 +177,7 @@ public class TaskController implements ITaskController {
     }
 
     @Override
-    public void changeTaskStatusByIndex() {
+    public void changeTaskStatusByIndex() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[CHANGE TASK STATUS BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;

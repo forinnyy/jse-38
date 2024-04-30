@@ -2,6 +2,8 @@ package ru.forinnyy.tm.controller;
 
 import ru.forinnyy.tm.api.controller.IProjectTaskController;
 import ru.forinnyy.tm.api.service.IProjectTaskService;
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
+import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.util.TerminalUtil;
 
@@ -14,7 +16,7 @@ public class ProjectTaskController implements IProjectTaskController {
     }
 
     @Override
-    public void bindTaskToProject() {
+    public void bindTaskToProject() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[BIND TASK TO PROJECT]");
         System.out.println("ENTER PROJECT ID:");
         final String projectId = TerminalUtil.nextLine();
@@ -24,7 +26,7 @@ public class ProjectTaskController implements IProjectTaskController {
     }
 
     @Override
-    public void unbindTaskToProject() {
+    public void unbindTaskToProject() throws AbstractEntityException, AbstractFieldException {
         System.out.println("[UNBIND TASK FROM PROJECT]");
         System.out.println("ENTER PROJECT ID:");
         final String projectId = TerminalUtil.nextLine();

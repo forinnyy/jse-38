@@ -1,5 +1,7 @@
 package ru.forinnyy.tm.api.repository;
 
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
+import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.model.Project;
 
 import java.util.Comparator;
@@ -11,25 +13,25 @@ public interface IProjectRepository {
 
     List<Project> findAll(Comparator<Project> comparator);
 
-    Project add(Project project);
+    Project add(Project project) throws AbstractEntityException;
 
     void clear();
 
     int getSize();
 
-    Project create(String name);
+    Project create(String name) throws AbstractFieldException;
 
-    Project create(String name, String description);
+    Project create(String name, String description) throws AbstractFieldException;
 
-    Project findOneById(String id);
+    Project findOneById(String id) throws AbstractFieldException;
 
-    Project findOneByIndex(Integer index);
+    Project findOneByIndex(Integer index) throws AbstractFieldException;
 
-    Project remove(Project project);
+    Project remove(Project project) throws AbstractEntityException;
 
-    Project removeById(String id);
+    Project removeById(String id) throws AbstractFieldException;
 
-    Project removeByIndex(Integer index);
+    Project removeByIndex(Integer index) throws AbstractFieldException;
 
     boolean existsById(String projectId);
 

@@ -1,35 +1,38 @@
 package ru.forinnyy.tm.api.controller;
 
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
+import ru.forinnyy.tm.exception.field.AbstractFieldException;
+
 public interface IProjectController {
 
     void clearProjects();
 
-    void createProject();
+    void createProject() throws AbstractFieldException;
 
     void showProjects();
 
-    void removeProjectById();
+    void removeProjectById() throws AbstractFieldException, AbstractEntityException;
 
-    void removeProjectByIndex();
+    void removeProjectByIndex() throws AbstractFieldException, AbstractEntityException;
 
-    void showProjectById();
+    void showProjectById() throws AbstractFieldException;
 
-    void showProjectByIndex();
+    void showProjectByIndex() throws AbstractFieldException;
 
-    void updateProjectById();
+    void updateProjectById() throws AbstractEntityException, AbstractFieldException;
 
-    void updateProjectByIndex();
+    void updateProjectByIndex() throws AbstractEntityException, AbstractFieldException;
 
-    void startProjectById();
+    void startProjectById() throws AbstractEntityException, AbstractFieldException;
 
-    void startProjectByIndex();
+    void startProjectByIndex() throws AbstractEntityException, AbstractFieldException;
 
-    void completeProjectById();
+    void completeProjectById() throws AbstractEntityException, AbstractFieldException;
 
-    void completeProjectByIndex();
+    void completeProjectByIndex() throws AbstractEntityException, AbstractFieldException;
 
-    void changeProjectStatusById();
+    void changeProjectStatusById() throws AbstractEntityException, AbstractFieldException;
 
-    void changeProjectStatusByIndex();
+    void changeProjectStatusByIndex() throws AbstractEntityException, AbstractFieldException;
 
 }

@@ -1,37 +1,40 @@
 package ru.forinnyy.tm.api.controller;
 
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
+import ru.forinnyy.tm.exception.field.AbstractFieldException;
+
 public interface ITaskController {
 
     void showTasks();
 
     void clearTasks();
 
-    void createTask();
+    void createTask() throws AbstractFieldException;
 
-    void removeTaskById();
+    void removeTaskById() throws AbstractFieldException;
 
-    void removeTaskByIndex();
+    void removeTaskByIndex() throws AbstractFieldException;
 
-    void showTaskById();
+    void showTaskById() throws AbstractFieldException;
 
-    void showTaskByIndex();
+    void showTaskByIndex() throws AbstractFieldException;
 
     void showTaskByProjectId();
 
-    void updateTaskById();
+    void updateTaskById() throws AbstractEntityException, AbstractFieldException;
 
-    void updateTaskByIndex();
+    void updateTaskByIndex() throws AbstractEntityException, AbstractFieldException;
 
-    void startTaskById();
+    void startTaskById() throws AbstractEntityException, AbstractFieldException;
 
-    void startTaskByIndex();
+    void startTaskByIndex() throws AbstractEntityException, AbstractFieldException;
 
-    void completeTaskById();
+    void completeTaskById() throws AbstractEntityException, AbstractFieldException;
 
-    void completeTaskByIndex();
+    void completeTaskByIndex() throws AbstractEntityException, AbstractFieldException;
 
-    void changeTaskStatusById();
+    void changeTaskStatusById() throws AbstractEntityException, AbstractFieldException;
 
-    void changeTaskStatusByIndex();
+    void changeTaskStatusByIndex() throws AbstractEntityException, AbstractFieldException;
 
 }

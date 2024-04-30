@@ -18,6 +18,9 @@ import ru.forinnyy.tm.controller.ProjectController;
 import ru.forinnyy.tm.controller.ProjectTaskController;
 import ru.forinnyy.tm.controller.TaskController;
 import ru.forinnyy.tm.enumerated.Status;
+import ru.forinnyy.tm.exception.AbstractException;
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
+import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.system.ArgumentNotSupportedException;
 import ru.forinnyy.tm.exception.system.CommandNotSupportedException;
 import ru.forinnyy.tm.model.Project;
@@ -54,7 +57,7 @@ public final class Bootstrap {
 
     private final IProjectController projectController = new ProjectController(projectService, projectTaskService);
 
-    private void initDemoData() {
+    private void initDemoData() throws AbstractFieldException, AbstractEntityException {
         projectService.add(new Project("TEST PROJECT", Status.IN_PROGRESS));
         projectService.add(new Project("DEMO PROJECT", Status.NOT_STARTED));
         projectService.add(new Project("ALPHA PROJECT", Status.IN_PROGRESS));
@@ -64,7 +67,7 @@ public final class Bootstrap {
         taskService.create("BETA TASK");
     }
 
-    private void processCommands() {
+    private void processCommands() throws AbstractEntityException, CommandNotSupportedException, AbstractFieldException {
         System.out.println("*** *** WELCOME TO TASK MANAGER *** ***");
         while (!Thread.currentThread().isInterrupted()) {
             System.out.println("ENTER COMMAND: ");
@@ -73,7 +76,7 @@ public final class Bootstrap {
         }
     }
 
-    private boolean processArguments(final String[] args) {
+    private boolean processArguments(final String[] args) throws ArgumentNotSupportedException {
         if (args == null || args.length < 1) return false;
         processArgument(args[0]);
         return true;
@@ -83,7 +86,7 @@ public final class Bootstrap {
         System.exit(0);
     }
 
-    private void processArgument(final String arg) {
+    private void processArgument(final String arg) throws ArgumentNotSupportedException {
         switch (arg) {
             case ArgumentConst.VERSION:
                 commandController.showVersion();
@@ -102,7 +105,7 @@ public final class Bootstrap {
         }
     }
 
-    private void processCommand(final String command) throws CommandNotSupportedException {
+    private void processCommand(final String command) throws CommandNotSupportedException, AbstractFieldException, AbstractEntityException {
         switch (command) {
             case CommandConst.VERSION:
                 commandController.showVersion();
@@ -220,7 +223,7 @@ public final class Bootstrap {
         }
     }
 
-    public void run(final String[] args) {
+    public void run(final String[] args) throws AbstractException {
         if (processArguments(args)) return;
 
         initDemoData();
