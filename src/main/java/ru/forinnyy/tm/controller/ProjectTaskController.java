@@ -20,9 +20,7 @@ public class ProjectTaskController implements IProjectTaskController {
         final String projectId = TerminalUtil.nextLine();
         System.out.println("ENTER TASK ID:");
         final String taskId = TerminalUtil.nextLine();
-        final Task task = projectTaskService.bindTaskToProject(projectId, taskId);
-        if (task == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        projectTaskService.bindTaskToProject(projectId, taskId);
     }
 
     @Override
@@ -32,9 +30,7 @@ public class ProjectTaskController implements IProjectTaskController {
         final String projectId = TerminalUtil.nextLine();
         System.out.println("ENTER TASK ID:");
         final String taskId = TerminalUtil.nextLine();
-        final Task task = projectTaskService.unbindTaskFromProject(projectId, taskId);
-        if (task == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        projectTaskService.unbindTaskFromProject(projectId, taskId);
     }
 
 }

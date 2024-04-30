@@ -4,6 +4,11 @@ import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.api.service.ITaskService;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.enumerated.Status;
+import ru.forinnyy.tm.exception.entity.TaskNotFoundException;
+import ru.forinnyy.tm.exception.field.DescriptionEmptyException;
+import ru.forinnyy.tm.exception.field.IndexIncorrectException;
+import ru.forinnyy.tm.exception.field.NameEmptyException;
+import ru.forinnyy.tm.exception.field.TaskIdEmptyException;
 import ru.forinnyy.tm.model.Task;
 
 import java.util.Collections;
@@ -20,7 +25,7 @@ public class TaskService implements ITaskService {
 
     @Override
     public Task add(final Task task) {
-        if (task == null ) return null;
+        if (task == null ) throw new TaskNotFoundException();
         return taskRepository.add(task);
     }
 
@@ -60,53 +65,53 @@ public class TaskService implements ITaskService {
 
     @Override
     public Task create(final String name, final String description) {
-        if (name == null || name.isEmpty()) return null;
-        if (description == null || description.isEmpty()) return null;
+        if (name == null || name.isEmpty()) throw new NameEmptyException();
+        if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
         return taskRepository.create(name, description);
     }
 
     @Override
     public Task create(String name) {
-        if (name == null || name.isEmpty()) return null;
+        if (name == null || name.isEmpty()) throw new NameEmptyException();
         return taskRepository.create(name);
     }
 
     @Override
     public Task findOneById(String id) {
-        if (id == null || id.isEmpty()) return null;
+        if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
         return taskRepository.findOneById(id);
     }
 
     @Override
     public Task findOneByIndex(Integer index) {
-        if (index == null || index < 0) return null;
+        if (index == null || index < 0) throw new IndexIncorrectException();
         return taskRepository.findOneByIndex(index);
     }
 
     @Override
-    public Task remove(Task project) {
-        if (project == null) return null;
-        return taskRepository.remove(project);
+    public Task remove(Task task) {
+        if (task == null) throw new TaskNotFoundException();
+        return taskRepository.remove(task);
     }
 
     @Override
     public Task removeById(String id) {
-        if (id == null || id.isEmpty()) return null;
+        if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
         return taskRepository.removeById(id);
     }
 
     @Override
     public Task removeByIndex(Integer index) {
-        if (index == null || index < 0) return null;
+        if (index == null || index < 0) throw new IndexIncorrectException();
         return taskRepository.removeByIndex(index);
     }
 
     @Override
     public Task updateById(String id, String name, String description) {
-        if (id == null || id.isEmpty()) return null;
-        if (name == null || name.isEmpty()) return null;
+        if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
+        if (name == null || name.isEmpty()) throw new NameEmptyException();
         final Task task = findOneById(id);
-        if (task == null) return null;
+        if (task == null) throw new TaskNotFoundException();
         task.setName(name);
         task.setDescription(description);
         return task;
@@ -114,10 +119,10 @@ public class TaskService implements ITaskService {
 
     @Override
     public Task updateByIndex(Integer index, String name, String description) {
-        if (index == null || index < 0) return null;
-        if (name == null || name.isEmpty()) return null;
+        if (index == null || index < 0) throw new IndexIncorrectException();
+        if (name == null || name.isEmpty()) throw new NameEmptyException();
         final Task task = findOneByIndex(index);
-        if (task == null) return null;
+        if (task == null) throw new TaskNotFoundException();
         task.setName(name);
         task.setDescription(description);
         return task;
@@ -125,19 +130,19 @@ public class TaskService implements ITaskService {
 
     @Override
     public Task changeTaskStatusById(String id, Status status) {
-        if (id == null || id.isEmpty()) return null;
+        if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
         final Task task = findOneById(id);
-        if (task == null) return null;
+        if (task == null) throw new TaskNotFoundException();
         task.setStatus(status);
         return task;
     }
 
     @Override
     public Task changeTaskStatusByIndex(Integer index, Status status) {
-        if (index == null || index < 0) return null;
-        if (index >= taskRepository.getSize()) return null;
+        if (index == null || index < 0) throw new IndexIncorrectException();
+        if (index >= taskRepository.getSize()) throw new IndexIncorrectException();
         final Task task = findOneByIndex(index);
-        if (task == null) return null;
+        if (task == null) throw new TaskNotFoundException();
         task.setStatus(status);
         return task;
     }

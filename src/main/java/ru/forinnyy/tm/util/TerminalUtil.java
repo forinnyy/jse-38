@@ -1,5 +1,7 @@
 package ru.forinnyy.tm.util;
 
+import ru.forinnyy.tm.exception.field.NumberIncorrectException;
+
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -13,7 +15,11 @@ public interface TerminalUtil {
 
     static Integer nextNumber() {
         final String value = nextLine();
-        return Integer.parseInt(value);
+        try {
+            return Integer.parseInt(value);
+        } catch (final RuntimeException e) {
+            throw new NumberIncorrectException(value, e);
+        }
     }
 
 }

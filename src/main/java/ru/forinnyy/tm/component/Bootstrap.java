@@ -18,6 +18,8 @@ import ru.forinnyy.tm.controller.ProjectController;
 import ru.forinnyy.tm.controller.ProjectTaskController;
 import ru.forinnyy.tm.controller.TaskController;
 import ru.forinnyy.tm.enumerated.Status;
+import ru.forinnyy.tm.exception.system.ArgumentNotSupportedException;
+import ru.forinnyy.tm.exception.system.CommandNotSupportedException;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.repository.CommandRepository;
 import ru.forinnyy.tm.repository.ProjectRepository;
@@ -52,10 +54,6 @@ public final class Bootstrap {
 
     private final IProjectController projectController = new ProjectController(projectService, projectTaskService);
 
-    public static void close() {
-        System.exit(0);
-    }
-
     private void initDemoData() {
         projectService.add(new Project("TEST PROJECT", Status.IN_PROGRESS));
         projectService.add(new Project("DEMO PROJECT", Status.NOT_STARTED));
@@ -75,10 +73,10 @@ public final class Bootstrap {
         }
     }
 
-    private void processArguments(final String[] args) {
-        if (args == null || args.length < 1) return;
+    private boolean processArguments(final String[] args) {
+        if (args == null || args.length < 1) return false;
         processArgument(args[0]);
-        exit();
+        return true;
     }
 
     private void exit() {
@@ -100,12 +98,12 @@ public final class Bootstrap {
                 commandController.showSystemInfo();
                 break;
             default:
-                commandController.showErrorArgument();
+                throw new ArgumentNotSupportedException(arg);
         }
     }
 
-    private void processCommand(final String argument) {
-        switch (argument) {
+    private void processCommand(final String command) throws CommandNotSupportedException {
+        switch (command) {
             case CommandConst.VERSION:
                 commandController.showVersion();
                 break;
@@ -218,17 +216,25 @@ public final class Bootstrap {
                 projectTaskController.unbindTaskToProject();
                 break;
             default:
-                commandController.showErrorCommand();
+                throw new CommandNotSupportedException(command);
         }
     }
 
-    public void run() {
+    public void run(final String[] args) {
+        if (processArguments(args)) return;
+
         initDemoData();
         commandController.showWelcome();
         while (!Thread.currentThread().isInterrupted()) {
-            System.out.println("ENTER COMMAND:");
-            final String command = TerminalUtil.nextLine();
-            processCommand(command);
+            try {
+                System.out.println("ENTER COMMAND:");
+                final String command = TerminalUtil.nextLine();
+                processCommand(command);
+                System.out.println("[OK]");
+            } catch (final Exception e) {
+                System.out.println(e.getMessage());
+                System.out.println("[FAIL]");
+            }
         }
     }
 

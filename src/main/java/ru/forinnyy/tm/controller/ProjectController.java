@@ -36,7 +36,6 @@ public final class ProjectController implements IProjectController {
             System.out.println(index + ". " + project.getName());
             index++;
         }
-        System.out.println("[OK]");
     }
 
     private void showProject(final Project project) {
@@ -53,12 +52,7 @@ public final class ProjectController implements IProjectController {
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
         final Project project = projectService.removeById(id);
-        if (project == null) {
-            System.out.println("[FAIL]");
-            return;
-        }
         projectTaskService.removeProjectById(project.getId());
-        System.out.println("[OK]");
     }
 
     @Override
@@ -67,12 +61,7 @@ public final class ProjectController implements IProjectController {
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() -1;
         final Project project = projectService.removeByIndex(index);
-        if (project == null) {
-            System.out.println("[FAIL]");
-            return;
-        }
         projectTaskService.removeProjectById(project.getId());
-        System.out.println("[OK]");
     }
 
     @Override
@@ -81,12 +70,7 @@ public final class ProjectController implements IProjectController {
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
         final Project project = projectService.findOneById(id);
-        if (project == null) {
-            System.out.println("[FAIL]");
-            return;
-        }
         showProject(project);
-        System.out.println("[OK]");
     }
 
     @Override
@@ -95,12 +79,7 @@ public final class ProjectController implements IProjectController {
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() -1;
         final Project project = projectService.findOneByIndex(index);
-        if (project == null) {
-            System.out.println("[FAIL]");
-            return;
-        }
         showProject(project);
-        System.out.println("[OK]");
     }
 
     @Override
@@ -112,9 +91,7 @@ public final class ProjectController implements IProjectController {
         final String name = TerminalUtil.nextLine();
         System.out.println("ENTER DESCRIPTION:");
         final String description = TerminalUtil.nextLine();
-        final Project project = projectService.updateById(id, name, description);
-        if (project == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        projectService.updateById(id, name, description);
     }
 
     @Override
@@ -126,9 +103,7 @@ public final class ProjectController implements IProjectController {
         final String name = TerminalUtil.nextLine();
         System.out.println("ENTER DESCRIPTION:");
         final String description = TerminalUtil.nextLine();
-        final Project project = projectService.updateByIndex(index, name, description);
-        if (project == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        projectService.updateByIndex(index, name, description);
     }
 
     @Override
@@ -136,9 +111,7 @@ public final class ProjectController implements IProjectController {
         System.out.println("[START PROJECT BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
-        final Project project = projectService.changeProjectStatusById(id, Status.IN_PROGRESS);
-        if (project == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        projectService.changeProjectStatusById(id, Status.IN_PROGRESS);
     }
 
     @Override
@@ -146,9 +119,7 @@ public final class ProjectController implements IProjectController {
         System.out.println("[START PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;
-        final Project project = projectService.changeProjectStatusByIndex(index, Status.IN_PROGRESS);
-        if (project == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        projectService.changeProjectStatusByIndex(index, Status.IN_PROGRESS);
     }
 
     @Override
@@ -156,9 +127,7 @@ public final class ProjectController implements IProjectController {
         System.out.println("[COMPLETE PROJECT BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
-        final Project project = projectService.changeProjectStatusById(id, Status.COMPLETED);
-        if (project == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        projectService.changeProjectStatusById(id, Status.COMPLETED);
     }
 
     @Override
@@ -166,9 +135,7 @@ public final class ProjectController implements IProjectController {
         System.out.println("[COMPLETE PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;
-        final Project project = projectService.changeProjectStatusByIndex(index, Status.COMPLETED);
-        if (project == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        projectService.changeProjectStatusByIndex(index, Status.COMPLETED);
     }
 
     @Override
@@ -180,9 +147,7 @@ public final class ProjectController implements IProjectController {
         System.out.println(Arrays.toString(Status.values()));
         final String statusValue = TerminalUtil.nextLine();
         final Status status = Status.toStatus(statusValue);
-        final Project project = projectService.changeProjectStatusById(id, status);
-        if (project == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        projectService.changeProjectStatusById(id, status);
     }
 
     @Override
@@ -194,9 +159,7 @@ public final class ProjectController implements IProjectController {
         System.out.println(Arrays.toString(Status.values()));
         final String statusValue = TerminalUtil.nextLine();
         final Status status = Status.toStatus(statusValue);
-        final Project project = projectService.changeProjectStatusByIndex(index, status);
-        if (project == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        projectService.changeProjectStatusByIndex(index, status);
     }
 
     @Override
@@ -206,16 +169,13 @@ public final class ProjectController implements IProjectController {
         final String name = TerminalUtil.nextLine();
         System.out.println("ENTER DESCRIPTION: ");
         final String description = TerminalUtil.nextLine();
-        final Project project = projectService.create(name, description);
-        if (project == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        projectService.create(name, description);
     }
 
     @Override
     public void clearProjects() {
         System.out.println("[CLEAR PROJECTS]");
         projectService.clear();
-        System.out.println("[OK]");
     }
 
 }

@@ -27,7 +27,6 @@ public class TaskController implements ITaskController {
         final Sort sort = Sort.toSort(sortType);
         final List<Task> tasks = taskService.findAll(sort);
         renderTasks(tasks);
-        System.out.println("[OK]");
     }
 
     private void showTask(final Task task) {
@@ -43,7 +42,6 @@ public class TaskController implements ITaskController {
     public void clearTasks() {
         System.out.println("[CLEAR TASKS]");
         taskService.clear();
-        System.out.println("[OK]");
     }
 
     @Override
@@ -53,9 +51,7 @@ public class TaskController implements ITaskController {
         final String name = TerminalUtil.nextLine();
         System.out.println("[ENTER DESCRIPTION]");
         final String description = TerminalUtil.nextLine();
-        final Task task = taskService.create(name, description);
-        if (task == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        taskService.create(name, description);
     }
 
     @Override
@@ -63,9 +59,7 @@ public class TaskController implements ITaskController {
         System.out.println("[REMOVE TASK BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
-        final Task task = taskService.removeById(id);
-        if (task == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        taskService.removeById(id);
     }
 
     @Override
@@ -73,9 +67,7 @@ public class TaskController implements ITaskController {
         System.out.println("[REMOVE TASK BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() -1;
-        final Task task = taskService.removeByIndex(index);
-        if (task == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        taskService.removeByIndex(index);
     }
 
     @Override
@@ -84,12 +76,7 @@ public class TaskController implements ITaskController {
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
         final Task task = taskService.findOneById(id);
-        if (task == null) {
-            System.out.println("[FAIL]");
-            return;
-        }
         showTask(task);
-        System.out.println("[OK]");
     }
 
     @Override
@@ -98,12 +85,7 @@ public class TaskController implements ITaskController {
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() -1;
         final Task task = taskService.findOneByIndex(index);
-        if (task == null) {
-            System.out.println("[FAIL]");
-            return;
-        }
         showTask(task);
-        System.out.println("[OK]");
     }
 
     private void renderTasks(final List<Task> tasks) {
@@ -122,7 +104,6 @@ public class TaskController implements ITaskController {
         final String projectId = TerminalUtil.nextLine();
         final List<Task> tasks = taskService.findAllByProjectId(projectId);
         renderTasks(tasks);
-        System.out.println("[OK]");
     }
 
     @Override
@@ -134,9 +115,7 @@ public class TaskController implements ITaskController {
         final String name = TerminalUtil.nextLine();
         System.out.println("ENTER DESCRIPTION:");
         final String description = TerminalUtil.nextLine();
-        final Task task = taskService.updateById(id, name, description);
-        if (task == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        taskService.updateById(id, name, description);
     }
 
     @Override
@@ -148,9 +127,7 @@ public class TaskController implements ITaskController {
         final String name = TerminalUtil.nextLine();
         System.out.println("ENTER DESCRIPTION:");
         final String description = TerminalUtil.nextLine();
-        final Task task = taskService.updateByIndex(index, name, description);
-        if (task == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        taskService.updateByIndex(index, name, description);
     }
 
     @Override
@@ -158,9 +135,7 @@ public class TaskController implements ITaskController {
         System.out.println("[START TASK BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
-        final Task task = taskService.changeTaskStatusById(id, Status.IN_PROGRESS);
-        if (task == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        taskService.changeTaskStatusById(id, Status.IN_PROGRESS);
     }
 
     @Override
@@ -168,9 +143,7 @@ public class TaskController implements ITaskController {
         System.out.println("[START TASK BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;
-        final Task task = taskService.changeTaskStatusByIndex(index, Status.IN_PROGRESS);
-        if (task == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        taskService.changeTaskStatusByIndex(index, Status.IN_PROGRESS);
     }
 
     @Override
@@ -178,9 +151,7 @@ public class TaskController implements ITaskController {
         System.out.println("[COMPLETE TASK BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
-        final Task task = taskService.changeTaskStatusById(id, Status.COMPLETED);
-        if (task == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        taskService.changeTaskStatusById(id, Status.COMPLETED);
     }
 
     @Override
@@ -188,9 +159,7 @@ public class TaskController implements ITaskController {
         System.out.println("[COMPLETE TASK BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;
-        final Task task = taskService.changeTaskStatusByIndex(index, Status.COMPLETED);
-        if (task == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        taskService.changeTaskStatusByIndex(index, Status.COMPLETED);
     }
 
     @Override
@@ -202,9 +171,7 @@ public class TaskController implements ITaskController {
         System.out.println(Arrays.toString(Status.values()));
         final String statusValue = TerminalUtil.nextLine();
         final Status status = Status.toStatus(statusValue);
-        final Task task = taskService.changeTaskStatusById(id, status);
-        if (task == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        taskService.changeTaskStatusById(id, status);
     }
 
     @Override
@@ -216,9 +183,7 @@ public class TaskController implements ITaskController {
         System.out.println(Arrays.toString(Status.values()));
         final String statusValue = TerminalUtil.nextLine();
         final Status status = Status.toStatus(statusValue);
-        final Task task = taskService.changeTaskStatusByIndex(index, status);
-        if (task == null) System.out.println("[FAIL]");
-        else System.out.println("[OK]");
+        taskService.changeTaskStatusByIndex(index, status);
     }
 
 }
