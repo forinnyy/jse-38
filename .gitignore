@@ -88,3 +88,13 @@ nb-configuration.xml
 ## Miscellaneous
 ##############################
 *.log
+
+##############################
+## LOGGER
+##############################
+errors.xml
+errors.xml.lck
+commands.xml
+commands.xml.lck
+messages.xml
+messages.xml.lck

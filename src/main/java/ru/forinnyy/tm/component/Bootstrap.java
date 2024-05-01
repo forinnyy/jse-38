@@ -7,10 +7,7 @@ import ru.forinnyy.tm.api.controller.ITaskController;
 import ru.forinnyy.tm.api.repository.ICommandRepository;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
-import ru.forinnyy.tm.api.service.ICommandService;
-import ru.forinnyy.tm.api.service.IProjectService;
-import ru.forinnyy.tm.api.service.IProjectTaskService;
-import ru.forinnyy.tm.api.service.ITaskService;
+import ru.forinnyy.tm.api.service.*;
 import ru.forinnyy.tm.constant.ArgumentConst;
 import ru.forinnyy.tm.constant.CommandConst;
 import ru.forinnyy.tm.controller.CommandController;
@@ -27,10 +24,7 @@ import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.repository.CommandRepository;
 import ru.forinnyy.tm.repository.ProjectRepository;
 import ru.forinnyy.tm.repository.TaskRepository;
-import ru.forinnyy.tm.service.CommandService;
-import ru.forinnyy.tm.service.ProjectService;
-import ru.forinnyy.tm.service.ProjectTaskService;
-import ru.forinnyy.tm.service.TaskService;
+import ru.forinnyy.tm.service.*;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class Bootstrap {
@@ -56,6 +50,8 @@ public final class Bootstrap {
     private final IProjectTaskController projectTaskController = new ProjectTaskController(projectTaskService);
 
     private final IProjectController projectController = new ProjectController(projectService, projectTaskService);
+
+    private final ILoggerService loggerService = new LoggerService();
 
     private void initDemoData() throws AbstractFieldException, AbstractEntityException {
         projectService.add(new Project("TEST PROJECT", Status.IN_PROGRESS));
@@ -223,19 +219,30 @@ public final class Bootstrap {
         }
     }
 
+    private void initLogger() {
+        loggerService.info("** WELCOME TO TASK-MANAGER **");
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                loggerService.info("** TASK-MANAGER IS SHUTTING DOWN **");
+            }
+        });
+    }
+
     public void run(final String[] args) throws AbstractException {
-        if (processArguments(args)) return;
+        if (processArguments(args)) System.exit(0);
 
         initDemoData();
-        commandController.showWelcome();
+        initLogger();
+
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 System.out.println("ENTER COMMAND:");
                 final String command = TerminalUtil.nextLine();
                 processCommand(command);
                 System.out.println("[OK]");
+                loggerService.command(command);
             } catch (final Exception e) {
-                System.out.println(e.getMessage());
+                loggerService.error(e);
                 System.out.println("[FAIL]");
             }
         }
