@@ -83,7 +83,7 @@ public class TaskService implements ITaskService {
 
     @Override
     public Task findOneByIndex(Integer index) throws AbstractFieldException {
-        if (index == null || index < 0) throw new IndexIncorrectException();
+        if (index == null || index < 0 || index > taskRepository.getSize()) throw new IndexIncorrectException();
         return taskRepository.findOneByIndex(index);
     }
 
@@ -101,7 +101,7 @@ public class TaskService implements ITaskService {
 
     @Override
     public Task removeByIndex(Integer index) throws AbstractFieldException {
-        if (index == null || index < 0) throw new IndexIncorrectException();
+        if (index == null || index < 0 || index > taskRepository.getSize()) throw new IndexIncorrectException();
         return taskRepository.removeByIndex(index);
     }
 
@@ -118,7 +118,7 @@ public class TaskService implements ITaskService {
 
     @Override
     public Task updateByIndex(Integer index, String name, String description) throws AbstractFieldException, AbstractEntityException {
-        if (index == null || index < 0) throw new IndexIncorrectException();
+        if (index == null || index < 0 || index > taskRepository.getSize()) throw new IndexIncorrectException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         final Task task = findOneByIndex(index);
         if (task == null) throw new TaskNotFoundException();
@@ -138,7 +138,7 @@ public class TaskService implements ITaskService {
 
     @Override
     public Task changeTaskStatusByIndex(Integer index, Status status) throws AbstractFieldException, AbstractEntityException {
-        if (index == null || index < 0) throw new IndexIncorrectException();
+        if (index == null || index < 0 || index > taskRepository.getSize()) throw new IndexIncorrectException();
         if (index >= taskRepository.getSize()) throw new IndexIncorrectException();
         final Task task = findOneByIndex(index);
         if (task == null) throw new TaskNotFoundException();

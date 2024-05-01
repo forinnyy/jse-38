@@ -9,17 +9,29 @@ import java.util.logging.*;
 public class LoggerService implements ILoggerService {
 
     private static final String CONFIG_FILE = "/logger.properties";
+
     private static final String COMMANDS = "COMMANDS";
+
     private static final String COMMANDS_FILE = "./commands.xml";
+
     private static final String ERRORS = "ERRORS";
+
     private static final String ERRORS_FILE = "./errors.xml";
+
     private static final String MESSAGES = "MESSAGES";
+
     private static final String MESSAGES_FILE = "./messages.xml";
+
     private static final LogManager MANAGER = LogManager.getLogManager();
+
     private static final Logger LOGGER_ROOT = Logger.getLogger("");
+
     private static final Logger LOGGER_COMMAND = Logger.getLogger(COMMANDS);
+
     private static final Logger LOGGER_ERROR = Logger.getLogger(ERRORS);
+
     private static final Logger LOGGER_MESSAGE = Logger.getLogger(MESSAGES);
+
     private static final ConsoleHandler CONSOLE_HANDLER = getConsoleHandler();
 
     public static Logger getLoggerCommand() {

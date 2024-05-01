@@ -64,13 +64,13 @@ public final class ProjectService implements IProjectService {
 
     @Override
     public Project findOneById(String id) throws AbstractFieldException {
-        if (id == null || id.isEmpty()) throw new IdEmptyException();
+        if (id == null || id.isEmpty()) throw new ProjectIdEmptyException();
         return projectRepository.findOneById(id);
     }
 
     @Override
     public Project findOneByIndex(Integer index) throws AbstractFieldException {
-        if (index == null || index < 0) throw new IndexIncorrectException();
+        if (index == null || index < 0 || index > projectRepository.getSize()) throw new IndexIncorrectException();
         return projectRepository.findOneByIndex(index);
     }
 
@@ -88,7 +88,7 @@ public final class ProjectService implements IProjectService {
 
     @Override
     public Project removeByIndex(Integer index) throws AbstractFieldException {
-        if (index == null || index < 0) throw new IndexIncorrectException();
+        if (index == null || index < 0 || index > projectRepository.getSize()) throw new IndexIncorrectException();
         return projectRepository.removeByIndex(index);
     }
 
@@ -116,7 +116,7 @@ public final class ProjectService implements IProjectService {
 
     @Override
     public Project updateByIndex(final Integer index, final String name, final String description) throws AbstractFieldException, AbstractEntityException {
-        if (index == null || index < 0) throw new IndexIncorrectException();
+        if (index == null || index < 0 || index > projectRepository.getSize()) throw new IndexIncorrectException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         final Project project = findOneByIndex(index);
         if (project == null) throw new ProjectNotFoundException();
@@ -136,7 +136,7 @@ public final class ProjectService implements IProjectService {
 
     @Override
     public Project changeProjectStatusByIndex(Integer index, Status status) throws AbstractFieldException, AbstractEntityException {
-        if (index == null || index < 0) throw new IndexIncorrectException();
+        if (index == null || index < 0 || index > projectRepository.getSize()) throw new IndexIncorrectException();
         if (index >= projectRepository.getSize()) throw new IndexIncorrectException();
         final Project project = findOneByIndex(index);
         if (project == null) throw new ProjectNotFoundException();
