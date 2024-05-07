@@ -1,5 +1,7 @@
 package ru.forinnyy.tm.component;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.forinnyy.tm.api.controller.ICommandController;
 import ru.forinnyy.tm.api.controller.IProjectController;
 import ru.forinnyy.tm.api.controller.IProjectTaskController;
@@ -29,6 +31,12 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class Bootstrap {
 
+    private final static Logger LOGGER_LIFECYCLE = LoggerFactory.getLogger("LIFECYCLE");
+
+    private final static Logger LOGGER_COMMANDS = LoggerFactory.getLogger("COMMANDS");
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(Bootstrap.class);
+
     private final ICommandRepository commandRepository = new CommandRepository();
 
     private final ICommandService commandService = new CommandService(commandRepository);
@@ -50,8 +58,6 @@ public final class Bootstrap {
     private final IProjectTaskController projectTaskController = new ProjectTaskController(projectTaskService);
 
     private final IProjectController projectController = new ProjectController(projectService, projectTaskService);
-
-    private final ILoggerService loggerService = new LoggerService();
 
     private void initDemoData() throws AbstractFieldException, AbstractEntityException {
         projectService.add(new Project("TEST PROJECT", Status.IN_PROGRESS));
@@ -220,10 +226,10 @@ public final class Bootstrap {
     }
 
     private void initLogger() {
-        loggerService.info("** WELCOME TO TASK-MANAGER **");
+        LOGGER_LIFECYCLE.info("** WELCOME TO TASK-MANAGER **");
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
-                loggerService.info("** TASK-MANAGER IS SHUTTING DOWN **");
+                LOGGER_LIFECYCLE.info("** TASK-MANAGER IS SHUTTING DOWN **");
             }
         });
     }
@@ -238,11 +244,11 @@ public final class Bootstrap {
             try {
                 System.out.println("ENTER COMMAND:");
                 final String command = TerminalUtil.nextLine();
+                LOGGER_COMMANDS.info(command);
                 processCommand(command);
                 System.out.println("[OK]");
-                loggerService.command(command);
             } catch (final Exception e) {
-                loggerService.error(e);
+                LOGGER_LIFECYCLE.error(e.getMessage());
                 System.out.println("[FAIL]");
             }
         }

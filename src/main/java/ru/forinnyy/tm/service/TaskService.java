@@ -4,7 +4,6 @@ import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.api.service.ITaskService;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.enumerated.Status;
-import ru.forinnyy.tm.exception.AbstractException;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.TaskNotFoundException;
 import ru.forinnyy.tm.exception.field.*;

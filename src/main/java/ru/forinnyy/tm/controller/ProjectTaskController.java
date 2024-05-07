@@ -4,7 +4,6 @@ import ru.forinnyy.tm.api.controller.IProjectTaskController;
 import ru.forinnyy.tm.api.service.IProjectTaskService;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
-import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public class ProjectTaskController implements IProjectTaskController {

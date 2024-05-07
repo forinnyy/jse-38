@@ -1,0 +1,54 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [$thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="STDOUT_MINI" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE_COMMANDS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>tm-commands.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>tm-commands-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>10MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{20} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE_LIFECYCLE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>tm-lifecycle.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>tm-lifecycle-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>10MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{20} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="COMMANDS" level="info">
+        <appender-ref ref="STDOUT_MINI" />
+        <appender-ref ref="FILE_COMMANDS" />
+    </logger>
+    <logger name="LIFECYCLE" level="info">
+        <appender-ref ref="STDOUT_MINI" />
+        <appender-ref ref="FILE_LIFECYCLE" />
+    </logger>
+    <logger name="ru.forinnyy.tm.component" level="info">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+
+<!--    <root level="debug">-->
+<!--        <appender-ref ref="STDOUT" />-->
+<!--    </root>-->
+</configuration>

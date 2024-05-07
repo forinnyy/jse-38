@@ -92,9 +92,5 @@ nb-configuration.xml
 ##############################
 ## LOGGER
 ##############################
-errors.xml
-errors.xml.lck
-commands.xml
-commands.xml.lck
-messages.xml
-messages.xml.lck
+tm-commands.log
+tm-lifecycle.log
