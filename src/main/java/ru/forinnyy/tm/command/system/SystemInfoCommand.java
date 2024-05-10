@@ -5,7 +5,7 @@ import ru.forinnyy.tm.exception.field.AbstractFieldException;
 
 import static ru.forinnyy.tm.util.NumberUtil.formatBytes;
 
-public class SystemInfoCommand extends AbstractSystemCommand {
+public final class SystemInfoCommand extends AbstractSystemCommand {
 
     private static final String DESCRIPTION = "Show system info.";
 
@@ -13,20 +13,19 @@ public class SystemInfoCommand extends AbstractSystemCommand {
 
     private static final String NAME = "info";
 
-
     @Override
     public String getArgument() {
-        return null;
+        return ARGUMENT;
     }
 
     @Override
     public String getDescription() {
-        return null;
+        return DESCRIPTION;
     }
 
     @Override
     public String getName() {
-        return null;
+        return NAME;
     }
 
     @Override

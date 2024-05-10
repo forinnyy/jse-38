@@ -3,7 +3,6 @@ package ru.forinnyy.tm.service;
 import ru.forinnyy.tm.api.repository.ICommandRepository;
 import ru.forinnyy.tm.api.service.ICommandService;
 import ru.forinnyy.tm.command.AbstractCommand;
-import ru.forinnyy.tm.model.Command;
 
 import java.util.Collection;
 
@@ -37,4 +36,10 @@ public final class CommandService implements ICommandService {
     public Collection<AbstractCommand> getTerminalCommands() {
         return commandRepository.getTerminalCommands();
     }
+
+    @Override
+    public Collection<AbstractCommand> getTerminalArguments() {
+        return commandRepository.getTerminalArguments();
+    }
+
 }

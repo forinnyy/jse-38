@@ -39,4 +39,9 @@ public final class CommandRepository implements ICommandRepository {
         return mapByName.values();
     }
 
+    @Override
+    public Collection<AbstractCommand> getTerminalArguments() {
+        return mapByArgument.values();
+    }
+
 }

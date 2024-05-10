@@ -1,7 +1,7 @@
 package ru.forinnyy.tm.command.system;
 
 
-public class ApplicationAboutCommand extends AbstractSystemCommand {
+public final class ApplicationAboutCommand extends AbstractSystemCommand {
 
     private static final String DESCRIPTION = "Show developer info";
 

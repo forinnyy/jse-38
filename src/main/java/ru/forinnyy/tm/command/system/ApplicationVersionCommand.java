@@ -1,6 +1,6 @@
 package ru.forinnyy.tm.command.system;
 
-public class ApplicationVersionCommand extends AbstractSystemCommand {
+public final class ApplicationVersionCommand extends AbstractSystemCommand {
 
     private static final String DESCRIPTION = "Show version info.";
 
@@ -11,7 +11,7 @@ public class ApplicationVersionCommand extends AbstractSystemCommand {
     @Override
     public void execute() {
         System.out.println("[VERSION]");
-        System.out.println("1.17.1");
+        System.out.println("1.17.2");
     }
 
     @Override

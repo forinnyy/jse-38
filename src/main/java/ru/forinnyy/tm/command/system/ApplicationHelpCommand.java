@@ -5,9 +5,9 @@ import ru.forinnyy.tm.command.AbstractCommand;
 
 import java.util.Collection;
 
-public class ApplicationHelpCommand extends AbstractSystemCommand {
+public final class ApplicationHelpCommand extends AbstractSystemCommand {
 
-    private static final String DESCRIPTION = "Show list of terminal commands.";
+    private static final String DESCRIPTION = "Display list of terminal commands.";
 
     private static final String NAME = "help";
 
