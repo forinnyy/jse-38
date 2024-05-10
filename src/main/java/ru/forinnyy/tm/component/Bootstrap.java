@@ -29,35 +29,25 @@ import ru.forinnyy.tm.repository.TaskRepository;
 import ru.forinnyy.tm.service.*;
 import ru.forinnyy.tm.util.TerminalUtil;
 
-public final class Bootstrap {
+public final class Bootstrap implements IServiceLocator {
 
     private final static Logger LOGGER_LIFECYCLE = LoggerFactory.getLogger("LIFECYCLE");
 
     private final static Logger LOGGER_COMMANDS = LoggerFactory.getLogger("COMMANDS");
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(Bootstrap.class);
-
     private final ICommandRepository commandRepository = new CommandRepository();
 
     private final ICommandService commandService = new CommandService(commandRepository);
-
-    private final ICommandController commandController = new CommandController(commandService);
-
-    private final ITaskRepository taskRepository = new TaskRepository();
-
-    private final ITaskService taskService = new TaskService(taskRepository);
-
-    private final ITaskController taskController = new TaskController(taskService);
 
     private final IProjectRepository projectRepository = new ProjectRepository();
 
     private final IProjectService projectService = new ProjectService(projectRepository);
 
+    private final ITaskRepository taskRepository = new TaskRepository();
+
     private final IProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
 
-    private final IProjectTaskController projectTaskController = new ProjectTaskController(projectTaskService);
-
-    private final IProjectController projectController = new ProjectController(projectService, projectTaskService);
+    private final ITaskService taskService = new TaskService(taskRepository);
 
     private void initDemoData() throws AbstractFieldException, AbstractEntityException {
         projectService.add(new Project("TEST PROJECT", Status.IN_PROGRESS));
@@ -67,6 +57,26 @@ public final class Bootstrap {
 
         taskService.create("MEGA TASK");
         taskService.create("BETA TASK");
+    }
+
+    @Override
+    public ICommandService getCommandService() {
+        return commandService;
+    }
+
+    @Override
+    public IProjectService getProjectService() {
+        return projectService;
+    }
+
+    @Override
+    public IProjectTaskService getProjectTaskService() {
+        return projectTaskService;
+    }
+
+    @Override
+    public ITaskService getTaskService() {
+        return taskService;
     }
 
     private void processCommands() throws AbstractEntityException, CommandNotSupportedException, AbstractFieldException {
