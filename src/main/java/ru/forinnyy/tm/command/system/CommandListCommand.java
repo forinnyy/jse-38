@@ -1,4 +1,4 @@
 package ru.forinnyy.tm.command.system;
 
-public class CommandListCommand {
+public class CommandListCommand extends AbstractSystemCommand {
 }

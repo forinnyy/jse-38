@@ -1,4 +1,38 @@
 package ru.forinnyy.tm.command.system;
 
-public class ApplicationHelpCommand {
+import ru.forinnyy.tm.api.model.ICommand;
+import ru.forinnyy.tm.command.AbstractCommand;
+
+import java.util.Collection;
+
+public class ApplicationHelpCommand extends AbstractSystemCommand {
+
+    private static final String DESCRIPTION = "Show list of terminal commands.";
+
+    private static final String NAME = "help";
+
+    private static final String ARGUMENT = "-h";
+
+    @Override
+    public void execute() {
+        System.out.println("[HELP]");
+        final Collection<AbstractCommand> commands = getCommandService().getTerminalCommands();
+        for (final ICommand command : commands) System.out.println(command);
+    }
+
+    @Override
+    public String getArgument() {
+        return ARGUMENT;
+    }
+
+    @Override
+    public String getDescription() {
+        return DESCRIPTION;
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
+    }
+
 }

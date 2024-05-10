@@ -1,7 +1,7 @@
 package ru.forinnyy.tm.command.system;
 
 
-public class ApplicationExitCommand extends AbstractSystemCommand {
+public final class ApplicationExitCommand extends AbstractSystemCommand {
 
     private static final String DESCRIPTION = "Close application.";
 
@@ -18,7 +18,7 @@ public class ApplicationExitCommand extends AbstractSystemCommand {
     }
 
     @Override
-    public String getDecription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
