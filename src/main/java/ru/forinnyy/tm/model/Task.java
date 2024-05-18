@@ -72,4 +72,5 @@ public final class Task implements IWBS {
     public void setStatus(Status status) {
         this.status = status;
     }
+
 }
