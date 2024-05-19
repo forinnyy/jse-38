@@ -5,11 +5,14 @@ import org.slf4j.LoggerFactory;
 import ru.forinnyy.tm.api.repository.ICommandRepository;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
+import ru.forinnyy.tm.api.repository.IUserRepository;
 import ru.forinnyy.tm.api.service.*;
 import ru.forinnyy.tm.command.AbstractCommand;
 import ru.forinnyy.tm.command.project.*;
 import ru.forinnyy.tm.command.system.*;
 import ru.forinnyy.tm.command.task.*;
+import ru.forinnyy.tm.command.user.*;
+import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.AbstractException;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
@@ -17,10 +20,12 @@ import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.system.AbstractSystemException;
 import ru.forinnyy.tm.exception.system.ArgumentNotSupportedException;
 import ru.forinnyy.tm.exception.system.CommandNotSupportedException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.repository.CommandRepository;
 import ru.forinnyy.tm.repository.ProjectRepository;
 import ru.forinnyy.tm.repository.TaskRepository;
+import ru.forinnyy.tm.repository.UserRepository;
 import ru.forinnyy.tm.service.*;
 import ru.forinnyy.tm.util.TerminalUtil;
 
@@ -44,6 +49,12 @@ public final class Bootstrap implements IServiceLocator {
     private final IProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
 
     private final ITaskService taskService = new TaskService(taskRepository);
+
+    private final IUserRepository userRepository = new UserRepository();
+
+    private final IUserService userService = new UserService(userRepository);
+
+    private final IAuthService authService = new AuthService(userService);
 
     {
         registry(new ApplicationAboutCommand());
@@ -88,6 +99,13 @@ public final class Bootstrap implements IServiceLocator {
         registry(new TaskStartByIndexCommand());
         registry(new TaskUpdateByIdCommand());
         registry(new TaskUpdateByIndexCommand());
+
+        registry(new UserChangePasswordCommand());
+        registry(new UserLoginCommand());
+        registry(new UserLogoutCommand());
+        registry(new UserRegistryCommand());
+        registry(new UserUpdateProfileCommand());
+        registry(new UserViewProfileCommand());
     }
 
     @Override
@@ -110,13 +128,31 @@ public final class Bootstrap implements IServiceLocator {
         return taskService;
     }
 
-    private void processArgument(final String arg) throws AbstractSystemException, AbstractEntityException, AbstractFieldException {
+    @Override
+    public IUserService getUserService() {
+        return userService;
+    }
+
+    @Override
+    public IAuthService getAuthService() {
+        return authService;
+    }
+
+    private void processArgument(final String arg) throws
+            AbstractSystemException,
+            AbstractEntityException,
+            AbstractFieldException,
+            AbstractUserException {
         final AbstractCommand abstractCommand = commandService.getCommandByArgument(arg);
         if (abstractCommand == null) throw new ArgumentNotSupportedException(arg);
         abstractCommand.execute();
     }
 
-    private boolean processArguments(final String[] args) throws AbstractSystemException, AbstractEntityException, AbstractFieldException {
+    private boolean processArguments(final String[] args) throws
+            AbstractSystemException,
+            AbstractEntityException,
+            AbstractFieldException,
+            AbstractUserException {
         if (args == null || args.length < 1) return false;
         processArgument(args[0]);
         return true;
@@ -126,7 +162,11 @@ public final class Bootstrap implements IServiceLocator {
         System.exit(0);
     }
 
-    private void processCommand(final String command) throws CommandNotSupportedException, AbstractFieldException, AbstractEntityException {
+    private void processCommand(final String command) throws
+            CommandNotSupportedException,
+            AbstractFieldException,
+            AbstractEntityException,
+            AbstractUserException {
         final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
         abstractCommand.execute();
@@ -137,7 +177,11 @@ public final class Bootstrap implements IServiceLocator {
         commandService.add(command);
     }
 
-    private void initDemoData() throws AbstractFieldException, AbstractEntityException {
+    private void initDemoData() throws AbstractFieldException, AbstractEntityException, AbstractUserException {
+        userService.create("test", "test", "test@test.ru");
+        userService.create("user", "user", "user@user.ru");
+        userService.create("admin", "admin", Role.ADMIN);
+
         projectService.add(new Project("TEST PROJECT", Status.IN_PROGRESS));
         projectService.add(new Project("DEMO PROJECT", Status.NOT_STARTED));
         projectService.add(new Project("ALPHA PROJECT", Status.IN_PROGRESS));

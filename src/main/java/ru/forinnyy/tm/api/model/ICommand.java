@@ -2,6 +2,7 @@ package ru.forinnyy.tm.api.model;
 
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 
 public interface ICommand {
 
@@ -11,6 +12,6 @@ public interface ICommand {
 
     String getName();
 
-    void execute() throws AbstractEntityException, AbstractFieldException;
+    void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException;
 
 }

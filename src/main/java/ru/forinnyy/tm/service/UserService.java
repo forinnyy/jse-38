@@ -5,7 +5,9 @@ import ru.forinnyy.tm.api.service.IUserService;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.*;
 import ru.forinnyy.tm.exception.field.*;
-import ru.forinnyy.tm.exception.user.*;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
+import ru.forinnyy.tm.exception.user.ExistsEmailException;
+import ru.forinnyy.tm.exception.user.ExistsLoginException;
 import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.util.HashUtil;
 

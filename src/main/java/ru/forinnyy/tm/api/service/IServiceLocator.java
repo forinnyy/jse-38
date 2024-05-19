@@ -10,4 +10,8 @@ public interface IServiceLocator {
 
     ITaskService getTaskService();
 
+    IUserService getUserService();
+
+    IAuthService getAuthService();
+
 }
