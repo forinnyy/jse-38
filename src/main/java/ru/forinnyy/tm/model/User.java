@@ -4,9 +4,7 @@ import ru.forinnyy.tm.enumerated.Role;
 
 import java.util.UUID;
 
-public class User {
-
-    private String id = UUID.randomUUID().toString();
+public class User extends AbstractModel {
 
     private String login;
 
@@ -21,14 +19,6 @@ public class User {
     private String middleName;
 
     private Role role = Role.USUAL;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getLogin() {
         return login;

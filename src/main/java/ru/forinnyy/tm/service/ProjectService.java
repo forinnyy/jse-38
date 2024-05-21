@@ -7,17 +7,17 @@ import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
 import ru.forinnyy.tm.exception.field.*;
+import ru.forinnyy.tm.model.AbstractModel;
 import ru.forinnyy.tm.model.Project;
 
 import java.util.Comparator;
 import java.util.List;
 
-public final class ProjectService implements IProjectService {
+public final class ProjectService extends AbstractService<Project, IProjectRepository>
+        implements IProjectService {
 
-    private final IProjectRepository projectRepository;
-
-    public ProjectService(final IProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
+    public ProjectService(IProjectRepository repository) {
+        super(repository);
     }
 
     @Override

@@ -11,7 +11,7 @@ public final class ApplicationVersionCommand extends AbstractSystemCommand {
     @Override
     public void execute() {
         System.out.println("[VERSION]");
-        System.out.println("1.18.1");
+        System.out.println("1.19.0");
     }
 
     @Override

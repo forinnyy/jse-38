@@ -6,9 +6,7 @@ import ru.forinnyy.tm.enumerated.Status;
 import java.util.Date;
 import java.util.UUID;
 
-public final class Project implements IWBS {
-
-    private String id = UUID.randomUUID().toString();
+public final class Project extends AbstractModel implements IWBS {
 
     private String name = "";
 
@@ -34,14 +32,6 @@ public final class Project implements IWBS {
     @Override
     public void setCreated(Date created) {
         this.created = created;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {

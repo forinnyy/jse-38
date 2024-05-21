@@ -1,38 +1,38 @@
 package ru.forinnyy.tm.repository;
 
 import ru.forinnyy.tm.api.repository.IUserRepository;
-import ru.forinnyy.tm.exception.entity.AbstractEntityException;
+import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.model.User;
+import ru.forinnyy.tm.util.HashUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class UserRepository implements IUserRepository {
-
-    private final List<User> users = new ArrayList<>();
+public class UserRepository extends AbstractRepository<User> implements IUserRepository {
 
     @Override
-    public User add(final User user) throws AbstractEntityException {
-        users.add(user);
+    public User create(String login, String password) {
+        final User user = new User();
+        user.setLogin(login);
+        user.setPasswordHash(HashUtil.salt(password));
+        user.setRole(Role.USUAL);
+        return add(user);
+    }
+
+    @Override
+    public User create(String login, String password, String email) {
+        final User user = create(login, password);
+        user.setEmail(email);
         return user;
     }
 
     @Override
-    public List<User> findAll() {
-        return users;
-    }
-
-    @Override
-    public User findById(final String id) {
-        for (final User user : users) {
-            if (id.equals(user.getId())) return user;
-        }
-        return null;
+    public User create(String login, String password, Role role) {
+        final User user = create(login, password);
+        user.setRole(role);
+        return user;
     }
 
     @Override
     public User findByLogin(final String login) {
-        for (final User user : users) {
+        for (final User user : models) {
             if (login.equals(user.getLogin())) return user;
         }
         return null;
@@ -40,21 +40,15 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public User findByEmail(final String email) {
-        for (final User user : users) {
+        for (final User user : models) {
             if (email.equals(user.getEmail())) return user;
         }
         return null;
     }
 
     @Override
-    public User remove(final User user) {
-        users.remove(user);
-        return user;
-    }
-
-    @Override
     public Boolean isLoginExist(final String login) {
-        for (final User user : users) {
+        for (final User user : models) {
             if (login.equals(user.getLogin())) return true;
         }
         return false;
@@ -62,7 +56,7 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public Boolean isEmailExist(final String email) {
-        for (final User user : users) {
+        for (final User user : models) {
             if (email.equals(user.getEmail())) return true;
         }
         return false;

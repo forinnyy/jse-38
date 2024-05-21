@@ -6,9 +6,7 @@ import ru.forinnyy.tm.enumerated.Status;
 import java.util.Date;
 import java.util.UUID;
 
-public final class Task implements IWBS {
-
-    private String id = UUID.randomUUID().toString();
+public final class Task extends AbstractModel implements IWBS {
 
     private String name = "";
 
@@ -39,14 +37,6 @@ public final class Task implements IWBS {
     }
 
     public Task() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {

@@ -7,7 +7,7 @@ import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.User;
 
-public interface IUserService extends IUserRepository {
+public interface IUserService extends IService<User> {
 
     User create(String login, String password) throws AbstractUserException, AbstractFieldException;
 

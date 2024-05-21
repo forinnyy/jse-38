@@ -1,27 +1,21 @@
 package ru.forinnyy.tm.api.repository;
 
-import ru.forinnyy.tm.exception.entity.AbstractEntityException;
-import ru.forinnyy.tm.exception.entity.UserNotFoundException;
-import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.field.LoginEmptyException;
 import ru.forinnyy.tm.exception.user.ExistsEmailException;
 import ru.forinnyy.tm.model.User;
 
-import java.util.List;
+public interface IUserRepository extends IRepository<User> {
 
-public interface IUserRepository {
+    User create(String login, String password);
 
-    User add(User user) throws AbstractEntityException;
+    User create(String login, String password, String email);
 
-    List<User> findAll();
-
-    User findById(String id) throws AbstractFieldException;
+    User create(String login, String password, Role role);
 
     User findByLogin(String login) throws LoginEmptyException;
 
     User findByEmail(String email) throws ExistsEmailException;
-
-    User remove(User user) throws UserNotFoundException;
 
     Boolean isLoginExist(String login);
 
