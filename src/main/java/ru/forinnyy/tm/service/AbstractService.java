@@ -32,6 +32,7 @@ public class AbstractService<M extends AbstractModel, R extends IRepository<M>>
 
     @Override
     public List<M> findAll(final Comparator<M> comparator) {
+        System.out.println(comparator);
         if (comparator == null) return findAll();
         return repository.findAll(comparator);
     }

@@ -25,7 +25,7 @@ public class AbstractRepository<M extends AbstractModel> implements IRepository<
     public List<M> findAll(Comparator<M> comparator) {
         final List<M> result = new ArrayList<>(models);
         result.sort(comparator);
-        return models;
+        return result;
     }
 
     @Override
@@ -77,4 +77,5 @@ public class AbstractRepository<M extends AbstractModel> implements IRepository<
         models.remove(model);
         return model;
     }
+
 }
