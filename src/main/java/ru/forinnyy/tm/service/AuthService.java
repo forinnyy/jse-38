@@ -53,7 +53,7 @@ public final class AuthService implements IAuthService {
     @Override
     public User getUser() throws AbstractUserException, AbstractFieldException {
         if (!isAuth()) throw new AccessDeniedException();
-        final User user = userService.findById(userId);
+        final User user = userService.findOneById(userId);
         if (user == null) throw new AccessDeniedException();
         return user;
     }

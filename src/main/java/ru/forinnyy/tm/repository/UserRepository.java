@@ -26,7 +26,7 @@ public class UserRepository extends AbstractRepository<User> implements IUserRep
     @Override
     public User create(String login, String password, Role role) {
         final User user = create(login, password);
-        user.setRole(role);
+        if (role != null) user.setRole(role);
         return user;
     }
 

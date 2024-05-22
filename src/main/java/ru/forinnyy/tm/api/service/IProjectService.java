@@ -9,7 +9,11 @@ import ru.forinnyy.tm.model.Project;
 
 import java.util.List;
 
-public interface IProjectService extends IProjectRepository {
+public interface IProjectService extends IService<Project> {
+
+    Project create(String name) throws AbstractFieldException;
+
+    Project create(String name, String description) throws AbstractFieldException;
 
     Project updateById(String id, String name, String description) throws AbstractFieldException, AbstractEntityException;
 
@@ -18,7 +22,5 @@ public interface IProjectService extends IProjectRepository {
     Project changeProjectStatusById(String id, Status status) throws AbstractFieldException, AbstractEntityException;
 
     Project changeProjectStatusByIndex(Integer index, Status status) throws AbstractFieldException, AbstractEntityException;
-
-    List<Project> findAll(Sort sort);
 
 }
