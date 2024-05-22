@@ -15,19 +15,19 @@ public final class CommandService implements ICommandService {
     }
 
     @Override
-    public void add(AbstractCommand command) {
+    public void add(final AbstractCommand command) {
         if (command == null) return;
         commandRepository.add(command);
     }
 
     @Override
-    public AbstractCommand getCommandByArgument(String argument) {
+    public AbstractCommand getCommandByArgument(final String argument) {
         if (argument == null || argument.isEmpty()) return null;
         return commandRepository.getCommandByArgument(argument);
     }
 
     @Override
-    public AbstractCommand getCommandByName(String name) {
+    public AbstractCommand getCommandByName(final String name) {
         if (name == null || name.isEmpty()) return null;
         return commandRepository.getCommandByName(name);
     }

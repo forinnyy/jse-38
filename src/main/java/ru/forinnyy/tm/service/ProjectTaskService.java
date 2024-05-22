@@ -25,7 +25,7 @@ public class ProjectTaskService implements IProjectTaskService {
     }
 
     @Override
-    public Task bindTaskToProject(String projectId, String taskId) throws AbstractFieldException, AbstractEntityException {
+    public Task bindTaskToProject(final String projectId, final String taskId) throws AbstractFieldException, AbstractEntityException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
         if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();
@@ -36,7 +36,7 @@ public class ProjectTaskService implements IProjectTaskService {
     }
 
     @Override
-    public void removeProjectById(String projectId) throws AbstractFieldException, AbstractEntityException {
+    public void removeProjectById(final String projectId) throws AbstractFieldException, AbstractEntityException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();
         final List<Task> tasks = taskRepository.findAllByProjectId(projectId);
@@ -45,7 +45,7 @@ public class ProjectTaskService implements IProjectTaskService {
     }
 
     @Override
-    public Task unbindTaskFromProject(String projectId, String taskId) throws AbstractFieldException, AbstractEntityException {
+    public Task unbindTaskFromProject(final String projectId, final String taskId) throws AbstractFieldException, AbstractEntityException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
         if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();

@@ -33,13 +33,13 @@ public final class TaskService extends AbstractService<Task, ITaskRepository> im
     }
 
     @Override
-    public Task create(String name) throws AbstractFieldException {
+    public Task create(final String name) throws AbstractFieldException {
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         return repository.create(name);
     }
 
     @Override
-    public Task updateById(String id, String name, String description) throws AbstractFieldException, AbstractEntityException {
+    public Task updateById(final String id, final String name, final String description) throws AbstractFieldException, AbstractEntityException {
         if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         final Task task = findOneById(id);
@@ -50,7 +50,7 @@ public final class TaskService extends AbstractService<Task, ITaskRepository> im
     }
 
     @Override
-    public Task updateByIndex(Integer index, String name, String description) throws AbstractFieldException, AbstractEntityException {
+    public Task updateByIndex(final Integer index, final String name, final String description) throws AbstractFieldException, AbstractEntityException {
         if (index == null || index < 0 || index > repository.getSize()) throw new IndexIncorrectException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         final Task task = findOneByIndex(index);
@@ -61,7 +61,7 @@ public final class TaskService extends AbstractService<Task, ITaskRepository> im
     }
 
     @Override
-    public Task changeTaskStatusById(String id, Status status) throws AbstractFieldException, AbstractEntityException {
+    public Task changeTaskStatusById(final String id, final Status status) throws AbstractFieldException, AbstractEntityException {
         if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
         final Task task = findOneById(id);
         if (task == null) throw new TaskNotFoundException();
@@ -70,7 +70,7 @@ public final class TaskService extends AbstractService<Task, ITaskRepository> im
     }
 
     @Override
-    public Task changeTaskStatusByIndex(Integer index, Status status) throws AbstractFieldException, AbstractEntityException {
+    public Task changeTaskStatusByIndex(final Integer index, final Status status) throws AbstractFieldException, AbstractEntityException {
         if (index == null || index < 0 || index > repository.getSize()) throw new IndexIncorrectException();
         if (index >= repository.getSize()) throw new IndexIncorrectException();
         final Task task = findOneByIndex(index);

@@ -50,7 +50,7 @@ public final class ProjectService extends AbstractService<Project, IProjectRepos
     }
 
     @Override
-    public Project changeProjectStatusById(String id, Status status) throws AbstractFieldException, AbstractEntityException {
+    public Project changeProjectStatusById(final String id, final Status status) throws AbstractFieldException, AbstractEntityException {
         if (id == null || id.isEmpty()) throw new ProjectIdEmptyException();
         final Project project = findOneById(id);
         if (project == null) throw new ProjectNotFoundException();
@@ -59,7 +59,7 @@ public final class ProjectService extends AbstractService<Project, IProjectRepos
     }
 
     @Override
-    public Project changeProjectStatusByIndex(Integer index, Status status) throws AbstractFieldException, AbstractEntityException {
+    public Project changeProjectStatusByIndex(final Integer index, final Status status) throws AbstractFieldException, AbstractEntityException {
         if (index == null || index < 0 || index > repository.getSize()) throw new IndexIncorrectException();
         if (index >= repository.getSize()) throw new IndexIncorrectException();
         final Project project = findOneByIndex(index);

@@ -29,18 +29,18 @@ public class AbstractRepository<M extends AbstractModel> implements IRepository<
     }
 
     @Override
-    public M add(M model) {
+    public M add(final M model) {
         models.add(model);
         return model;
     }
 
     @Override
-    public boolean existsById(String id) {
+    public boolean existsById(final String id) {
         return findOneById(id) != null;
     }
 
     @Override
-    public M findOneById(String id) {
+    public M findOneById(final String id) {
         for (final M model : models) {
             if (id.equals(model.getId())) return model;
         }

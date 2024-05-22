@@ -8,7 +8,7 @@ import ru.forinnyy.tm.util.HashUtil;
 public class UserRepository extends AbstractRepository<User> implements IUserRepository {
 
     @Override
-    public User create(String login, String password) {
+    public User create(final String login, final String password) {
         final User user = new User();
         user.setLogin(login);
         user.setPasswordHash(HashUtil.salt(password));
@@ -17,14 +17,14 @@ public class UserRepository extends AbstractRepository<User> implements IUserRep
     }
 
     @Override
-    public User create(String login, String password, String email) {
+    public User create(final String login, final String password, final String email) {
         final User user = create(login, password);
         user.setEmail(email);
         return user;
     }
 
     @Override
-    public User create(String login, String password, Role role) {
+    public User create(final String login, final String password, final Role role) {
         final User user = create(login, password);
         if (role != null) user.setRole(role);
         return user;
