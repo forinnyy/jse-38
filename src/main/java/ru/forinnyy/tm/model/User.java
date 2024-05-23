@@ -4,7 +4,7 @@ import ru.forinnyy.tm.enumerated.Role;
 
 import java.util.UUID;
 
-public class User extends AbstractModel {
+public final class User extends AbstractModel {
 
     private String login;
 

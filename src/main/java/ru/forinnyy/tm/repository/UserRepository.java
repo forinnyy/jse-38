@@ -5,7 +5,7 @@ import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.util.HashUtil;
 
-public class UserRepository extends AbstractRepository<User> implements IUserRepository {
+public final class UserRepository extends AbstractRepository<User> implements IUserRepository {
 
     @Override
     public User create(final String login, final String password) {

@@ -11,7 +11,7 @@ import ru.forinnyy.tm.model.AbstractModel;
 import java.util.Comparator;
 import java.util.List;
 
-public class AbstractService<M extends AbstractModel, R extends IRepository<M>>
+public abstract class AbstractService<M extends AbstractModel, R extends IRepository<M>>
         implements IService<M> {
 
     protected final R repository;

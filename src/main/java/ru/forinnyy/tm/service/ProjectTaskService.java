@@ -13,7 +13,7 @@ import ru.forinnyy.tm.model.Task;
 
 import java.util.List;
 
-public class ProjectTaskService implements IProjectTaskService {
+public final class ProjectTaskService implements IProjectTaskService {
 
     private final IProjectRepository projectRepository;
 

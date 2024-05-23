@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class AbstractRepository<M extends AbstractModel> implements IRepository<M> {
+public abstract class AbstractRepository<M extends AbstractModel> implements IRepository<M> {
 
     protected final List<M> models = new ArrayList<>();
 
