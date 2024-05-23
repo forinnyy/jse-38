@@ -4,9 +4,8 @@ import ru.forinnyy.tm.api.model.IWBS;
 import ru.forinnyy.tm.enumerated.Status;
 
 import java.util.Date;
-import java.util.UUID;
 
-public final class Project extends AbstractModel implements IWBS {
+public final class Project extends AbstractUserOwnedModel implements IWBS {
 
     private String name = "";
 
