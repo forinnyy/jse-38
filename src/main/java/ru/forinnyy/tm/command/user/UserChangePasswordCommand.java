@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.command.user;
 
+import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
@@ -28,6 +29,11 @@ public class UserChangePasswordCommand extends AbstractUserCommand {
         System.out.println("ENTER NEW PASSWORD:");
         final String password = TerminalUtil.nextLine();
         getUserService().setPassword(userId, password);
+    }
+
+    @Override
+    public Role[] getRoles() {
+        return Role.values();
     }
 
 }

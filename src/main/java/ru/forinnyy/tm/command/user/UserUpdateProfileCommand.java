@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.command.user;
 
+import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
@@ -32,6 +33,11 @@ public final class UserUpdateProfileCommand extends AbstractUserCommand {
         System.out.println("ENTER MIDDLE NAME:");
         final String middleName = TerminalUtil.nextLine();
         getUserService().updateUser(userId, firstName, lastName, middleName);
+    }
+
+    @Override
+    public Role[] getRoles() {
+        return Role.values();
     }
 
 }

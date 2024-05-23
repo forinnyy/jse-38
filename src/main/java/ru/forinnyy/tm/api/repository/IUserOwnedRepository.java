@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.api.repository;
 
+import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
 
@@ -14,13 +15,15 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> extends 
 
     List<M> findAll(String userId, Comparator<M> comparator);
 
+    List<M> findAll(String userId, Sort sort);
+
     M add(String userId, M model);
 
     boolean existsById(String userId, String id) throws AbstractFieldException;
 
     M findOneById(String userId, String id) throws AbstractFieldException;
 
-    M findOneByIndex(String userId, Integer index);
+    M findOneByIndex(String userId, Integer index) throws AbstractFieldException;
 
     int getSize(String userId);
 

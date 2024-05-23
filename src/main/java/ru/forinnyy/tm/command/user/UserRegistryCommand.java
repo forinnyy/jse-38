@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.user;
 
 import ru.forinnyy.tm.api.service.IAuthService;
+import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
@@ -36,6 +37,11 @@ public final class UserRegistryCommand extends AbstractUserCommand {
         final IAuthService authService = getAuthService();
         final User user = authService.registry(login, password, email);
         showUser(user);
+    }
+
+    @Override
+    public Role[] getRoles() {
+        return null;
     }
     
 }

@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.command.user;
 
+import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
@@ -32,6 +33,11 @@ public final class UserViewProfileCommand extends AbstractUserCommand {
         System.out.println("LAST NAME: " + user.getLastName());
         System.out.println("EMAIL: " + user.getEmail());
         System.out.println("ROLE: " + user.getRole());
+    }
+
+    @Override
+    public Role[] getRoles() {
+        return Role.values();
     }
 
 }

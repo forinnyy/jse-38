@@ -3,6 +3,7 @@ package ru.forinnyy.tm.command.task;
 import ru.forinnyy.tm.api.service.IProjectTaskService;
 import ru.forinnyy.tm.api.service.ITaskService;
 import ru.forinnyy.tm.command.AbstractCommand;
+import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.model.Task;
 
@@ -39,6 +40,11 @@ public abstract class AbstractTaskCommand extends AbstractCommand {
             System.out.println(index + ". " + task.getName());
             index++;
         }
+    }
+
+    @Override
+    public Role[] getRoles() {
+        return Role.values();
     }
 
 }

@@ -2,7 +2,9 @@ package ru.forinnyy.tm.command;
 
 
 import ru.forinnyy.tm.api.model.ICommand;
+import ru.forinnyy.tm.api.service.IAuthService;
 import ru.forinnyy.tm.api.service.IServiceLocator;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 
 public abstract class AbstractCommand implements ICommand {
 
@@ -10,6 +12,14 @@ public abstract class AbstractCommand implements ICommand {
 
     public IServiceLocator getServiceLocator() {
         return serviceLocator;
+    }
+
+    public IAuthService getAuthService() {
+        return serviceLocator.getAuthService();
+    }
+
+    public String getUserId() throws AbstractUserException {
+        return getAuthService().getUserId();
     }
 
     public void setServiceLocator(final IServiceLocator serviceLocator) {

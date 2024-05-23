@@ -42,7 +42,7 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
 
     @Override
     public boolean existsById(final String userId, final String id) throws AbstractFieldException {
-        return findOneById(userId, id);
+        return findOneById(userId, id) != null;
     }
 
     @Override
