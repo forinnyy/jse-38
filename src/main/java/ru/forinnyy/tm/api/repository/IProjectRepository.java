@@ -3,10 +3,10 @@ package ru.forinnyy.tm.api.repository;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.model.Project;
 
-public interface IProjectRepository extends IRepository<Project> {
+public interface IProjectRepository extends IUserOwnedRepository<Project> {
 
-    Project create(String name) throws AbstractFieldException;
+    Project create(String userId, String name) throws AbstractFieldException;
 
-    Project create(String name, String description) throws AbstractFieldException;
+    Project create(String userId, String name, String description) throws AbstractFieldException;
 
 }

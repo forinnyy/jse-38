@@ -2,11 +2,15 @@ package ru.forinnyy.tm.service;
 
 import ru.forinnyy.tm.api.service.IAuthService;
 import ru.forinnyy.tm.api.service.IUserService;
+import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.field.*;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.exception.user.AccessDeniedException;
+import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.util.HashUtil;
+
+import java.util.Arrays;
 
 public final class AuthService implements IAuthService {
 
@@ -56,6 +60,16 @@ public final class AuthService implements IAuthService {
         final User user = userService.findOneById(userId);
         if (user == null) throw new AccessDeniedException();
         return user;
+    }
+
+    @Override
+    public void checkRoles(final Role[] roles) throws AbstractUserException, AbstractFieldException {
+        if (roles == null) return;
+        final User user = getUser();
+        final Role role = user.getRole();
+        if (role == null) throw new PermissionException();
+        final boolean hasRole = Arrays.asList(roles).contains(role);
+        if (!hasRole) throw new PermissionException();
     }
 
 }

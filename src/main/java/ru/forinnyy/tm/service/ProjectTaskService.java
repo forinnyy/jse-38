@@ -25,7 +25,7 @@ public final class ProjectTaskService implements IProjectTaskService {
     }
 
     @Override
-    public Task bindTaskToProject(final String projectId, final String taskId) throws AbstractFieldException, AbstractEntityException {
+    public Task bindTaskToProject(final String userId, final String projectId, final String taskId) throws AbstractFieldException, AbstractEntityException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
         if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();
@@ -36,16 +36,16 @@ public final class ProjectTaskService implements IProjectTaskService {
     }
 
     @Override
-    public void removeProjectById(final String projectId) throws AbstractFieldException, AbstractEntityException {
+    public void removeProjectById(final String userId, final String projectId) throws AbstractFieldException, AbstractEntityException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();
-        final List<Task> tasks = taskRepository.findAllByProjectId(projectId);
+        final List<Task> tasks = taskRepository.findAllByProjectId(userId, projectId);
         for (final Task task: tasks) taskRepository.removeById(task.getId());
         projectRepository.removeById(projectId);
     }
 
     @Override
-    public Task unbindTaskFromProject(final String projectId, final String taskId) throws AbstractFieldException, AbstractEntityException {
+    public Task unbindTaskFromProject(final String userId, final String projectId, final String taskId) throws AbstractFieldException, AbstractEntityException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
         if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();

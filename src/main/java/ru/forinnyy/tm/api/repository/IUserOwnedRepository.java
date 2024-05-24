@@ -9,15 +9,15 @@ import java.util.List;
 
 public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> extends IRepository<M> {
 
-    void clear(String userId);
+    void clear(String userId) throws AbstractFieldException;
 
-    List<M> findAll(String userId);
+    List<M> findAll(String userId) throws AbstractFieldException;
 
-    List<M> findAll(String userId, Comparator<M> comparator);
+    List<M> findAll(String userId, Comparator<M> comparator) throws AbstractFieldException;
 
-    List<M> findAll(String userId, Sort sort);
+    List<M> findAll(String userId, Sort sort) throws AbstractFieldException;
 
-    M add(String userId, M model);
+    M add(String userId, M model) throws AbstractFieldException;
 
     boolean existsById(String userId, String id) throws AbstractFieldException;
 
@@ -25,9 +25,9 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> extends 
 
     M findOneByIndex(String userId, Integer index) throws AbstractFieldException;
 
-    int getSize(String userId);
+    int getSize(String userId) throws AbstractFieldException;
 
-    M remove(String userId, M model);
+    M remove(String userId, M model) throws AbstractFieldException;
 
     M removeById(String userId, String id) throws AbstractFieldException;
 

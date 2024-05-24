@@ -81,13 +81,21 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
         if (userId == null || id == null) return null;
         final M model = findOneById(userId, id);
         if (model == null) return null;
-        return remove(model);
+        try {
+            return remove(model);
+        } catch (ru.forinnyy.tm.exception.entity.AbstractEntityException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public M removeByIndex(final String userId, final Integer index) throws AbstractFieldException {
         final M model = findOneByIndex(userId, index);
         if (model == null) return null;
-        return remove(model);
+        try {
+            return remove(model);
+        } catch (ru.forinnyy.tm.exception.entity.AbstractEntityException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

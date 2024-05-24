@@ -5,6 +5,7 @@ import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.IdEmptyException;
 import ru.forinnyy.tm.exception.field.IndexIncorrectException;
+import ru.forinnyy.tm.exception.field.UserIdEmptyException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
 
 import java.util.Comparator;
@@ -19,26 +20,26 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     }
 
     @Override
-    public void clear(final String userId) {
+    public void clear(final String userId) throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         repository.clear(userId);
     }
 
     @Override
-    public List<M> findAll(final String userId) {
+    public List<M> findAll(final String userId) throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         return repository.findAll(userId);
     }
 
     @Override
-    public List<M> findAll(final String userId, final Comparator<M> comparator) {
+    public List<M> findAll(final String userId, final Comparator<M> comparator) throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (comparator == null) return repository.findAll(userId);
         return repository.findAll(userId, comparator);
     }
 
     @Override
-    public M add(final String userId, final M model) {
+    public M add(final String userId, final M model) throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (model == null) return null;
         return repository.add(userId, model);
@@ -66,13 +67,13 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     }
 
     @Override
-    public int getSize(final String userId) {
+    public int getSize(final String userId) throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         return repository.getSize(userId);
     }
 
     @Override
-    public M remove(final String userId, M model) {
+    public M remove(final String userId, M model) throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (model == null) return null;
         return repository.remove(userId, model);
@@ -93,8 +94,8 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     }
 
     @Override
-    public List<M> findAll(final String userId, final Sort sort) {
-        if (userId == null || userId.isEmpty()) throw UserIdEmptyException();
+    public List<M> findAll(final String userId, final Sort sort) throws AbstractFieldException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (sort == null) return findAll(userId);
         return repository.findAll(userId, sort.getComparator());
     }

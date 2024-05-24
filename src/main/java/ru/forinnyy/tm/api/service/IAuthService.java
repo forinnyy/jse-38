@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.api.service;
 
+import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.User;
@@ -17,5 +18,7 @@ public interface IAuthService {
     String getUserId() throws AbstractUserException;
 
     User getUser() throws AbstractUserException, AbstractFieldException;
+
+    void checkRoles(Role[] roles) throws AbstractUserException, AbstractFieldException;
 
 }

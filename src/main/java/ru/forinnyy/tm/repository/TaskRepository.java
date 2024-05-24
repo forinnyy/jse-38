@@ -8,7 +8,7 @@ import java.util.List;
 public final class TaskRepository extends AbstractRepository<Task> implements ITaskRepository {
 
     @Override
-    public List<Task> findAllByProjectId(final String projectId) {
+    public List<Task> findAllByProjectId(final String userId, final String projectId) {
         final List<Task> result = new ArrayList<>();
         for (final Task task: models) {
             if (task.getProjectId() == null) continue;
@@ -18,14 +18,14 @@ public final class TaskRepository extends AbstractRepository<Task> implements IT
     }
 
     @Override
-    public Task create(final String name) {
+    public Task create(final String userId, final String name) {
         final Task task = new Task();
         task.setName(name);
         return add(task);
     }
 
     @Override
-    public Task create(final String name, final String description) {
+    public Task create(final String userId, final String name, final String description) {
         final Task task = new Task();
         task.setName(name);
         task.setDescription(description);

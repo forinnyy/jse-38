@@ -10,14 +10,14 @@ import java.util.List;
 public final class ProjectRepository extends AbstractRepository<Project> implements IProjectRepository {
 
     @Override
-    public Project create(final String name) {
+    public Project create(final String userId, final String name) {
         final Project project = new Project();
         project.setName(name);
         return add(project);
     }
 
     @Override
-    public Project create(final String name, final String description) {
+    public Project create(final String userId, final String name, final String description) {
         final Project project = new Project();
         project.setName(name);
         project.setDescription(description);

@@ -3,11 +3,14 @@ package ru.forinnyy.tm.service;
 import ru.forinnyy.tm.api.repository.IRepository;
 import ru.forinnyy.tm.api.service.IService;
 import ru.forinnyy.tm.enumerated.Sort;
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
+import ru.forinnyy.tm.exception.entity.EntityNotFoundException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.IdEmptyException;
 import ru.forinnyy.tm.exception.field.IndexIncorrectException;
 import ru.forinnyy.tm.model.AbstractModel;
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -57,7 +60,7 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
 
     @Override
     public M findOneById(final String id) throws AbstractFieldException {
-        if (id == null || id.isEmpty()) throw new IdEmptyException();
+        if (id == null || id.isEmpty()) return null;
         return repository.findOneById(id);
     }
 
@@ -73,21 +76,27 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     }
 
     @Override
-    public M remove(final M model) {
-        if (model == null) return null;
+    public M remove(final M model) throws AbstractEntityException {
+        if (model == null) throw new EntityNotFoundException();
         return repository.remove(model);
     }
 
     @Override
-    public M removeById(final String id) throws AbstractFieldException {
+    public M removeById(final String id) throws AbstractFieldException, AbstractEntityException {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         return repository.removeById(id);
     }
 
     @Override
-    public M removeByIndex(final Integer index) throws AbstractFieldException {
+    public M removeByIndex(final Integer index) throws AbstractFieldException, AbstractEntityException {
         if (index == null) throw new IndexIncorrectException();
         return repository.removeByIndex(index);
+    }
+
+    @Override
+    public void removeAll(Collection<M> collection) {
+        if (collection == null || collection.isEmpty()) return;
+        repository.removeAll(collection);
     }
 
 }

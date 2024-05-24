@@ -24,7 +24,6 @@ public final class UserUpdateProfileCommand extends AbstractUserCommand {
 
     @Override
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
-        final String userId = getAuthService().getUserId();
         System.out.println("[USER UPDATE PROFILE]");
         System.out.println("ENTER FIRST NAME:");
         final String firstName = TerminalUtil.nextLine();
@@ -32,6 +31,7 @@ public final class UserUpdateProfileCommand extends AbstractUserCommand {
         final String lastName = TerminalUtil.nextLine();
         System.out.println("ENTER MIDDLE NAME:");
         final String middleName = TerminalUtil.nextLine();
+        final String userId = getAuthService().getUserId();
         getUserService().updateUser(userId, firstName, lastName, middleName);
     }
 

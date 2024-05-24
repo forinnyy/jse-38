@@ -1,9 +1,12 @@
 package ru.forinnyy.tm.repository;
 
 import ru.forinnyy.tm.api.repository.IRepository;
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
+import ru.forinnyy.tm.exception.entity.EntityNotFoundException;
 import ru.forinnyy.tm.model.AbstractModel;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -58,24 +61,31 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
     }
 
     @Override
-    public M remove(M model) {
+    public M remove(M model) throws AbstractEntityException {
+        if (model == null) throw new EntityNotFoundException();
         models.remove(model);
         return model;
     }
 
     @Override
-    public M removeById(String id) {
+    public M removeById(String id) throws AbstractEntityException {
         final M model = findOneById(id);
+        if (model == null) throw new EntityNotFoundException();
         models.remove(model);
         return model;
     }
 
     @Override
-    public M removeByIndex(Integer index) {
+    public M removeByIndex(Integer index) throws AbstractEntityException {
         final M model = findOneByIndex(index);
-        if (model == null) return null;
+        if (model == null) throw new EntityNotFoundException();
         models.remove(model);
         return model;
+    }
+
+    public void removeAll(final Collection<M> collection) {
+        if (collection == null) return;
+        models.removeAll(collection);
     }
 
 }

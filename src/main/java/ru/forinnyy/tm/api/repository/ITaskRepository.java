@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface ITaskRepository extends IRepository<Task> {
 
-    List<Task> findAllByProjectId(String projectId);
+    List<Task> findAllByProjectId(String userId, String projectId);
 
-    Task create(String name) throws AbstractFieldException;
+    Task create(String userId, String name) throws AbstractFieldException;
 
-    Task create(String name, String description) throws AbstractFieldException;
+    Task create(String userId, String name, String description) throws AbstractFieldException;
 
 }

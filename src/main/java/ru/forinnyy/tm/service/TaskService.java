@@ -13,33 +13,34 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public final class TaskService extends AbstractService<Task, ITaskRepository> implements ITaskService {
+public final class TaskService extends AbstractService<Task, ITaskRepository>
+        implements ITaskService {
 
     public TaskService(ITaskRepository repository) {
         super(repository);
     }
 
     @Override
-    public List<Task> findAllByProjectId(String projectId) {
+    public List<Task> findAllByProjectId(final String userId, String projectId) {
         if (projectId == null || projectId.isEmpty()) return Collections.emptyList();
-        return repository.findAllByProjectId(projectId);
+        return repository.findAllByProjectId(userId, projectId);
     }
 
     @Override
-    public Task create(final String name, final String description) throws AbstractFieldException {
+    public Task create(final String userId, final String name, final String description) throws AbstractFieldException {
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
-        return repository.create(name, description);
+        return repository.create(userId, name, description);
     }
 
     @Override
-    public Task create(final String name) throws AbstractFieldException {
+    public Task create(final String userId, final String name) throws AbstractFieldException {
         if (name == null || name.isEmpty()) throw new NameEmptyException();
-        return repository.create(name);
+        return repository.create(userId, name);
     }
 
     @Override
-    public Task updateById(final String id, final String name, final String description) throws AbstractFieldException, AbstractEntityException {
+    public Task updateById(final String userId, final String id, final String name, final String description) throws AbstractFieldException, AbstractEntityException {
         if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         final Task task = findOneById(id);
@@ -50,7 +51,7 @@ public final class TaskService extends AbstractService<Task, ITaskRepository> im
     }
 
     @Override
-    public Task updateByIndex(final Integer index, final String name, final String description) throws AbstractFieldException, AbstractEntityException {
+    public Task updateByIndex(final String userId, final Integer index, final String name, final String description) throws AbstractFieldException, AbstractEntityException {
         if (index == null || index < 0 || index > repository.getSize()) throw new IndexIncorrectException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         final Task task = findOneByIndex(index);
@@ -61,7 +62,7 @@ public final class TaskService extends AbstractService<Task, ITaskRepository> im
     }
 
     @Override
-    public Task changeTaskStatusById(final String id, final Status status) throws AbstractFieldException, AbstractEntityException {
+    public Task changeTaskStatusById(final String userId, final String id, final Status status) throws AbstractFieldException, AbstractEntityException {
         if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
         final Task task = findOneById(id);
         if (task == null) throw new TaskNotFoundException();
@@ -70,7 +71,7 @@ public final class TaskService extends AbstractService<Task, ITaskRepository> im
     }
 
     @Override
-    public Task changeTaskStatusByIndex(final Integer index, final Status status) throws AbstractFieldException, AbstractEntityException {
+    public Task changeTaskStatusByIndex(final String userId, final Integer index, final Status status) throws AbstractFieldException, AbstractEntityException {
         if (index == null || index < 0 || index > repository.getSize()) throw new IndexIncorrectException();
         if (index >= repository.getSize()) throw new IndexIncorrectException();
         final Task task = findOneByIndex(index);

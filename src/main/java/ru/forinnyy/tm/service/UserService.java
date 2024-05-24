@@ -12,7 +12,8 @@ import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.util.HashUtil;
 
 
-public final class UserService extends AbstractService<User, IUserRepository> implements IUserService {
+public final class UserService extends AbstractService<User, IUserRepository>
+        implements IUserService {
 
     public UserService(IUserRepository repository) {
         super(repository);
@@ -69,16 +70,18 @@ public final class UserService extends AbstractService<User, IUserRepository> im
     }
 
     @Override
-    public User removeByLogin(final String login) throws AbstractFieldException {
+    public User removeByLogin(final String login) throws AbstractFieldException, AbstractEntityException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         final User user = findByLogin(login);
+        if (user == null) throw new UserNotFoundException();
         return remove(user);
     }
 
     @Override
-    public User removeByEmail(final String email) throws AbstractUserException, AbstractFieldException {
+    public User removeByEmail(final String email) throws AbstractUserException, AbstractFieldException, AbstractEntityException {
         if (email == null || email.isEmpty()) throw new EmailEmptyException();
         final User user = findByEmail(email);
+        if (user == null) throw new UserNotFoundException();
         return remove(user);
     }
 

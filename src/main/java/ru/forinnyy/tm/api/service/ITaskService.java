@@ -9,18 +9,18 @@ import java.util.List;
 
 public interface ITaskService extends IService<Task> {
 
-    Task updateById(String id, String name, String description) throws AbstractFieldException, AbstractEntityException;
+    Task updateById(String userId, String id, String name, String description) throws AbstractFieldException, AbstractEntityException;
 
-    Task updateByIndex(Integer index, String name, String description) throws AbstractFieldException, AbstractEntityException;
+    Task updateByIndex(String userId, Integer index, String name, String description) throws AbstractFieldException, AbstractEntityException;
 
-    Task changeTaskStatusById(String id, Status status) throws AbstractFieldException, AbstractEntityException;
+    Task changeTaskStatusById(String userId, String id, Status status) throws AbstractFieldException, AbstractEntityException;
 
-    Task changeTaskStatusByIndex(Integer index, Status status) throws AbstractFieldException, AbstractEntityException;
+    Task changeTaskStatusByIndex(String userId, Integer index, Status status) throws AbstractFieldException, AbstractEntityException;
 
-    List<Task> findAllByProjectId(String projectId);
+    List<Task> findAllByProjectId(String userId, String projectId);
 
-    Task create(String name, String description) throws AbstractFieldException;
+    Task create(String userId, String name, String description) throws AbstractFieldException;
 
-    Task create(String name) throws AbstractFieldException;
+    Task create(String userId, String name) throws AbstractFieldException;
 
 }

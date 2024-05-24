@@ -29,6 +29,8 @@ import ru.forinnyy.tm.repository.UserRepository;
 import ru.forinnyy.tm.service.*;
 import ru.forinnyy.tm.util.TerminalUtil;
 
+import java.util.Arrays;
+
 
 public final class Bootstrap implements IServiceLocator {
 
@@ -163,12 +165,13 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     private void processCommand(final String command) throws
-            CommandNotSupportedException,
+            AbstractSystemException,
             AbstractFieldException,
             AbstractEntityException,
             AbstractUserException {
         final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
+        authService.checkRoles(abstractCommand.getRoles());
         abstractCommand.execute();
     }
 
@@ -182,13 +185,13 @@ public final class Bootstrap implements IServiceLocator {
         userService.create("user", "user", "user@user.ru");
         userService.create("admin", "admin", Role.ADMIN);
 
-        projectService.add(new Project("TEST PROJECT", Status.IN_PROGRESS));
-        projectService.add(new Project("DEMO PROJECT", Status.NOT_STARTED));
-        projectService.add(new Project("ALPHA PROJECT", Status.IN_PROGRESS));
-        projectService.add(new Project("BETA PROJECT", Status.COMPLETED));
+        projectService.add(test.getId(), new Project("TEST PROJECT", Status.IN_PROGRESS));
+        projectService.add(test.getId(), new Project("DEMO PROJECT", Status.NOT_STARTED));
+        projectService.add(test.getId(), new Project("ALPHA PROJECT", Status.IN_PROGRESS));
+        projectService.add(test.getId(), new Project("BETA PROJECT", Status.COMPLETED));
 
-        taskService.create("MEGA TASK");
-        taskService.create("BETA TASK");
+        taskService.create(test.getId(), "MEGA TASK");
+        taskService.create(test.getId(), "BETA TASK");
     }
 
     private void initLogger() {
