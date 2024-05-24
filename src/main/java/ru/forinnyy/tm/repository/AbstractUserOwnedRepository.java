@@ -2,6 +2,7 @@ package ru.forinnyy.tm.repository;
 
 import ru.forinnyy.tm.api.repository.IUserOwnedRepository;
 import ru.forinnyy.tm.enumerated.Sort;
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
 
@@ -36,8 +37,7 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
 
     @Override
     public List<M> findAll(final String userId, final Sort sort) throws AbstractFieldException {
-        final List<M> result = findAll(userId, sort.getComparator());
-        return result;
+        return findAll(userId, sort.getComparator());
     }
 
     @Override
@@ -78,31 +78,24 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
     }
 
     @Override
-    public M remove(final String userId, final M model) throws AbstractFieldException {
+    public M remove(final String userId, final M model) throws AbstractFieldException, AbstractEntityException {
         if (userId == null || model == null) return null;
         return removeById(userId, model.getId());
     }
 
     @Override
-    public M removeById(final String userId, final String id) throws AbstractFieldException {
+    public M removeById(final String userId, final String id) throws AbstractFieldException, AbstractEntityException {
         if (userId == null || id == null) return null;
         final M model = findOneById(userId, id);
         if (model == null) return null;
-        try {
-            return remove(model);
-        } catch (ru.forinnyy.tm.exception.entity.AbstractEntityException e) {
-            throw new RuntimeException(e);
-        }
+        return remove(model);
     }
 
     @Override
-    public M removeByIndex(final String userId, final Integer index) throws AbstractFieldException {
+    public M removeByIndex(final String userId, final Integer index) throws AbstractEntityException {
         final M model = findOneByIndex(userId, index);
         if (model == null) return null;
-        try {
-            return remove(model);
-        } catch (ru.forinnyy.tm.exception.entity.AbstractEntityException e) {
-            throw new RuntimeException(e);
-        }
+        return remove(model);
     }
+
 }

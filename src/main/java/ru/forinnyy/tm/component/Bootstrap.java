@@ -22,6 +22,7 @@ import ru.forinnyy.tm.exception.system.ArgumentNotSupportedException;
 import ru.forinnyy.tm.exception.system.CommandNotSupportedException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.Project;
+import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.repository.CommandRepository;
 import ru.forinnyy.tm.repository.ProjectRepository;
 import ru.forinnyy.tm.repository.TaskRepository;
@@ -181,9 +182,9 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     private void initDemoData() throws AbstractFieldException, AbstractEntityException, AbstractUserException {
-        userService.create("test", "test", "test@test.ru");
-        userService.create("user", "user", "user@user.ru");
-        userService.create("admin", "admin", Role.ADMIN);
+        final User test = userService.create("test", "test", "test@test.ru");
+        final User user = userService.create("user", "user", "user@user.ru");
+        final User admin = userService.create("admin", "admin", Role.ADMIN);
 
         projectService.add(test.getId(), new Project("TEST PROJECT", Status.IN_PROGRESS));
         projectService.add(test.getId(), new Project("DEMO PROJECT", Status.NOT_STARTED));

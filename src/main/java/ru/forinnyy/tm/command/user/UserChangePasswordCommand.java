@@ -27,7 +27,7 @@ public class UserChangePasswordCommand extends AbstractUserCommand {
         System.out.println("[USER CHANGE PASSWORD]");
         System.out.println("ENTER NEW PASSWORD:");
         final String password = TerminalUtil.nextLine();
-        final String userId = getAuthService().getUserId();
+        final String userId = getUserId();
         getUserService().setPassword(userId, password);
     }
 

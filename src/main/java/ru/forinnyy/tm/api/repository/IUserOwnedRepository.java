@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.api.repository;
 
 import ru.forinnyy.tm.enumerated.Sort;
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
 
@@ -27,10 +28,10 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> extends 
 
     int getSize(String userId) throws AbstractFieldException;
 
-    M remove(String userId, M model) throws AbstractFieldException;
+    M remove(String userId, M model) throws AbstractFieldException, AbstractEntityException;
 
-    M removeById(String userId, String id) throws AbstractFieldException;
+    M removeById(String userId, String id) throws AbstractFieldException, AbstractEntityException;
 
-    M removeByIndex(String userId, Integer index) throws AbstractFieldException;
+    M removeByIndex(String userId, Integer index) throws AbstractFieldException, AbstractEntityException;
 
 }

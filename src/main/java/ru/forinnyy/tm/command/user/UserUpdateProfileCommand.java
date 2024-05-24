@@ -31,7 +31,7 @@ public final class UserUpdateProfileCommand extends AbstractUserCommand {
         final String lastName = TerminalUtil.nextLine();
         System.out.println("ENTER MIDDLE NAME:");
         final String middleName = TerminalUtil.nextLine();
-        final String userId = getAuthService().getUserId();
+        final String userId = getUserId();
         getUserService().updateUser(userId, firstName, lastName, middleName);
     }
 
