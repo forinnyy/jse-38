@@ -3,6 +3,7 @@ package ru.forinnyy.tm.command.task;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class TaskStartByIdCommand extends AbstractTaskCommand {
@@ -22,11 +23,12 @@ public final class TaskStartByIdCommand extends AbstractTaskCommand {
     }
 
     @Override
-    public void execute() throws AbstractEntityException, AbstractFieldException {
+    public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[START TASK BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
-        getTaskService().changeTaskStatusById(id, Status.IN_PROGRESS);
+        final String userId = getUserId();
+        getTaskService().changeTaskStatusById(userId, id, Status.IN_PROGRESS);
     }
 
 }

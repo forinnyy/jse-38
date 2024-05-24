@@ -3,6 +3,7 @@ package ru.forinnyy.tm.command.task;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 import java.util.Arrays;
@@ -24,7 +25,7 @@ public final class TaskChangeStatusByIndexCommand extends AbstractTaskCommand {
     }
 
     @Override
-    public void execute() throws AbstractEntityException, AbstractFieldException {
+    public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[CHANGE TASK STATUS BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() - 1;
@@ -32,7 +33,8 @@ public final class TaskChangeStatusByIndexCommand extends AbstractTaskCommand {
         System.out.println(Arrays.toString(Status.values()));
         final String statusValue = TerminalUtil.nextLine();
         final Status status = Status.toStatus(statusValue);
-        getTaskService().changeTaskStatusByIndex(index, status);
+        final String userId = getUserId();
+        getTaskService().changeTaskStatusByIndex(userId, index, status);
     }
 
 }

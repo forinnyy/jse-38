@@ -3,6 +3,7 @@ package ru.forinnyy.tm.command.project;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class ProjectCompleteByIdCommand extends AbstractProjectCommand {
@@ -22,11 +23,12 @@ public final class ProjectCompleteByIdCommand extends AbstractProjectCommand {
     }
 
     @Override
-    public void execute() throws AbstractEntityException, AbstractFieldException {
+    public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[COMPLETE PROJECT BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
-        getProjectService().changeProjectStatusById(id, Status.COMPLETED);
+        final String userId = getUserId();
+        getProjectService().changeProjectStatusById(userId, id, Status.COMPLETED);
     }
 
 }

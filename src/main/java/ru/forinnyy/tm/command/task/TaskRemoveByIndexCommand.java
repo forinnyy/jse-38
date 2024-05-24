@@ -2,6 +2,7 @@ package ru.forinnyy.tm.command.task;
 
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class TaskRemoveByIndexCommand extends AbstractTaskCommand {
@@ -21,11 +22,12 @@ public final class TaskRemoveByIndexCommand extends AbstractTaskCommand {
     }
 
     @Override
-    public void execute() throws AbstractEntityException, AbstractFieldException {
+    public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[REMOVE TASK BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() -1;
-        getTaskService().removeByIndex(index);
+        final String userId = getUserId();
+        getTaskService().removeByIndex(userId, index);
     }
 
 }

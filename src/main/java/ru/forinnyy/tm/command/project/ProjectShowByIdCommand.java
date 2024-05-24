@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.project;
 
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.util.TerminalUtil;
 
@@ -21,11 +22,12 @@ public final class ProjectShowByIdCommand extends AbstractProjectCommand {
     }
 
     @Override
-    public void execute() throws AbstractFieldException {
+    public void execute() throws AbstractFieldException, AbstractUserException {
         System.out.println("[SHOW PROJECT BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
-        final Project project = getProjectService().findOneById(id);
+        final String userId = getUserId();
+        final Project project = getProjectService().findOneById(userId, id);
         showProject(project);
     }
 

@@ -5,7 +5,8 @@ import ru.forinnyy.tm.model.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class TaskRepository extends AbstractRepository<Task> implements ITaskRepository {
+public final class TaskRepository extends AbstractUserOwnedRepository<Task>
+        implements ITaskRepository {
 
     @Override
     public List<Task> findAllByProjectId(final String userId, final String projectId) {

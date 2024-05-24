@@ -5,7 +5,7 @@ import ru.forinnyy.tm.model.Task;
 
 import java.util.List;
 
-public interface ITaskRepository extends IRepository<Task> {
+public interface ITaskRepository extends IUserOwnedRepository<Task> {
 
     List<Task> findAllByProjectId(String userId, String projectId);
 

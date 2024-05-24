@@ -2,6 +2,7 @@ package ru.forinnyy.tm.command.task;
 
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.util.TerminalUtil;
 
@@ -24,11 +25,12 @@ public final class TaskListByProjectIdCommand extends AbstractTaskCommand {
     }
 
     @Override
-    public void execute() throws AbstractEntityException, AbstractFieldException {
+    public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[TASK LIST BY PROJECT ID]");
         System.out.println("ENTER PROJECT ID:");
         final String projectId = TerminalUtil.nextLine();
-        final List<Task> tasks = getTaskService().findAllByProjectId(projectId);
+        final String userId = getUserId();
+        final List<Task> tasks = getTaskService().findAllByProjectId(userId, projectId);
         renderTasks(tasks);
     }
 

@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public final class ProjectRepository extends AbstractRepository<Project> implements IProjectRepository {
+public final class ProjectRepository extends AbstractUserOwnedRepository<Project>
+        implements IProjectRepository {
 
     @Override
     public Project create(final String userId, final String name) {

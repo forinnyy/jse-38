@@ -2,6 +2,7 @@ package ru.forinnyy.tm.command.project;
 
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class ProjectUpdateByIdCommand extends AbstractProjectCommand {
@@ -21,7 +22,7 @@ public final class ProjectUpdateByIdCommand extends AbstractProjectCommand {
     }
 
     @Override
-    public void execute() throws AbstractEntityException, AbstractFieldException {
+    public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[SHOW PROJECT BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
@@ -29,7 +30,8 @@ public final class ProjectUpdateByIdCommand extends AbstractProjectCommand {
         final String name = TerminalUtil.nextLine();
         System.out.println("ENTER DESCRIPTION:");
         final String description = TerminalUtil.nextLine();
-        getProjectService().updateById(id, name, description);
+        final String userId = getUserId();
+        getProjectService().updateById(userId, id, name, description);
     }
 
 }

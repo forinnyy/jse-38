@@ -2,6 +2,7 @@ package ru.forinnyy.tm.command.task;
 
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class TaskRemoveByIdCommand extends AbstractTaskCommand {
@@ -21,11 +22,12 @@ public final class TaskRemoveByIdCommand extends AbstractTaskCommand {
     }
 
     @Override
-    public void execute() throws AbstractEntityException, AbstractFieldException {
+    public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[REMOVE TASK BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
-        getTaskService().removeById(id);
+        final String userId = getUserId();
+        getTaskService().removeById(userId, id);
     }
 
 }

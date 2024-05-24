@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.repository;
 
 import ru.forinnyy.tm.api.repository.IUserOwnedRepository;
+import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
 
@@ -30,6 +31,12 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
     public List<M> findAll(final String userId, final Comparator<M> comparator) {
         final List<M> result = findAll(userId);
         result.sort(comparator);
+        return result;
+    }
+
+    @Override
+    public List<M> findAll(final String userId, final Sort sort) throws AbstractFieldException {
+        final List<M> result = findAll(userId, sort.getComparator());
         return result;
     }
 

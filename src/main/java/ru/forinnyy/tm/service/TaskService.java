@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public final class TaskService extends AbstractService<Task, ITaskRepository>
+public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepository>
         implements ITaskService {
 
     public TaskService(ITaskRepository repository) {

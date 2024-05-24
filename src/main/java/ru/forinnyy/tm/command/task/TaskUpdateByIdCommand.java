@@ -2,6 +2,7 @@ package ru.forinnyy.tm.command.task;
 
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class TaskUpdateByIdCommand extends AbstractTaskCommand {
@@ -21,7 +22,7 @@ public final class TaskUpdateByIdCommand extends AbstractTaskCommand {
     }
 
     @Override
-    public void execute() throws AbstractEntityException, AbstractFieldException {
+    public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[SHOW TASK BY ID]");
         System.out.println("ENTER ID:");
         final String id = TerminalUtil.nextLine();
@@ -29,7 +30,8 @@ public final class TaskUpdateByIdCommand extends AbstractTaskCommand {
         final String name = TerminalUtil.nextLine();
         System.out.println("ENTER DESCRIPTION:");
         final String description = TerminalUtil.nextLine();
-        getTaskService().updateById(id, name, description);
+        final String userId = getUserId();
+        getTaskService().updateById(userId, id, name, description);
     }
 
 }

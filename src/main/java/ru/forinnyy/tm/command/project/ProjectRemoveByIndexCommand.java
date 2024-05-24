@@ -2,6 +2,7 @@ package ru.forinnyy.tm.command.project;
 
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.util.TerminalUtil;
 
@@ -22,12 +23,13 @@ public final class ProjectRemoveByIndexCommand extends AbstractProjectCommand {
     }
 
     @Override
-    public void execute() throws AbstractEntityException, AbstractFieldException {
+    public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[REMOVE PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         final Integer index = TerminalUtil.nextNumber() -1;
         final Project project = getProjectService().removeByIndex(index);
-        getProjectTaskService().removeProjectById(project.getId());
+        final String userId = getUserId();
+        getProjectTaskService().removeProjectById(userId, project.getId());
     }
 
 }

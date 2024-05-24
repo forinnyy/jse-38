@@ -2,6 +2,7 @@ package ru.forinnyy.tm.command.task;
 
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 
 public final class TaskClearCommand extends AbstractTaskCommand {
 
@@ -20,9 +21,10 @@ public final class TaskClearCommand extends AbstractTaskCommand {
     }
 
     @Override
-    public void execute() throws AbstractEntityException, AbstractFieldException {
+    public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[CLEAR TASKS]");
-        getTaskService().clear();
+        final String userId = getUserId();
+        getTaskService().clear(userId);
     }
 
 }
