@@ -7,7 +7,7 @@ import ru.forinnyy.tm.model.Task;
 
 import java.util.List;
 
-public interface ITaskService extends IService<Task> {
+public interface ITaskService extends IUserOwnedService<Task> {
 
     Task updateById(String userId, String id, String name, String description) throws AbstractFieldException, AbstractEntityException;
 

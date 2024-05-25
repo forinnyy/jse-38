@@ -1,7 +1,9 @@
 package ru.forinnyy.tm.service;
 
 import ru.forinnyy.tm.api.repository.IUserOwnedRepository;
+import ru.forinnyy.tm.api.service.IUserOwnedService;
 import ru.forinnyy.tm.enumerated.Sort;
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.IdEmptyException;
 import ru.forinnyy.tm.exception.field.IndexIncorrectException;
@@ -13,7 +15,7 @@ import java.util.List;
 
 public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel, R extends IUserOwnedRepository<M>>
         extends AbstractService<M, R>
-        implements IUserOwnedRepository<M> {
+        implements IUserOwnedService<M> {
 
     public AbstractUserOwnedService(final R repository) {
         super(repository);
@@ -73,14 +75,14 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     }
 
     @Override
-    public M remove(final String userId, M model) throws AbstractFieldException {
+    public M remove(final String userId, M model) throws AbstractFieldException, AbstractEntityException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (model == null) return null;
         return repository.remove(userId, model);
     }
 
     @Override
-    public M removeById(final String userId, final String id) throws AbstractFieldException {
+    public M removeById(final String userId, final String id) throws AbstractFieldException, AbstractEntityException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         return repository.removeById(userId, id);

@@ -10,7 +10,7 @@ import ru.forinnyy.tm.model.Project;
 
 import java.util.List;
 
-public interface IProjectService extends IService<Project> {
+public interface IProjectService extends IUserOwnedService<Project> {
 
     Project create(String userId, String name) throws AbstractFieldException;
 
