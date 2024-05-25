@@ -32,9 +32,9 @@ public final class AuthService implements IAuthService {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         final User user = userService.findByLogin(login);
-        if (user == null) throw new AccessDeniedException();
+        if (user == null) throw new PermissionException();
         final String hash = HashUtil.salt(password);
-        if (!hash.equals(user.getPasswordHash())) throw new AccessDeniedException();
+        if (!hash.equals(user.getPasswordHash())) throw new PermissionException();
         userId = user.getId();
     }
 
