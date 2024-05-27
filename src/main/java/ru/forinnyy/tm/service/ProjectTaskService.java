@@ -9,6 +9,9 @@ import ru.forinnyy.tm.exception.entity.TaskNotFoundException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.ProjectIdEmptyException;
 import ru.forinnyy.tm.exception.field.TaskIdEmptyException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
+import ru.forinnyy.tm.exception.user.PermissionException;
+import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Task;
 
 import java.util.List;
@@ -25,34 +28,43 @@ public final class ProjectTaskService implements IProjectTaskService {
     }
 
     @Override
-    public Task bindTaskToProject(final String userId, final String projectId, final String taskId) throws AbstractFieldException, AbstractEntityException {
+    public Task bindTaskToProject(final String userId, final String projectId, final String taskId)
+            throws AbstractFieldException, AbstractEntityException, AbstractUserException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
-        if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();
+        final Project project = projectRepository.findOneById(projectId);
         final Task task = taskRepository.findOneById(taskId);
+        if (!project.getUserId().equals(userId)) throw new PermissionException();
+        if (!task.getUserId().equals(userId)) throw new PermissionException();
+        if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();
         if (task == null) throw new TaskNotFoundException();
         task.setProjectId(projectId);
         return task;
     }
 
     @Override
-    public void removeProjectById(final String userId, final String projectId) throws AbstractFieldException, AbstractEntityException {
-        if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
-        if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();
-        final List<Task> tasks = taskRepository.findAllByProjectId(userId, projectId);
-        for (final Task task: tasks) taskRepository.removeById(task.getId());
-        projectRepository.removeById(projectId);
-    }
-
-    @Override
-    public Task unbindTaskFromProject(final String userId, final String projectId, final String taskId) throws AbstractFieldException, AbstractEntityException {
+    public Task unbindTaskFromProject(final String userId, final String projectId, final String taskId)
+            throws AbstractFieldException, AbstractEntityException, AbstractUserException {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
         if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();
         final Task task = taskRepository.findOneById(taskId);
+        if (!task.getUserId().equals(userId)) throw new PermissionException();
         if (task == null) throw new TaskNotFoundException();
         task.setProjectId(null);
         return task;
+    }
+
+    @Override
+    public void removeProjectById(final String userId, final String projectId)
+            throws AbstractFieldException, AbstractEntityException, AbstractUserException {
+        if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
+        if (!projectRepository.existsById(projectId)) throw new ProjectNotFoundException();
+        final Project project = projectRepository.findOneById(projectId);
+        if (!project.getUserId().equals(userId)) throw new PermissionException();
+        final List<Task> tasks = taskRepository.findAllByProjectId(userId, projectId);
+        for (final Task task: tasks) taskRepository.removeById(task.getId());
+        projectRepository.removeById(projectId);
     }
 
 }

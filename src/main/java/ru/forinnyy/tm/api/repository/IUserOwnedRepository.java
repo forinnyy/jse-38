@@ -3,6 +3,8 @@ package ru.forinnyy.tm.api.repository;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
+import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
 
 import java.util.Comparator;
@@ -20,17 +22,17 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> extends 
 
     M add(String userId, M model) throws AbstractFieldException;
 
-    boolean existsById(String userId, String id) throws AbstractFieldException;
+    boolean existsById(String userId, String id) throws AbstractFieldException, PermissionException, AbstractUserException;
 
-    M findOneById(String userId, String id) throws AbstractFieldException;
+    M findOneById(String userId, String id) throws AbstractFieldException, PermissionException, AbstractUserException;
 
     M findOneByIndex(String userId, Integer index) throws AbstractFieldException;
 
     int getSize(String userId) throws AbstractFieldException;
 
-    M remove(String userId, M model) throws AbstractFieldException, AbstractEntityException;
+    M remove(String userId, M model) throws AbstractFieldException, AbstractEntityException, PermissionException, AbstractUserException;
 
-    M removeById(String userId, String id) throws AbstractFieldException, AbstractEntityException;
+    M removeById(String userId, String id) throws AbstractFieldException, AbstractEntityException, PermissionException, AbstractUserException;
 
     M removeByIndex(String userId, Integer index) throws AbstractFieldException, AbstractEntityException;
 

@@ -39,6 +39,10 @@ public final class Task extends AbstractUserOwnedModel implements IWBS {
     public Task() {
     }
 
+    public Task(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

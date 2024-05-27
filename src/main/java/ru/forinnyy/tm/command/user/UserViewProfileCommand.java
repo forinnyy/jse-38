@@ -23,7 +23,7 @@ public final class UserViewProfileCommand extends AbstractUserCommand {
     }
 
     @Override
-    public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
+    public void execute() throws AbstractFieldException, AbstractUserException {
         final User user = getAuthService().getUser();
         System.out.println("[USER VIEW PROFILE]");
         System.out.println("ID: " + user.getId());

@@ -15,7 +15,7 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>tm-commands-%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>10</maxHistory>
-            <totalSizeCap>10MB</totalSizeCap>
+            <totalSizeCap>5MB</totalSizeCap>
         </rollingPolicy>
         <encoder>
             <pattern>%d{dd.MM.yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{20} - %msg%n</pattern>
@@ -46,9 +46,4 @@
     <logger name="ru.forinnyy.tm.component" level="info">
         <appender-ref ref="STDOUT" />
     </logger>
-
-
-<!--    <root level="debug">-->
-<!--        <appender-ref ref="STDOUT" />-->
-<!--    </root>-->
 </configuration>

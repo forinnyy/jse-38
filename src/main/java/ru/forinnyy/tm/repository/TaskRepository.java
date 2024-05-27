@@ -22,7 +22,7 @@ public final class TaskRepository extends AbstractUserOwnedRepository<Task>
     public Task create(final String userId, final String name) {
         final Task task = new Task();
         task.setName(name);
-        return add(task);
+        return add(userId, task);
     }
 
     @Override
@@ -30,7 +30,7 @@ public final class TaskRepository extends AbstractUserOwnedRepository<Task>
         final Task task = new Task();
         task.setName(name);
         task.setDescription(description);
-        return add(task);
+        return add(userId, task);
     }
 
 }

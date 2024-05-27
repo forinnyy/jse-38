@@ -15,6 +15,6 @@ public interface ICommand {
 
     Role[] getRoles();
 
-    void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException;
+    void execute() throws AbstractFieldException, AbstractUserException, AbstractEntityException;
 
 }

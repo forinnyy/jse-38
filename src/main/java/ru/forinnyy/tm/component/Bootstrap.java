@@ -22,6 +22,7 @@ import ru.forinnyy.tm.exception.system.ArgumentNotSupportedException;
 import ru.forinnyy.tm.exception.system.CommandNotSupportedException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.Project;
+import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.repository.CommandRepository;
 import ru.forinnyy.tm.repository.ProjectRepository;
@@ -191,8 +192,8 @@ public final class Bootstrap implements IServiceLocator {
         projectService.add(test.getId(), new Project("ALPHA PROJECT", Status.IN_PROGRESS));
         projectService.add(test.getId(), new Project("BETA PROJECT", Status.COMPLETED));
 
-        taskService.create(test.getId(), "MEGA TASK");
-        taskService.create(test.getId(), "BETA TASK");
+        taskService.add(test.getId(), new Task("MEGA TASK"));
+        taskService.add(test.getId(), new Task("BETA TASK"));
     }
 
     private void initLogger() {
@@ -218,7 +219,7 @@ public final class Bootstrap implements IServiceLocator {
                 processCommand(command);
                 System.out.println("[OK]");
             } catch (final Exception e) {
-                LOGGER_LIFECYCLE.error(e.getMessage());
+                // LOGGER_LIFECYCLE.error(e.getMessage());
                 System.err.println("[FAIL]");
             }
         }

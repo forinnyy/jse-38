@@ -8,6 +8,7 @@ import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.IdEmptyException;
 import ru.forinnyy.tm.exception.field.IndexIncorrectException;
 import ru.forinnyy.tm.exception.field.UserIdEmptyException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
 
 import java.util.Comparator;
@@ -48,14 +49,14 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     }
 
     @Override
-    public boolean existsById(final String userId, final String id) throws AbstractFieldException {
+    public boolean existsById(final String userId, final String id) throws AbstractFieldException, AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         return repository.existsById(userId, id);
     }
 
     @Override
-    public M findOneById(final String userId, final String id) throws AbstractFieldException {
+    public M findOneById(final String userId, final String id) throws AbstractFieldException, AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         return repository.findOneById(userId, id);
@@ -75,16 +76,17 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     }
 
     @Override
-    public M remove(final String userId, M model) throws AbstractFieldException, AbstractEntityException {
+    public M remove(final String userId, M model) throws AbstractFieldException, AbstractEntityException, AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (model == null) return null;
         return repository.remove(userId, model);
     }
 
     @Override
-    public M removeById(final String userId, final String id) throws AbstractFieldException, AbstractEntityException {
+    public M removeById(final String userId, final String id) throws AbstractFieldException, AbstractEntityException, AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
+        final M model = findOneById(userId, id);
         return repository.removeById(userId, id);
     }
 

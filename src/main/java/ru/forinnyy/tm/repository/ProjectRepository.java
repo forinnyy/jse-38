@@ -14,7 +14,8 @@ public final class ProjectRepository extends AbstractUserOwnedRepository<Project
     public Project create(final String userId, final String name) {
         final Project project = new Project();
         project.setName(name);
-        return add(project);
+        project.setUserId(userId);
+        return add(userId, project);
     }
 
     @Override
@@ -22,7 +23,7 @@ public final class ProjectRepository extends AbstractUserOwnedRepository<Project
         final Project project = new Project();
         project.setName(name);
         project.setDescription(description);
-        return add(project);
+        return add(userId, project);
     }
 
 }

@@ -4,6 +4,8 @@ import ru.forinnyy.tm.api.repository.IUserOwnedRepository;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
+import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
 
 import java.util.*;
@@ -48,16 +50,16 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
     }
 
     @Override
-    public boolean existsById(final String userId, final String id) throws AbstractFieldException {
+    public boolean existsById(final String userId, final String id) throws AbstractUserException {
         return findOneById(userId, id) != null;
     }
 
     @Override
-    public M findOneById(final String userId, final String id) throws AbstractFieldException {
+    public M findOneById(final String userId, final String id) throws AbstractUserException {
         if (userId == null || id == null) return null;
         for (final M model : models) {
             if (!id.equals(model.getId())) continue;
-            if (!userId.equals(model.getUserId())) continue;
+            if (!userId.equals(model.getUserId())) throw new PermissionException();
             return model;
         }
         return null;
@@ -78,13 +80,13 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
     }
 
     @Override
-    public M remove(final String userId, final M model) throws AbstractFieldException, AbstractEntityException {
+    public M remove(final String userId, final M model) throws AbstractEntityException, AbstractUserException {
         if (userId == null || model == null) return null;
         return removeById(userId, model.getId());
     }
 
     @Override
-    public M removeById(final String userId, final String id) throws AbstractFieldException, AbstractEntityException {
+    public M removeById(final String userId, final String id) throws AbstractEntityException, AbstractUserException {
         if (userId == null || id == null) return null;
         final M model = findOneById(userId, id);
         if (model == null) return null;
