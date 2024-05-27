@@ -24,7 +24,6 @@ public class UserChangePasswordCommand extends AbstractUserCommand {
 
     @Override
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
-        System.out.println("WE ARE HERE");
         System.out.println("[USER CHANGE PASSWORD]");
         System.out.println("ENTER NEW PASSWORD:");
         final String password = TerminalUtil.nextLine();
