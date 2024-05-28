@@ -86,7 +86,6 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     public M removeById(final String userId, final String id) throws AbstractFieldException, AbstractEntityException, AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
-        final M model = findOneById(userId, id);
         return repository.removeById(userId, id);
     }
 
