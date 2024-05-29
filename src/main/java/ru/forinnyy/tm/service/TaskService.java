@@ -21,13 +21,15 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     }
 
     @Override
-    public List<Task> findAllByProjectId(final String userId, String projectId) {
+    public List<Task> findAllByProjectId(final String userId, String projectId) throws AbstractFieldException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (projectId == null || projectId.isEmpty()) return Collections.emptyList();
         return repository.findAllByProjectId(userId, projectId);
     }
 
     @Override
     public Task create(final String userId, final String name, final String description) throws AbstractFieldException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
         return repository.create(userId, name, description);
@@ -35,6 +37,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
 
     @Override
     public Task create(final String userId, final String name) throws AbstractFieldException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         return repository.create(userId, name);
     }
@@ -42,6 +45,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     @Override
     public Task updateById(final String userId, final String id, final String name, final String description)
             throws AbstractFieldException, AbstractEntityException, AbstractUserException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         final Task task = findOneById(id);
@@ -55,6 +59,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     @Override
     public Task updateByIndex(final String userId, final Integer index, final String name, final String description)
             throws AbstractFieldException, AbstractEntityException, AbstractUserException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0 || index > repository.getSize()) throw new IndexIncorrectException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         final Task task = findOneByIndex(index);
@@ -68,6 +73,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     @Override
     public Task changeTaskStatusById(final String userId, final String id, final Status status)
             throws AbstractFieldException, AbstractEntityException, AbstractUserException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
         final Task task = findOneById(id);
         if (task == null) throw new TaskNotFoundException();
@@ -79,6 +85,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     @Override
     public Task changeTaskStatusByIndex(final String userId, final Integer index, final Status status)
             throws AbstractFieldException, AbstractEntityException, AbstractUserException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0 || index > repository.getSize()) throw new IndexIncorrectException();
         if (index >= repository.getSize()) throw new IndexIncorrectException();
         final Task task = findOneByIndex(index);

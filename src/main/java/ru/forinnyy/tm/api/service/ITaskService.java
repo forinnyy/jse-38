@@ -18,7 +18,7 @@ public interface ITaskService extends IUserOwnedService<Task> {
 
     Task changeTaskStatusByIndex(String userId, Integer index, Status status) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
 
-    List<Task> findAllByProjectId(String userId, String projectId);
+    List<Task> findAllByProjectId(String userId, String projectId) throws AbstractFieldException;
 
     Task create(String userId, String name, String description) throws AbstractFieldException;
 
