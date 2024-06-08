@@ -5,10 +5,10 @@ import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
-import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedModel>
         extends AbstractRepository<M>
@@ -22,12 +22,10 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
 
     @Override
     public List<M> findAll(final String userId) {
-        if (userId == null) return Collections.emptyList();
-        final List<M> result = new ArrayList<>();
-        for (final M model : models) {
-            if (userId.equals(model.getUserId())) result.add(model);
-        }
-        return result;
+        return findAll()
+                .stream()
+                .filter(m -> userId.equals(m.getUserId()))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -56,27 +54,30 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
 
     @Override
     public M findOneById(final String userId, final String id) throws AbstractUserException {
-        if (userId == null || id == null) return null;
-        for (final M model : models) {
-            if (!id.equals(model.getId())) continue;
-            if (!userId.equals(model.getUserId())) throw new PermissionException();
-            return model;
-        }
-        return null;
+        return findAll()
+                .stream()
+                .filter(m -> userId.equals(m.getUserId()))
+                .filter(m -> id.equals(m.getId()))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public M findOneByIndex(final String userId, final Integer index) {
-        return findAll(userId).get(index);
+        return findAll()
+                .stream()
+                .filter(m -> userId.equals(m.getUserId()))
+                .skip(index)
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
     public int getSize(final String userId) {
-        int count = 0;
-        for (final M model : models) {
-            if (userId.equals(model.getUserId())) count++;
-        }
-        return count;
+        return (int) findAll()
+                .stream()
+                .filter(m -> userId.equals(m.getUserId()))
+                .count();
     }
 
     @Override

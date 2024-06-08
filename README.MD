@@ -8,17 +8,17 @@
 
 ## SOFTWARE
 
-* **OS**: MACOS Monterey 12.2
+* **OS**: MACOS Sonoma 14.5
 
-* **JAVA**: OpenJDK 1.8.0_402
+* **JAVA**: OpenJDK 1.8.0_401
 
 ## HARDWARE 
 
-* **CPU**: M1
+* **CPU**: Intel Core i5
 
-* **RAM**: 8gb
+* **RAM**: 32gb
 
-* **SSD**: 256gb
+* **SSD**: 500gb
 
 ## PROGRAM BUILD
 

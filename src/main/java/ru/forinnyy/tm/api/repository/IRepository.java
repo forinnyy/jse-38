@@ -7,8 +7,31 @@ import ru.forinnyy.tm.model.AbstractModel;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public interface IRepository<M extends AbstractModel> {
+
+    interface IRepositoryOptional<M> {
+
+        Optional<M> findOneById(String id) throws AbstractFieldException;
+
+        Optional<M> findOneByIndex(Integer index) throws AbstractFieldException;
+
+    }
+
+    default IRepositoryOptional<M> optional() {
+        return new IRepositoryOptional<M>() {
+            @Override
+            public Optional<M> findOneById(String id) throws AbstractFieldException {
+                return Optional.ofNullable(IRepository.this.findOneById(id));
+            }
+
+            @Override
+            public Optional<M> findOneByIndex(Integer index) throws AbstractFieldException {
+                return Optional.ofNullable(IRepository.this.findOneByIndex(index));
+            }
+        };
+    }
 
     void clear();
 

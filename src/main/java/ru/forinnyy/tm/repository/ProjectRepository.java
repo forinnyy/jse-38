@@ -3,9 +3,6 @@ package ru.forinnyy.tm.repository;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.model.Project;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 public final class ProjectRepository extends AbstractUserOwnedRepository<Project>
         implements IProjectRepository {

@@ -2,20 +2,18 @@ package ru.forinnyy.tm.repository;
 
 import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.model.Task;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class TaskRepository extends AbstractUserOwnedRepository<Task>
         implements ITaskRepository {
 
     @Override
     public List<Task> findAllByProjectId(final String userId, final String projectId) {
-        final List<Task> result = new ArrayList<>();
-        for (final Task task: models) {
-            if (task.getProjectId() == null) continue;
-            if (task.getProjectId().equals(projectId)) result.add(task);
-        }
-        return result;
+        return findAll().stream()
+                .filter(m -> userId.equals(m.getUserId()))
+                .filter(m -> projectId.equals(m.getProjectId()))
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -5,14 +5,11 @@ import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.EntityNotFoundException;
 import ru.forinnyy.tm.model.AbstractModel;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public abstract class AbstractRepository<M extends AbstractModel> implements IRepository<M> {
 
-    protected final List<M> models = new ArrayList<>();
+    private final Map<String, M> models = new LinkedHashMap<>();
 
     @Override
     public void clear() {
@@ -21,19 +18,19 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
 
     @Override
     public List<M> findAll() {
-        return models;
+        return new ArrayList<>(models.values());
     }
 
     @Override
     public List<M> findAll(Comparator<M> comparator) {
-        final List<M> result = new ArrayList<>(models);
+        final List<M> result = new ArrayList<>(models.values());
         result.sort(comparator);
         return result;
     }
 
     @Override
     public M add(final M model) {
-        models.add(model);
+        models.put(model.getId(), model);
         return model;
     }
 
@@ -44,10 +41,7 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
 
     @Override
     public M findOneById(final String id) {
-        for (final M model : models) {
-            if (id.equals(model.getId())) return model;
-        }
-        return null;
+        return models.get(id);
     }
 
     @Override
@@ -63,29 +57,24 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
     @Override
     public M remove(M model) throws AbstractEntityException {
         if (model == null) throw new EntityNotFoundException();
-        models.remove(model);
+        models.remove(model.getId());
         return model;
     }
 
     @Override
     public M removeById(String id) throws AbstractEntityException {
         final M model = findOneById(id);
-        if (model == null) throw new EntityNotFoundException();
-        models.remove(model);
-        return model;
+        return remove(model);
     }
 
     @Override
     public M removeByIndex(Integer index) throws AbstractEntityException {
         final M model = findOneByIndex(index);
-        if (model == null) throw new EntityNotFoundException();
-        models.remove(model);
-        return model;
+        return remove(model);
     }
 
     public void removeAll(final Collection<M> collection) {
-        if (collection == null) return;
-        models.removeAll(collection);
+        collection.stream().map(AbstractModel::getId).forEach(models::remove);
     }
 
 }

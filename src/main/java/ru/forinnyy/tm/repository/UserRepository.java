@@ -32,34 +32,32 @@ public final class UserRepository extends AbstractRepository<User> implements IU
 
     @Override
     public User findByLogin(final String login) {
-        for (final User user : models) {
-            if (login.equals(user.getLogin())) return user;
-        }
-        return null;
+        return findAll()
+                .stream()
+                .filter(m -> login.equals(m.getLogin()))
+                .findFirst().orElse(null);
     }
 
     @Override
     public User findByEmail(final String email) {
-        for (final User user : models) {
-            if (email.equals(user.getEmail())) return user;
-        }
-        return null;
+        return findAll()
+                .stream()
+                .filter(m -> email.equals(m.getEmail()))
+                .findFirst().orElse(null);
     }
 
     @Override
     public Boolean isLoginExist(final String login) {
-        for (final User user : models) {
-            if (login.equals(user.getLogin())) return true;
-        }
-        return false;
+        return findAll()
+                .stream()
+                .anyMatch(m -> login.equals(m.getLogin()));
     }
 
     @Override
     public Boolean isEmailExist(final String email) {
-        for (final User user : models) {
-            if (email.equals(user.getEmail())) return true;
-        }
-        return false;
+        return findAll()
+                .stream()
+                .anyMatch(m -> email.equals(m.getEmail()));
     }
 
 }
