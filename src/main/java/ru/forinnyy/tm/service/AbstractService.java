@@ -95,13 +95,14 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     }
 
     @Override
-    public void removeAll(Collection<M> collection) {
+    public void removeAll(final Collection<M> collection) {
         if (collection == null || collection.isEmpty()) return;
         repository.removeAll(collection);
     }
 
     @Override
-    public M removeOne(M model) throws AbstractEntityException, AbstractFieldException {
+    public M removeOne(final M model) throws AbstractEntityException, AbstractFieldException {
+        if (model == null) throw new EntityNotFoundException();
         return repository.remove(model);
     }
 
