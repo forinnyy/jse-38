@@ -2,8 +2,6 @@ package ru.forinnyy.tm.model;
 
 import ru.forinnyy.tm.enumerated.Role;
 
-import java.util.UUID;
-
 public final class User extends AbstractModel {
 
     private String login;
@@ -19,6 +17,16 @@ public final class User extends AbstractModel {
     private String middleName;
 
     private Role role = Role.USUAL;
+
+    private Boolean locked = false;
+
+    public Boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
 
     public String getLogin() {
         return login;

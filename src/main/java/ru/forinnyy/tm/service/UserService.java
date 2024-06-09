@@ -1,5 +1,7 @@
 package ru.forinnyy.tm.service;
 
+import ru.forinnyy.tm.api.repository.IProjectRepository;
+import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.api.repository.IUserRepository;
 import ru.forinnyy.tm.api.service.IUserService;
 import ru.forinnyy.tm.enumerated.Role;
@@ -15,8 +17,18 @@ import ru.forinnyy.tm.util.HashUtil;
 public final class UserService extends AbstractService<User, IUserRepository>
         implements IUserService {
 
-    public UserService(IUserRepository repository) {
-        super(repository);
+    private final IProjectRepository projectRepository;
+
+    private final ITaskRepository taskRepository;
+
+    public UserService(
+            final IUserRepository userRepository,
+            final IProjectRepository projectRepository,
+            final ITaskRepository taskRepository
+            ) {
+        super(userRepository);
+        this.projectRepository;
+        this.taskRepository;
     }
 
     @Override
@@ -85,6 +97,16 @@ public final class UserService extends AbstractService<User, IUserRepository>
         return remove(user);
     }
 
+    public User removeOne(final User model) {
+        if (model == null) return null;
+        final User user = super.removeOne(model);
+        if (user == null) return null;
+        final String userId = user.getId();
+        taskRepository.removeAll(userId);
+        projectrepository.removeAll(userId);
+        return user;
+    }
+
     @Override
     public Boolean isLoginExist(final String login) {
         if (login == null || login.isEmpty()) return false;
@@ -121,6 +143,22 @@ public final class UserService extends AbstractService<User, IUserRepository>
         user.setLastName(lastName);
         user.setMiddleName(middleName);
         return user;
+    }
+
+    @Override
+    public void lockUserByLogin(final String login) throws AbstractFieldException, AbstractEntityException {
+        if (login == null || login.isEmpty()) throw new LoginEmptyException();
+        final User user = findByLogin(login);
+        if (user == null) throw new UserNotFoundException();
+        user.setLocked(true);
+    }
+
+    @Override
+    public void unlockUserByLogin(final String login) throws AbstractFieldException, AbstractEntityException {
+        if (login == null || login.isEmpty()) throw new LoginEmptyException();
+        final User user = findByLogin(login);
+        if (user == null) throw new UserNotFoundException();
+        user.setLocked(false);
     }
 
 }

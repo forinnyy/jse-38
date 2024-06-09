@@ -23,7 +23,10 @@ public final class ProjectTaskService implements IProjectTaskService {
 
     private final ITaskRepository taskRepository;
 
-    public ProjectTaskService(IProjectRepository projectRepository, ITaskRepository taskRepository) {
+    public ProjectTaskService(
+            final IProjectRepository projectRepository,
+            final ITaskRepository taskRepository
+    ) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
     }

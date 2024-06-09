@@ -56,7 +56,7 @@ public final class Bootstrap implements IServiceLocator {
 
     private final IUserRepository userRepository = new UserRepository();
 
-    private final IUserService userService = new UserService(userRepository);
+    private final IUserService userService = new UserService(userRepository, projectRepository, taskRepository);
 
     private final IAuthService authService = new AuthService(userService);
 
@@ -110,6 +110,9 @@ public final class Bootstrap implements IServiceLocator {
         registry(new UserRegistryCommand());
         registry(new UserUpdateProfileCommand());
         registry(new UserViewProfileCommand());
+        registry(new UserLockCommand());
+        registry(new UserUnlockCommand());
+        registry(new UserRemoveCommand());
     }
 
     @Override
