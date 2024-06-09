@@ -3,6 +3,7 @@ package ru.forinnyy.tm.api.repository;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.field.UserIdEmptyException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
@@ -35,5 +36,7 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> extends 
     M removeById(String userId, String id) throws AbstractFieldException, AbstractEntityException, PermissionException, AbstractUserException;
 
     M removeByIndex(String userId, Integer index) throws AbstractFieldException, AbstractEntityException;
+
+    void removeAll(String userId) throws UserIdEmptyException;
 
 }

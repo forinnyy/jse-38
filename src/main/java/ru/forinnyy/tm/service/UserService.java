@@ -27,8 +27,8 @@ public final class UserService extends AbstractService<User, IUserRepository>
             final ITaskRepository taskRepository
             ) {
         super(userRepository);
-        this.projectRepository;
-        this.taskRepository;
+        this.projectRepository = projectRepository;
+        this.taskRepository = taskRepository;
     }
 
     @Override
@@ -86,7 +86,7 @@ public final class UserService extends AbstractService<User, IUserRepository>
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         final User user = findByLogin(login);
         if (user == null) throw new UserNotFoundException();
-        return remove(user);
+        return this.removeOne(user);
     }
 
     @Override
@@ -94,16 +94,16 @@ public final class UserService extends AbstractService<User, IUserRepository>
         if (email == null || email.isEmpty()) throw new EmailEmptyException();
         final User user = findByEmail(email);
         if (user == null) throw new UserNotFoundException();
-        return remove(user);
+        return this.removeOne(user);
     }
 
-    public User removeOne(final User model) {
+    public User removeOne(final User model) throws AbstractEntityException, AbstractFieldException {
         if (model == null) return null;
         final User user = super.removeOne(model);
         if (user == null) return null;
         final String userId = user.getId();
         taskRepository.removeAll(userId);
-        projectrepository.removeAll(userId);
+        projectRepository.removeAll(userId);
         return user;
     }
 

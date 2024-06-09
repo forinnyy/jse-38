@@ -8,6 +8,7 @@ import ru.forinnyy.tm.exception.entity.EntityNotFoundException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.IdEmptyException;
 import ru.forinnyy.tm.exception.field.IndexIncorrectException;
+import ru.forinnyy.tm.exception.field.UserIdEmptyException;
 import ru.forinnyy.tm.model.AbstractModel;
 
 import java.util.Collection;
@@ -97,6 +98,11 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     public void removeAll(Collection<M> collection) {
         if (collection == null || collection.isEmpty()) return;
         repository.removeAll(collection);
+    }
+
+    @Override
+    public M removeOne(M model) throws AbstractEntityException, AbstractFieldException {
+        return repository.remove(model);
     }
 
 }

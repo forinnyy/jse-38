@@ -6,6 +6,7 @@ import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
+import ru.forinnyy.tm.model.User;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -99,6 +100,12 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
         final M model = findOneByIndex(userId, index);
         if (model == null) return null;
         return remove(model);
+    }
+
+    @Override
+    public void removeAll(String userId) {
+        final List<M> list = findAll(userId);
+        removeAll(list);
     }
 
 }
