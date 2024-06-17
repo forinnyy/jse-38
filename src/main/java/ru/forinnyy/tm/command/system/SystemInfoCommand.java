@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.command.system;
 
+import org.jetbrains.annotations.NotNull;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 
@@ -19,12 +20,12 @@ public final class SystemInfoCommand extends AbstractSystemCommand {
     }
 
     @Override
-    public String getDescription() {
+    public @NotNull String getDescription() {
         return DESCRIPTION;
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return NAME;
     }
 

@@ -1,6 +1,8 @@
 package ru.forinnyy.tm.command.system;
 
 
+import org.jetbrains.annotations.NotNull;
+
 public final class ApplicationAboutCommand extends AbstractSystemCommand {
 
     private static final String DESCRIPTION = "Show developer info";
@@ -22,12 +24,12 @@ public final class ApplicationAboutCommand extends AbstractSystemCommand {
     }
 
     @Override
-    public String getDescription() {
+    public @NotNull String getDescription() {
         return DESCRIPTION;
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return NAME;
     }
 

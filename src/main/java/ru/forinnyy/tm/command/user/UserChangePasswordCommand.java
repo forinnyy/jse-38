@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.command.user;
 
+import org.jetbrains.annotations.NotNull;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -13,12 +14,12 @@ public class UserChangePasswordCommand extends AbstractUserCommand {
     private final String DESCRIPTION = "Change password of current user";
 
     @Override
-    public String getDescription() {
+    public @NotNull String getDescription() {
         return DESCRIPTION;
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return NAME;
     }
 

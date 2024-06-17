@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.command.system;
 
+import org.jetbrains.annotations.NotNull;
 import ru.forinnyy.tm.api.model.ICommand;
 import ru.forinnyy.tm.command.AbstractCommand;
 
@@ -26,12 +27,12 @@ public final class CommandListCommand extends AbstractSystemCommand {
     }
 
     @Override
-    public String getDescription() {
+    public @NotNull String getDescription() {
         return DESCRIPTION;
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return NAME;
     }
 

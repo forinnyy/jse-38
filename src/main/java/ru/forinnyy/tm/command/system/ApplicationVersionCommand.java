@@ -1,5 +1,7 @@
 package ru.forinnyy.tm.command.system;
 
+import org.jetbrains.annotations.NotNull;
+
 public final class ApplicationVersionCommand extends AbstractSystemCommand {
 
     private static final String DESCRIPTION = "Show version info.";
@@ -20,12 +22,12 @@ public final class ApplicationVersionCommand extends AbstractSystemCommand {
     }
 
     @Override
-    public String getDescription() {
+    public @NotNull String getDescription() {
         return DESCRIPTION;
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return NAME;
     }
 
