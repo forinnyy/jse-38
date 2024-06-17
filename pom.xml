@@ -5,7 +5,7 @@
 
     <groupId>ru.forinnyy.tm</groupId>
     <artifactId>task-manager</artifactId>
-    <version>1.22.0</version>
+    <version>1.23.0</version>
 
     <name>Task Manager</name>
     <url>http://tm.forinnyy.ru</url>
@@ -30,7 +30,8 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
             <version>1.2.6</version>
-        </dependency><dependency>
+        </dependency>
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.2.6</version>
@@ -45,6 +46,12 @@
             <artifactId>junit</artifactId>
             <version>4.13</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

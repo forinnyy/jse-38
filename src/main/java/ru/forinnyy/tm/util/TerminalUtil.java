@@ -3,7 +3,6 @@ package ru.forinnyy.tm.util;
 import ru.forinnyy.tm.exception.field.NumberIncorrectException;
 
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
 public interface TerminalUtil {
 
