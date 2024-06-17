@@ -1,70 +1,38 @@
 package ru.forinnyy.tm.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.api.model.IWBS;
 import ru.forinnyy.tm.enumerated.Status;
 
 import java.util.Date;
 import java.util.UUID;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public final class Task extends AbstractUserOwnedModel implements IWBS {
 
+    @NotNull
     private String name = "";
 
+    @NotNull
     private String description = "";
 
+    @NotNull
     private Status status = Status.NOT_STARTED;
 
+    @Nullable
     private String projectId;
 
+    @NotNull
     private Date created = new Date();
 
-    @Override
-    public Date getCreated() {
-        return created;
-    }
-
-    @Override
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public String getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
-    }
-
-    public Task() {
-    }
-
-    public Task(String name) {
+    public Task(@NotNull String name) {
         this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 
 }

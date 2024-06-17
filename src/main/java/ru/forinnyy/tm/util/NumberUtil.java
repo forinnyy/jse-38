@@ -1,7 +1,11 @@
 package ru.forinnyy.tm.util;
 
+import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+
 import java.text.DecimalFormat;
 
+@NoArgsConstructor
 public final class NumberUtil {
 
     private static final double KILOBYTE = 1024;
@@ -28,23 +32,28 @@ public final class NumberUtil {
 
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.###");
 
+    @NotNull
     private static String render(final double bytes) {
         return DECIMAL_FORMAT.format(bytes);
     }
 
+    @NotNull
     private static String render(final long bytes, final double size) {
         return render(bytes / size);
     }
 
+    @NotNull
     private static String render(final long bytes, final double size, final String name) {
         return render(bytes, size) + SEPARATOR + name;
     }
 
+    @NotNull
     private static String render(final long bytes, final String name) {
         return render(bytes) + SEPARATOR + name;
     }
 
 
+    @NotNull
     public static String formatBytes(final long bytes) {
         if ((bytes >= 0) && (bytes < KILOBYTE)) return render(bytes, NAME_BYTES);
         if ((bytes >= KILOBYTE) && (bytes < MEGABYTE)) return render(bytes, KILOBYTE, NAME_KILOBYTE);
@@ -52,9 +61,6 @@ public final class NumberUtil {
         if ((bytes >= GIGABYTE) && (bytes < TERABYTE)) return render(bytes, GIGABYTE, NAME_GIGABYTE);
         if (bytes >= TERABYTE) render(bytes, TERABYTE, NAME_TERABYTE);
         return render(bytes, NAME_BYTES_LONG);
-    }
-
-    private NumberUtil() {
     }
 
 }

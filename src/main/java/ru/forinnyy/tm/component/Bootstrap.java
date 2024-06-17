@@ -1,5 +1,9 @@
 package ru.forinnyy.tm.component;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.forinnyy.tm.api.repository.ICommandRepository;
@@ -31,33 +35,50 @@ import ru.forinnyy.tm.repository.UserRepository;
 import ru.forinnyy.tm.service.*;
 import ru.forinnyy.tm.util.TerminalUtil;
 
-import java.util.Arrays;
 
-
+@NoArgsConstructor
 public final class Bootstrap implements IServiceLocator {
 
+    @NotNull
     private final static Logger LOGGER_LIFECYCLE = LoggerFactory.getLogger("LIFECYCLE");
 
+    @NotNull
     private final static Logger LOGGER_COMMANDS = LoggerFactory.getLogger("COMMANDS");
 
+    @NotNull
     private final ICommandRepository commandRepository = new CommandRepository();
 
+    @Getter
+    @NotNull
     private final ICommandService commandService = new CommandService(commandRepository);
 
+    @NotNull
     private final IProjectRepository projectRepository = new ProjectRepository();
 
+    @Getter
+    @NotNull
     private final IProjectService projectService = new ProjectService(projectRepository);
 
+    @NotNull
     private final ITaskRepository taskRepository = new TaskRepository();
 
+    @Getter
+    @NotNull
     private final IProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
 
+    @Getter
+    @NotNull
     private final ITaskService taskService = new TaskService(taskRepository);
 
+    @NotNull
     private final IUserRepository userRepository = new UserRepository();
 
+    @Getter
+    @NotNull
     private final IUserService userService = new UserService(userRepository, projectRepository, taskRepository);
 
+    @Getter
+    @NotNull
     private final IAuthService authService = new AuthService(userService);
 
     {
@@ -115,42 +136,12 @@ public final class Bootstrap implements IServiceLocator {
         registry(new UserRemoveCommand());
     }
 
-    @Override
-    public ICommandService getCommandService() {
-        return commandService;
-    }
-
-    @Override
-    public IProjectService getProjectService() {
-        return projectService;
-    }
-
-    @Override
-    public IProjectTaskService getProjectTaskService() {
-        return projectTaskService;
-    }
-
-    @Override
-    public ITaskService getTaskService() {
-        return taskService;
-    }
-
-    @Override
-    public IUserService getUserService() {
-        return userService;
-    }
-
-    @Override
-    public IAuthService getAuthService() {
-        return authService;
-    }
-
-    private void processArgument(final String arg) throws
+    private void processArgument(@Nullable final String arg) throws
             AbstractSystemException,
             AbstractEntityException,
             AbstractFieldException,
             AbstractUserException {
-        final AbstractCommand abstractCommand = commandService.getCommandByArgument(arg);
+        @Nullable final AbstractCommand abstractCommand = commandService.getCommandByArgument(arg);
         if (abstractCommand == null) throw new ArgumentNotSupportedException(arg);
         abstractCommand.execute();
     }
@@ -163,10 +154,6 @@ public final class Bootstrap implements IServiceLocator {
         if (args == null || args.length < 1) return false;
         processArgument(args[0]);
         return true;
-    }
-
-    private void exit() {
-        System.exit(0);
     }
 
     private void processCommand(final String command) throws
@@ -186,9 +173,9 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     private void initDemoData() throws AbstractFieldException, AbstractEntityException, AbstractUserException {
-        final User test = userService.create("test", "test", "test@test.ru");
-        final User user = userService.create("user", "user", "user@user.ru");
-        final User admin = userService.create("admin", "admin", Role.ADMIN);
+        @NotNull final User test = userService.create("test", "test", "test@test.ru");
+        @NotNull final User user = userService.create("user", "user", "user@user.ru");
+        @NotNull final User admin = userService.create("admin", "admin", Role.ADMIN);
 
         projectService.add(test.getId(), new Project("TEST PROJECT", Status.IN_PROGRESS));
         projectService.add(test.getId(), new Project("DEMO PROJECT", Status.NOT_STARTED));
