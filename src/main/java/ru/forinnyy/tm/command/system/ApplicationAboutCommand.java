@@ -5,10 +5,13 @@ import org.jetbrains.annotations.NotNull;
 
 public final class ApplicationAboutCommand extends AbstractSystemCommand {
 
+    @NotNull
     private static final String DESCRIPTION = "Show developer info";
 
+    @NotNull
     private static final String NAME = "about";
 
+    @NotNull
     private static final String ARGUMENT = "-a";
 
     @Override
@@ -18,18 +21,21 @@ public final class ApplicationAboutCommand extends AbstractSystemCommand {
         System.out.println("E-mail: forinnyy@gmail.com");
     }
 
+    @NotNull
     @Override
     public String getArgument() {
         return ARGUMENT;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 

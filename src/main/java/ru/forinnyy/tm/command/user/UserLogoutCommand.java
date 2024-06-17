@@ -8,17 +8,21 @@ import ru.forinnyy.tm.exception.user.AbstractUserException;
 
 public final class UserLogoutCommand extends AbstractUserCommand {
 
-    private final String NAME = "logout";
+    @NotNull
+    private static final String NAME = "logout";
 
-    private final String DESCRIPTION = "Logout current user";
+    @NotNull
+    private static final String DESCRIPTION = "Logout current user";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 

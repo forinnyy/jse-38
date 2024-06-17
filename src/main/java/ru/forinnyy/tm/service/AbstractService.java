@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.service;
 
+import org.jetbrains.annotations.NotNull;
 import ru.forinnyy.tm.api.repository.IRepository;
 import ru.forinnyy.tm.api.service.IService;
 import ru.forinnyy.tm.enumerated.Sort;
@@ -29,11 +30,13 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
         repository.clear();
     }
 
+    @NotNull
     @Override
     public List<M> findAll() {
         return repository.findAll();
     }
 
+    @NotNull
     @Override
     public List<M> findAll(final Comparator<M> comparator) {
         System.out.println(comparator);
@@ -41,12 +44,14 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
         return repository.findAll(comparator);
     }
 
+    @NotNull
     @Override
     public List<M> findAll(final Sort sort) {
         if (sort == null) return findAll();
         return repository.findAll(sort.getComparator());
     }
 
+    @NotNull
     @Override
     public M add(final M model) {
         if (model == null) return null;

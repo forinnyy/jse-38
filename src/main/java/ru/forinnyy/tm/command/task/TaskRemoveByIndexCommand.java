@@ -8,17 +8,21 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class TaskRemoveByIndexCommand extends AbstractTaskCommand {
 
+    @NotNull
     private static final String NAME = "task-remove-by-index";
 
+    @NotNull
     private static final String DESCRIPTION = "Remove task by index.";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 
@@ -26,8 +30,8 @@ public final class TaskRemoveByIndexCommand extends AbstractTaskCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[REMOVE TASK BY INDEX]");
         System.out.println("ENTER INDEX:");
-        final Integer index = TerminalUtil.nextNumber() -1;
-        final String userId = getUserId();
+        @NotNull final Integer index = TerminalUtil.nextNumber() -1;
+        @NotNull final String userId = getUserId();
         getTaskService().removeByIndex(userId, index);
     }
 

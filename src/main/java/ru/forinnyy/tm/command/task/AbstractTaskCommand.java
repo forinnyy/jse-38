@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.command.task;
 
+import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.api.service.IProjectTaskService;
 import ru.forinnyy.tm.api.service.ITaskService;
 import ru.forinnyy.tm.command.AbstractCommand;
@@ -19,6 +20,7 @@ public abstract class AbstractTaskCommand extends AbstractCommand {
         return getServiceLocator().getProjectTaskService();
     }
 
+    @Nullable
     @Override
     public String getArgument() {
         return null;
@@ -42,6 +44,7 @@ public abstract class AbstractTaskCommand extends AbstractCommand {
         }
     }
 
+    @Nullable
     @Override
     public Role[] getRoles() {
         return Role.values();

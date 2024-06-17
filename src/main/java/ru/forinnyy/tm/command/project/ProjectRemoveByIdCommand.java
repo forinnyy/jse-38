@@ -1,7 +1,9 @@
 package ru.forinnyy.tm.command.project;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
+import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.Project;
@@ -9,8 +11,10 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class ProjectRemoveByIdCommand extends AbstractProjectCommand {
 
+    @NotNull
     private static final String NAME = "project-remove-by-id";
 
+    @NotNull
     private static final String DESCRIPTION = "Remove project by id.";
 
     @NotNull
@@ -30,7 +34,8 @@ public final class ProjectRemoveByIdCommand extends AbstractProjectCommand {
         System.out.println("[REMOVE PROJECT BY ID]");
         System.out.println("ENTER ID:");
         @NotNull final String id = TerminalUtil.nextLine();
-        final Project project = getProjectService().removeById(id);
+        @Nullable final Project project = getProjectService().removeById(id);
+        if (project == null) throw new ProjectNotFoundException();
         @NotNull final String userId = getUserId();
         getProjectTaskService().removeProjectById(userId, project.getId());
     }

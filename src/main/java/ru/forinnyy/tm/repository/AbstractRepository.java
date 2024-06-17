@@ -1,5 +1,7 @@
 package ru.forinnyy.tm.repository;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.api.repository.IRepository;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.EntityNotFoundException;
@@ -9,6 +11,7 @@ import java.util.*;
 
 public abstract class AbstractRepository<M extends AbstractModel> implements IRepository<M> {
 
+    @NotNull
     private final Map<String, M> models = new LinkedHashMap<>();
 
     @Override
@@ -16,11 +19,13 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
         models.clear();
     }
 
+    @NotNull
     @Override
     public List<M> findAll() {
         return new ArrayList<>(models.values());
     }
 
+    @NotNull
     @Override
     public List<M> findAll(Comparator<M> comparator) {
         final List<M> result = new ArrayList<>(models.values());
@@ -28,14 +33,15 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
         return result;
     }
 
+    @NotNull
     @Override
-    public M add(final M model) {
+    public M add(@NotNull final M model) {
         models.put(model.getId(), model);
         return model;
     }
 
     @Override
-    public boolean existsById(final String id) {
+    public boolean existsById(@Nullable final String id) {
         return findOneById(id) != null;
     }
 

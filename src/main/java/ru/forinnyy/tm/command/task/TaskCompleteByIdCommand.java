@@ -9,17 +9,21 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class TaskCompleteByIdCommand extends AbstractTaskCommand {
 
+    @NotNull
     private static final String NAME = "task-complete-by-id";
 
+    @NotNull
     private static final String DESCRIPTION = "Complete task by id.";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 
@@ -27,8 +31,8 @@ public final class TaskCompleteByIdCommand extends AbstractTaskCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[COMPLETE TASK BY ID]");
         System.out.println("ENTER ID:");
-        final String id = TerminalUtil.nextLine();
-        final String userId = getUserId();
+        @NotNull final String id = TerminalUtil.nextLine();
+        @NotNull final String userId = getUserId();
         getTaskService().changeTaskStatusById(userId, id, Status.COMPLETED);
     }
 

@@ -8,17 +8,21 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class TaskCreateCommand extends AbstractTaskCommand {
 
+    @NotNull
     private static final String NAME = "task-create";
 
+    @NotNull
     private static final String DESCRIPTION = "Create new task.";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 
@@ -26,10 +30,10 @@ public final class TaskCreateCommand extends AbstractTaskCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[CREATE TASK]");
         System.out.println("[ENTER NAME]");
-        final String name = TerminalUtil.nextLine();
+        @NotNull final String name = TerminalUtil.nextLine();
         System.out.println("[ENTER DESCRIPTION]");
-        final String description = TerminalUtil.nextLine();
-        final String userId = getUserId();
+        @NotNull final String description = TerminalUtil.nextLine();
+        @NotNull final String userId = getUserId();
         getTaskService().create(userId, name, description);
     }
 

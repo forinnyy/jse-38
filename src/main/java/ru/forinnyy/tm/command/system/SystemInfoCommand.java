@@ -8,24 +8,30 @@ import static ru.forinnyy.tm.util.NumberUtil.formatBytes;
 
 public final class SystemInfoCommand extends AbstractSystemCommand {
 
+    @NotNull
     private static final String DESCRIPTION = "Show system info.";
 
+    @NotNull
     private static final String ARGUMENT = "-i";
 
+    @NotNull
     private static final String NAME = "info";
 
+    @NotNull
     @Override
     public String getArgument() {
         return ARGUMENT;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 

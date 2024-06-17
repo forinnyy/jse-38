@@ -9,7 +9,6 @@ import ru.forinnyy.tm.api.model.IWBS;
 import ru.forinnyy.tm.enumerated.Status;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Getter
 @Setter

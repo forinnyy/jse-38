@@ -4,30 +4,36 @@ import org.jetbrains.annotations.NotNull;
 
 public final class ApplicationVersionCommand extends AbstractSystemCommand {
 
+    @NotNull
     private static final String DESCRIPTION = "Show version info.";
 
+    @NotNull
     private static final String NAME = "version";
 
+    @NotNull
     private static final String ARGUMENT = "-v";
 
     @Override
     public void execute() {
         System.out.println("[VERSION]");
-        System.out.println("1.22.0");
+        System.out.println("1.23.0");
     }
 
+    @NotNull
     @Override
     public String getArgument() {
         return ARGUMENT;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 

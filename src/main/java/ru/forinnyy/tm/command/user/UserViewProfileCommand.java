@@ -1,31 +1,35 @@
 package ru.forinnyy.tm.command.user;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.enumerated.Role;
-import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.User;
 
 public final class UserViewProfileCommand extends AbstractUserCommand {
 
-    private final String NAME = "view-user-profile";
+    @NotNull
+    private static final String NAME = "view-user-profile";
 
-    private final String DESCRIPTION = "View profile of current user";
+    @NotNull
+    private static final String DESCRIPTION = "View profile of current user";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 
     @Override
     public void execute() throws AbstractFieldException, AbstractUserException {
-        final User user = getAuthService().getUser();
+        @NotNull final User user = getAuthService().getUser();
         System.out.println("[USER VIEW PROFILE]");
         System.out.println("ID: " + user.getId());
         System.out.println("LOGIN: " + user.getLogin());
@@ -36,6 +40,7 @@ public final class UserViewProfileCommand extends AbstractUserCommand {
         System.out.println("ROLE: " + user.getRole());
     }
 
+    @Nullable
     @Override
     public Role[] getRoles() {
         return Role.values();

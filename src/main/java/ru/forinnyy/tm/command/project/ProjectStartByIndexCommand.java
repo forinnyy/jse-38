@@ -9,17 +9,21 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class ProjectStartByIndexCommand extends AbstractProjectCommand {
 
+    @NotNull
     private static final String NAME = "project-start-by-index";
 
+    @NotNull
     private static final String DESCRIPTION = "Start project by index.";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 
@@ -27,8 +31,8 @@ public final class ProjectStartByIndexCommand extends AbstractProjectCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[START PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
-        final Integer index = TerminalUtil.nextNumber() - 1;
-        final String userId = getUserId();
+        @NotNull final Integer index = TerminalUtil.nextNumber() - 1;
+        @NotNull final String userId = getUserId();
         getProjectService().changeProjectStatusByIndex(userId, index, Status.IN_PROGRESS);
     }
 

@@ -7,24 +7,28 @@ import ru.forinnyy.tm.exception.user.AbstractUserException;
 
 public final class TaskClearCommand extends AbstractTaskCommand {
 
+    @NotNull
     private static final String NAME = "task-clear";
 
+    @NotNull
     private static final String DESCRIPTION = "Clear all tasks.";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 
     @Override
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[CLEAR TASKS]");
-        final String userId = getUserId();
+        @NotNull final String userId = getUserId();
         getTaskService().clear(userId);
     }
 

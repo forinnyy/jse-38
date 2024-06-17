@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.command.user;
 
+import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.api.service.IAuthService;
 import ru.forinnyy.tm.api.service.IUserService;
 import ru.forinnyy.tm.command.AbstractCommand;
@@ -13,7 +14,7 @@ public abstract class AbstractUserCommand extends AbstractCommand {
     }
 
     public IAuthService getAuthService() {
-        return serviceLocator.getAuthService();
+        return super.getAuthService();
     }
 
     protected void showUser(final User user) throws UserNotFoundException {
@@ -22,6 +23,7 @@ public abstract class AbstractUserCommand extends AbstractCommand {
         System.out.println("LOGIN: " + user.getLogin());
     }
 
+    @Nullable
     @Override
     public String getArgument() {
         return null;

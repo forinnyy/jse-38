@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.enumerated;
 
 import lombok.Getter;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.comparator.CreatedComparator;
 import ru.forinnyy.tm.comparator.NameComparator;
@@ -36,6 +35,7 @@ public enum Sort {
         this.comparator = comparator;
     }
 
+    @SuppressWarnings("rawtypes")
     public Comparator getComparator() {
         return comparator;
     }

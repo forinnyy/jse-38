@@ -8,17 +8,21 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class TaskUnbindFromProjectCommand extends AbstractTaskCommand {
 
+    @NotNull
     private static final String NAME = "task-unbind-from-project";
 
+    @NotNull
     private static final String DESCRIPTION = "Unbind task from project.";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 
@@ -26,10 +30,10 @@ public final class TaskUnbindFromProjectCommand extends AbstractTaskCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[UNBIND TASK FROM PROJECT]");
         System.out.println("ENTER PROJECT ID:");
-        final String projectId = TerminalUtil.nextLine();
+        @NotNull final String projectId = TerminalUtil.nextLine();
         System.out.println("ENTER TASK ID:");
-        final String taskId = TerminalUtil.nextLine();
-        final String userId = getUserId();
+        @NotNull final String taskId = TerminalUtil.nextLine();
+        @NotNull final String userId = getUserId();
         getProjectTaskService().unbindTaskFromProject(userId, projectId, taskId);
     }
 

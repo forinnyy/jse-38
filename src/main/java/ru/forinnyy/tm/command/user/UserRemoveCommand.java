@@ -9,20 +9,25 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class UserRemoveCommand extends AbstractUserCommand {
 
-    private final String NAME = "user-remove";
+    @NotNull
+    private static final String NAME = "user-remove";
 
-    private final String DESCRIPTION = "Remove user.";
+    @NotNull
+    private static final String DESCRIPTION = "Remove user.";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 
+    @NotNull
     @Override
     public Role[] getRoles() {
         return  new Role[] {
@@ -34,7 +39,7 @@ public final class UserRemoveCommand extends AbstractUserCommand {
     public void execute() throws AbstractFieldException, AbstractUserException, AbstractEntityException {
         System.out.println("[USER REMOVE]");
         System.out.println("ENTER LOGIN");
-        final String login = TerminalUtil.nextLine();
+        @NotNull final String login = TerminalUtil.nextLine();
         getUserService().removeByLogin(login);
     }
 

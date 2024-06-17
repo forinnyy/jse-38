@@ -8,17 +8,21 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class ProjectUpdateByIndexCommand extends AbstractProjectCommand {
 
+    @NotNull
     private static final String NAME = "project-update-by-index";
 
+    @NotNull
     private static final String DESCRIPTION = "Update project by index.";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 
@@ -26,12 +30,12 @@ public final class ProjectUpdateByIndexCommand extends AbstractProjectCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[SHOW PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
-        final Integer index = TerminalUtil.nextNumber() -1;
+        @NotNull final Integer index = TerminalUtil.nextNumber() -1;
         System.out.println("ENTER NAME:");
-        final String name = TerminalUtil.nextLine();
+        @NotNull final String name = TerminalUtil.nextLine();
         System.out.println("ENTER DESCRIPTION:");
-        final String description = TerminalUtil.nextLine();
-        final String userId = getUserId();
+        @NotNull final String description = TerminalUtil.nextLine();
+        @NotNull final String userId = getUserId();
         getProjectService().updateByIndex(userId, index, name, description);
     }
 

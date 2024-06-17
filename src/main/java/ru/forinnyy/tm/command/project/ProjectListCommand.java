@@ -41,7 +41,7 @@ public final class ProjectListCommand extends AbstractProjectCommand {
         @NotNull final String userId = getUserId();
         @NotNull final List<Project> projects = getProjectService().findAll(userId, sort);
         int index = 1;
-        for (final Project project: projects) {
+        for (@Nullable final Project project: projects) {
             if (project == null) continue;
             System.out.println(index + ". " + project.getName());
             index++;

@@ -8,17 +8,21 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class ProjectUpdateByIdCommand extends AbstractProjectCommand {
 
+    @NotNull
     private static final String NAME = "project-update-by-id";
 
+    @NotNull
     private static final String DESCRIPTION = "Update project by id.";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 
@@ -26,12 +30,12 @@ public final class ProjectUpdateByIdCommand extends AbstractProjectCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[SHOW PROJECT BY ID]");
         System.out.println("ENTER ID:");
-        final String id = TerminalUtil.nextLine();
+        @NotNull final String id = TerminalUtil.nextLine();
         System.out.println("ENTER NAME:");
-        final String name = TerminalUtil.nextLine();
+        @NotNull final String name = TerminalUtil.nextLine();
         System.out.println("ENTER DESCRIPTION:");
-        final String description = TerminalUtil.nextLine();
-        final String userId = getUserId();
+        @NotNull final String description = TerminalUtil.nextLine();
+        @NotNull final String userId = getUserId();
         getProjectService().updateById(userId, id, name, description);
     }
 

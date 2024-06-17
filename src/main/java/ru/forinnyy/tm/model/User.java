@@ -1,6 +1,5 @@
 package ru.forinnyy.tm.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,5 +36,9 @@ public final class User extends AbstractModel {
 
     @NotNull
     private Boolean locked = false;
+
+    public Boolean isLocked() {
+        return locked;
+    }
 
 }

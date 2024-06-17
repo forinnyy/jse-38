@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.command.user;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
@@ -9,20 +10,25 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class UserLockCommand extends AbstractUserCommand {
 
-    private final String NAME = "user-lock";
+    @NotNull
+    private static final String NAME = "user-lock";
 
-    private final String DESCRIPTION = "Lock user.";
+    @NotNull
+    private static final String DESCRIPTION = "Lock user.";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 
+    @NotNull
     @Override
     public Role[] getRoles() {
         return  new Role[] {
@@ -34,7 +40,7 @@ public final class UserLockCommand extends AbstractUserCommand {
     public void execute() throws AbstractFieldException, AbstractUserException, AbstractEntityException {
         System.out.println("[USER LOCK]");
         System.out.println("ENTER LOGIN");
-        final String login = TerminalUtil.nextLine();
+        @NotNull final String login = TerminalUtil.nextLine();
         getUserService().lockUserByLogin(login);
     }
 

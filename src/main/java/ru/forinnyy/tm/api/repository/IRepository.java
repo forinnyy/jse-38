@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.api.repository;
 
+import org.jetbrains.annotations.NotNull;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.UserIdEmptyException;
@@ -37,10 +38,13 @@ public interface IRepository<M extends AbstractModel> {
 
     void clear();
 
+    @NotNull
     List<M> findAll();
 
+    @NotNull
     List<M> findAll(Comparator<M> comparator);
 
+    @NotNull
     M add(M model);
 
     boolean existsById(String id);

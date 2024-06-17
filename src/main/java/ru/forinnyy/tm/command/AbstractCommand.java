@@ -1,18 +1,19 @@
 package ru.forinnyy.tm.command;
 
 
+import lombok.Getter;
+import lombok.Setter;
 import ru.forinnyy.tm.api.model.ICommand;
 import ru.forinnyy.tm.api.service.IAuthService;
 import ru.forinnyy.tm.api.service.IServiceLocator;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 
+
+@Setter
+@Getter
 public abstract class AbstractCommand implements ICommand {
 
     protected IServiceLocator serviceLocator;
-
-    public IServiceLocator getServiceLocator() {
-        return serviceLocator;
-    }
 
     public IAuthService getAuthService() {
         return serviceLocator.getAuthService();
@@ -20,10 +21,6 @@ public abstract class AbstractCommand implements ICommand {
 
     public String getUserId() throws AbstractUserException {
         return getAuthService().getUserId();
-    }
-
-    public void setServiceLocator(final IServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
     }
 
     @Override

@@ -9,17 +9,21 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class UserUpdateProfileCommand extends AbstractUserCommand {
 
-    private final String NAME = "update-user-profile";
+    @NotNull
+    private static final String NAME = "update-user-profile";
 
-    private final String DESCRIPTION = "Update profile of current user";
+    @NotNull
+    private static final String DESCRIPTION = "Update profile of current user";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 
@@ -27,7 +31,7 @@ public final class UserUpdateProfileCommand extends AbstractUserCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[USER UPDATE PROFILE]");
         System.out.println("ENTER FIRST NAME:");
-        final String firstName = TerminalUtil.nextLine();
+        @NotNull final String firstName = TerminalUtil.nextLine();
         System.out.println("ENTER LAST NAME:");
         final String lastName = TerminalUtil.nextLine();
         System.out.println("ENTER MIDDLE NAME:");
@@ -36,6 +40,7 @@ public final class UserUpdateProfileCommand extends AbstractUserCommand {
         getUserService().updateUser(userId, firstName, lastName, middleName);
     }
 
+    @NotNull
     @Override
     public Role[] getRoles() {
         return Role.values();

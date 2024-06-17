@@ -8,17 +8,21 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class TaskBindToProjectCommand extends AbstractTaskCommand {
 
+    @NotNull
     private static final String NAME = "task-bind-to-project";
 
+    @NotNull
     private static final String DESCRIPTION = "Bind task to project.";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 
@@ -26,10 +30,10 @@ public final class TaskBindToProjectCommand extends AbstractTaskCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[BIND TASK TO PROJECT]");
         System.out.println("ENTER PROJECT ID:");
-        final String projectId = TerminalUtil.nextLine();
+        @NotNull final String projectId = TerminalUtil.nextLine();
         System.out.println("ENTER TASK ID:");
-        final String taskId = TerminalUtil.nextLine();
-        final String userId = getUserId();
+        @NotNull final String taskId = TerminalUtil.nextLine();
+        @NotNull final String userId = getUserId();
         getProjectTaskService().bindTaskToProject(userId, projectId, taskId);
     }
 

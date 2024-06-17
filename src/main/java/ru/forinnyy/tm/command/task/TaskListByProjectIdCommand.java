@@ -11,17 +11,21 @@ import java.util.List;
 
 public final class TaskListByProjectIdCommand extends AbstractTaskCommand {
 
+    @NotNull
     private static final String NAME = "task-list-by-project-id";
 
+    @NotNull
     private static final String DESCRIPTION = "Shows list of tasks for project id";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 
@@ -29,9 +33,9 @@ public final class TaskListByProjectIdCommand extends AbstractTaskCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[TASK LIST BY PROJECT ID]");
         System.out.println("ENTER PROJECT ID:");
-        final String projectId = TerminalUtil.nextLine();
-        final String userId = getUserId();
-        final List<Task> tasks = getTaskService().findAllByProjectId(userId, projectId);
+        @NotNull final String projectId = TerminalUtil.nextLine();
+        @NotNull final String userId = getUserId();
+        @NotNull final List<Task> tasks = getTaskService().findAllByProjectId(userId, projectId);
         renderTasks(tasks);
     }
 

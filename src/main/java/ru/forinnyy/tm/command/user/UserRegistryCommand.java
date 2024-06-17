@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.user;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.api.service.IAuthService;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
@@ -12,17 +13,19 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class UserRegistryCommand extends AbstractUserCommand {
 
-    private final String NAME = "user-registry";
+    private static final String NAME = "user-registry";
 
-    private final String DESCRIPTION = "User registration";
+    private static final String DESCRIPTION = "User registration";
 
+    @NotNull
     @Override
-    public @NotNull String getDescription() {
+    public String getDescription() {
         return DESCRIPTION;
     }
 
+    @NotNull
     @Override
-    public @NotNull String getName() {
+    public String getName() {
         return NAME;
     }
 
@@ -30,16 +33,17 @@ public final class UserRegistryCommand extends AbstractUserCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[USER REGISTRY]");
         System.out.println("ENTER LOGIN:");
-        final String login = TerminalUtil.nextLine();
+        @NotNull final String login = TerminalUtil.nextLine();
         System.out.println("ENTER PASSWORD:");
-        final String password = TerminalUtil.nextLine();
+        @NotNull final String password = TerminalUtil.nextLine();
         System.out.println("ENTER EMAIL:");
-        final String email = TerminalUtil.nextLine();
-        final IAuthService authService = getAuthService();
-        final User user = authService.registry(login, password, email);
+        @NotNull final String email = TerminalUtil.nextLine();
+        @NotNull final IAuthService authService = getAuthService();
+        @NotNull final User user = authService.registry(login, password, email);
         showUser(user);
     }
 
+    @Nullable
     @Override
     public Role[] getRoles() {
         return null;

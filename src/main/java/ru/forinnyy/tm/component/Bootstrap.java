@@ -105,6 +105,8 @@ public final class Bootstrap implements IServiceLocator {
         registry(new ProjectStartByIndexCommand());
         registry(new ProjectUpdateByIdCommand());
         registry(new ProjectUpdateByIndexCommand());
+        registry(new ProjectCompleteByIdCommand());
+        registry(new ProjectCompleteByIndexCommand());
 
         registry(new TaskBindToProjectCommand());
         registry(new TaskUnbindFromProjectCommand());
@@ -146,7 +148,7 @@ public final class Bootstrap implements IServiceLocator {
         abstractCommand.execute();
     }
 
-    private boolean processArguments(final String[] args) throws
+    private boolean processArguments(@Nullable final String[] args) throws
             AbstractSystemException,
             AbstractEntityException,
             AbstractFieldException,
@@ -161,7 +163,7 @@ public final class Bootstrap implements IServiceLocator {
             AbstractFieldException,
             AbstractEntityException,
             AbstractUserException {
-        final AbstractCommand abstractCommand = commandService.getCommandByName(command);
+        @Nullable final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
         authService.checkRoles(abstractCommand.getRoles());
         abstractCommand.execute();
@@ -172,10 +174,13 @@ public final class Bootstrap implements IServiceLocator {
         commandService.add(command);
     }
 
-    private void initDemoData() throws AbstractFieldException, AbstractEntityException, AbstractUserException {
+    private void initDemoData() throws AbstractFieldException, AbstractUserException {
         @NotNull final User test = userService.create("test", "test", "test@test.ru");
         @NotNull final User user = userService.create("user", "user", "user@user.ru");
         @NotNull final User admin = userService.create("admin", "admin", Role.ADMIN);
+
+        projectService.add(user.getId(), new Project("USER PROJECT", Status.IN_PROGRESS));
+        projectService.add(admin.getId(), new Project("ADMIN PROJECT", Status.NOT_STARTED));
 
         projectService.add(test.getId(), new Project("TEST PROJECT", Status.IN_PROGRESS));
         projectService.add(test.getId(), new Project("DEMO PROJECT", Status.NOT_STARTED));
@@ -188,11 +193,9 @@ public final class Bootstrap implements IServiceLocator {
 
     private void initLogger() {
         LOGGER_LIFECYCLE.info("** WELCOME TO TASK-MANAGER **");
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            public void run() {
-                LOGGER_LIFECYCLE.info("** TASK-MANAGER IS SHUTTING DOWN **");
-            }
-        });
+        Runtime.getRuntime().addShutdownHook(
+                new Thread(() -> LOGGER_LIFECYCLE.info("** TASK-MANAGER IS SHUTTING DOWN **"))
+        );
     }
 
     public void run(final String[] args) throws AbstractException {
@@ -204,7 +207,7 @@ public final class Bootstrap implements IServiceLocator {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 System.out.println("ENTER COMMAND:");
-                final String command = TerminalUtil.nextLine();
+                @NotNull final String command = TerminalUtil.nextLine();
                 LOGGER_COMMANDS.info(command);
                 processCommand(command);
                 System.out.println("[OK]");
