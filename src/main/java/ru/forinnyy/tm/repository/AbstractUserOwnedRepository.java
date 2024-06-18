@@ -1,5 +1,7 @@
 package ru.forinnyy.tm.repository;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.api.repository.IUserOwnedRepository;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
@@ -21,29 +23,37 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
         removeAll(models);
     }
 
+    @Nullable
     @Override
     public List<M> findAll(final String userId) {
+        if (userId == null) return null;
         return findAll()
                 .stream()
                 .filter(m -> userId.equals(m.getUserId()))
                 .collect(Collectors.toList());
     }
 
+    @Nullable
     @Override
-    public List<M> findAll(final String userId, final Comparator<M> comparator) {
+    public List<M> findAll(@Nullable final String userId, @Nullable final Comparator<M> comparator) {
+        if (userId == null) return null;
         final List<M> result = findAll(userId);
         result.sort(comparator);
         return result;
     }
 
+    @Nullable
     @Override
-    public List<M> findAll(final String userId, final Sort sort) throws AbstractFieldException {
+    public List<M> findAll(@Nullable final String userId, @Nullable final Sort sort) throws AbstractFieldException {
+        if (userId == null) return null;
         return findAll(userId, sort.getComparator());
     }
 
+    @Nullable
     @Override
-    public M add(final String userId, final M model) {
-        if (userId == null) return  null;
+    public M add(@Nullable final String userId, @Nullable final M model) {
+        if (userId == null) return null;
+        if (model == null) return null;
         model.setUserId(userId);
         return add(model);
     }

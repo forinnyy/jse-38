@@ -7,6 +7,7 @@ import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
 import ru.forinnyy.tm.exception.field.*;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.Project;
 
 public final class ProjectService extends AbstractUserOwnedService<Project, IProjectRepository>
@@ -32,11 +33,11 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
     }
 
     @Override
-    public Project updateById(final String userId, final String id, final String name, final String description) throws AbstractFieldException, AbstractEntityException {
+    public Project updateById(final String userId, final String id, final String name, final String description) throws AbstractFieldException, AbstractEntityException, AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new ProjectIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
-        final Project project = findOneById(id);
+        final Project project = findOneById(userId, id);
         if (project == null) throw new ProjectNotFoundException();
         project.setName(name);
         project.setDescription(description);
@@ -48,7 +49,7 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0 || index > repository.getSize()) throw new IndexIncorrectException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
-        final Project project = findOneByIndex(index);
+        final Project project = findOneByIndex(userId, index);
         if (project == null) throw new ProjectNotFoundException();
         project.setName(name);
         project.setDescription(description);
@@ -56,10 +57,10 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
     }
 
     @Override
-    public Project changeProjectStatusById(final String userId, final String id, final Status status) throws AbstractFieldException, AbstractEntityException {
+    public Project changeProjectStatusById(final String userId, final String id, final Status status) throws AbstractFieldException, AbstractEntityException, AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new ProjectIdEmptyException();
-        final Project project = findOneById(id);
+        final Project project = findOneById(userId, id);
         if (project == null) throw new ProjectNotFoundException();
         project.setStatus(status);
         return project;
@@ -70,7 +71,7 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0 || index > repository.getSize()) throw new IndexIncorrectException();
         if (index >= repository.getSize()) throw new IndexIncorrectException();
-        final Project project = findOneByIndex(index);
+        final Project project = findOneByIndex(userId, index);
         if (project == null) throw new ProjectNotFoundException();
         project.setStatus(status);
         return project;

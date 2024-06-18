@@ -48,7 +48,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
-        final Task task = findOneById(id);
+        final Task task = findOneById(userId, id);
         if (task == null) throw new TaskNotFoundException();
         if (!task.getUserId().equals(userId)) throw new PermissionException();
         task.setName(name);
@@ -62,7 +62,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0 || index > repository.getSize()) throw new IndexIncorrectException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
-        final Task task = findOneByIndex(index);
+        final Task task = findOneByIndex(userId, index);
         if (task == null) throw new TaskNotFoundException();
         if (!task.getUserId().equals(userId)) throw new PermissionException();
         task.setName(name);
@@ -75,7 +75,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
             throws AbstractFieldException, AbstractEntityException, AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
-        final Task task = findOneById(id);
+        final Task task = findOneById(userId, id);
         if (task == null) throw new TaskNotFoundException();
         if (!task.getUserId().equals(userId)) throw new PermissionException();
         task.setStatus(status);
@@ -88,7 +88,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0 || index > repository.getSize()) throw new IndexIncorrectException();
         if (index >= repository.getSize()) throw new IndexIncorrectException();
-        final Task task = findOneByIndex(index);
+        final Task task = findOneByIndex(userId, index);
         if (task == null) throw new TaskNotFoundException();
         if (!task.getUserId().equals(userId)) throw new PermissionException();
         task.setStatus(status);

@@ -27,7 +27,7 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
 
     @NotNull
     @Override
-    public List<M> findAll(Comparator<M> comparator) {
+    public List<M> findAll(@Nullable Comparator<M> comparator) {
         final List<M> result = new ArrayList<>(models.values());
         result.sort(comparator);
         return result;
@@ -46,13 +46,17 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
     }
 
     @Override
-    public M findOneById(final String id) {
+    public M findOneById(@Nullable final String id) {
         return models.get(id);
     }
 
+    @Nullable
     @Override
-    public M findOneByIndex(Integer index) {
-        return models.get(index);
+    public M findOneByIndex(@Nullable Integer index) {
+        if (index == null) return null;
+        final List<String> list = new LinkedList<>(models.keySet());
+        final String key = list.get(index);
+        return models.get(key);
     }
 
     @Override
@@ -60,26 +64,30 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
         return models.size();
     }
 
+    @Nullable
     @Override
-    public M remove(M model) throws AbstractEntityException {
+    public M remove(@Nullable M model) throws AbstractEntityException {
         if (model == null) throw new EntityNotFoundException();
         models.remove(model.getId());
         return model;
     }
 
+    @Nullable
     @Override
     public M removeById(String id) throws AbstractEntityException {
-        final M model = findOneById(id);
+        @Nullable final M model = findOneById(id);
         return remove(model);
     }
 
+    @Nullable
     @Override
-    public M removeByIndex(Integer index) throws AbstractEntityException {
-        final M model = findOneByIndex(index);
+    public M removeByIndex(@Nullable Integer index) throws AbstractEntityException {
+        @Nullable final M model = findOneByIndex(index);
         return remove(model);
     }
 
-    public void removeAll(final Collection<M> collection) {
+    public void removeAll(@Nullable final Collection<M> collection) {
+        if (collection == null) return;
         collection.stream().map(AbstractModel::getId).forEach(models::remove);
     }
 

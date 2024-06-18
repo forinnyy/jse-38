@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.service;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.api.repository.IRepository;
 import ru.forinnyy.tm.api.service.IService;
 import ru.forinnyy.tm.enumerated.Sort;
@@ -51,7 +52,7 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
         return repository.findAll(sort.getComparator());
     }
 
-    @NotNull
+    @Nullable
     @Override
     public M add(final M model) {
         if (model == null) return null;
