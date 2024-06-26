@@ -158,7 +158,7 @@ public final class Bootstrap implements IServiceLocator {
         return true;
     }
 
-    private void processCommand(final String command) throws
+    private void processCommand(@Nullable final String command) throws
             AbstractSystemException,
             AbstractFieldException,
             AbstractEntityException,
@@ -169,12 +169,12 @@ public final class Bootstrap implements IServiceLocator {
         abstractCommand.execute();
     }
 
-    private void registry(final AbstractCommand command) {
+    private void registry(@NotNull final AbstractCommand command) {
         command.setServiceLocator(this);
         commandService.add(command);
     }
 
-    private void initDemoData() throws AbstractFieldException, AbstractUserException {
+    private void initDemoData() throws AbstractFieldException, AbstractUserException, AbstractEntityException {
         @NotNull final User test = userService.create("test", "test", "test@test.ru");
         @NotNull final User user = userService.create("user", "user", "user@user.ru");
         @NotNull final User admin = userService.create("admin", "admin", Role.ADMIN);

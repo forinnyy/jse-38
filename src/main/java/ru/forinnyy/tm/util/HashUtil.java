@@ -14,19 +14,17 @@ public interface HashUtil {
     @NotNull
     Integer ITERATION = 7657;
 
-    @Nullable
-    static String salt(@Nullable final String value) {
-        if (value == null) return null;
-        @Nullable String result = value;
+    @NotNull
+    static String salt(@NotNull final String value) {
+        @NotNull String result = value;
         for (int i = 0; i < ITERATION; i++) {
             result = md5(SECRET + result + SECRET);
         }
         return result;
     }
 
-    @Nullable
-    static String md5(@Nullable final String value) {
-        if (value == null) return null;
+    @NotNull
+    static String md5(@NotNull final String value) {
         try {
             @NotNull final MessageDigest md = MessageDigest.getInstance("MD5");
             @NotNull final byte[] array = md.digest(value.getBytes());

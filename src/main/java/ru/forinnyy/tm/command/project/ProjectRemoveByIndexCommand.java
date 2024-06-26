@@ -33,10 +33,10 @@ public final class ProjectRemoveByIndexCommand extends AbstractProjectCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[REMOVE PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
-        @NotNull final Integer index = TerminalUtil.nextNumber() -1;
-        @Nullable final Project project = getProjectService().removeByIndex(index);
-        if (project == null) throw new ProjectNotFoundException();
         @NotNull final String userId = getUserId();
+        @NotNull final Integer index = TerminalUtil.nextNumber() -1;
+        @Nullable final Project project = getProjectService().findOneByIndex(userId, index);
+        if (project == null) throw new ProjectNotFoundException();
         getProjectTaskService().removeProjectById(userId, project.getId());
     }
 

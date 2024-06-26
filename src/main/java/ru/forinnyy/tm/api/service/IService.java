@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.api.service;
 
+import org.jetbrains.annotations.NotNull;
 import ru.forinnyy.tm.api.repository.IRepository;
 import ru.forinnyy.tm.api.repository.IUserOwnedRepository;
 import ru.forinnyy.tm.enumerated.Sort;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public interface IService<M extends AbstractModel> extends IRepository<M> {
 
+    @NotNull
     List<M> findAll(Sort sort);
 
     M removeOne(M model) throws AbstractEntityException, AbstractFieldException;

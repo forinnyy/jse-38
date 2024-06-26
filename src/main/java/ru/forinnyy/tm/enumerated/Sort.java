@@ -36,6 +36,7 @@ public enum Sort {
     }
 
     @SuppressWarnings("rawtypes")
+    @Nullable
     public Comparator getComparator() {
         return comparator;
     }

@@ -1,9 +1,12 @@
 package ru.forinnyy.tm.command.task;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
+import ru.forinnyy.tm.exception.entity.TaskNotFoundException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
+import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class TaskRemoveByIdCommand extends AbstractTaskCommand {
@@ -32,6 +35,8 @@ public final class TaskRemoveByIdCommand extends AbstractTaskCommand {
         System.out.println("ENTER ID:");
         @NotNull final String id = TerminalUtil.nextLine();
         @NotNull final String userId = getUserId();
+        @Nullable final Task task = getTaskService().findOneById(userId, id);
+        if (task == null) throw new TaskNotFoundException();
         getTaskService().removeById(userId, id);
     }
 

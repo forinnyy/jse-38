@@ -17,21 +17,21 @@ public interface IRepository<M extends AbstractModel> {
 
     interface IRepositoryOptional<M> {
 
-        Optional<M> findOneById(String id) throws AbstractFieldException;
+        Optional<M> findOneById(@Nullable String id) throws AbstractFieldException;
 
-        Optional<M> findOneByIndex(Integer index) throws AbstractFieldException;
+        Optional<M> findOneByIndex(@Nullable Integer index) throws AbstractFieldException;
 
     }
 
     default IRepositoryOptional<M> optional() {
         return new IRepositoryOptional<M>() {
             @Override
-            public Optional<M> findOneById(String id) throws AbstractFieldException {
+            public Optional<M> findOneById(@Nullable String id) throws AbstractFieldException {
                 return Optional.ofNullable(IRepository.this.findOneById(id));
             }
 
             @Override
-            public Optional<M> findOneByIndex(Integer index) throws AbstractFieldException {
+            public Optional<M> findOneByIndex(@Nullable Integer index) throws AbstractFieldException {
                 return Optional.ofNullable(IRepository.this.findOneByIndex(index));
             }
         };
@@ -45,21 +45,26 @@ public interface IRepository<M extends AbstractModel> {
     @NotNull
     List<M> findAll(Comparator<M> comparator);
 
-    @Nullable
-    M add(M model);
+    @NotNull
+    M add(M model) throws AbstractEntityException;
 
     boolean existsById(String id);
 
+    @Nullable
     M findOneById(String id) throws AbstractFieldException;
 
+    @Nullable
     M findOneByIndex(Integer index) throws AbstractFieldException;
 
     int getSize();
 
+    @Nullable
     M remove(M model) throws AbstractEntityException;
 
+    @Nullable
     M removeById(String id) throws AbstractFieldException, AbstractEntityException;
 
+    @Nullable
     M removeByIndex(Integer index) throws AbstractFieldException, AbstractEntityException;
 
     void removeAll(Collection<M> collection);
