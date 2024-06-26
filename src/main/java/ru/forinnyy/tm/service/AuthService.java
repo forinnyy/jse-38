@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.api.service.IAuthService;
 import ru.forinnyy.tm.api.service.IUserService;
 import ru.forinnyy.tm.enumerated.Role;
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.*;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.exception.user.AccessDeniedException;
@@ -26,7 +27,7 @@ public final class AuthService implements IAuthService {
 
     @NotNull
     @Override
-    public User registry(@NotNull final String login, @NotNull final String password, @NotNull final String email) throws AbstractUserException, AbstractFieldException {
+    public User registry(@NotNull final String login, @NotNull final String password, @NotNull final String email) throws AbstractUserException, AbstractFieldException, AbstractEntityException {
         return userService.create(login, password, email);
     }
 
