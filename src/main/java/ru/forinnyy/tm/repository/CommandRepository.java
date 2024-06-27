@@ -11,8 +11,10 @@ import java.util.Map;
 
 public final class CommandRepository implements ICommandRepository {
 
+    @NotNull
     private final Map<String, AbstractCommand> mapByArgument = new LinkedHashMap<>();
 
+    @NotNull
     private final Map<String, AbstractCommand> mapByName = new LinkedHashMap<>();
 
     @Override

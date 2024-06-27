@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.enumerated;
 
 import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.comparator.CreatedComparator;
 import ru.forinnyy.tm.comparator.NameComparator;
@@ -22,9 +23,9 @@ public enum Sort {
     private final Comparator<?> comparator;
 
     @Nullable
-    public static Sort toSort(final String value) {
+    public static Sort toSort(@Nullable final String value) {
         if (value == null || value.isEmpty()) return null;
-        for (final Sort sort: values()) {
+        for (@NotNull final Sort sort: values()) {
             if (sort.name().equals(value)) return sort;
         }
         return null;

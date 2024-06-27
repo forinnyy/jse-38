@@ -22,10 +22,10 @@ public interface IUserService extends IService<User> {
     User create(String login, String password, Role role) throws AbstractUserException, AbstractFieldException, AbstractEntityException;
 
     @Nullable
-    User findByLogin(String login) throws AbstractFieldException;
+    User findByLogin(String login) throws AbstractFieldException, AbstractEntityException;
 
     @Nullable
-    User findByEmail(String email) throws AbstractUserException;
+    User findByEmail(String email) throws AbstractUserException, AbstractEntityException;
 
     @Nullable
     User removeByLogin(String login) throws AbstractEntityException, AbstractFieldException;

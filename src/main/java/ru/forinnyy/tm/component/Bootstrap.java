@@ -198,7 +198,7 @@ public final class Bootstrap implements IServiceLocator {
         );
     }
 
-    public void run(final String[] args) throws AbstractException {
+    public void run(@Nullable final String[] args) throws AbstractException {
         if (processArguments(args)) System.exit(0);
 
         initDemoData();

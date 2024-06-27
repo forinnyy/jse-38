@@ -72,19 +72,19 @@ public final class UserService extends AbstractService<User, IUserRepository>
 
     @Nullable
     @Override
-    public User findByLogin(@Nullable final String login) throws AbstractFieldException {
+    public User findByLogin(@Nullable final String login) throws AbstractFieldException, AbstractEntityException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
-        final User user = repository.findByLogin(login);
-        if (user == null) return null;
+        @Nullable final User user = repository.findByLogin(login);
+        if (user == null) throw new UserNotFoundException();
         return user;
     }
 
     @Nullable
     @Override
-    public User findByEmail(@Nullable final String email) throws AbstractUserException {
+    public User findByEmail(@Nullable final String email) throws AbstractUserException, AbstractEntityException {
         if (email == null || email.isEmpty()) throw new ExistsEmailException();
         @Nullable final User user = repository.findByEmail(email);
-        if (user == null) return null;
+        if (user == null) throw new UserNotFoundException();
         return user;
     }
 

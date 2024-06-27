@@ -12,7 +12,7 @@ public interface IAuthService {
     @NotNull
     User registry(String login, String password, String email) throws AbstractUserException, AbstractFieldException, AbstractEntityException;
 
-    void login(String login, String password) throws AbstractFieldException, AbstractUserException;
+    void login(String login, String password) throws AbstractFieldException, AbstractUserException, AbstractEntityException;
 
     void logout();
 

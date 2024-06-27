@@ -32,7 +32,7 @@ public final class AuthService implements IAuthService {
     }
 
     @Override
-    public void login(@Nullable final String login, @Nullable final String password) throws AbstractFieldException, AbstractUserException {
+    public void login(@Nullable final String login, @Nullable final String password) throws AbstractFieldException, AbstractUserException, AbstractEntityException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         @Nullable final User user = userService.findByLogin(login);

@@ -2,6 +2,7 @@ package ru.forinnyy.tm.util;
 
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.text.DecimalFormat;
 
@@ -16,20 +17,28 @@ public final class NumberUtil {
 
     private static final double TERABYTE = GIGABYTE * 1024;
 
+    @NotNull
     private static final String NAME_BYTES = "B";
 
+    @NotNull
     private static final String NAME_BYTES_LONG = "Bytes";
 
+    @NotNull
     private static final String NAME_KILOBYTE = "KB";
 
+    @NotNull
     private static final String NAME_MEGABYTE = "MB";
 
+    @NotNull
     private static final String NAME_GIGABYTE = "GB";
 
+    @NotNull
     private static final String NAME_TERABYTE = "TB";
 
+    @NotNull
     private static final String SEPARATOR = " ";
 
+    @NotNull
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.###");
 
     @NotNull
@@ -43,12 +52,12 @@ public final class NumberUtil {
     }
 
     @NotNull
-    private static String render(final long bytes, final double size, final String name) {
+    private static String render(final long bytes, final double size, @NotNull final String name) {
         return render(bytes, size) + SEPARATOR + name;
     }
 
     @NotNull
-    private static String render(final long bytes, final String name) {
+    private static String render(final long bytes, @NotNull final String name) {
         return render(bytes) + SEPARATOR + name;
     }
 

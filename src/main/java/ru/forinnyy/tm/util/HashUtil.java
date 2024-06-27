@@ -36,7 +36,7 @@ public interface HashUtil {
         } catch (@NotNull final NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        return null;
+        return value;
     }
 
 }

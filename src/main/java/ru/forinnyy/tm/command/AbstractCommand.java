@@ -3,6 +3,7 @@ package ru.forinnyy.tm.command;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 import ru.forinnyy.tm.api.model.ICommand;
 import ru.forinnyy.tm.api.service.IAuthService;
 import ru.forinnyy.tm.api.service.IServiceLocator;
@@ -23,12 +24,13 @@ public abstract class AbstractCommand implements ICommand {
         return getAuthService().getUserId();
     }
 
+    @NotNull
     @Override
     public String toString() {
         final String name = getName();
         final String argument = getArgument();
         final String description = getDescription();
-        String result = "";
+        @NotNull String result = "";
         if (name != null && !name.isEmpty()) result += name + " : ";
         if (argument != null && !argument.isEmpty()) result += argument + " : ";
         if (description != null && !description.isEmpty()) result += description;

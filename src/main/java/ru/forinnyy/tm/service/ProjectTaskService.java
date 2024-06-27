@@ -59,7 +59,7 @@ public final class ProjectTaskService implements IProjectTaskService {
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
         if (!projectRepository.existsById(userId, projectId)) throw new ProjectNotFoundException();
-        final Task task = taskRepository.findOneById(userId, taskId);
+        @Nullable final Task task = taskRepository.findOneById(userId, taskId);
         if (task == null) throw new TaskNotFoundException();
         if (!task.getUserId().equals(userId)) throw new PermissionException();
         task.setProjectId(null);
@@ -72,11 +72,11 @@ public final class ProjectTaskService implements IProjectTaskService {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (!projectRepository.existsById(userId, projectId)) throw new ProjectNotFoundException();
-        final Project project = projectRepository.findOneById(userId, projectId);
+        @Nullable final Project project = projectRepository.findOneById(userId, projectId);
         if (project == null) throw new ProjectNotFoundException();
         if (!project.getUserId().equals(userId)) throw new PermissionException();
-        final List<Task> tasks = taskRepository.findAllByProjectId(userId, projectId);
-        for (final Task task: tasks) taskRepository.removeById(userId, task.getId());
+        @NotNull final List<Task> tasks = taskRepository.findAllByProjectId(userId, projectId);
+        for (@NotNull final Task task: tasks) taskRepository.removeById(userId, task.getId());
         projectRepository.removeById(projectId);
     }
 
