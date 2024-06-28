@@ -15,9 +15,9 @@ import java.util.List;
 public interface IService<M extends AbstractModel> extends IRepository<M> {
 
     @NotNull
-    List<M> findAll(Sort sort);
+    List<M> findAll(@Nullable Sort sort);
 
     @Nullable
-    M removeOne(M model) throws AbstractEntityException, AbstractFieldException;
+    M removeOne(@Nullable M model) throws AbstractEntityException, AbstractFieldException;
 
 }

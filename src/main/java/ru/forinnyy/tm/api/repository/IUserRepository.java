@@ -10,24 +10,24 @@ import ru.forinnyy.tm.model.User;
 public interface IUserRepository extends IRepository<User> {
 
     @NotNull
-    User create(String login, String password);
+    User create(@NotNull String login, @NotNull String password);
 
     @NotNull
-    User create(String login, String password, String email);
+    User create(@NotNull String login, @NotNull String password, @NotNull String email);
 
     @NotNull
-    User create(String login, String password, Role role);
+    User create(@NotNull String login, @NotNull String password, @NotNull Role role);
 
     @Nullable
-    User findByLogin(String login) throws LoginEmptyException;
+    User findByLogin(@NotNull String login) throws LoginEmptyException;
 
     @Nullable
-    User findByEmail(String email) throws ExistsEmailException;
+    User findByEmail(@NotNull String email) throws ExistsEmailException;
 
     @NotNull
-    Boolean isLoginExist(String login);
+    Boolean isLoginExist(@NotNull String login);
 
     @NotNull
-    Boolean isEmailExist(String email);
+    Boolean isEmailExist(@NotNull String email);
 
 }

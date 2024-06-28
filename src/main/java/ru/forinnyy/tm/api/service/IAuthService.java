@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.api.service;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -10,9 +11,9 @@ import ru.forinnyy.tm.model.User;
 public interface IAuthService {
 
     @NotNull
-    User registry(String login, String password, String email) throws AbstractUserException, AbstractFieldException, AbstractEntityException;
+    User registry(@NotNull String login, @NotNull String password, @NotNull String email) throws AbstractUserException, AbstractFieldException, AbstractEntityException;
 
-    void login(String login, String password) throws AbstractFieldException, AbstractUserException, AbstractEntityException;
+    void login(@Nullable String login, @Nullable String password) throws AbstractFieldException, AbstractUserException, AbstractEntityException;
 
     void logout();
 
@@ -24,6 +25,6 @@ public interface IAuthService {
     @NotNull
     User getUser() throws AbstractUserException, AbstractFieldException;
 
-    void checkRoles(Role[] roles) throws AbstractUserException, AbstractFieldException;
+    void checkRoles(@Nullable Role[] roles) throws AbstractUserException, AbstractFieldException;
 
 }

@@ -10,11 +10,11 @@ import ru.forinnyy.tm.model.Task;
 public interface IProjectTaskService {
 
     @NotNull
-    Task bindTaskToProject(String userId, String projectId, String taskId) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
+    Task bindTaskToProject(@Nullable String userId, @Nullable String projectId, @Nullable String taskId) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
 
-    void removeProjectById(String userId, String projectId) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
+    void removeProjectById(@Nullable String userId, @Nullable String projectId) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
 
     @NotNull
-    Task unbindTaskFromProject(String userId, String projectId, String taskId) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
+    Task unbindTaskFromProject(@Nullable String userId, @Nullable String projectId, @Nullable String taskId) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
 
 }

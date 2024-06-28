@@ -43,30 +43,30 @@ public interface IRepository<M extends AbstractModel> {
     List<M> findAll();
 
     @NotNull
-    List<M> findAll(Comparator<M> comparator);
+    List<M> findAll(@Nullable Comparator<M> comparator);
 
     @NotNull
-    M add(M model) throws AbstractEntityException;
+    M add(@Nullable M model) throws AbstractEntityException;
 
-    boolean existsById(String id);
-
-    @Nullable
-    M findOneById(String id) throws AbstractFieldException;
+    boolean existsById(@Nullable String id);
 
     @Nullable
-    M findOneByIndex(Integer index) throws AbstractFieldException;
+    M findOneById(@Nullable String id) throws AbstractFieldException;
+
+    @Nullable
+    M findOneByIndex(@Nullable Integer index) throws AbstractFieldException;
 
     int getSize();
 
     @Nullable
-    M remove(M model) throws AbstractEntityException;
+    M remove(@Nullable M model) throws AbstractEntityException;
 
     @Nullable
-    M removeById(String id) throws AbstractFieldException, AbstractEntityException;
+    M removeById(@Nullable String id) throws AbstractFieldException, AbstractEntityException;
 
     @Nullable
-    M removeByIndex(Integer index) throws AbstractFieldException, AbstractEntityException;
+    M removeByIndex(@Nullable Integer index) throws AbstractFieldException, AbstractEntityException;
 
-    void removeAll(Collection<M> collection);
+    void removeAll(@Nullable Collection<M> collection);
 
 }

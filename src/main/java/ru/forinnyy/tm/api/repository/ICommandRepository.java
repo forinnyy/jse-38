@@ -11,10 +11,10 @@ public interface ICommandRepository {
     void add(AbstractCommand command);
 
     @Nullable
-    AbstractCommand getCommandByArgument(String argument);
+    AbstractCommand getCommandByArgument(@Nullable String argument);
 
     @Nullable
-    AbstractCommand getCommandByName(String name);
+    AbstractCommand getCommandByName(@NotNull String name);
 
     @NotNull
     Collection<AbstractCommand> getTerminalCommands();

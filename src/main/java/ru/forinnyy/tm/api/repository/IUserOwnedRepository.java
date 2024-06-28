@@ -19,36 +19,36 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> extends 
     void clear(String userId) throws AbstractFieldException;
 
     @NotNull
-    List<M> findAll(String userId) throws AbstractFieldException;
+    List<M> findAll(@Nullable String userId) throws AbstractFieldException;
 
     @NotNull
-    List<M> findAll(String userId, Comparator<M> comparator) throws AbstractFieldException;
+    List<M> findAll(@Nullable String userId, @Nullable Comparator<M> comparator) throws AbstractFieldException;
 
     @NotNull
-    List<M> findAll(String userId, Sort sort) throws AbstractFieldException;
+    List<M> findAll(@Nullable String userId, Sort sort) throws AbstractFieldException;
 
     @NotNull
-    M add(String userId, M model) throws AbstractFieldException, AbstractEntityException;
+    M add(@Nullable String userId, @Nullable M model) throws AbstractFieldException, AbstractEntityException;
 
-    boolean existsById(String userId, String id) throws AbstractFieldException, AbstractUserException;
-
-    @Nullable
-    M findOneById(String userId, String id) throws AbstractFieldException, AbstractUserException;
+    boolean existsById(@Nullable String userId, @Nullable String id) throws AbstractFieldException, AbstractUserException;
 
     @Nullable
-    M findOneByIndex(String userId, Integer index) throws AbstractFieldException;
-
-    int getSize(String userId) throws AbstractFieldException;
+    M findOneById(@Nullable String userId, @Nullable String id) throws AbstractFieldException, AbstractUserException;
 
     @Nullable
-    M remove(String userId, M model) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
+    M findOneByIndex(@Nullable String userId, @Nullable Integer index) throws AbstractFieldException;
+
+    int getSize(@Nullable String userId) throws AbstractFieldException;
 
     @Nullable
-    M removeById(String userId, String id) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
+    M remove(@Nullable String userId, @Nullable M model) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
 
     @Nullable
-    M removeByIndex(String userId, Integer index) throws AbstractFieldException, AbstractEntityException;
+    M removeById(@Nullable String userId, @Nullable String id) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
 
-    void removeAll(String userId) throws UserIdEmptyException;
+    @Nullable
+    M removeByIndex(@Nullable String userId, @Nullable Integer index) throws AbstractFieldException, AbstractEntityException;
+
+    void removeAll(@Nullable String userId) throws UserIdEmptyException;
 
 }

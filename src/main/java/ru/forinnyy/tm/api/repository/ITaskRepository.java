@@ -9,12 +9,12 @@ import java.util.List;
 public interface ITaskRepository extends IUserOwnedRepository<Task> {
 
     @NotNull
-    List<Task> findAllByProjectId(String userId, String projectId);
+    List<Task> findAllByProjectId(@NotNull String userId, @NotNull String projectId);
 
     @NotNull
-    Task create(String userId, String name) throws AbstractFieldException;
+    Task create(@NotNull String userId, @NotNull String name) throws AbstractFieldException;
 
     @NotNull
-    Task create(String userId, String name, String description) throws AbstractFieldException;
+    Task create(@NotNull String userId, @NotNull String name, @NotNull String description) throws AbstractFieldException;
 
 }

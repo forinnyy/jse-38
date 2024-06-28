@@ -7,9 +7,9 @@ import ru.forinnyy.tm.model.Project;
 public interface IProjectRepository extends IUserOwnedRepository<Project> {
 
     @NotNull
-    Project create(String userId, String name) throws AbstractFieldException;
+    Project create(@NotNull String userId, @NotNull String name) throws AbstractFieldException;
 
     @NotNull
-    Project create(String userId, String name, String description) throws AbstractFieldException;
+    Project create(@NotNull String userId, @NotNull String name, @NotNull String description) throws AbstractFieldException;
 
 }
