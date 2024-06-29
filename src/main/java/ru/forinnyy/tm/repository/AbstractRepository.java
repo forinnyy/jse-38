@@ -27,8 +27,8 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
 
     @NotNull
     @Override
-    public List<M> findAll(@NotNull Comparator<M> comparator) {
-        final List<M> result = new ArrayList<>(models.values());
+    public List<M> findAll(@NotNull final Comparator<M> comparator) {
+        @NotNull final List<M> result = new ArrayList<>(models.values());
         result.sort(comparator);
         return result;
     }
@@ -67,7 +67,7 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
 
     @Nullable
     @Override
-    public M remove(@Nullable M model) throws AbstractEntityException {
+    public M remove(@Nullable final M model) throws AbstractEntityException {
         if (model == null) throw new EntityNotFoundException();
         models.remove(model.getId());
         return model;
@@ -75,14 +75,14 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
 
     @Nullable
     @Override
-    public M removeById(@Nullable String id) throws AbstractEntityException {
+    public M removeById(@Nullable final String id) throws AbstractEntityException {
         @Nullable final M model = findOneById(id);
         return remove(model);
     }
 
     @Nullable
     @Override
-    public M removeByIndex(@Nullable Integer index) throws AbstractEntityException {
+    public M removeByIndex(@Nullable final Integer index) throws AbstractEntityException {
         @Nullable final M model = findOneByIndex(index);
         return remove(model);
     }

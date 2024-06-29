@@ -19,9 +19,10 @@ import java.util.List;
 public abstract class AbstractService<M extends AbstractModel, R extends IRepository<M>>
         implements IService<M> {
 
+    @NotNull
     protected final R repository;
 
-    public AbstractService(final R repository) {
+    public AbstractService(@NotNull final R repository) {
         this.repository = repository;
     }
 

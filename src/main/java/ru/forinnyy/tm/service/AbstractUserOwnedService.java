@@ -21,7 +21,7 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         extends AbstractService<M, R>
         implements IUserOwnedService<M> {
 
-    public AbstractUserOwnedService(final R repository) {
+    public AbstractUserOwnedService(@NotNull final R repository) {
         super(repository);
     }
 
@@ -85,7 +85,7 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
 
     @Nullable
     @Override
-    public M remove(@Nullable final String userId, @Nullable M model) throws AbstractFieldException, AbstractEntityException, AbstractUserException {
+    public M remove(@Nullable final String userId, @Nullable final M model) throws AbstractFieldException, AbstractEntityException, AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (model == null) return null;
         return repository.remove(userId, model);

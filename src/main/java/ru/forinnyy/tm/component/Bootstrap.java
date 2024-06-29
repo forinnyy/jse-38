@@ -211,7 +211,7 @@ public final class Bootstrap implements IServiceLocator {
                 LOGGER_COMMANDS.info(command);
                 processCommand(command);
                 System.out.println("[OK]");
-            } catch (final Exception e) {
+            } catch (@NotNull final Exception e) {
                 LOGGER_LIFECYCLE.error(e.getMessage());
                 System.err.println("[FAIL]");
             }

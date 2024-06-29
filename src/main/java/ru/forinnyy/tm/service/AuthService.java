@@ -17,11 +17,13 @@ import java.util.Arrays;
 
 public final class AuthService implements IAuthService {
 
+    @NotNull
     private final IUserService userService;
 
+    @Nullable
     private String userId;
 
-    public AuthService(IUserService userService) {
+    public AuthService(@NotNull IUserService userService) {
         this.userService = userService;
     }
 

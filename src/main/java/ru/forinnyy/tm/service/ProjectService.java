@@ -3,7 +3,6 @@ package ru.forinnyy.tm.service;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
-import ru.forinnyy.tm.api.repository.IUserOwnedRepository;
 import ru.forinnyy.tm.api.service.IProjectService;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
@@ -15,7 +14,7 @@ import ru.forinnyy.tm.model.Project;
 public final class ProjectService extends AbstractUserOwnedService<Project, IProjectRepository>
         implements IProjectService {
 
-    public ProjectService(IProjectRepository repository) {
+    public ProjectService(@NotNull final IProjectRepository repository) {
         super(repository);
     }
 

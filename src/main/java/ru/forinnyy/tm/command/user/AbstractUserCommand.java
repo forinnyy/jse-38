@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.command.user;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.api.service.IAuthService;
 import ru.forinnyy.tm.api.service.IUserService;
@@ -9,10 +10,12 @@ import ru.forinnyy.tm.model.User;
 
 public abstract class AbstractUserCommand extends AbstractCommand {
 
+    @NotNull
     public IUserService getUserService() {
         return serviceLocator.getUserService();
     }
 
+    @NotNull
     public IAuthService getAuthService() {
         return super.getAuthService();
     }

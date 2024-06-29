@@ -6,9 +6,9 @@ import ru.forinnyy.tm.api.repository.IUserOwnedRepository;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.field.UserIdEmptyException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
-import ru.forinnyy.tm.model.User;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -82,7 +82,8 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
     }
 
     @Override
-    public int getSize(final String userId) {
+    public int getSize(@Nullable final String userId) throws AbstractFieldException {
+        if (userId == null) throw new UserIdEmptyException();
         return (int) findAll()
                 .stream()
                 .filter(m -> userId.equals(m.getUserId()))
@@ -112,7 +113,7 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
     }
 
     @Override
-    public void removeAll(@NotNull String userId) {
+    public void removeAll(@NotNull final String userId) {
         @NotNull final List<M> list = findAll(userId);
         removeAll(list);
     }

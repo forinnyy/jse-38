@@ -19,14 +19,16 @@ import ru.forinnyy.tm.util.HashUtil;
 public final class UserService extends AbstractService<User, IUserRepository>
         implements IUserService {
 
+    @NotNull
     private final IProjectRepository projectRepository;
 
+    @NotNull
     private final ITaskRepository taskRepository;
 
     public UserService(
-            final IUserRepository userRepository,
-            final IProjectRepository projectRepository,
-            final ITaskRepository taskRepository
+            @NotNull final IUserRepository userRepository,
+            @NotNull final IProjectRepository projectRepository,
+            @NotNull final ITaskRepository taskRepository
             ) {
         super(userRepository);
         this.projectRepository = projectRepository;

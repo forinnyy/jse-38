@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.command.project;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.api.service.IProjectService;
 import ru.forinnyy.tm.api.service.IProjectTaskService;
@@ -10,10 +11,12 @@ import ru.forinnyy.tm.model.Project;
 
 public abstract class AbstractProjectCommand extends AbstractCommand {
 
+    @NotNull
     protected IProjectService getProjectService() {
         return getServiceLocator().getProjectService();
     }
 
+    @NotNull
     protected IProjectTaskService getProjectTaskService() {
         return getServiceLocator().getProjectTaskService();
     }

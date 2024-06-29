@@ -21,13 +21,15 @@ import java.util.List;
 
 public final class ProjectTaskService implements IProjectTaskService {
 
+    @NotNull
     private final IProjectRepository projectRepository;
 
+    @NotNull
     private final ITaskRepository taskRepository;
 
     public ProjectTaskService(
-            final IProjectRepository projectRepository,
-            final ITaskRepository taskRepository
+            @NotNull final IProjectRepository projectRepository,
+            @NotNull final ITaskRepository taskRepository
     ) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;

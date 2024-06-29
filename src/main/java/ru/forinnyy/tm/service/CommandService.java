@@ -10,9 +10,10 @@ import java.util.Collection;
 
 public final class CommandService implements ICommandService {
 
+    @NotNull
     private final ICommandRepository commandRepository;
 
-    public CommandService(final ICommandRepository commandRepository) {
+    public CommandService(@NotNull final ICommandRepository commandRepository) {
         this.commandRepository = commandRepository;
     }
 

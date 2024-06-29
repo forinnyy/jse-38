@@ -18,7 +18,7 @@ import java.util.List;
 public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepository>
         implements ITaskService {
 
-    public TaskService(ITaskRepository repository) {
+    public TaskService(@NotNull final ITaskRepository repository) {
         super(repository);
     }
 

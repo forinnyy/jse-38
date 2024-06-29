@@ -28,7 +28,7 @@ public final class Project extends AbstractUserOwnedModel implements IWBS {
     @NotNull
     private Date created = new Date();
 
-    public Project(@NotNull String name, @NotNull Status status) {
+    public Project(@NotNull final String name, @NotNull final Status status) {
         this.name = name;
         this.status = status;
     }
