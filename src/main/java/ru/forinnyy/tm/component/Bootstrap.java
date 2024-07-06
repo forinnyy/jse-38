@@ -79,11 +79,15 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NotNull
-    private final IUserService userService = new UserService(userRepository, projectRepository, taskRepository);
+    private final IPropertyService propertyService = new PropertyService();
 
     @Getter
     @NotNull
-    private final IAuthService authService = new AuthService(userService);
+    private final IUserService userService = new UserService(propertyService, userRepository, projectRepository, taskRepository);
+
+    @Getter
+    @NotNull
+    private final IAuthService authService = new AuthService(propertyService, userService);
 
     {
         @NotNull final Reflections reflections = new Reflections(PACKAGE_COMMANDS);

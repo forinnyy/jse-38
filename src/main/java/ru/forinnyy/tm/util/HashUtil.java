@@ -1,27 +1,38 @@
 package ru.forinnyy.tm.util;
 
+import com.sun.jdi.request.StepRequest;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import ru.forinnyy.tm.api.component.ISaltProvider;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public interface HashUtil {
 
-    @NotNull
-    String SECRET = "34534";
-
-    @NotNull
-    Integer ITERATION = 7657;
-
-    @NotNull
-    static String salt(@NotNull final String value) {
-        @NotNull String result = value;
-        for (int i = 0; i < ITERATION; i++) {
-            result = md5(SECRET + result + SECRET);
+    @Nullable
+    static String salt(@Nullable final String value,
+                       @Nullable final String secret,
+                       @Nullable final Integer iteration
+    ) {
+        if (value == null || secret == null || iteration == null) return null;
+        @Nullable String result = value;
+        for (int i = 0; i < iteration; i++) {
+            result = md5(secret + result + secret);
         }
         return result;
     }
+
+    @Nullable
+    static String salt(@Nullable final ISaltProvider saltProvider,
+                       @Nullable final String value
+    ) {
+        if (saltProvider == null) return null;
+        @NotNull final String secret = saltProvider.getPasswordSecret();
+        @NotNull final Integer iteration = saltProvider.getPasswordIteration();
+        return salt(value, secret, iteration);
+    }
+
 
     @NotNull
     static String md5(@NotNull final String value) {

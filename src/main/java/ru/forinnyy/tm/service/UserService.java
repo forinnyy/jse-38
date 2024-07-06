@@ -5,6 +5,7 @@ import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.api.repository.IUserRepository;
+import ru.forinnyy.tm.api.service.IPropertyService;
 import ru.forinnyy.tm.api.service.IUserService;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.*;
@@ -25,14 +26,20 @@ public final class UserService extends AbstractService<User, IUserRepository>
     @NotNull
     private final ITaskRepository taskRepository;
 
+    @NotNull
+    private final IPropertyService propertyService;
+
     public UserService(
+            @NotNull final IPropertyService propertyService,
             @NotNull final IUserRepository userRepository,
             @NotNull final IProjectRepository projectRepository,
             @NotNull final ITaskRepository taskRepository
             ) {
         super(userRepository);
+        this.propertyService = propertyService;
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
+
     }
 
     @NotNull
@@ -43,7 +50,7 @@ public final class UserService extends AbstractService<User, IUserRepository>
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         @NotNull final User user = new User();
         user.setLogin(login);
-        user.setPasswordHash(HashUtil.salt(password));
+        user.setPasswordHash(HashUtil.salt(propertyService, password));
         user.setRole(Role.USUAL);
         return repository.add(user);
     }
