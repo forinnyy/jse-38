@@ -5,7 +5,7 @@
 
     <groupId>ru.forinnyy.tm</groupId>
     <artifactId>task-manager</artifactId>
-    <version>1.24.0</version>
+    <version>1.25.0</version>
 
     <name>Task Manager</name>
     <url>http://tm.forinnyy.ru</url>

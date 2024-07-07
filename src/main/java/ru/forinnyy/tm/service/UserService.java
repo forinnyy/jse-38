@@ -79,7 +79,7 @@ public final class UserService extends AbstractService<User, IUserRepository>
         return user;
     }
 
-    @Nullable
+    @NotNull
     @Override
     public User findByLogin(@Nullable final String login) throws AbstractFieldException, AbstractEntityException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
@@ -88,7 +88,7 @@ public final class UserService extends AbstractService<User, IUserRepository>
         return user;
     }
 
-    @Nullable
+    @NotNull
     @Override
     public User findByEmail(@Nullable final String email) throws AbstractUserException, AbstractEntityException {
         if (email == null || email.isEmpty()) throw new ExistsEmailException();
