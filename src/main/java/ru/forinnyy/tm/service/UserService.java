@@ -146,7 +146,7 @@ public final class UserService extends AbstractService<User, IUserRepository>
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         @Nullable final User user = findOneById(id);
         if (user == null) throw new UserNotFoundException();
-        user.setPasswordHash(HashUtil.salt(password));
+        user.setPasswordHash(HashUtil.salt(propertyService, password));
         return user;
     }
 

@@ -22,4 +22,7 @@ public interface IServiceLocator {
     @NotNull
     IAuthService getAuthService();
 
+    @NotNull
+    IPropertyService getPropertyService();
+
 }

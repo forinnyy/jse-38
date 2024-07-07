@@ -8,6 +8,8 @@ import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.util.TerminalUtil;
 
+import javax.naming.AuthenticationException;
+
 public final class UserLoginCommand extends AbstractUserCommand {
 
     @NotNull
@@ -29,7 +31,7 @@ public final class UserLoginCommand extends AbstractUserCommand {
     }
 
     @Override
-    public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
+    public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException, AuthenticationException {
         System.out.println("[USER LOGIN]");
         System.out.println("ENTER LOGIN:");
         @NotNull final String login = TerminalUtil.nextLine();

@@ -3,6 +3,7 @@ package ru.forinnyy.tm.service;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.api.service.IAuthService;
+import ru.forinnyy.tm.api.service.IPropertyService;
 import ru.forinnyy.tm.api.service.IUserService;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
@@ -13,6 +14,7 @@ import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.util.HashUtil;
 
+import javax.naming.AuthenticationException;
 import java.util.Arrays;
 
 public final class AuthService implements IAuthService {
@@ -20,10 +22,17 @@ public final class AuthService implements IAuthService {
     @NotNull
     private final IUserService userService;
 
+    @NotNull
+    private final IPropertyService propertyService;
+
     @Nullable
     private String userId;
 
-    public AuthService(@NotNull IUserService userService) {
+    public AuthService(
+            @NotNull IPropertyService propertyService,
+            @NotNull IUserService userService
+    ) {
+        this.propertyService = propertyService;
         this.userService = userService;
     }
 
@@ -34,14 +43,15 @@ public final class AuthService implements IAuthService {
     }
 
     @Override
-    public void login(@Nullable final String login, @Nullable final String password) throws AbstractFieldException, AbstractUserException, AbstractEntityException {
+    public void login(@Nullable final String login, @Nullable final String password) throws AbstractFieldException, AbstractUserException, AbstractEntityException, AuthenticationException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         @Nullable final User user = userService.findByLogin(login);
         if (user == null) throw new PermissionException();
         final boolean locked = user.isLocked() == null || user.isLocked();
         if (locked) throw new AccessDeniedException();
-        @NotNull final String hash = HashUtil.salt(password);
+        @Nullable final String hash = HashUtil.salt(propertyService, password);
+        if (hash == null) throw new AuthenticationException();
         if (!hash.equals(user.getPasswordHash())) throw new PermissionException();
         userId = user.getId();
     }

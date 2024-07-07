@@ -9,15 +9,6 @@ import ru.forinnyy.tm.model.User;
 
 public interface IUserRepository extends IRepository<User> {
 
-    @NotNull
-    User create(@NotNull String login, @NotNull String password);
-
-    @NotNull
-    User create(@NotNull String login, @NotNull String password, @NotNull String email);
-
-    @NotNull
-    User create(@NotNull String login, @NotNull String password, @NotNull Role role);
-
     @Nullable
     User findByLogin(@NotNull String login) throws LoginEmptyException;
 

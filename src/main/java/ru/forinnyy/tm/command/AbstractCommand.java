@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.forinnyy.tm.api.model.ICommand;
 import ru.forinnyy.tm.api.service.IAuthService;
+import ru.forinnyy.tm.api.service.IPropertyService;
 import ru.forinnyy.tm.api.service.IServiceLocator;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 

@@ -17,8 +17,8 @@ public final class ApplicationAboutCommand extends AbstractSystemCommand {
     @Override
     public void execute() {
         System.out.println("[ABOUT]");
-        System.out.println("Name: Pavel Forinnyy");
-        System.out.println("E-mail: forinnyy@gmail.com");
+        System.out.println("Name: " + getPropertyService().getAuthorName());
+        System.out.println("E-mail: " + getPropertyService().getAuthorEmail());
     }
 
     @NotNull

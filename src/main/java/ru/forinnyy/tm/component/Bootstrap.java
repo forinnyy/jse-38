@@ -33,6 +33,7 @@ import ru.forinnyy.tm.repository.UserRepository;
 import ru.forinnyy.tm.service.*;
 import ru.forinnyy.tm.util.TerminalUtil;
 
+import javax.naming.AuthenticationException;
 import java.lang.reflect.Modifier;
 import java.util.Set;
 
@@ -113,7 +114,8 @@ public final class Bootstrap implements IServiceLocator {
             AbstractSystemException,
             AbstractEntityException,
             AbstractFieldException,
-            AbstractUserException {
+            AbstractUserException,
+            AuthenticationException {
         @Nullable final AbstractCommand abstractCommand = commandService.getCommandByArgument(arg);
         if (abstractCommand == null) throw new ArgumentNotSupportedException(arg);
         abstractCommand.execute();
@@ -123,7 +125,8 @@ public final class Bootstrap implements IServiceLocator {
             AbstractSystemException,
             AbstractEntityException,
             AbstractFieldException,
-            AbstractUserException {
+            AbstractUserException,
+            AuthenticationException {
         if (args == null || args.length < 1) return false;
         processArgument(args[0]);
         return true;
@@ -133,7 +136,8 @@ public final class Bootstrap implements IServiceLocator {
             AbstractSystemException,
             AbstractFieldException,
             AbstractEntityException,
-            AbstractUserException {
+            AbstractUserException,
+            AuthenticationException {
         @Nullable final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
         authService.checkRoles(abstractCommand.getRoles());
@@ -164,7 +168,7 @@ public final class Bootstrap implements IServiceLocator {
         );
     }
 
-    public void run(@Nullable final String[] args) throws AbstractException {
+    public void run(@Nullable final String[] args) throws AbstractException, AuthenticationException {
         if (processArguments(args)) System.exit(0);
 
         initDemoData();

@@ -7,6 +7,8 @@ import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 
+import javax.naming.AuthenticationException;
+
 public interface ICommand {
 
     @Nullable
@@ -21,6 +23,6 @@ public interface ICommand {
     @Nullable
     Role[] getRoles();
 
-    void execute() throws AbstractFieldException, AbstractUserException, AbstractEntityException;
+    void execute() throws AbstractFieldException, AbstractUserException, AbstractEntityException, AuthenticationException;
 
 }

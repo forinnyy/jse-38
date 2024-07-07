@@ -8,12 +8,14 @@ import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.User;
 
+import javax.naming.AuthenticationException;
+
 public interface IAuthService {
 
     @NotNull
     User registry(@NotNull String login, @NotNull String password, @NotNull String email) throws AbstractUserException, AbstractFieldException, AbstractEntityException;
 
-    void login(@Nullable String login, @Nullable String password) throws AbstractFieldException, AbstractUserException, AbstractEntityException;
+    void login(@Nullable String login, @Nullable String password) throws AbstractFieldException, AbstractUserException, AbstractEntityException, AuthenticationException;
 
     void logout();
 
