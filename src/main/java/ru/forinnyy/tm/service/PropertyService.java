@@ -85,7 +85,7 @@ public final class PropertyService implements IPropertyService {
 
     @NotNull
     private String getStringValue(@NotNull final String key, @NotNull final String defaultValue) {
-        if (System.getProperties().contains(key)) return System.getProperties().getProperty(key);
+        if (System.getProperties().containsKey(key)) return System.getProperties().getProperty(key);
         @NotNull final String envKey = getEnvKey(key);
         if (System.getenv().containsKey(envKey)) return System.getenv(envKey);
         return properties.getProperty(key, defaultValue);
