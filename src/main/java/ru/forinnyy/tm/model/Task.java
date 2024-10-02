@@ -3,8 +3,7 @@ package ru.forinnyy.tm.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.api.model.IWBS;
 import ru.forinnyy.tm.enumerated.Status;
 
@@ -15,22 +14,21 @@ import java.util.Date;
 @NoArgsConstructor
 public final class Task extends AbstractUserOwnedModel implements IWBS {
 
-    @NotNull
+    @NonNull
     private String name = "";
 
-    @NotNull
+    @NonNull
     private String description = "";
 
-    @NotNull
+    @NonNull
     private Status status = Status.NOT_STARTED;
 
-    @Nullable
     private String projectId;
 
-    @NotNull
+    @NonNull
     private Date created = new Date();
 
-    public Task(@NotNull final String name) {
+    public Task(@NonNull final String name) {
         this.name = name;
     }
 

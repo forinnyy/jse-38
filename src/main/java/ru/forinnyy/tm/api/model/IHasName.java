@@ -1,12 +1,13 @@
 package ru.forinnyy.tm.api.model;
 
-import org.jetbrains.annotations.NotNull;
+
+import lombok.NonNull;
 
 public interface IHasName {
 
-    @NotNull
+    @NonNull
     String getName();
 
-    void setName(@NotNull String name);
+    void setName(@NonNull String name);
 
 }

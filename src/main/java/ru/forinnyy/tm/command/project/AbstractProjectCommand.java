@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.command.project;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.api.service.IProjectService;
 import ru.forinnyy.tm.api.service.IProjectTaskService;
 import ru.forinnyy.tm.command.AbstractCommand;
@@ -11,17 +10,16 @@ import ru.forinnyy.tm.model.Project;
 
 public abstract class AbstractProjectCommand extends AbstractCommand {
 
-    @NotNull
+    @NonNull
     protected IProjectService getProjectService() {
         return getServiceLocator().getProjectService();
     }
 
-    @NotNull
+    @NonNull
     protected IProjectTaskService getProjectTaskService() {
         return getServiceLocator().getProjectTaskService();
     }
 
-    @Nullable
     @Override
     public String getArgument() {
         return null;
@@ -35,7 +33,6 @@ public abstract class AbstractProjectCommand extends AbstractCommand {
         System.out.println("STATUS: " + Status.toName(project.getStatus()));
     }
 
-    @Nullable
     @Override
     public Role[] getRoles() {
         return Role.values();

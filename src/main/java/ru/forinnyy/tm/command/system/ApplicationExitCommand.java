@@ -1,15 +1,14 @@
 package ru.forinnyy.tm.command.system;
 
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 
 public final class ApplicationExitCommand extends AbstractSystemCommand {
 
-    @NotNull
+    @NonNull
     private static final String DESCRIPTION = "Close application.";
 
-    @NotNull
+    @NonNull
     private static final String NAME = "exit";
 
     @Override
@@ -17,19 +16,18 @@ public final class ApplicationExitCommand extends AbstractSystemCommand {
         System.exit(0);
     }
 
-    @Nullable
     @Override
     public String getArgument() {
         return null;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return NAME;

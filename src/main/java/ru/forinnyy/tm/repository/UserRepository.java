@@ -1,43 +1,38 @@
 package ru.forinnyy.tm.repository;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.api.repository.IUserRepository;
-import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.model.User;
-import ru.forinnyy.tm.util.HashUtil;
 
 public final class UserRepository extends AbstractRepository<User> implements IUserRepository {
 
-    @Nullable
     @Override
-    public User findByLogin(@NotNull final String login) {
+    public User findByLogin(@NonNull final String login) {
         return findAll()
                 .stream()
                 .filter(m -> login.equals(m.getLogin()))
                 .findFirst().orElse(null);
     }
 
-    @Nullable
     @Override
-    public User findByEmail(@NotNull final String email) {
+    public User findByEmail(@NonNull final String email) {
         return findAll()
                 .stream()
                 .filter(m -> email.equals(m.getEmail()))
                 .findFirst().orElse(null);
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public Boolean isLoginExist(@NotNull final String login) {
+    public Boolean isLoginExist(@NonNull final String login) {
         return findAll()
                 .stream()
                 .anyMatch(m -> login.equals(m.getLogin()));
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public Boolean isEmailExist(@NotNull final String email) {
+    public Boolean isEmailExist(@NonNull final String email) {
         return findAll()
                 .stream()
                 .anyMatch(m -> email.equals(m.getEmail()));

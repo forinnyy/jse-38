@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.api.service;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -12,21 +11,21 @@ import javax.naming.AuthenticationException;
 
 public interface IAuthService {
 
-    @NotNull
-    User registry(@NotNull String login, @NotNull String password, @NotNull String email) throws AbstractUserException, AbstractFieldException, AbstractEntityException;
+    @NonNull
+    User registry(@NonNull String login, @NonNull String password, @NonNull String email) throws AbstractUserException, AbstractFieldException, AbstractEntityException;
 
-    void login(@Nullable String login, @Nullable String password) throws AbstractFieldException, AbstractUserException, AbstractEntityException, AuthenticationException;
+    void login(String login, String password) throws AbstractFieldException, AbstractUserException, AbstractEntityException, AuthenticationException;
 
     void logout();
 
     boolean isAuth();
 
-    @NotNull
+    @NonNull
     String getUserId() throws AbstractUserException;
 
-    @NotNull
+    @NonNull
     User getUser() throws AbstractUserException, AbstractFieldException;
 
-    void checkRoles(@Nullable Role[] roles) throws AbstractUserException, AbstractFieldException;
+    void checkRoles(Role[] roles) throws AbstractUserException, AbstractFieldException;
 
 }

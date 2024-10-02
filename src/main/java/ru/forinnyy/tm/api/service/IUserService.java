@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.api.service;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -10,41 +9,41 @@ import ru.forinnyy.tm.model.User;
 
 public interface IUserService extends IService<User> {
 
-    @NotNull
-    User create(@Nullable String login, @Nullable String password) throws AbstractUserException, AbstractFieldException, AbstractEntityException;
+    @NonNull
+    User create(String login, String password) throws AbstractUserException, AbstractFieldException, AbstractEntityException;
 
-    @NotNull
-    User create(@Nullable String login, @Nullable String password, @Nullable String email) throws AbstractUserException, AbstractFieldException, AbstractEntityException;
+    @NonNull
+    User create(String login, String password, String email) throws AbstractUserException, AbstractFieldException, AbstractEntityException;
 
-    @NotNull
-    User create(@Nullable String login, @Nullable String password, @Nullable Role role) throws AbstractUserException, AbstractFieldException, AbstractEntityException;
+    @NonNull
+    User create(String login, String password, Role role) throws AbstractUserException, AbstractFieldException, AbstractEntityException;
 
-    @Nullable
-    User findByLogin(@Nullable String login) throws AbstractFieldException, AbstractEntityException;
+    @NonNull
+    User findByLogin(String login) throws AbstractFieldException, AbstractEntityException;
 
-    @Nullable
-    User findByEmail(@Nullable String email) throws AbstractUserException, AbstractEntityException;
+    @NonNull
+    User findByEmail(String email) throws AbstractUserException, AbstractEntityException;
 
-    @Nullable
-    User removeByLogin(@Nullable String login) throws AbstractEntityException, AbstractFieldException;
+    @NonNull
+    User removeByLogin(String login) throws AbstractEntityException, AbstractFieldException;
 
-    @Nullable
-    User removeByEmail(@Nullable String email) throws AbstractEntityException, AbstractUserException, AbstractFieldException;
+    @NonNull
+    User removeByEmail(String email) throws AbstractEntityException, AbstractUserException, AbstractFieldException;
 
-    @NotNull
-    User setPassword(@Nullable String id, @Nullable String password) throws AbstractFieldException, AbstractEntityException;
+    @NonNull
+    User setPassword(@NonNull String id, @NonNull String password) throws AbstractFieldException, AbstractEntityException;
 
-    @NotNull
-    User updateUser(@Nullable String id, @Nullable String firstName, @Nullable String lastName, @Nullable String middleName) throws AbstractFieldException, AbstractEntityException;
+    @NonNull
+    User updateUser(String id, String firstName, String lastName, String middleName) throws AbstractFieldException, AbstractEntityException;
 
-    @NotNull
-    Boolean isLoginExist(@Nullable String login);
+    @NonNull
+    Boolean isLoginExist(String login);
 
-    @NotNull
-    Boolean isEmailExist(@Nullable String email);
+    @NonNull
+    Boolean isEmailExist(String email);
 
-    void lockUserByLogin(@Nullable String login) throws AbstractFieldException, AbstractEntityException;
+    void lockUserByLogin(String login) throws AbstractFieldException, AbstractEntityException;
 
-    void unlockUserByLogin(@Nullable String login) throws AbstractFieldException, AbstractEntityException;
+    void unlockUserByLogin(String login) throws AbstractFieldException, AbstractEntityException;
 
 }

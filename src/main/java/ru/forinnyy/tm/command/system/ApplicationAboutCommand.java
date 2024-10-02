@@ -1,17 +1,17 @@
 package ru.forinnyy.tm.command.system;
 
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 
 public final class ApplicationAboutCommand extends AbstractSystemCommand {
 
-    @NotNull
+    @NonNull
     private static final String DESCRIPTION = "Show developer info";
 
-    @NotNull
+    @NonNull
     private static final String NAME = "about";
 
-    @NotNull
+    @NonNull
     private static final String ARGUMENT = "-a";
 
     @Override
@@ -21,19 +21,19 @@ public final class ApplicationAboutCommand extends AbstractSystemCommand {
         System.out.println("E-mail: " + getPropertyService().getAuthorEmail());
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getArgument() {
         return ARGUMENT;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return NAME;

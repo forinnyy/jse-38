@@ -3,7 +3,7 @@ package ru.forinnyy.tm.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 
 import java.util.UUID;
 
@@ -13,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public abstract class AbstractModel {
 
-    @NotNull
+    @NonNull
     private String id = UUID.randomUUID().toString();
 
 }

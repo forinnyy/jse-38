@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.api.repository;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -16,37 +15,32 @@ public interface IUserOwnedRepository<M extends AbstractUserOwnedModel> extends 
 
     void clear(String userId) throws AbstractFieldException;
 
-    @NotNull
-    List<M> findAll(@Nullable String userId) throws AbstractFieldException;
+    @NonNull
+    List<M> findAll(String userId) throws AbstractFieldException;
 
-    @NotNull
-    List<M> findAll(@Nullable String userId, @Nullable Comparator<M> comparator) throws AbstractFieldException;
+    @NonNull
+    List<M> findAll(String userId, Comparator<M> comparator) throws AbstractFieldException;
 
-    @NotNull
-    List<M> findAll(@Nullable String userId, Sort sort) throws AbstractFieldException;
+    @NonNull
+    List<M> findAll(String userId, Sort sort) throws AbstractFieldException;
 
-    @NotNull
-    M add(@Nullable String userId, @Nullable M model) throws AbstractFieldException, AbstractEntityException;
+    @NonNull
+    M add(String userId, M model) throws AbstractFieldException, AbstractEntityException;
 
-    boolean existsById(@Nullable String userId, @Nullable String id) throws AbstractFieldException, AbstractUserException;
+    boolean existsById(String userId, String id) throws AbstractFieldException, AbstractUserException;
 
-    @Nullable
-    M findOneById(@Nullable String userId, @Nullable String id) throws AbstractFieldException, AbstractUserException;
+    M findOneById(String userId, String id) throws AbstractFieldException, AbstractUserException;
 
-    @Nullable
-    M findOneByIndex(@Nullable String userId, @Nullable Integer index) throws AbstractFieldException;
+    M findOneByIndex(String userId, Integer index) throws AbstractFieldException;
 
-    int getSize(@Nullable String userId) throws AbstractFieldException;
+    int getSize(String userId) throws AbstractFieldException;
 
-    @Nullable
-    M remove(@Nullable String userId, @Nullable M model) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
+    M remove(String userId, M model) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
 
-    @Nullable
-    M removeById(@Nullable String userId, @Nullable String id) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
+    M removeById(String userId, String id) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
 
-    @Nullable
-    M removeByIndex(@Nullable String userId, @Nullable Integer index) throws AbstractFieldException, AbstractEntityException;
+    M removeByIndex(String userId, Integer index) throws AbstractFieldException, AbstractEntityException;
 
-    void removeAll(@Nullable String userId) throws UserIdEmptyException;
+    void removeAll(String userId) throws UserIdEmptyException;
 
 }

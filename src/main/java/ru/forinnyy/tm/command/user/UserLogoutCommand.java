@@ -1,6 +1,6 @@
 package ru.forinnyy.tm.command.user;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -8,19 +8,19 @@ import ru.forinnyy.tm.exception.user.AbstractUserException;
 
 public final class UserLogoutCommand extends AbstractUserCommand {
 
-    @NotNull
+    @NonNull
     private static final String NAME = "logout";
 
-    @NotNull
+    @NonNull
     private static final String DESCRIPTION = "Logout current user";
 
-    @NotNull
+    @NonNull
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return NAME;

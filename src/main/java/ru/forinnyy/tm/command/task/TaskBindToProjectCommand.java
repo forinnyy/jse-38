@@ -1,6 +1,6 @@
 package ru.forinnyy.tm.command.task;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
@@ -8,19 +8,19 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class TaskBindToProjectCommand extends AbstractTaskCommand {
 
-    @NotNull
+    @NonNull
     private static final String NAME = "task-bind-to-project";
 
-    @NotNull
+    @NonNull
     private static final String DESCRIPTION = "Bind task to project.";
 
-    @NotNull
+    @NonNull
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return NAME;
@@ -30,10 +30,10 @@ public final class TaskBindToProjectCommand extends AbstractTaskCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[BIND TASK TO PROJECT]");
         System.out.println("ENTER PROJECT ID:");
-        @NotNull final String projectId = TerminalUtil.nextLine();
+        @NonNull final String projectId = TerminalUtil.nextLine();
         System.out.println("ENTER TASK ID:");
-        @NotNull final String taskId = TerminalUtil.nextLine();
-        @NotNull final String userId = getUserId();
+        @NonNull final String taskId = TerminalUtil.nextLine();
+        @NonNull final String userId = getUserId();
         getProjectTaskService().bindTaskToProject(userId, projectId, taskId);
     }
 

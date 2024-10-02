@@ -1,6 +1,6 @@
 package ru.forinnyy.tm.command.system;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 
@@ -8,28 +8,28 @@ import static ru.forinnyy.tm.util.NumberUtil.formatBytes;
 
 public final class SystemInfoCommand extends AbstractSystemCommand {
 
-    @NotNull
+    @NonNull
     private static final String DESCRIPTION = "Show system info.";
 
-    @NotNull
+    @NonNull
     private static final String ARGUMENT = "-i";
 
-    @NotNull
+    @NonNull
     private static final String NAME = "info";
 
-    @NotNull
+    @NonNull
     @Override
     public String getArgument() {
         return ARGUMENT;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return NAME;

@@ -1,6 +1,6 @@
 package ru.forinnyy.tm.command.project;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -9,19 +9,19 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class ProjectCompleteByIdCommand extends AbstractProjectCommand {
 
-    @NotNull
+    @NonNull
     private static final String NAME = "project-complete-by-id";
 
-    @NotNull
+    @NonNull
     private static final String DESCRIPTION = "Complete project by id.";
 
-    @NotNull
+    @NonNull
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return NAME;
@@ -31,8 +31,8 @@ public final class ProjectCompleteByIdCommand extends AbstractProjectCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[COMPLETE PROJECT BY ID]");
         System.out.println("ENTER ID:");
-        @NotNull final String id = TerminalUtil.nextLine();
-        @NotNull final String userId = getUserId();
+        @NonNull final String id = TerminalUtil.nextLine();
+        @NonNull final String userId = getUserId();
         getProjectService().changeProjectStatusById(userId, id, Status.COMPLETED);
     }
 

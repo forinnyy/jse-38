@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.command.task;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.TaskNotFoundException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -11,19 +10,19 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class TaskRemoveByIdCommand extends AbstractTaskCommand {
 
-    @NotNull
+    @NonNull
     private static final String NAME = "task-remove-by-id";
 
-    @NotNull
+    @NonNull
     private static final String DESCRIPTION = "Remove task by id.";
 
-    @NotNull
+    @NonNull
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return NAME;
@@ -33,9 +32,9 @@ public final class TaskRemoveByIdCommand extends AbstractTaskCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[REMOVE TASK BY ID]");
         System.out.println("ENTER ID:");
-        @NotNull final String id = TerminalUtil.nextLine();
-        @NotNull final String userId = getUserId();
-        @Nullable final Task task = getTaskService().findOneById(userId, id);
+        @NonNull final String id = TerminalUtil.nextLine();
+        @NonNull final String userId = getUserId();
+        final Task task = getTaskService().findOneById(userId, id);
         if (task == null) throw new TaskNotFoundException();
         getTaskService().removeById(userId, id);
     }

@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.command.task;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -12,19 +11,19 @@ import java.util.Arrays;
 
 public final class TaskChangeStatusByIdCommand extends AbstractTaskCommand {
 
-    @NotNull
+    @NonNull
     private static final String NAME = "task-change-status-by-id";
 
-    @NotNull
+    @NonNull
     private static final String DESCRIPTION = "Change task status by id.";
 
-    @NotNull
+    @NonNull
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return NAME;
@@ -34,12 +33,12 @@ public final class TaskChangeStatusByIdCommand extends AbstractTaskCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[CHANGE TASK STATUS BY ID]");
         System.out.println("ENTER ID:");
-        @NotNull final String id = TerminalUtil.nextLine();
+        @NonNull final String id = TerminalUtil.nextLine();
         System.out.println("ENTER STATUS");
         System.out.println(Arrays.toString(Status.values()));
-        @NotNull final String statusValue = TerminalUtil.nextLine();
-        @Nullable final Status status = Status.toStatus(statusValue);
-        @NotNull final String userId = getUserId();
+        @NonNull final String statusValue = TerminalUtil.nextLine();
+        final Status status = Status.toStatus(statusValue);
+        @NonNull final String userId = getUserId();
         getTaskService().changeTaskStatusById(userId, id, status);
     }
 

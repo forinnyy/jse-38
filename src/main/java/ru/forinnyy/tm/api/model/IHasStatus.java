@@ -1,13 +1,13 @@
 package ru.forinnyy.tm.api.model;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import ru.forinnyy.tm.enumerated.Status;
 
 public interface IHasStatus {
 
-    @NotNull
+    @NonNull
     Status getStatus();
 
-    void setStatus(@NotNull Status status);
+    void setStatus(@NonNull Status status);
 
 }

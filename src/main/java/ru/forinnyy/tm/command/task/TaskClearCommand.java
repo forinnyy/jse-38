@@ -1,25 +1,25 @@
 package ru.forinnyy.tm.command.task;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 
 public final class TaskClearCommand extends AbstractTaskCommand {
 
-    @NotNull
+    @NonNull
     private static final String NAME = "task-clear";
 
-    @NotNull
+    @NonNull
     private static final String DESCRIPTION = "Clear all tasks.";
 
-    @NotNull
+    @NonNull
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return NAME;
@@ -28,7 +28,7 @@ public final class TaskClearCommand extends AbstractTaskCommand {
     @Override
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[CLEAR TASKS]");
-        @NotNull final String userId = getUserId();
+        @NonNull final String userId = getUserId();
         getTaskService().clear(userId);
     }
 

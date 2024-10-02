@@ -1,16 +1,16 @@
 package ru.forinnyy.tm.command.system;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 
 public final class ApplicationVersionCommand extends AbstractSystemCommand {
 
-    @NotNull
+    @NonNull
     private static final String DESCRIPTION = "Show version info.";
 
-    @NotNull
+    @NonNull
     private static final String NAME = "version";
 
-    @NotNull
+    @NonNull
     private static final String ARGUMENT = "-v";
 
     @Override
@@ -19,19 +19,19 @@ public final class ApplicationVersionCommand extends AbstractSystemCommand {
         System.out.println(getPropertyService().getApplicationVersion());
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getArgument() {
         return ARGUMENT;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return NAME;

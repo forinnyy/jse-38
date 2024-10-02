@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.service;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.api.repository.IRepository;
 import ru.forinnyy.tm.api.service.IService;
 import ru.forinnyy.tm.enumerated.Sort;
@@ -19,10 +18,10 @@ import java.util.List;
 public abstract class AbstractService<M extends AbstractModel, R extends IRepository<M>>
         implements IService<M> {
 
-    @NotNull
+    @NonNull
     protected final R repository;
 
-    public AbstractService(@NotNull final R repository) {
+    public AbstractService(@NonNull final R repository) {
         this.repository = repository;
     }
 
@@ -31,50 +30,48 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
         repository.clear();
     }
 
-    @NotNull
+    @NonNull
     @Override
     public List<M> findAll() {
         return repository.findAll();
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public List<M> findAll(@Nullable final Comparator<M> comparator) {
+    public List<M> findAll(final Comparator<M> comparator) {
         if (comparator == null) return findAll();
         return repository.findAll(comparator);
     }
 
-    @NotNull
+    @NonNull
     @SuppressWarnings("unchecked")
     @Override
-    public List<M> findAll(@Nullable final Sort sort) {
+    public List<M> findAll(final Sort sort) {
         if (sort == null) return findAll();
         return repository.findAll(sort.getComparator());
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public M add(@Nullable final M model) throws AbstractEntityException {
-        if (model == null) throw new EntityNotFoundException();
+    public M add(@NonNull final M model) throws AbstractEntityException {
         return repository.add(model);
     }
 
     @Override
-    public boolean existsById(@Nullable final String id) {
+    public boolean existsById(final String id) {
         if (id == null || id.isEmpty()) return false;
         return repository.existsById(id);
     }
 
-    @Nullable
+    @NonNull
     @Override
-    public M findOneById(@Nullable final String id) throws AbstractFieldException {
-        if (id == null || id.isEmpty()) return null;
+    public M findOneById(final String id) throws AbstractFieldException {
+        if (id == null || id.isEmpty()) throw new IdEmptyException();
         return repository.findOneById(id);
     }
-
-    @Nullable
+    
     @Override
-    public M findOneByIndex(@Nullable final Integer index) throws AbstractFieldException {
+    public M findOneByIndex(final Integer index) throws AbstractFieldException {
         if (index == null) throw new IndexIncorrectException();
         return repository.findOneByIndex(index);
     }
@@ -84,37 +81,33 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
         return repository.getSize();
     }
 
-    @Nullable
     @Override
-    public M remove(@Nullable final M model) throws AbstractEntityException {
+    public M remove(final M model) throws AbstractEntityException {
         if (model == null) throw new EntityNotFoundException();
         return repository.remove(model);
     }
 
-    @Nullable
     @Override
-    public M removeById(@Nullable final String id) throws AbstractFieldException, AbstractEntityException {
+    public M removeById(final String id) throws AbstractFieldException, AbstractEntityException {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         return repository.removeById(id);
     }
 
-    @Nullable
     @Override
-    public M removeByIndex(@Nullable final Integer index) throws AbstractFieldException, AbstractEntityException {
+    public M removeByIndex(final Integer index) throws AbstractFieldException, AbstractEntityException {
         if (index == null) throw new IndexIncorrectException();
         return repository.removeByIndex(index);
     }
 
     @Override
-    public void removeAll(@Nullable final Collection<M> collection) {
+    public void removeAll(final Collection<M> collection) {
         if (collection == null || collection.isEmpty()) return;
         repository.removeAll(collection);
     }
 
-    @Nullable
+    @NonNull
     @Override
-    public M removeOne(@Nullable final M model) throws AbstractEntityException, AbstractFieldException {
-        if (model == null) throw new EntityNotFoundException();
+    public M removeOne(@NonNull final M model) throws AbstractEntityException, AbstractFieldException {
         return repository.remove(model);
     }
 

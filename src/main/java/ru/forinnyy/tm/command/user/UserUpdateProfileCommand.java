@@ -1,6 +1,6 @@
 package ru.forinnyy.tm.command.user;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -9,19 +9,19 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class UserUpdateProfileCommand extends AbstractUserCommand {
 
-    @NotNull
+    @NonNull
     private static final String NAME = "update-user-profile";
 
-    @NotNull
+    @NonNull
     private static final String DESCRIPTION = "Update profile of current user";
 
-    @NotNull
+    @NonNull
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return NAME;
@@ -31,16 +31,16 @@ public final class UserUpdateProfileCommand extends AbstractUserCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[USER UPDATE PROFILE]");
         System.out.println("ENTER FIRST NAME:");
-        @NotNull final String firstName = TerminalUtil.nextLine();
+        @NonNull final String firstName = TerminalUtil.nextLine();
         System.out.println("ENTER LAST NAME:");
-        final String lastName = TerminalUtil.nextLine();
+        @NonNull final String lastName = TerminalUtil.nextLine();
         System.out.println("ENTER MIDDLE NAME:");
-        final String middleName = TerminalUtil.nextLine();
-        final String userId = getUserId();
+        @NonNull final String middleName = TerminalUtil.nextLine();
+        @NonNull final String userId = getUserId();
         getUserService().updateUser(userId, firstName, lastName, middleName);
     }
 
-    @NotNull
+    @NonNull
     @Override
     public Role[] getRoles() {
         return Role.values();

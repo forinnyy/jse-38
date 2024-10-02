@@ -1,17 +1,17 @@
 package ru.forinnyy.tm.api.service;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import ru.forinnyy.tm.api.component.ISaltProvider;
 
 public interface IPropertyService extends ISaltProvider {
 
-    @NotNull
+    @NonNull
     String getApplicationVersion();
 
-    @NotNull
+    @NonNull
     String getAuthorEmail();
 
-    @NotNull
+    @NonNull
     String getAuthorName();
 
 }

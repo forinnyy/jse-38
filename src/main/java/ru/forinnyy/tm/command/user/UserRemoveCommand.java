@@ -1,6 +1,6 @@
 package ru.forinnyy.tm.command.user;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -9,25 +9,25 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class UserRemoveCommand extends AbstractUserCommand {
 
-    @NotNull
+    @NonNull
     private static final String NAME = "user-remove";
 
-    @NotNull
+    @NonNull
     private static final String DESCRIPTION = "Remove user.";
 
-    @NotNull
+    @NonNull
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return NAME;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public Role[] getRoles() {
         return  new Role[] {
@@ -39,7 +39,7 @@ public final class UserRemoveCommand extends AbstractUserCommand {
     public void execute() throws AbstractFieldException, AbstractUserException, AbstractEntityException {
         System.out.println("[USER REMOVE]");
         System.out.println("ENTER LOGIN");
-        @NotNull final String login = TerminalUtil.nextLine();
+        @NonNull final String login = TerminalUtil.nextLine();
         getUserService().removeByLogin(login);
     }
 

@@ -3,8 +3,7 @@ package ru.forinnyy.tm.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.enumerated.Role;
 
 
@@ -13,28 +12,22 @@ import ru.forinnyy.tm.enumerated.Role;
 @NoArgsConstructor
 public final class User extends AbstractModel {
 
-    @Nullable
     private String login;
 
-    @Nullable
     private String passwordHash;
 
-    @Nullable
     private String email;
 
-    @Nullable
     private String firstName;
 
-    @Nullable
     private String lastName;
 
-    @Nullable
     private String middleName;
 
-    @NotNull
+    @NonNull
     private Role role = Role.USUAL;
 
-    @NotNull
+    @NonNull
     private Boolean locked = false;
 
     public Boolean isLocked() {

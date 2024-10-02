@@ -1,24 +1,24 @@
 package ru.forinnyy.tm.command.project;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 
 public final class ProjectClearCommand extends AbstractProjectCommand {
 
-    @NotNull
+    @NonNull
     private static final String NAME = "project-clear";
 
-    @NotNull
+    @NonNull
     private static final String DESCRIPTION = "Delete all projects.";
 
-    @NotNull
+    @NonNull
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return NAME;
@@ -27,7 +27,7 @@ public final class ProjectClearCommand extends AbstractProjectCommand {
     @Override
     public void execute() throws AbstractUserException, AbstractFieldException {
         System.out.println("[CLEAR PROJECTS]");
-        @NotNull final String userId = getUserId();
+        @NonNull final String userId = getUserId();
         getProjectService().clear(userId);
     }
 

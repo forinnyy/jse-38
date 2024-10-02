@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.command.user;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.api.service.IAuthService;
 import ru.forinnyy.tm.api.service.IUserService;
 import ru.forinnyy.tm.command.AbstractCommand;
@@ -10,12 +9,12 @@ import ru.forinnyy.tm.model.User;
 
 public abstract class AbstractUserCommand extends AbstractCommand {
 
-    @NotNull
+    @NonNull
     public IUserService getUserService() {
         return serviceLocator.getUserService();
     }
 
-    @NotNull
+    @NonNull
     public IAuthService getAuthService() {
         return super.getAuthService();
     }
@@ -25,8 +24,7 @@ public abstract class AbstractUserCommand extends AbstractCommand {
         System.out.println("ID: " + user.getId());
         System.out.println("LOGIN: " + user.getLogin());
     }
-
-    @Nullable
+    
     @Override
     public String getArgument() {
         return null;

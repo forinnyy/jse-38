@@ -1,23 +1,23 @@
 package ru.forinnyy.tm.util;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import ru.forinnyy.tm.exception.field.NumberIncorrectException;
 
 import java.util.Scanner;
 
 public interface TerminalUtil {
 
-    @NotNull
+    @NonNull
     Scanner SCANNER = new Scanner(System.in);
 
-    @NotNull
+    @NonNull
     static String nextLine() {
         return SCANNER.nextLine();
     }
 
-    @NotNull
+    @NonNull
     static Integer nextNumber() throws NumberIncorrectException {
-        @NotNull final String value = nextLine();
+        @NonNull final String value = nextLine();
         try {
             return Integer.parseInt(value);
         } catch (final RuntimeException e) {

@@ -1,6 +1,6 @@
 package ru.forinnyy.tm.api.service;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -11,25 +11,25 @@ import java.util.List;
 
 public interface ITaskService extends IUserOwnedService<Task> {
 
-    @NotNull
+    @NonNull
     Task updateById(String userId, String id, String name, String description) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
 
-    @NotNull
+    @NonNull
     Task updateByIndex(String userId, Integer index, String name, String description) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
 
-    @NotNull
+    @NonNull
     Task changeTaskStatusById(String userId, String id, Status status) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
 
-    @NotNull
+    @NonNull
     Task changeTaskStatusByIndex(String userId, Integer index, Status status) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
 
-    @NotNull
+    @NonNull
     List<Task> findAllByProjectId(String userId, String projectId) throws AbstractFieldException;
 
-    @NotNull
+    @NonNull
     Task create(String userId, String name, String description) throws AbstractFieldException;
 
-    @NotNull
+    @NonNull
     Task create(String userId, String name) throws AbstractFieldException;
 
 }

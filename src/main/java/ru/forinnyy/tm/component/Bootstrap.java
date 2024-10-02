@@ -2,9 +2,8 @@ package ru.forinnyy.tm.component;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.SneakyThrows;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,87 +40,87 @@ import java.util.Set;
 @NoArgsConstructor
 public final class Bootstrap implements IServiceLocator {
 
-    @NotNull
+    @NonNull
     private static final String PACKAGE_COMMANDS = "ru.forinnyy.tm.command";
 
-    @NotNull
+    @NonNull
     private static final Logger LOGGER_LIFECYCLE = LoggerFactory.getLogger("LIFECYCLE");
 
-    @NotNull
+    @NonNull
     private static final Logger LOGGER_COMMANDS = LoggerFactory.getLogger("COMMANDS");
 
-    @NotNull
+    @NonNull
     private final ICommandRepository commandRepository = new CommandRepository();
 
     @Getter
-    @NotNull
+    @NonNull
     private final ICommandService commandService = new CommandService(commandRepository);
 
-    @NotNull
+    @NonNull
     private final IProjectRepository projectRepository = new ProjectRepository();
 
     @Getter
-    @NotNull
+    @NonNull
     private final IProjectService projectService = new ProjectService(projectRepository);
 
-    @NotNull
+    @NonNull
     private final ITaskRepository taskRepository = new TaskRepository();
 
     @Getter
-    @NotNull
+    @NonNull
     private final IProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
 
     @Getter
-    @NotNull
+    @NonNull
     private final ITaskService taskService = new TaskService(taskRepository);
 
-    @NotNull
+    @NonNull
     private final IUserRepository userRepository = new UserRepository();
 
     @Getter
-    @NotNull
+    @NonNull
     private final IPropertyService propertyService = new PropertyService();
 
     @Getter
-    @NotNull
+    @NonNull
     private final IUserService userService = new UserService(propertyService, userRepository, projectRepository, taskRepository);
 
     @Getter
-    @NotNull
+    @NonNull
     private final IAuthService authService = new AuthService(propertyService, userService);
 
     {
-        @NotNull final Reflections reflections = new Reflections(PACKAGE_COMMANDS);
-        @NotNull final Set<Class<? extends AbstractCommand>> classes =
+        @NonNull final Reflections reflections = new Reflections(PACKAGE_COMMANDS);
+        @NonNull final Set<Class<? extends AbstractCommand>> classes =
                 reflections.getSubTypesOf(AbstractCommand.class);
-        for (@NotNull final Class<? extends AbstractCommand> clazz : classes) registry(clazz);
+        for (@NonNull final Class<? extends AbstractCommand> clazz : classes) registry(clazz);
     }
 
     @SneakyThrows
-    private void registry(@NotNull final Class<? extends AbstractCommand> clazz) {
+    private void registry(@NonNull final Class<? extends AbstractCommand> clazz) {
         if (Modifier.isAbstract(clazz.getModifiers())) return;
         if (!AbstractCommand.class.isAssignableFrom(clazz)) return;
         final AbstractCommand command = clazz.newInstance();
         registry(command);
     }
 
-    private void registry(@NotNull final AbstractCommand command) {
+    private void registry(@NonNull final AbstractCommand command) {
         command.setServiceLocator(this);
         commandService.add(command);
     }
 
-    private void processArgument(@Nullable final String arg) throws
+    private void processArgument(final String arg) throws
             AbstractSystemException,
             AbstractEntityException,
             AbstractFieldException,
             AbstractUserException,
             AuthenticationException {
-        @Nullable final AbstractCommand abstractCommand = commandService.getCommandByArgument(arg);
+        final AbstractCommand abstractCommand = commandService.getCommandByArgument(arg);
         if (abstractCommand == null) throw new ArgumentNotSupportedException(arg);
         abstractCommand.execute();
     }
 
-    private boolean processArguments(@Nullable final String[] args) throws
+    private boolean processArguments(final String[] args) throws
             AbstractSystemException,
             AbstractEntityException,
             AbstractFieldException,
@@ -132,22 +131,22 @@ public final class Bootstrap implements IServiceLocator {
         return true;
     }
 
-    private void processCommand(@Nullable final String command) throws
+    private void processCommand(final String command) throws
             AbstractSystemException,
             AbstractFieldException,
             AbstractEntityException,
             AbstractUserException,
             AuthenticationException {
-        @Nullable final AbstractCommand abstractCommand = commandService.getCommandByName(command);
+        final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
         authService.checkRoles(abstractCommand.getRoles());
         abstractCommand.execute();
     }
 
     private void initDemoData() throws AbstractFieldException, AbstractUserException, AbstractEntityException {
-        @NotNull final User test = userService.create("test", "test", "test@test.ru");
-        @NotNull final User user = userService.create("user", "user", "user@user.ru");
-        @NotNull final User admin = userService.create("admin", "admin", Role.ADMIN);
+        @NonNull final User test = userService.create("test", "test", "test@test.ru");
+        @NonNull final User user = userService.create("user", "user", "user@user.ru");
+        @NonNull final User admin = userService.create("admin", "admin", Role.ADMIN);
 
         projectService.add(user.getId(), new Project("USER PROJECT", Status.IN_PROGRESS));
         projectService.add(admin.getId(), new Project("ADMIN PROJECT", Status.NOT_STARTED));
@@ -168,7 +167,7 @@ public final class Bootstrap implements IServiceLocator {
         );
     }
 
-    public void run(@Nullable final String[] args) throws AbstractException, AuthenticationException {
+    public void run(final String[] args) throws AbstractException, AuthenticationException {
         if (processArguments(args)) System.exit(0);
 
         initDemoData();
@@ -177,11 +176,11 @@ public final class Bootstrap implements IServiceLocator {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 System.out.println("ENTER COMMAND:");
-                @NotNull final String command = TerminalUtil.nextLine();
+                @NonNull final String command = TerminalUtil.nextLine();
                 LOGGER_COMMANDS.info(command);
                 processCommand(command);
                 System.out.println("[OK]");
-            } catch (@NotNull final Exception e) {
+            } catch (@NonNull final Exception e) {
                 LOGGER_LIFECYCLE.error(e.getMessage());
                 System.err.println("[FAIL]");
             }

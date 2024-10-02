@@ -1,13 +1,13 @@
 package ru.forinnyy.tm.api.component;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 
 public interface ISaltProvider {
 
-    @NotNull
+    @NonNull
     Integer getPasswordIteration();
 
-    @NotNull
+    @NonNull
     String getPasswordSecret();
 
 }

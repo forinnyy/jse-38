@@ -1,8 +1,7 @@
 package ru.forinnyy.tm.util;
 
 import lombok.NoArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 
 import java.text.DecimalFormat;
 
@@ -17,52 +16,51 @@ public final class NumberUtil {
 
     private static final double TERABYTE = GIGABYTE * 1024;
 
-    @NotNull
+    @NonNull
     private static final String NAME_BYTES = "B";
 
-    @NotNull
+    @NonNull
     private static final String NAME_BYTES_LONG = "Bytes";
 
-    @NotNull
+    @NonNull
     private static final String NAME_KILOBYTE = "KB";
 
-    @NotNull
+    @NonNull
     private static final String NAME_MEGABYTE = "MB";
 
-    @NotNull
+    @NonNull
     private static final String NAME_GIGABYTE = "GB";
 
-    @NotNull
+    @NonNull
     private static final String NAME_TERABYTE = "TB";
 
-    @NotNull
+    @NonNull
     private static final String SEPARATOR = " ";
 
-    @NotNull
+    @NonNull
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.###");
 
-    @NotNull
+    @NonNull
     private static String render(final double bytes) {
         return DECIMAL_FORMAT.format(bytes);
     }
 
-    @NotNull
+    @NonNull
     private static String render(final long bytes, final double size) {
         return render(bytes / size);
     }
 
-    @NotNull
-    private static String render(final long bytes, final double size, @NotNull final String name) {
+    @NonNull
+    private static String render(final long bytes, final double size, @NonNull final String name) {
         return render(bytes, size) + SEPARATOR + name;
     }
 
-    @NotNull
-    private static String render(final long bytes, @NotNull final String name) {
+    @NonNull
+    private static String render(final long bytes, @NonNull final String name) {
         return render(bytes) + SEPARATOR + name;
     }
 
-
-    @NotNull
+    @NonNull
     public static String formatBytes(final long bytes) {
         if ((bytes >= 0) && (bytes < KILOBYTE)) return render(bytes, NAME_BYTES);
         if ((bytes >= KILOBYTE) && (bytes < MEGABYTE)) return render(bytes, KILOBYTE, NAME_KILOBYTE);

@@ -1,28 +1,28 @@
 package ru.forinnyy.tm.api.service;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 
 public interface IServiceLocator {
 
-    @NotNull
+    @NonNull
     ICommandService getCommandService();
 
-    @NotNull
+    @NonNull
     IProjectService getProjectService();
 
-    @NotNull
+    @NonNull
     IProjectTaskService getProjectTaskService();
 
-    @NotNull
+    @NonNull
     ITaskService getTaskService();
 
-    @NotNull
+    @NonNull
     IUserService getUserService();
 
-    @NotNull
+    @NonNull
     IAuthService getAuthService();
 
-    @NotNull
+    @NonNull
     IPropertyService getPropertyService();
 
 }

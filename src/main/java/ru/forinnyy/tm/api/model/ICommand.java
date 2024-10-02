@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.api.model;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -11,16 +10,14 @@ import javax.naming.AuthenticationException;
 
 public interface ICommand {
 
-    @Nullable
     String getArgument();
 
-    @NotNull
+    @NonNull
     String getDescription();
 
-    @NotNull
+    @NonNull
     String getName();
 
-    @Nullable
     Role[] getRoles();
 
     void execute() throws AbstractFieldException, AbstractUserException, AbstractEntityException, AuthenticationException;

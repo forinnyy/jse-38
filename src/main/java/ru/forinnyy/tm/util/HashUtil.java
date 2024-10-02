@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.util;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.api.component.ISaltProvider;
 
 import java.security.MessageDigest;
@@ -9,41 +8,38 @@ import java.security.NoSuchAlgorithmException;
 
 public interface HashUtil {
 
-    @Nullable
-    static String salt(@Nullable final String value,
-                       @Nullable final String secret,
-                       @Nullable final Integer iteration
+    static String salt(final String value,
+                       final String secret,
+                       final Integer iteration
     ) {
         if (value == null || secret == null || iteration == null) return null;
-        @Nullable String result = value;
+        String result = value;
         for (int i = 0; i < iteration; i++) {
             result = md5(secret + result + secret);
         }
         return result;
     }
 
-    @Nullable
-    static String salt(@Nullable final ISaltProvider saltProvider,
-                       @Nullable final String value
+    static String salt(final ISaltProvider saltProvider,
+                       final String value
     ) {
         if (saltProvider == null) return null;
-        @NotNull final String secret = saltProvider.getPasswordSecret();
-        @NotNull final Integer iteration = saltProvider.getPasswordIteration();
+        @NonNull final String secret = saltProvider.getPasswordSecret();
+        @NonNull final Integer iteration = saltProvider.getPasswordIteration();
         return salt(value, secret, iteration);
     }
 
-
-    @NotNull
-    static String md5(@NotNull final String value) {
+    @NonNull
+    static String md5(@NonNull final String value) {
         try {
-            @NotNull final MessageDigest md = MessageDigest.getInstance("MD5");
-            @NotNull final byte[] array = md.digest(value.getBytes());
-            @NotNull final StringBuffer sb = new StringBuffer();
+            @NonNull final MessageDigest md = MessageDigest.getInstance("MD5");
+            @NonNull final byte[] array = md.digest(value.getBytes());
+            @NonNull final StringBuffer sb = new StringBuffer();
             for (int i = 0; i < array.length; i++) {
                 sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
             }
             return sb.toString();
-        } catch (@NotNull final NoSuchAlgorithmException e) {
+        } catch (@NonNull final NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return value;

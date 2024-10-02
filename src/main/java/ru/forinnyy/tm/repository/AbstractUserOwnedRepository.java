@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.repository;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.api.repository.IUserOwnedRepository;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
@@ -18,50 +17,49 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
         implements IUserOwnedRepository<M> {
 
     @Override
-    public void clear(@NotNull final String userId) {
-        @NotNull final List<M> models = findAll(userId);
+    public void clear(@NonNull final String userId) {
+        @NonNull final List<M> models = findAll(userId);
         removeAll(models);
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public List<M> findAll(@NotNull final String userId) {
+    public List<M> findAll(@NonNull final String userId) {
         return findAll()
                 .stream()
                 .filter(m -> userId.equals(m.getUserId()))
                 .collect(Collectors.toList());
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public List<M> findAll(@NotNull final String userId, @Nullable final Comparator<M> comparator) {
-        @NotNull final List<M> result = findAll(userId);
+    public List<M> findAll(@NonNull final String userId, final Comparator<M> comparator) {
+        @NonNull final List<M> result = findAll(userId);
         result.sort(comparator);
         return result;
     }
 
-    @NotNull
+    @NonNull
     @SuppressWarnings("unchecked")
     @Override
-    public List<M> findAll(@NotNull final String userId, @NotNull final Sort sort) throws AbstractFieldException {
+    public List<M> findAll(@NonNull final String userId, @NonNull final Sort sort) throws AbstractFieldException {
         return findAll(userId, sort.getComparator());
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public M add(@NotNull final String userId, @NotNull final M model) {
+    public M add(@NonNull final String userId, @NonNull final M model) {
         model.setUserId(userId);
         return add(model);
     }
 
     @Override
-    public boolean existsById(@NotNull final String userId, @NotNull final String id) throws AbstractUserException {
+    public boolean existsById(@NonNull final String userId, @NonNull final String id) throws AbstractUserException {
         return findOneById(userId, id) != null;
     }
 
-    @Nullable
     @Override
-    public M findOneById(@NotNull final String userId, @NotNull final String id) throws AbstractUserException {
+    public M findOneById(@NonNull final String userId, @NonNull final String id) throws AbstractUserException {
         return findAll()
                 .stream()
                 .filter(m -> userId.equals(m.getUserId()))
@@ -69,10 +67,9 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
                 .findFirst()
                 .orElse(null);
     }
-
-    @Nullable
+    
     @Override
-    public M findOneByIndex(@NotNull final String userId, @NotNull final Integer index) {
+    public M findOneByIndex(@NonNull final String userId, @NonNull final Integer index) {
         return findAll()
                 .stream()
                 .filter(m -> userId.equals(m.getUserId()))
@@ -82,7 +79,7 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
     }
 
     @Override
-    public int getSize(@Nullable final String userId) throws AbstractFieldException {
+    public int getSize(final String userId) throws AbstractFieldException {
         if (userId == null) throw new UserIdEmptyException();
         return (int) findAll()
                 .stream()
@@ -90,31 +87,29 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
                 .count();
     }
 
-    @Nullable
+    
     @Override
-    public M remove(@NotNull final String userId, @NotNull final M model) throws AbstractEntityException, AbstractUserException {
+    public M remove(@NonNull final String userId, @NonNull final M model) throws AbstractEntityException, AbstractUserException {
         return removeById(userId, model.getId());
     }
 
-    @Nullable
     @Override
-    public M removeById(@NotNull final String userId, @NotNull final String id) throws AbstractEntityException, AbstractUserException {
-        @Nullable final M model = findOneById(userId, id);
+    public M removeById(@NonNull final String userId, @NonNull final String id) throws AbstractEntityException, AbstractUserException {
+        final M model = findOneById(userId, id);
+        if (model == null) return null;
+        return remove(model);
+    }
+    
+    @Override
+    public M removeByIndex(@NonNull final String userId, @NonNull final Integer index) throws AbstractEntityException {
+        final M model = findOneByIndex(userId, index);
         if (model == null) return null;
         return remove(model);
     }
 
-    @Nullable
     @Override
-    public M removeByIndex(@NotNull final String userId, @NotNull final Integer index) throws AbstractEntityException {
-        @Nullable final M model = findOneByIndex(userId, index);
-        if (model == null) return null;
-        return remove(model);
-    }
-
-    @Override
-    public void removeAll(@NotNull final String userId) {
-        @NotNull final List<M> list = findAll(userId);
+    public void removeAll(@NonNull final String userId) {
+        @NonNull final List<M> list = findAll(userId);
         removeAll(list);
     }
 

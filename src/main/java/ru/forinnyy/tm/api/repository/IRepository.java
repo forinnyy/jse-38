@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.api.repository;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.model.AbstractModel;
@@ -15,21 +14,21 @@ public interface IRepository<M extends AbstractModel> {
 
     interface IRepositoryOptional<M> {
 
-        Optional<M> findOneById(@Nullable String id) throws AbstractFieldException;
+        Optional<M> findOneById(String id) throws AbstractFieldException;
 
-        Optional<M> findOneByIndex(@Nullable Integer index) throws AbstractFieldException;
+        Optional<M> findOneByIndex(Integer index) throws AbstractFieldException;
 
     }
 
     default IRepositoryOptional<M> optional() {
         return new IRepositoryOptional<M>() {
             @Override
-            public Optional<M> findOneById(@Nullable String id) throws AbstractFieldException {
+            public Optional<M> findOneById(String id) throws AbstractFieldException {
                 return Optional.ofNullable(IRepository.this.findOneById(id));
             }
 
             @Override
-            public Optional<M> findOneByIndex(@Nullable Integer index) throws AbstractFieldException {
+            public Optional<M> findOneByIndex(Integer index) throws AbstractFieldException {
                 return Optional.ofNullable(IRepository.this.findOneByIndex(index));
             }
         };
@@ -37,34 +36,31 @@ public interface IRepository<M extends AbstractModel> {
 
     void clear();
 
-    @NotNull
+    @NonNull
     List<M> findAll();
 
-    @NotNull
-    List<M> findAll(@Nullable Comparator<M> comparator);
+    @NonNull
+    List<M> findAll(Comparator<M> comparator);
 
-    @NotNull
-    M add(@Nullable M model) throws AbstractEntityException;
+    @NonNull
+    M add(@NonNull M model) throws AbstractEntityException;
 
-    boolean existsById(@Nullable String id);
+    boolean existsById(String id);
 
-    @Nullable
-    M findOneById(@Nullable String id) throws AbstractFieldException;
+    @NonNull
+    M findOneById(@NonNull String id) throws AbstractFieldException;
 
-    @Nullable
-    M findOneByIndex(@Nullable Integer index) throws AbstractFieldException;
+    M findOneByIndex(Integer index) throws AbstractFieldException;
 
     int getSize();
 
-    @Nullable
-    M remove(@Nullable M model) throws AbstractEntityException;
+    @NonNull
+    M remove(@NonNull M model) throws AbstractEntityException;
 
-    @Nullable
-    M removeById(@Nullable String id) throws AbstractFieldException, AbstractEntityException;
+    M removeById(String id) throws AbstractFieldException, AbstractEntityException;
 
-    @Nullable
-    M removeByIndex(@Nullable Integer index) throws AbstractFieldException, AbstractEntityException;
+    M removeByIndex(Integer index) throws AbstractFieldException, AbstractEntityException;
 
-    void removeAll(@Nullable Collection<M> collection);
+    void removeAll(Collection<M> collection);
 
 }

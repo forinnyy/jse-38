@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.api.repository;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.command.AbstractCommand;
 
 import java.util.Collection;
@@ -10,16 +9,14 @@ public interface ICommandRepository {
 
     void add(AbstractCommand command);
 
-    @Nullable
-    AbstractCommand getCommandByArgument(@Nullable String argument);
+    AbstractCommand getCommandByArgument(String argument);
 
-    @Nullable
-    AbstractCommand getCommandByName(@NotNull String name);
+    AbstractCommand getCommandByName(String name);
 
-    @NotNull
+    @NonNull
     Collection<AbstractCommand> getTerminalCommands();
 
-    @NotNull
+    @NonNull
     Collection<AbstractCommand> getTerminalArguments();
 
 }

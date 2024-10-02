@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.command.user;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -12,19 +11,19 @@ import javax.naming.AuthenticationException;
 
 public final class UserLoginCommand extends AbstractUserCommand {
 
-    @NotNull
+    @NonNull
     private static final String NAME = "login";
 
-    @NotNull
+    @NonNull
     private static final String DESCRIPTION = "Login user";
 
-    @NotNull
+    @NonNull
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return NAME;
@@ -34,13 +33,12 @@ public final class UserLoginCommand extends AbstractUserCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException, AuthenticationException {
         System.out.println("[USER LOGIN]");
         System.out.println("ENTER LOGIN:");
-        @NotNull final String login = TerminalUtil.nextLine();
+        @NonNull final String login = TerminalUtil.nextLine();
         System.out.println("ENTER PASSWORD:");
-        @NotNull final String password = TerminalUtil.nextLine();
+        @NonNull final String password = TerminalUtil.nextLine();
         getAuthService().login(login, password);
     }
-
-    @Nullable
+    
     @Override
     public Role[] getRoles() {
         return null;

@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.service;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.api.service.ITaskService;
 import ru.forinnyy.tm.enumerated.Status;
@@ -18,44 +17,44 @@ import java.util.List;
 public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepository>
         implements ITaskService {
 
-    public TaskService(@NotNull final ITaskRepository repository) {
+    public TaskService(@NonNull final ITaskRepository repository) {
         super(repository);
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public List<Task> findAllByProjectId(@Nullable final String userId, @Nullable String projectId) throws AbstractFieldException {
+    public List<Task> findAllByProjectId(final String userId, String projectId) throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (projectId == null || projectId.isEmpty()) return Collections.emptyList();
         return repository.findAllByProjectId(userId, projectId);
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public Task create(@Nullable final String userId, @Nullable final String name, @Nullable final String description) throws AbstractFieldException {
+    public Task create(final String userId, final String name, final String description) throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
         return repository.create(userId, name, description);
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public Task create(@Nullable final String userId, @Nullable final String name) throws AbstractFieldException {
+    public Task create(final String userId, final String name) throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         return repository.create(userId, name);
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public Task updateById(@Nullable final String userId, @Nullable final String id, @Nullable final String name, @Nullable final String description)
+    public Task updateById(final String userId, final String id, final String name, final String description)
             throws AbstractFieldException, AbstractEntityException, AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
-        @Nullable final Task task = findOneById(userId, id);
+        final Task task = findOneById(userId, id);
         if (task == null) throw new TaskNotFoundException();
         if (!task.getUserId().equals(userId)) throw new PermissionException();
         task.setName(name);
@@ -63,15 +62,15 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         return task;
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public Task updateByIndex(@Nullable final String userId, @Nullable final Integer index, @Nullable final String name, @Nullable final String description)
+    public Task updateByIndex(final String userId, final Integer index, final String name, final String description)
             throws AbstractFieldException, AbstractEntityException, AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0 || index > repository.getSize()) throw new IndexIncorrectException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
-        @Nullable final Task task = findOneByIndex(userId, index);
+        final Task task = findOneByIndex(userId, index);
         if (task == null) throw new TaskNotFoundException();
         if (!task.getUserId().equals(userId)) throw new PermissionException();
         task.setName(name);
@@ -79,27 +78,27 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         return task;
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public Task changeTaskStatusById(@Nullable final String userId, @Nullable final String id, @NotNull final Status status)
+    public Task changeTaskStatusById(final String userId, final String id, @NonNull final Status status)
             throws AbstractFieldException, AbstractEntityException, AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
-        @Nullable final Task task = findOneById(userId, id);
+        final Task task = findOneById(userId, id);
         if (task == null) throw new TaskNotFoundException();
         if (!task.getUserId().equals(userId)) throw new PermissionException();
         task.setStatus(status);
         return task;
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public Task changeTaskStatusByIndex(@Nullable final String userId, @Nullable final Integer index, @NotNull final Status status)
+    public Task changeTaskStatusByIndex(final String userId, final Integer index, @NonNull final Status status)
             throws AbstractFieldException, AbstractEntityException, AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0 || index > repository.getSize()) throw new IndexIncorrectException();
         if (index >= repository.getSize()) throw new IndexIncorrectException();
-        @Nullable final Task task = findOneByIndex(userId, index);
+        final Task task = findOneByIndex(userId, index);
         if (task == null) throw new TaskNotFoundException();
         if (!task.getUserId().equals(userId)) throw new PermissionException();
         task.setStatus(status);

@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.service;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import lombok.NonNull;
 import ru.forinnyy.tm.api.service.IAuthService;
 import ru.forinnyy.tm.api.service.IPropertyService;
 import ru.forinnyy.tm.api.service.IUserService;
@@ -19,38 +18,37 @@ import java.util.Arrays;
 
 public final class AuthService implements IAuthService {
 
-    @NotNull
+    @NonNull
     private final IUserService userService;
 
-    @NotNull
+    @NonNull
     private final IPropertyService propertyService;
 
-    @Nullable
     private String userId;
 
     public AuthService(
-            @NotNull IPropertyService propertyService,
-            @NotNull IUserService userService
+            @NonNull IPropertyService propertyService,
+            @NonNull IUserService userService
     ) {
         this.propertyService = propertyService;
         this.userService = userService;
     }
 
-    @NotNull
+    @NonNull
     @Override
-    public User registry(@NotNull final String login, @NotNull final String password, @NotNull final String email) throws AbstractUserException, AbstractFieldException, AbstractEntityException {
+    public User registry(@NonNull final String login, @NonNull final String password, @NonNull final String email) throws AbstractUserException, AbstractFieldException, AbstractEntityException {
         return userService.create(login, password, email);
     }
 
     @Override
-    public void login(@Nullable final String login, @Nullable final String password) throws AbstractFieldException, AbstractUserException, AbstractEntityException, AuthenticationException {
+    public void login(final String login, final String password) throws AbstractFieldException, AbstractUserException, AbstractEntityException, AuthenticationException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
-        @Nullable final User user = userService.findByLogin(login);
+        final User user = userService.findByLogin(login);
         if (user == null) throw new PermissionException();
         final boolean locked = user.isLocked() == null || user.isLocked();
         if (locked) throw new AccessDeniedException();
-        @Nullable final String hash = HashUtil.salt(propertyService, password);
+        final String hash = HashUtil.salt(propertyService, password);
         if (hash == null) throw new AuthenticationException();
         if (!hash.equals(user.getPasswordHash())) throw new PermissionException();
         userId = user.getId();
@@ -66,27 +64,27 @@ public final class AuthService implements IAuthService {
         return userId != null;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getUserId() throws AbstractUserException {
         if (!isAuth()) throw new AccessDeniedException();
         return userId;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public User getUser() throws AbstractUserException, AbstractFieldException {
         if (!isAuth()) throw new AccessDeniedException();
-        @Nullable final User user = userService.findOneById(userId);
+        final User user = userService.findOneById(userId);
         if (user == null) throw new AccessDeniedException();
         return user;
     }
 
     @Override
-    public void checkRoles(@Nullable final Role[] roles) throws AbstractUserException, AbstractFieldException {
+    public void checkRoles(final Role[] roles) throws AbstractUserException, AbstractFieldException {
         if (roles == null) return;
-        @NotNull final User user = getUser();
-        @NotNull final Role role = user.getRole();
+        @NonNull final User user = getUser();
+        @NonNull final Role role = user.getRole();
         final boolean hasRole = Arrays.asList(roles).contains(role);
         if (!hasRole) throw new PermissionException();
     }

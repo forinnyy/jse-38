@@ -1,6 +1,6 @@
 package ru.forinnyy.tm.command.project;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -9,19 +9,19 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class ProjectCompleteByIndexCommand extends AbstractProjectCommand {
 
-    @NotNull
+    @NonNull
     private static final String NAME = "project-complete-by-index";
 
-    @NotNull
+    @NonNull
     private static final String DESCRIPTION = "Complete project by index.";
 
-    @NotNull
+    @NonNull
     @Override
     public String getDescription() {
         return DESCRIPTION;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public String getName() {
         return NAME;
@@ -31,8 +31,8 @@ public final class ProjectCompleteByIndexCommand extends AbstractProjectCommand 
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[COMPLETE PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
-        @NotNull final Integer index = TerminalUtil.nextNumber() - 1;
-        @NotNull final String userId = getUserId();
+        @NonNull final Integer index = TerminalUtil.nextNumber() - 1;
+        @NonNull final String userId = getUserId();
         getProjectService().changeProjectStatusByIndex(userId, index, Status.COMPLETED);
     }
 
