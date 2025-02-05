@@ -17,8 +17,17 @@ public final class ApplicationAboutCommand extends AbstractSystemCommand {
     @Override
     public void execute() {
         System.out.println("[ABOUT]");
-        System.out.println("Name: " + getPropertyService().getAuthorName());
-        System.out.println("E-mail: " + getPropertyService().getAuthorEmail());
+        System.out.println("AUTHOR: " + getPropertyService().getAuthorName());
+        System.out.println("E-MAIL: " + getPropertyService().getAuthorEmail());
+        System.out.println();
+
+        System.out.println("[GIT]");
+        System.out.println("BRANCH: " + getPropertyService().getGitBranch());
+        System.out.println("COMMIT ID: " + getPropertyService().getGitCommitId());
+        System.out.println("COMMITTER: " + getPropertyService().getGitCommitterName());
+        System.out.println("E-MAIL: " + getPropertyService().getGitCommitterEmail());
+        System.out.println("MESSAGE: " + getPropertyService().getGitCommitMessage());
+        System.out.println("TIME: " + getPropertyService().getGitCommitTime());
     }
 
     @NonNull

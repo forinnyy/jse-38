@@ -30,10 +30,14 @@ import ru.forinnyy.tm.repository.ProjectRepository;
 import ru.forinnyy.tm.repository.TaskRepository;
 import ru.forinnyy.tm.repository.UserRepository;
 import ru.forinnyy.tm.service.*;
+import ru.forinnyy.tm.util.SystemUtil;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 import javax.naming.AuthenticationException;
+import java.io.File;
 import java.lang.reflect.Modifier;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Set;
 
 
@@ -143,6 +147,15 @@ public final class Bootstrap implements IServiceLocator {
         abstractCommand.execute();
     }
 
+    @SneakyThrows
+    private void initPID() {
+        @NonNull final String filename = "task-manager.pid";
+        @NonNull final String pid = Long.toString(SystemUtil.getPID());
+        Files.write(Paths.get(filename), pid.getBytes());
+        @NonNull final File file = new File(filename);
+        file.deleteOnExit();
+    }
+
     private void initDemoData() throws AbstractFieldException, AbstractUserException, AbstractEntityException {
         @NonNull final User test = userService.create("test", "test", "test@test.ru");
         @NonNull final User user = userService.create("user", "user", "user@user.ru");
@@ -170,6 +183,7 @@ public final class Bootstrap implements IServiceLocator {
     public void run(final String[] args) throws AbstractException, AuthenticationException {
         if (processArguments(args)) System.exit(0);
 
+        initPID();
         initDemoData();
         initLogger();
 

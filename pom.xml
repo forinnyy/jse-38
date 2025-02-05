@@ -16,6 +16,12 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <scm>
+        <connection>scm:svn:http://none</connection>
+        <developerConnection>scm:svn:https://none</developerConnection>
+        <url>scm:svn:http://none</url>
+    </scm>
+
     <developers>
         <developer>
             <id>forinnyy</id>
@@ -63,6 +69,21 @@
             <artifactId>annotations</artifactId>
             <version>16.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.jcabi</groupId>
+            <artifactId>jcabi-manifests</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.5</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -78,6 +99,25 @@
                             <classpathPrefix>../lib/</classpathPrefix>
                             <mainClass>ru.forinnyy.tm.Application</mainClass>
                         </manifest>
+                        <manifestEntries>
+                            <groupId>${groupId}</groupId>
+                            <artifactId>${artifactId}</artifactId>
+                            <version>${version}</version>
+
+                            <buildNumber>${buildNumber}</buildNumber>
+                            <timestamp>${timestamp}</timestamp>
+
+                            <developer>Pavel Forinnyy</developer>
+                            <email>forinnyy@gmail.com</email>
+
+                            <buildHash>${git.commit.id.abbrev}</buildHash>
+                            <gitBranch>${git.branch}</gitBranch>
+                            <gitCommitId>${git.commit.id}</gitCommitId>
+                            <gitCommitTime>${git.commit.time}</gitCommitTime>
+                            <gitCommitMessage>${git.commit.message.full}</gitCommitMessage>
+                            <gitCommitterName>${git.commit.user.name}</gitCommitterName>
+                            <gitCommitterEmail>${git.commit.user.email}</gitCommitterEmail>
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
@@ -99,6 +139,51 @@
                         </execution>
                     </executions>
                 </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>true</doCheck>
+                    <doUpdate>false</doUpdate>
+                    <revisionOnScmFailure>true</revisionOnScmFailure>
+                    <format>${version}.{0,number}</format>
+                    <items>
+                        <item>buildNumber</item>
+                        <item>timestamp</item>
+                    </items>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>4.9.10</version>
+                <executions>
+                    <execution>
+                        <id>get-the-git-infos</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>validate-the-git-infos</id>
+                        <goals>
+                            <goal>validateRevision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                </configuration>
+            </plugin>
 <!--            <plugin>-->
 <!--                <groupId>org.apache.maven.plugins</groupId>-->
 <!--                <artifactId>maven-shade-plugin</artifactId>-->

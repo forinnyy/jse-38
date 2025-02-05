@@ -13,9 +13,14 @@
 
     <files>
         <file>
-            <source>${project.basedir}/release/bin/startup.sh</source>
+            <source>${project.basedir}/src/main/assembly/release/bin/startup.sh</source>
             <outputDirectory>/bin</outputDirectory>
             <fileMode>0755</fileMode>
+        </file>
+        <file>
+            <source>${project.basedir}/src/main/assembly/release/config/application.properties</source>
+            <outputDirectory>/config</outputDirectory>
+            <fileMode>0644</fileMode>
         </file>
         <file>
             <source>${project.build.directory}/task-manager.jar</source>
