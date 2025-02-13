@@ -2,6 +2,7 @@ package ru.forinnyy.tm.command.system;
 
 
 import lombok.NonNull;
+import ru.forinnyy.tm.api.service.IPropertyService;
 
 public final class ApplicationAboutCommand extends AbstractSystemCommand {
 
@@ -16,18 +17,19 @@ public final class ApplicationAboutCommand extends AbstractSystemCommand {
 
     @Override
     public void execute() {
+        @NonNull final IPropertyService service = getPropertyService();
         System.out.println("[ABOUT]");
-        System.out.println("AUTHOR: " + getPropertyService().getAuthorName());
-        System.out.println("E-MAIL: " + getPropertyService().getAuthorEmail());
+        System.out.println("AUTHOR: " + service.getAuthorName());
+        System.out.println("E-MAIL: " + service.getAuthorEmail());
         System.out.println();
 
         System.out.println("[GIT]");
-        System.out.println("BRANCH: " + getPropertyService().getGitBranch());
-        System.out.println("COMMIT ID: " + getPropertyService().getGitCommitId());
-        System.out.println("COMMITTER: " + getPropertyService().getGitCommitterName());
-        System.out.println("E-MAIL: " + getPropertyService().getGitCommitterEmail());
-        System.out.println("MESSAGE: " + getPropertyService().getGitCommitMessage());
-        System.out.println("TIME: " + getPropertyService().getGitCommitTime());
+        System.out.println("BRANCH: " + service.getGitBranch());
+        System.out.println("COMMIT ID: " + service.getGitCommitId());
+        System.out.println("COMMITTER: " + service.getGitCommitterName());
+        System.out.println("E-MAIL: " + service.getGitCommitterEmail());
+        System.out.println("MESSAGE: " + service.getGitCommitMessage());
+        System.out.println("TIME: " + service.getGitCommitTime());
     }
 
     @NonNull
