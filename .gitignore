@@ -94,3 +94,9 @@ nb-configuration.xml
 ##############################
 tm-commands.log
 tm-lifecycle.log
+
+##############################
+## DATA
+##############################
+data.bin
+data.base64

@@ -34,6 +34,12 @@ public interface IRepository<M extends AbstractModel> {
         };
     }
 
+    @NonNull
+    Collection<M> add(@NonNull Collection<M> models);
+
+    @NonNull
+    Collection<M> set(@NonNull Collection<M> models);
+
     void clear();
 
     @NonNull

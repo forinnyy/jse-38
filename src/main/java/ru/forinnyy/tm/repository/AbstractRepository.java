@@ -38,6 +38,20 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
         return model;
     }
 
+    @NonNull
+    @Override
+    public Collection<M> add(@NonNull Collection<M> models) {
+        models.forEach(this::add);
+        return models;
+    }
+
+    @NonNull
+    @Override
+    public Collection<M> set(@NonNull Collection<M> models) {
+        clear();
+        return add(models);
+    }
+
     @Override
     public boolean existsById(final String id) {
         return findOneById(id) != null;

@@ -13,6 +13,9 @@ import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.api.repository.IUserRepository;
 import ru.forinnyy.tm.api.service.*;
 import ru.forinnyy.tm.command.AbstractCommand;
+import ru.forinnyy.tm.command.data.AbstractDataCommand;
+import ru.forinnyy.tm.command.data.DataBase64LoadCommand;
+import ru.forinnyy.tm.command.data.DataBinaryLoadCommand;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.AbstractException;
@@ -37,6 +40,7 @@ import javax.naming.AuthenticationException;
 import java.io.File;
 import java.lang.reflect.Modifier;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
 
@@ -136,6 +140,15 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     private void processCommand(final String command) throws
+            AbstractEntityException,
+            AbstractUserException,
+            AuthenticationException,
+            AbstractSystemException,
+            AbstractFieldException {
+        processCommand(command, true);
+    }
+
+    private void processCommand(final String command, boolean checkRoles) throws
             AbstractSystemException,
             AbstractFieldException,
             AbstractEntityException,
@@ -143,7 +156,7 @@ public final class Bootstrap implements IServiceLocator {
             AuthenticationException {
         final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
-        authService.checkRoles(abstractCommand.getRoles());
+        if (checkRoles) authService.checkRoles(abstractCommand.getRoles());
         abstractCommand.execute();
     }
 
@@ -154,6 +167,14 @@ public final class Bootstrap implements IServiceLocator {
         Files.write(Paths.get(filename), pid.getBytes());
         @NonNull final File file = new File(filename);
         file.deleteOnExit();
+    }
+
+    private void initData() {
+        final boolean checkBinary = Files.exists(Paths.get(AbstractDataCommand.FILE_BINARY));
+        if (checkBinary) processCommand(DataBinaryLoadCommand.NAME, false);
+        if (checkBinary) return;
+        final boolean checkBase64 = Files.exists(Paths.get(AbstractDataCommand.FILE_BASE64));
+        if (checkBase64) processCommand(DataBase64LoadCommand.NAME, false);
     }
 
     private void initDemoData() throws AbstractFieldException, AbstractUserException, AbstractEntityException {
@@ -186,6 +207,7 @@ public final class Bootstrap implements IServiceLocator {
         initPID();
         initDemoData();
         initLogger();
+        initData();
 
         while (!Thread.currentThread().isInterrupted()) {
             try {
