@@ -12,6 +12,8 @@ import ru.forinnyy.tm.enumerated.Role;
 @NoArgsConstructor
 public final class User extends AbstractModel {
 
+    private static final long serialVersionUID = 1;
+
     private String login;
 
     private String passwordHash;

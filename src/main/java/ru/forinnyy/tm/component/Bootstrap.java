@@ -40,7 +40,6 @@ import javax.naming.AuthenticationException;
 import java.io.File;
 import java.lang.reflect.Modifier;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Set;
 
@@ -169,7 +168,7 @@ public final class Bootstrap implements IServiceLocator {
         file.deleteOnExit();
     }
 
-    private void initData() {
+    private void initData() throws AbstractEntityException, AbstractUserException, AuthenticationException, AbstractSystemException, AbstractFieldException {
         final boolean checkBinary = Files.exists(Paths.get(AbstractDataCommand.FILE_BINARY));
         if (checkBinary) processCommand(DataBinaryLoadCommand.NAME, false);
         if (checkBinary) return;

@@ -6,13 +6,14 @@ import lombok.Setter;
 import lombok.NonNull;
 import ru.forinnyy.tm.api.model.IWBS;
 import ru.forinnyy.tm.enumerated.Status;
-
 import java.util.Date;
 
 @Getter
 @Setter
 @NoArgsConstructor
 public final class Task extends AbstractUserOwnedModel implements IWBS {
+
+    private static final long serialVersionUID = 1;
 
     @NonNull
     private String name = "";

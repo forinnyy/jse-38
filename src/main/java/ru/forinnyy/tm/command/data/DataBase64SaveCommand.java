@@ -8,6 +8,7 @@ import ru.forinnyy.tm.enumerated.Role;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Base64;
 
 public final class DataBase64SaveCommand extends AbstractDataCommand {
 
@@ -29,7 +30,7 @@ public final class DataBase64SaveCommand extends AbstractDataCommand {
         objectOutputStream.writeObject(domain);
 
         @NonNull final byte[] bytes = byteArrayOutputStream.toByteArray();
-        @NonNull final String base64 = new BASE64Encoder().encode(bytes);
+        @NonNull final String base64 = Base64.getEncoder().encodeToString(bytes);
 
         @Cleanup @NonNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
         fileOutputStream.write(base64.getBytes());

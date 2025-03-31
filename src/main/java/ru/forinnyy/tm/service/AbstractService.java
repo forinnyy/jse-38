@@ -18,6 +18,16 @@ import java.util.List;
 public abstract class AbstractService<M extends AbstractModel, R extends IRepository<M>>
         implements IService<M> {
 
+    @Override
+    public @NonNull Collection<M> add(@NonNull Collection<M> models) {
+        return repository.add(models);
+    }
+
+    @Override
+    public @NonNull Collection<M> set(@NonNull Collection<M> models) {
+        return repository.set(models);
+    }
+
     @NonNull
     protected final R repository;
 
