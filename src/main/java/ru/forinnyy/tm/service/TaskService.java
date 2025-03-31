@@ -104,4 +104,5 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         task.setStatus(status);
         return task;
     }
+
 }
