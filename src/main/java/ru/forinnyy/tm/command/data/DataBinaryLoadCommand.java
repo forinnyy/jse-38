@@ -29,16 +29,19 @@ public final class DataBinaryLoadCommand extends AbstractDataCommand {
         return null;
     }
 
+    @NonNull
     @Override
-    public @NonNull String getDescription() {
+    public String getDescription() {
         return "Load data from binary file.";
     }
 
+    @NonNull
     @Override
-    public @NonNull String getName() {
+    public String getName() {
         return NAME;
     }
 
+    @NonNull
     @Override
     public Role[] getRoles() {
         return new Role[]{Role.ADMIN};

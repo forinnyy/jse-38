@@ -45,7 +45,6 @@ public abstract class AbstractDataCommand extends AbstractCommand {
         return domain;
     }
 
-    @NonNull
     public void setDomain(final Domain domain) {
         if (domain == null) return;
         serviceLocator.getProjectService().set(domain.getProjects());

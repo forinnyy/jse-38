@@ -17,16 +17,19 @@ public final class DataYamlLoadFasterXmlCommand extends AbstractDataCommand {
         return null;
     }
 
+    @NonNull
     @Override
-    public @NonNull String getDescription() {
+    public String getDescription() {
         return "Load data from yaml file.";
     }
 
+    @NonNull
     @Override
-    public @NonNull String getName() {
+    public String getName() {
         return "data-load-yaml";
     }
 
+    @NonNull
     @Override
     public Role[] getRoles() {
         return new Role[]{Role.ADMIN};

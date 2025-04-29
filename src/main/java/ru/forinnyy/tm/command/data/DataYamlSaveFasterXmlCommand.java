@@ -19,16 +19,19 @@ public final class DataYamlSaveFasterXmlCommand extends AbstractDataCommand {
         return null;
     }
 
+    @NonNull
     @Override
-    public @NonNull String getDescription() {
-        return "";
+    public String getDescription() {
+        return "Save data in yaml file.";
     }
 
+    @NonNull
     @Override
-    public @NonNull String getName() {
+    public String getName() {
         return "data-save-yaml";
     }
 
+    @NonNull
     @Override
     public Role[] getRoles() {
         return new Role[]{Role.ADMIN};

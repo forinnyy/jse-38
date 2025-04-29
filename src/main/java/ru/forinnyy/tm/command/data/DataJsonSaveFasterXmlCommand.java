@@ -19,16 +19,19 @@ public final class DataJsonSaveFasterXmlCommand extends AbstractDataCommand {
         return null;
     }
 
+    @NonNull
     @Override
-    public @NonNull String getDescription() {
+    public String getDescription() {
         return "Save data in json file.";
     }
 
+    @NonNull
     @Override
-    public @NonNull String getName() {
+    public String getName() {
         return "data-save-json";
     }
 
+    @NonNull
     @Override
     public Role[] getRoles() {
         return new Role[]{Role.ADMIN};

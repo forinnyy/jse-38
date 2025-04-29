@@ -19,16 +19,19 @@ public final class DataXmlSaveJaxBCommand extends AbstractDataCommand {
         return null;
     }
 
+    @NonNull
     @Override
-    public @NonNull String getDescription() {
+    public String getDescription() {
         return "Save data in xml file.";
     }
 
+    @NonNull
     @Override
-    public @NonNull String getName() {
+    public String getName() {
         return "data-save-xml-jaxb";
     }
 
+    @NonNull
     @Override
     public Role[] getRoles() {
         return new Role[0];

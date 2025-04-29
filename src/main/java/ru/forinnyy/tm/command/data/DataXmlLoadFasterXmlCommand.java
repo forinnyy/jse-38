@@ -17,16 +17,19 @@ public final class DataXmlLoadFasterXmlCommand extends AbstractDataCommand {
         return null;
     }
 
+    @NonNull
     @Override
-    public @NonNull String getDescription() {
+    public String getDescription() {
         return "Load data from xml file.";
     }
 
+    @NonNull
     @Override
-    public @NonNull String getName() {
+    public String getName() {
         return "data-load-xml";
     }
 
+    @NonNull
     @Override
     public Role[] getRoles() {
         return new Role[]{Role.ADMIN};
