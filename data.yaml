@@ -1,0 +1,97 @@
+---
+id: "e4831b07-014f-4c6c-9209-090b5a54cf5f"
+created: 1745920118954
+users:
+- id: "b5548065-83e0-40e2-93c3-e88538d6a9c9"
+  login: "test"
+  passwordHash: "a733e48f8992faf2e03dcf01a0b732bd"
+  email: "test@test.ru"
+  firstName: null
+  lastName: null
+  middleName: null
+  role: "USUAL"
+  locked: false
+- id: "65d2f78e-2006-4f0a-91e4-1790aec1e5a9"
+  login: "user"
+  passwordHash: "42656cb18deaed69a935b9ce0a6dadfc"
+  email: "user@user.ru"
+  firstName: null
+  lastName: null
+  middleName: null
+  role: "USUAL"
+  locked: false
+- id: "592e6f9b-9b12-46b0-b38d-86b536b20894"
+  login: "admin"
+  passwordHash: "24c7f869333066fd417c93393a18f0df"
+  email: null
+  firstName: null
+  lastName: null
+  middleName: null
+  role: "ADMIN"
+  locked: false
+projects:
+- id: "54464c37-ab72-4458-85b4-5dd70fec9c55"
+  userId: "65d2f78e-2006-4f0a-91e4-1790aec1e5a9"
+  name: "USER PROJECT"
+  description: ""
+  status: "IN_PROGRESS"
+  created: 1745919899617
+- id: "a3633f6e-a9c1-4f4a-ada1-99c06ed11e2f"
+  userId: "592e6f9b-9b12-46b0-b38d-86b536b20894"
+  name: "ADMIN PROJECT"
+  description: ""
+  status: "NOT_STARTED"
+  created: 1745919899617
+- id: "c0a2811e-2ece-4a81-8657-b25605e3bb23"
+  userId: "b5548065-83e0-40e2-93c3-e88538d6a9c9"
+  name: "TEST PROJECT"
+  description: ""
+  status: "IN_PROGRESS"
+  created: 1745919899617
+- id: "918eae89-16dc-40c3-a4c1-779722548dde"
+  userId: "b5548065-83e0-40e2-93c3-e88538d6a9c9"
+  name: "DEMO PROJECT"
+  description: ""
+  status: "NOT_STARTED"
+  created: 1745919899617
+- id: "ec447e87-bfe5-44c4-8ade-4b3968e018c3"
+  userId: "b5548065-83e0-40e2-93c3-e88538d6a9c9"
+  name: "ALPHA PROJECT"
+  description: ""
+  status: "IN_PROGRESS"
+  created: 1745919899617
+- id: "45772cba-652c-4a6b-b906-7ef07ac57ec3"
+  userId: "b5548065-83e0-40e2-93c3-e88538d6a9c9"
+  name: "BETA PROJECT"
+  description: ""
+  status: "COMPLETED"
+  created: 1745919899617
+tasks:
+- id: "a64f69ba-d73a-49c8-bbb5-3744aa8bc96b"
+  userId: "b5548065-83e0-40e2-93c3-e88538d6a9c9"
+  name: "MEGA TASK"
+  description: ""
+  status: "NOT_STARTED"
+  projectId: null
+  created: 1745919899617
+- id: "8064dca6-0def-4690-bb58-107e4c22f302"
+  userId: "b5548065-83e0-40e2-93c3-e88538d6a9c9"
+  name: "BETA TASK"
+  description: ""
+  status: "NOT_STARTED"
+  projectId: null
+  created: 1745919899617
+- id: "acc9b88a-2ef2-4b9a-8e1f-152370a1b239"
+  userId: "592e6f9b-9b12-46b0-b38d-86b536b20894"
+  name: "AHAHAHAHAHAHA"
+  description: "asdasdd"
+  status: "NOT_STARTED"
+  projectId: null
+  created: 1745920025276
+- id: "d29f1c32-2574-4412-99a5-76e222952735"
+  userId: "592e6f9b-9b12-46b0-b38d-86b536b20894"
+  name: "NEW NEW NEW"
+  description: "2323232"
+  status: "NOT_STARTED"
+  projectId: null
+  created: 1745920030638

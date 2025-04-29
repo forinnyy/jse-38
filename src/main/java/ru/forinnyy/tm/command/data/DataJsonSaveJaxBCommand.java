@@ -5,16 +5,11 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import ru.forinnyy.tm.dto.Domain;
 import ru.forinnyy.tm.enumerated.Role;
-import ru.forinnyy.tm.exception.entity.AbstractEntityException;
-import ru.forinnyy.tm.exception.field.AbstractFieldException;
-import ru.forinnyy.tm.exception.user.AbstractUserException;
 
-import javax.naming.AuthenticationException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.file.Files;
 
 public final class DataJsonSaveJaxBCommand extends AbstractDataCommand {

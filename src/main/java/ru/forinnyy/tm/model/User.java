@@ -2,8 +2,8 @@ package ru.forinnyy.tm.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.NonNull;
+import lombok.Setter;
 import ru.forinnyy.tm.enumerated.Role;
 
 

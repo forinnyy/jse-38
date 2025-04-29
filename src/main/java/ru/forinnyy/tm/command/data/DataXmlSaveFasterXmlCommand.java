@@ -1,22 +1,15 @@
 package ru.forinnyy.tm.command.data;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.Cleanup;
-import lombok.Data;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import ru.forinnyy.tm.dto.Domain;
 import ru.forinnyy.tm.enumerated.Role;
-import ru.forinnyy.tm.exception.entity.AbstractEntityException;
-import ru.forinnyy.tm.exception.field.AbstractFieldException;
-import ru.forinnyy.tm.exception.user.AbstractUserException;
 
-import javax.naming.AuthenticationException;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.file.Files;
 
 public final class DataXmlSaveFasterXmlCommand extends AbstractDataCommand {

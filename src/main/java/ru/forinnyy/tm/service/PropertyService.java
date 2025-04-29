@@ -2,15 +2,14 @@ package ru.forinnyy.tm.service;
 
 import com.jcabi.manifests.Manifests;
 import lombok.Cleanup;
-import lombok.SneakyThrows;
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import ru.forinnyy.tm.api.service.IPropertyService;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.jar.Manifest;
 
 import static java.lang.ClassLoader.getSystemResourceAsStream;
 

@@ -2,8 +2,8 @@ package ru.forinnyy.tm.command;
 
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.NonNull;
+import lombok.Setter;
 import ru.forinnyy.tm.api.model.ICommand;
 import ru.forinnyy.tm.api.service.IAuthService;
 import ru.forinnyy.tm.api.service.IServiceLocator;

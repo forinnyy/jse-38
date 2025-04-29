@@ -4,6 +4,7 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import ru.forinnyy.tm.dto.Domain;
 import ru.forinnyy.tm.enumerated.Role;
+
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 import java.nio.file.Files;

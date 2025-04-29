@@ -2,8 +2,8 @@ package ru.forinnyy.tm.service;
 
 import lombok.NonNull;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
-import ru.forinnyy.tm.api.service.IProjectTaskService;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
+import ru.forinnyy.tm.api.service.IProjectTaskService;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
 import ru.forinnyy.tm.exception.entity.TaskNotFoundException;
