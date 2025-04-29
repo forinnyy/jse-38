@@ -100,3 +100,6 @@ tm-lifecycle.log
 ##############################
 data.bin
 data.base64
+data.json
+data.xml
+data.yaml
