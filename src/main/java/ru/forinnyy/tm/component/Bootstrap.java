@@ -38,6 +38,7 @@ import ru.forinnyy.tm.util.TerminalUtil;
 
 import javax.naming.AuthenticationException;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -121,7 +122,8 @@ public final class Bootstrap implements IServiceLocator {
             AbstractEntityException,
             AbstractFieldException,
             AbstractUserException,
-            AuthenticationException {
+            AuthenticationException,
+            IOException {
         final AbstractCommand abstractCommand = commandService.getCommandByArgument(arg);
         if (abstractCommand == null) throw new ArgumentNotSupportedException(arg);
         abstractCommand.execute();
@@ -132,7 +134,8 @@ public final class Bootstrap implements IServiceLocator {
             AbstractEntityException,
             AbstractFieldException,
             AbstractUserException,
-            AuthenticationException {
+            AuthenticationException,
+            IOException {
         if (args == null || args.length < 1) return false;
         processArgument(args[0]);
         return true;
@@ -143,7 +146,8 @@ public final class Bootstrap implements IServiceLocator {
             AbstractUserException,
             AuthenticationException,
             AbstractSystemException,
-            AbstractFieldException {
+            AbstractFieldException,
+            IOException {
         processCommand(command, true);
     }
 
@@ -152,7 +156,8 @@ public final class Bootstrap implements IServiceLocator {
             AbstractFieldException,
             AbstractEntityException,
             AbstractUserException,
-            AuthenticationException {
+            AuthenticationException,
+            IOException {
         final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
         if (checkRoles) authService.checkRoles(abstractCommand.getRoles());
@@ -168,7 +173,13 @@ public final class Bootstrap implements IServiceLocator {
         file.deleteOnExit();
     }
 
-    private void initData() throws AbstractEntityException, AbstractUserException, AuthenticationException, AbstractSystemException, AbstractFieldException {
+    private void initData() throws
+            AbstractEntityException,
+            AbstractUserException,
+            AuthenticationException,
+            AbstractSystemException,
+            AbstractFieldException,
+            IOException {
         final boolean checkBinary = Files.exists(Paths.get(AbstractDataCommand.FILE_BINARY));
         if (checkBinary) processCommand(DataBinaryLoadCommand.NAME, false);
         if (checkBinary) return;
@@ -200,7 +211,7 @@ public final class Bootstrap implements IServiceLocator {
         );
     }
 
-    public void run(final String[] args) throws AbstractException, AuthenticationException {
+    public void run(final String[] args) throws AbstractException, AuthenticationException, IOException {
         if (processArguments(args)) System.exit(0);
 
         initPID();

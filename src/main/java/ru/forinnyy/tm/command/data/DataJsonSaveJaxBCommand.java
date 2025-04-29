@@ -1,0 +1,60 @@
+package ru.forinnyy.tm.command.data;
+
+import lombok.Cleanup;
+import lombok.NonNull;
+import lombok.SneakyThrows;
+import ru.forinnyy.tm.dto.Domain;
+import ru.forinnyy.tm.enumerated.Role;
+import ru.forinnyy.tm.exception.entity.AbstractEntityException;
+import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.user.AbstractUserException;
+
+import javax.naming.AuthenticationException;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+
+public final class DataJsonSaveJaxBCommand extends AbstractDataCommand {
+
+    @Override
+    public String getArgument() {
+        return null;
+    }
+
+    @Override
+    public @NonNull String getDescription() {
+        return "Save data in json file.";
+    }
+
+    @Override
+    public @NonNull String getName() {
+        return "data-save-json-jaxb";
+    }
+
+    @Override
+    public Role[] getRoles() {
+        return new Role[]{Role.ADMIN};
+    }
+
+    @SneakyThrows
+    @Override
+    public void execute() {
+        System.out.println("[DATA SAVE JSON]");
+        System.setProperty(CONTEXT_FACTORY, CONTEXT_FACTORY_JAXB);
+        @NonNull final Domain domain = getDomain();
+        @NonNull final File file = new File(FILE_JSON);
+        Files.deleteIfExists(file.toPath());
+        Files.createFile(file.toPath());
+        @NonNull final JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
+        @NonNull final Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        jaxbMarshaller.setProperty(MEDIA_TYPE, APPLICATION_TYPE_JSON);
+        @Cleanup @NonNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
+        jaxbMarshaller.marshal(domain, fileOutputStream);
+        fileOutputStream.flush();
+    }
+
+}
