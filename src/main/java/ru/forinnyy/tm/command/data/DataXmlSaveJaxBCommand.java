@@ -37,8 +37,8 @@ public final class DataXmlSaveJaxBCommand extends AbstractDataCommand {
         return new Role[0];
     }
 
-    @SneakyThrows
     @Override
+    @SneakyThrows
     public void execute() {
         System.out.println("[DATA SAVE XML]");
         @NonNull final Domain domain = getDomain();

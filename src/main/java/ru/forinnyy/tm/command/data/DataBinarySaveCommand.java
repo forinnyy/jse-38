@@ -17,8 +17,8 @@ public final class DataBinarySaveCommand extends AbstractDataCommand {
     @NonNull
     public static final String NAME = "data-save-bin";
 
-    @SneakyThrows
     @Override
+    @SneakyThrows
     public void execute() {
         System.out.println("[DATA SAVE BINARY]");
         @NonNull final Domain domain = getDomain();

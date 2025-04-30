@@ -37,8 +37,8 @@ public final class DataYamlSaveFasterXmlCommand extends AbstractDataCommand {
         return new Role[]{Role.ADMIN};
     }
 
-    @SneakyThrows
     @Override
+    @SneakyThrows
     public void execute() {
         System.out.println("[DATA SAVE YAML]");
         @NonNull final Domain domain = getDomain();

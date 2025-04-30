@@ -34,8 +34,8 @@ public final class DataXmlLoadJaxBCommand extends AbstractDataCommand {
         return new Role[]{Role.ADMIN};
     }
 
-    @SneakyThrows
     @Override
+    @SneakyThrows
     public void execute() {
         System.out.println("[DATA LOAD XML]");
         @NonNull JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);

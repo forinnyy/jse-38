@@ -35,8 +35,8 @@ public final class DataXmlLoadFasterXmlCommand extends AbstractDataCommand {
         return new Role[]{Role.ADMIN};
     }
 
-    @SneakyThrows
     @Override
+    @SneakyThrows
     public void execute() {
         System.out.println("[DATA LOAD XML]");
         @NonNull final byte[] bytes = Files.readAllBytes(Paths.get(FILE_XML));

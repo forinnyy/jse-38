@@ -34,8 +34,8 @@ public final class DataJsonLoadJaxBCommand extends AbstractDataCommand {
         return new Role[]{Role.ADMIN};
     }
 
-    @SneakyThrows
     @Override
+    @SneakyThrows
     public void execute() {
         System.out.println("[DATA LOAD JSON]");
         System.setProperty(CONTEXT_FACTORY, CONTEXT_FACTORY_JAXB);

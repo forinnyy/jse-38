@@ -37,8 +37,8 @@ public final class DataJsonSaveJaxBCommand extends AbstractDataCommand {
         return new Role[]{Role.ADMIN};
     }
 
-    @SneakyThrows
     @Override
+    @SneakyThrows
     public void execute() {
         System.out.println("[DATA SAVE JSON]");
         System.setProperty(CONTEXT_FACTORY, CONTEXT_FACTORY_JAXB);
