@@ -97,11 +97,18 @@ public final class Bootstrap implements IServiceLocator {
     @NonNull
     private final IAuthService authService = new AuthService(propertyService, userService);
 
+    @NonNull
+    private final Backup backup = new Backup(this);
+
     {
         @NonNull final Reflections reflections = new Reflections(PACKAGE_COMMANDS);
         @NonNull final Set<Class<? extends AbstractCommand>> classes =
                 reflections.getSubTypesOf(AbstractCommand.class);
         for (@NonNull final Class<? extends AbstractCommand> clazz : classes) registry(clazz);
+    }
+
+    private void initBackup() {
+        backup.init();
     }
 
     @SneakyThrows
@@ -117,47 +124,26 @@ public final class Bootstrap implements IServiceLocator {
         commandService.add(command);
     }
 
-    private void processArgument(final String arg) throws
-            AbstractSystemException,
-            AbstractEntityException,
-            AbstractFieldException,
-            AbstractUserException,
-            AuthenticationException,
-            IOException {
+    @SneakyThrows
+    private void processArgument(final String arg) {
         final AbstractCommand abstractCommand = commandService.getCommandByArgument(arg);
         if (abstractCommand == null) throw new ArgumentNotSupportedException(arg);
         abstractCommand.execute();
     }
 
-    private boolean processArguments(final String[] args) throws
-            AbstractSystemException,
-            AbstractEntityException,
-            AbstractFieldException,
-            AbstractUserException,
-            AuthenticationException,
-            IOException {
+    @SneakyThrows
+    private boolean processArguments(final String[] args) {
         if (args == null || args.length < 1) return false;
         processArgument(args[0]);
         return true;
     }
 
-    private void processCommand(final String command) throws
-            AbstractEntityException,
-            AbstractUserException,
-            AuthenticationException,
-            AbstractSystemException,
-            AbstractFieldException,
-            IOException {
+    private void processCommand(final String command) {
         processCommand(command, true);
     }
 
-    private void processCommand(final String command, boolean checkRoles) throws
-            AbstractSystemException,
-            AbstractFieldException,
-            AbstractEntityException,
-            AbstractUserException,
-            AuthenticationException,
-            IOException {
+    @SneakyThrows
+    public void processCommand(final String command, boolean checkRoles) {
         final AbstractCommand abstractCommand = commandService.getCommandByName(command);
         if (abstractCommand == null) throw new CommandNotSupportedException(command);
         if (checkRoles) authService.checkRoles(abstractCommand.getRoles());
@@ -173,13 +159,8 @@ public final class Bootstrap implements IServiceLocator {
         file.deleteOnExit();
     }
 
-    private void initData() throws
-            AbstractEntityException,
-            AbstractUserException,
-            AuthenticationException,
-            AbstractSystemException,
-            AbstractFieldException,
-            IOException {
+    @SneakyThrows
+    private void initData() {
         final boolean checkBinary = Files.exists(Paths.get(AbstractDataCommand.FILE_BINARY));
         if (checkBinary) processCommand(DataBinaryLoadCommand.NAME, false);
         if (checkBinary) return;
@@ -211,14 +192,7 @@ public final class Bootstrap implements IServiceLocator {
         );
     }
 
-    public void run(final String[] args) throws AbstractException, AuthenticationException, IOException {
-        if (processArguments(args)) System.exit(0);
-
-        initPID();
-        initDemoData();
-        initLogger();
-        initData();
-
+    private void initCommands() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 System.out.println("ENTER COMMAND:");
@@ -231,6 +205,17 @@ public final class Bootstrap implements IServiceLocator {
                 System.err.println("[FAIL]");
             }
         }
+    }
+
+    public void run(final String[] args) throws AbstractException, AuthenticationException, IOException {
+        if (processArguments(args)) System.exit(0);
+
+        initPID();
+        initDemoData();
+        initLogger();
+        initBackup();
+
+        initCommands();
     }
 
 }

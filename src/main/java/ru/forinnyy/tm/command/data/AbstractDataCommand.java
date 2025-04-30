@@ -13,6 +13,9 @@ public abstract class AbstractDataCommand extends AbstractCommand {
     public static final String FILE_BINARY = "./data.bin";
 
     @NonNull
+    public static final String FILE_BACKUP = "./backup.base64";
+
+    @NonNull
     public static final String FILE_XML = "./data.xml";
 
     @NonNull

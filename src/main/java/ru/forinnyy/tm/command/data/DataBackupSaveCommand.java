@@ -14,17 +14,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Base64;
 
-public final class DataBase64SaveCommand extends AbstractDataCommand {
+public final class DataBackupSaveCommand extends AbstractDataCommand {
 
     @NonNull
-    public static final String NAME = "data-save-base64";
+    public static final String NAME = "backup-save";
 
     @Override
     @SneakyThrows
     public void execute() {
-        System.out.println("[DATA BASE64 SAVE]");
         @NonNull final Domain domain = getDomain();
-        @NonNull final File file = new File(FILE_BASE64);
+        @NonNull final File file = new File(FILE_BACKUP);
         @NonNull final Path path = file.toPath();
         Files.deleteIfExists(path);
         Files.createFile(path);
@@ -50,7 +49,7 @@ public final class DataBase64SaveCommand extends AbstractDataCommand {
     @NonNull
     @Override
     public String getDescription() {
-        return "Save data to base64 file.";
+        return "Save backup in file.";
     }
 
     @NonNull

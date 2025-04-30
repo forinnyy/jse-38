@@ -11,16 +11,15 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Base64;
 
-public final class DataBase64LoadCommand extends AbstractDataCommand {
+public final class DataBackupLoadCommand extends AbstractDataCommand {
 
     @NonNull
-    public static final String NAME = "data-load-base64";
+    public static final String NAME = "backup-load";
 
     @Override
     @SneakyThrows
     public void execute() {
-        System.out.println("[DATA BASE64 LOAD]");
-        @NonNull final byte[] base64Byte = Files.readAllBytes(Paths.get(FILE_BASE64));
+        @NonNull final byte[] base64Byte = Files.readAllBytes(Paths.get(FILE_BACKUP));
         final String base64Date = new String(base64Byte);
         final byte[] bytes = Base64.getDecoder().decode(base64Date);
         @NonNull final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
@@ -39,7 +38,7 @@ public final class DataBase64LoadCommand extends AbstractDataCommand {
     @NonNull
     @Override
     public String getDescription() {
-        return "Load data from base64 file.";
+        return "Load backup from file.";
     }
 
     @NonNull
@@ -55,3 +54,4 @@ public final class DataBase64LoadCommand extends AbstractDataCommand {
     }
 
 }
+
