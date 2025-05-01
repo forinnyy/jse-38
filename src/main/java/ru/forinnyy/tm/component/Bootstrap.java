@@ -18,10 +18,8 @@ import ru.forinnyy.tm.command.data.DataBase64LoadCommand;
 import ru.forinnyy.tm.command.data.DataBinaryLoadCommand;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.enumerated.Status;
-import ru.forinnyy.tm.exception.AbstractException;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
-import ru.forinnyy.tm.exception.system.AbstractSystemException;
 import ru.forinnyy.tm.exception.system.ArgumentNotSupportedException;
 import ru.forinnyy.tm.exception.system.CommandNotSupportedException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
@@ -36,9 +34,7 @@ import ru.forinnyy.tm.service.*;
 import ru.forinnyy.tm.util.SystemUtil;
 import ru.forinnyy.tm.util.TerminalUtil;
 
-import javax.naming.AuthenticationException;
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -100,6 +96,9 @@ public final class Bootstrap implements IServiceLocator {
     @NonNull
     private final Backup backup = new Backup(this);
 
+    @NonNull
+    private final FileScanner fileScanner = new FileScanner(this);
+
     {
         @NonNull final Reflections reflections = new Reflections(PACKAGE_COMMANDS);
         @NonNull final Set<Class<? extends AbstractCommand>> classes =
@@ -109,6 +108,10 @@ public final class Bootstrap implements IServiceLocator {
 
     private void initBackup() {
         backup.init();
+    }
+
+    private void initFileScanner() {
+        fileScanner.init();
     }
 
     @SneakyThrows
@@ -138,7 +141,7 @@ public final class Bootstrap implements IServiceLocator {
         return true;
     }
 
-    private void processCommand(final String command) {
+    public void processCommand(final String command) {
         processCommand(command, true);
     }
 
@@ -186,10 +189,6 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     private void initLogger() {
-        LOGGER_LIFECYCLE.info("** WELCOME TO TASK-MANAGER **");
-        Runtime.getRuntime().addShutdownHook(
-                new Thread(() -> LOGGER_LIFECYCLE.info("** TASK-MANAGER IS SHUTTING DOWN **"))
-        );
     }
 
     private void initCommands() {
@@ -207,13 +206,27 @@ public final class Bootstrap implements IServiceLocator {
         }
     }
 
-    public void run(final String[] args) throws AbstractException, AuthenticationException, IOException {
-        if (processArguments(args)) System.exit(0);
-
+    @SneakyThrows
+    private void prepareStartup() {
         initPID();
         initDemoData();
-        initLogger();
+        LOGGER_LIFECYCLE.info("** WELCOME TO TASK-MANAGER **");
+        Runtime.getRuntime().addShutdownHook(new Thread(this::prepareShutdown));
         initBackup();
+        initFileScanner();
+    }
+
+    @SneakyThrows
+    private void prepareShutdown() {
+        backup.stop();
+        fileScanner.stop();
+        LOGGER_LIFECYCLE.info("** TASK-MANAGER IS SHUTTING DOWN **");
+    }
+
+    public void run(final String[] args) {
+        if (processArguments(args)) System.exit(0);
+
+        prepareStartup();
 
         initCommands();
     }
