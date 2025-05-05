@@ -107,11 +107,11 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     private void initBackup() {
-        backup.init();
+        backup.start();
     }
 
     private void initFileScanner() {
-        fileScanner.init();
+        fileScanner.start();
     }
 
     @SneakyThrows
