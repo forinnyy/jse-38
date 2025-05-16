@@ -67,6 +67,9 @@ public final class PropertyService implements IPropertyService {
     public static final String PASSWORD_SECRET_KEY = "password.secret";
 
     @NonNull
+    public static final String PORT = "server.port";
+
+    @NonNull
     public static final String EMPTY_VALUE = "---";
 
 
@@ -167,6 +170,13 @@ public final class PropertyService implements IPropertyService {
     @Override
     public @NonNull String getGitCommitTime() {
         return read(GIT_COMMIT_TIME);
+    }
+
+    @Override
+    public @NonNull Integer getServerPort() {
+        System.out.println(PORT);
+        System.out.println(read(PORT));
+        return 6060;
     }
 
     @NonNull

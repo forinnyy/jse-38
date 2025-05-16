@@ -7,6 +7,7 @@ import lombok.SneakyThrows;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.forinnyy.tm.api.endpoint.ISystemEndpoint;
 import ru.forinnyy.tm.api.repository.ICommandRepository;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
@@ -16,6 +17,9 @@ import ru.forinnyy.tm.command.AbstractCommand;
 import ru.forinnyy.tm.command.data.AbstractDataCommand;
 import ru.forinnyy.tm.command.data.DataBase64LoadCommand;
 import ru.forinnyy.tm.command.data.DataBinaryLoadCommand;
+import ru.forinnyy.tm.dto.request.ServerAboutRequest;
+import ru.forinnyy.tm.dto.request.ServerVersionRequest;
+import ru.forinnyy.tm.endpoint.SystemEndpoint;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
@@ -94,7 +98,13 @@ public final class Bootstrap implements IServiceLocator {
     private final IAuthService authService = new AuthService(propertyService, userService);
 
     @NonNull
+    private final ISystemEndpoint systemEndpoint = new SystemEndpoint(this);
+
+    @NonNull
     private final Backup backup = new Backup(this);
+
+    @NonNull
+    private final Server server = new Server(this);
 
     @NonNull
     private final FileScanner fileScanner = new FileScanner(this);
@@ -104,6 +114,11 @@ public final class Bootstrap implements IServiceLocator {
         @NonNull final Set<Class<? extends AbstractCommand>> classes =
                 reflections.getSubTypesOf(AbstractCommand.class);
         for (@NonNull final Class<? extends AbstractCommand> clazz : classes) registry(clazz);
+    }
+
+    {
+        server.registry(ServerAboutRequest.class, systemEndpoint::getAbout);
+        server.registry(ServerVersionRequest.class, systemEndpoint::getVersion);
     }
 
     private void initBackup() {
@@ -214,13 +229,15 @@ public final class Bootstrap implements IServiceLocator {
         Runtime.getRuntime().addShutdownHook(new Thread(this::prepareShutdown));
         initBackup();
         initFileScanner();
+        server.start();
     }
 
     @SneakyThrows
     private void prepareShutdown() {
+        LOGGER_LIFECYCLE.info("** TASK-MANAGER IS SHUTTING DOWN **");
         backup.stop();
         fileScanner.stop();
-        LOGGER_LIFECYCLE.info("** TASK-MANAGER IS SHUTTING DOWN **");
+        server.stop();
     }
 
     public void run(final String[] args) {
