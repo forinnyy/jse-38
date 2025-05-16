@@ -70,6 +70,9 @@ public final class PropertyService implements IPropertyService {
     public static final String PORT = "server.port";
 
     @NonNull
+    public static final String PORT_DEFAULT = "6060";
+
+    @NonNull
     public static final String EMPTY_VALUE = "---";
 
 
@@ -174,9 +177,7 @@ public final class PropertyService implements IPropertyService {
 
     @Override
     public @NonNull Integer getServerPort() {
-        System.out.println(PORT);
-        System.out.println(read(PORT));
-        return 6060;
+        return getIntegerValue(PORT, PORT_DEFAULT);
     }
 
     @NonNull
