@@ -48,4 +48,10 @@ public interface IDomainEndpoint {
     @NonNull
     DataXmlSaveJaxBResponse saveDataXmlJaxB(@NonNull DataXmlSaveJaxBRequest request);
 
+    @NonNull
+    DataYamlLoadFasterXmlResponse loadDataYamlFasterXml(@NonNull DataYamlLoadFasterXmlRequest request);
+
+    @NonNull
+    DataYamlSaveFasterXmlResponse saveDataYamlFasterXml(@NonNull DataYamlSaveFasterXmlRequest request);
+
 }

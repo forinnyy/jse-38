@@ -1,4 +1,11 @@
 package ru.forinnyy.tm.dto.response;
 
-public class DataBackupLoadResponse {
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class DataBackupLoadResponse extends AbstractResponse {
 }

@@ -1,4 +1,4 @@
 package ru.forinnyy.tm.dto.response;
 
-public class AbstractResultResponse {
+public class AbstractResultResponse extends AbstractResponse {
 }

@@ -1,4 +1,11 @@
 package ru.forinnyy.tm.dto.request;
 
-public class UserUnlockRequest {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class UserUnlockRequest extends AbstractUserRequest {
+
+    private String login;
 }

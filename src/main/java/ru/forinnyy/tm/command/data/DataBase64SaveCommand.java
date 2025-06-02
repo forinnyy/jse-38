@@ -39,7 +39,6 @@ public final class DataBase64SaveCommand extends AbstractDataCommand {
         @Cleanup @NonNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
         fileOutputStream.write(base64.getBytes());
         fileOutputStream.flush();
-
     }
 
     @Override

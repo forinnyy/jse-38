@@ -1,4 +1,4 @@
 package ru.forinnyy.tm.dto.request;
 
-public class DataXmlLoadJaxBRequest {
+public class DataXmlLoadJaxBRequest extends AbstractUserRequest {
 }

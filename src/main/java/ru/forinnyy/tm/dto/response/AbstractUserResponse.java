@@ -1,4 +1,11 @@
 package ru.forinnyy.tm.dto.response;
 
-public class AbstractUserResponse {
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+public class AbstractUserResponse extends AbstractResponse {
 }
