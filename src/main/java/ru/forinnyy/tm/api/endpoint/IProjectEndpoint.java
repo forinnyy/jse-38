@@ -28,7 +28,7 @@ public interface IProjectEndpoint {
     ProjectListResponse listProject(@NonNull ProjectListRequest request);
 
     @NonNull
-    ProjectRemoveByIdResponse removeProjectById(@NonNull ProjectRemoveByIDRequest request);
+    ProjectRemoveByIdResponse removeProjectById(@NonNull ProjectRemoveByIdRequest request);
 
     @NonNull
     ProjectRemoveByIndexResponse removeProjectByIndex(@NonNull ProjectRemoveByIndexRequest request);

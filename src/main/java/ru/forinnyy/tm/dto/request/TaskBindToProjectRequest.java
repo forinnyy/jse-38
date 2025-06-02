@@ -1,4 +1,6 @@
 package ru.forinnyy.tm.dto.request;
 
-public class TaskBindToProjectRequest {
+import ru.forinnyy.tm.dto.response.AbstractTaskResponse;
+
+public class TaskBindToProjectRequest extends AbstractUserRequest {
 }

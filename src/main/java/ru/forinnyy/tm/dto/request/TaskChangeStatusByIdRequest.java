@@ -1,4 +1,6 @@
 package ru.forinnyy.tm.dto.request;
 
-public class TaskChangeStatusByIdRequest {
+import ru.forinnyy.tm.dto.response.AbstractTaskResponse;
+
+public class TaskChangeStatusByIdRequest extends AbstractUserRequest {
 }

@@ -1,4 +1,4 @@
 package ru.forinnyy.tm.dto.request;
 
-public class TaskUpdateByIndexRequest {
+public class TaskUpdateByIndexRequest extends AbstractUserRequest {
 }
