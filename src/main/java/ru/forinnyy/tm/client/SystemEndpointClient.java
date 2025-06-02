@@ -13,14 +13,14 @@ public final class SystemEndpointClient extends AbstractClient implements ISyste
     @NonNull
     @Override
     @SneakyThrows
-    public  ServerAboutResponse getAbout(@NonNull ServerAboutRequest request) {
+    public ServerAboutResponse getAbout(@NonNull ServerAboutRequest request) {
         return (ServerAboutResponse) call(request);
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public  ServerVersionResponse getVersion(@NonNull ServerVersionRequest request) {
+    public ServerVersionResponse getVersion(@NonNull ServerVersionRequest request) {
         return (ServerVersionResponse) call(request);
     }
 
