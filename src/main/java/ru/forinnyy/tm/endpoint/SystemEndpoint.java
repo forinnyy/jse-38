@@ -19,22 +19,25 @@ public final class SystemEndpoint implements ISystemEndpoint {
         this.serviceLocator = serviceLocator;
     }
 
+    @NonNull
+    private IPropertyService getPropertyService() {
+        return serviceLocator.getPropertyService();
+    }
+
     @NotNull
     @Override
     public ApplicationAboutResponse getAbout(@NotNull final ApplicationAboutRequest request) {
-        @NonNull final IPropertyService propertyService = serviceLocator.getPropertyService();
         @NonNull final ApplicationAboutResponse response = new ApplicationAboutResponse();
-        response.setEmail(propertyService.getAuthorEmail());
-        response.setName(propertyService.getAuthorName());
+        response.setEmail(getPropertyService().getAuthorEmail());
+        response.setName(getPropertyService().getAuthorName());
         return response;
     }
 
     @NotNull
     @Override
     public ApplicationVersionResponse getVersion(@NotNull final ApplicationVersionRequest request) {
-        @NonNull final IPropertyService propertyService = serviceLocator.getPropertyService();
         @NonNull final ApplicationVersionResponse response = new ApplicationVersionResponse();
-        response.setVersion(propertyService.getApplicationVersion());
+        response.setVersion(getPropertyService().getApplicationVersion());
         return response;
     }
 

@@ -13,7 +13,7 @@ import ru.forinnyy.tm.model.Task;
 
 import java.util.List;
 
-public class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoint {
+public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoint {
 
     public TaskEndpoint(@NonNull final IServiceLocator serviceLocator) {
         super(serviceLocator);
@@ -32,45 +32,47 @@ public class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoint {
     @NonNull
     @Override
     @SneakyThrows
-    public TaskBindToProjectResponse bindTaskToProject(@NonNull TaskBindToProjectRequest request) {
+    public TaskBindToProjectResponse bindTaskToProject(@NonNull final TaskBindToProjectRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final String taskId = request.getTaskId();
-        @NonNull final String projectId = request.getProjectId();
-        @NonNull final Task task = getProjectTaskService().bindTaskToProject(userId, projectId, taskId);
+        final String userId = request.getUserId();
+        final String taskId = request.getTaskId();
+        final String projectId = request.getProjectId();
+        final Task task = getProjectTaskService().bindTaskToProject(userId, projectId, taskId);
         return new TaskBindToProjectResponse(task);
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public TaskChangeStatusByIdResponse changeTaskStatusById(@NonNull TaskChangeStatusByIdRequest request) {
+    public TaskChangeStatusByIdResponse changeTaskStatusById(@NonNull final TaskChangeStatusByIdRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final String id = request.getId();
-        @NonNull final Status status = request.getStatus();
-        @NonNull final Task task = getTaskService().changeTaskStatusById(userId, id, status);
+        final String userId = request.getUserId();
+        final String id = request.getId();
+        final Status status = request.getStatus();
+        final Task task = getTaskService().changeTaskStatusById(userId, id, status);
         return new TaskChangeStatusByIdResponse(task);
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public TaskChangeStatusByIndexResponse changeTaskStatusByIndex(@NonNull TaskChangeStatusByIndexRequest request) {
+    public TaskChangeStatusByIndexResponse changeTaskStatusByIndex(
+            @NonNull final TaskChangeStatusByIndexRequest request
+    ) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final Status status = request.getStatus();
-        @NonNull final Integer index = request.getIndex();
-        @NonNull final Task task = getTaskService().changeTaskStatusByIndex(userId, index, status);
+        final String userId = request.getUserId();
+        final Status status = request.getStatus();
+        final Integer index = request.getIndex();
+        final Task task = getTaskService().changeTaskStatusByIndex(userId, index, status);
         return new TaskChangeStatusByIndexResponse(task);
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public TaskClearResponse clearTask(@NonNull TaskClearRequest request) {
+    public TaskClearResponse clearTask(@NonNull final TaskClearRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
+        final String userId = request.getUserId();
         getTaskService().clear(userId);
         return new TaskClearResponse();
     }
@@ -78,116 +80,160 @@ public class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoint {
     @NonNull
     @Override
     @SneakyThrows
-    public TaskCreateResponse createTask(@NonNull TaskCreateRequest request) {
+    public TaskCreateResponse createTask(@NonNull final TaskCreateRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final String name = request.getName();
-        @NonNull final String description = request.getDescription();
-        @NonNull final Task task = getTaskService().create(userId, name, description);
+        final String userId = request.getUserId();
+        final String name = request.getName();
+        final String description = request.getDescription();
+        final Task task = getTaskService().create(userId, name, description);
         return new TaskCreateResponse(task);
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public TaskGetByIdResponse getTaskById(@NonNull TaskGetByIdRequest request) {
+    public TaskGetByIdResponse getTaskById(@NonNull final TaskGetByIdRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final String id = request.getId();
-        @NonNull final Task task = getTaskService().findOneById(userId, id);
+        final String userId = request.getUserId();
+        final String id = request.getId();
+        final Task task = getTaskService().findOneById(userId, id);
         return new TaskGetByIdResponse(task);
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public TaskGetByIndexResponse getTaskByIndex(@NonNull TaskGetByIndexRequest request) {
+    public TaskGetByIndexResponse getTaskByIndex(@NonNull final TaskGetByIndexRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final Integer index = request.getIndex();
-        @NonNull final Task task = getTaskService().findOneByIndex(userId, index);
+        final String userId = request.getUserId();
+        final Integer index = request.getIndex();
+        final Task task = getTaskService().findOneByIndex(userId, index);
         return new TaskGetByIndexResponse(task);
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public TaskListByProjectIdResponse listTaskByProjectId(@NonNull TaskListByProjectIdRequest request) {
+    public TaskListByProjectIdResponse listTaskByProjectId(@NonNull final TaskListByProjectIdRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final String projectId = request.getProjectId();
-        @NonNull final List<Task> tasks = getTaskService().findAllByProjectId(userId, projectId);
+        final String userId = request.getUserId();
+        final String projectId = request.getProjectId();
+        final List<Task> tasks = getTaskService().findAllByProjectId(userId, projectId);
         return new TaskListByProjectIdResponse(tasks);
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public TaskListResponse listTask(@NonNull TaskListRequest request) {
+    public TaskListResponse listTask(@NonNull final TaskListRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final List<Task> tasks = getTaskService().findAll(userId);
+        final String userId = request.getUserId();
+        final List<Task> tasks = getTaskService().findAll(userId);
         return new TaskListResponse(tasks);
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public TaskRemoveByIdResponse removeTaskById(@NonNull TaskRemoveByIdRequest request) {
+    public TaskRemoveByIdResponse removeTaskById(@NonNull final TaskRemoveByIdRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final String id = request.getId();
-        @NonNull final Task task = getTaskService().removeById(userId, id);
+        final String userId = request.getUserId();
+        final String id = request.getId();
+        final Task task = getTaskService().removeById(userId, id);
         return new TaskRemoveByIdResponse(task);
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public TaskRemoveByIndexResponse removeTaskByIndex(@NonNull TaskRemoveByIndexRequest request) {
+    public TaskRemoveByIndexResponse removeTaskByIndex(@NonNull final TaskRemoveByIndexRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final Integer index = request.getIndex();
-        @NonNull final Task task = getTaskService().removeByIndex(userId, index);
+        final String userId = request.getUserId();
+        final Integer index = request.getIndex();
+        final Task task = getTaskService().removeByIndex(userId, index);
         return new TaskRemoveByIndexResponse(task);
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public TaskUnbindFromProjectResponse unbindTaskFromProject(@NonNull TaskUnbindFromProjectRequest request) {
+    public TaskUnbindFromProjectResponse unbindTaskFromProject(@NonNull final TaskUnbindFromProjectRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final String taskId = request.getTaskId();
-        @NonNull final String projectId = request.getProjectId();
-        @NonNull final Task task = getProjectTaskService().unbindTaskFromProject(userId, projectId, taskId);
+        final String userId = request.getUserId();
+        final String taskId = request.getTaskId();
+        final String projectId = request.getProjectId();
+        final Task task = getProjectTaskService().unbindTaskFromProject(userId, projectId, taskId);
         return new TaskUnbindFromProjectResponse(task);
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public TaskUpdateByIdResponse updateTaskById(@NonNull TaskUpdateByIdRequest request) {
+    public TaskUpdateByIdResponse updateTaskById(@NonNull final TaskUpdateByIdRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final String id = request.getId();
-        @NonNull final String name = request.getName();
-        @NonNull final String description = request.getDescription();
-        @NonNull final Task task = getTaskService().updateById(userId, id, name, description);
+        final String userId = request.getUserId();
+        final String id = request.getId();
+        final String name = request.getName();
+        final String description = request.getDescription();
+        final Task task = getTaskService().updateById(userId, id, name, description);
         return new TaskUpdateByIdResponse(task);
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public TaskUpdateByIndexResponse updateTaskByIndex(@NonNull TaskUpdateByIndexRequest request) {
+    public TaskUpdateByIndexResponse updateTaskByIndex(@NonNull final TaskUpdateByIndexRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final Integer index = request.getIndex();
-        @NonNull final String name = request.getName();
-        @NonNull final String description = request.getDescription();
-        @NonNull final Task task = getTaskService().updateByIndex(userId, index, name, description);
+        final String userId = request.getUserId();
+        final Integer index = request.getIndex();
+        final String name = request.getName();
+        final String description = request.getDescription();
+        final Task task = getTaskService().updateByIndex(userId, index, name, description);
         return new TaskUpdateByIndexResponse(task);
+    }
+
+    @NonNull
+    @Override
+    @SneakyThrows
+    public TaskCompleteByIdResponse completeTaskById(@NonNull final TaskCompleteByIdRequest request) {
+        check(request);
+        final String userId = request.getUserId();
+        final String id = request.getId();
+        final Task task = getTaskService().changeTaskStatusById(userId, id, Status.COMPLETED);
+        return new TaskCompleteByIdResponse(task);
+    }
+
+    @NonNull
+    @Override
+    @SneakyThrows
+    public TaskCompleteByIndexResponse completeTaskByIndex(@NonNull final TaskCompleteByIndexRequest request) {
+        check(request);
+        final String userId = request.getUserId();
+        final Integer index = request.getIndex();
+        final Task task = getTaskService().changeTaskStatusByIndex(userId, index, Status.COMPLETED);
+        return new TaskCompleteByIndexResponse(task);
+    }
+
+    @NonNull
+    @Override
+    @SneakyThrows
+    public TaskStartByIdResponse startTaskById(@NonNull final TaskStartByIdRequest request) {
+        check(request);
+        final String userId = request.getUserId();
+        final String id = request.getId();
+        final Task task = getTaskService().changeTaskStatusById(userId, id, Status.IN_PROGRESS);
+        return new TaskStartByIdResponse(task);
+    }
+
+    @NonNull
+    @Override
+    @SneakyThrows
+    public TaskStartByIndexResponse startTaskByIndex(@NonNull final TaskStartByIndexRequest request) {
+        check(request);
+        final String userId = request.getUserId();
+        final Integer index = request.getIndex();
+        final Task task = getTaskService().changeTaskStatusByIndex(userId, index, Status.IN_PROGRESS);
+        return new TaskStartByIndexResponse(task);
     }
 
 }

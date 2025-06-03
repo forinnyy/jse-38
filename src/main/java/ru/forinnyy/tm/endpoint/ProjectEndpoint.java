@@ -13,7 +13,7 @@ import ru.forinnyy.tm.model.Project;
 
 import java.util.List;
 
-public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoint { //
+public final class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoint { //
 
     public ProjectEndpoint(IServiceLocator serviceLocator) {
         super(serviceLocator);
@@ -27,24 +27,28 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @NonNull
     @Override
     @SneakyThrows
-    public ProjectChangeStatusByIdResponse changeProjectStatusById(@NonNull final ProjectChangeStatusByIdRequest request) {
+    public ProjectChangeStatusByIdResponse changeProjectStatusById(
+            @NonNull final ProjectChangeStatusByIdRequest request
+    ) {
         check(request);
-        @NonNull final String id = request.getId();
-        @NonNull final String userId = request.getUserId();
-        @NonNull final Status status = request.getStatus();
-        @NonNull final Project project = getProjectService().changeProjectStatusById(userId, id, status);
+        final String id = request.getId();
+        final String userId = request.getUserId();
+        final Status status = request.getStatus();
+        final Project project = getProjectService().changeProjectStatusById(userId, id, status);
         return new ProjectChangeStatusByIdResponse(project);
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public ProjectChangeStatusByIndexResponse changeProjectStatusByIndex(@NonNull final ProjectChangeStatusByIndexRequest request) {
+    public ProjectChangeStatusByIndexResponse changeProjectStatusByIndex(
+            @NonNull final ProjectChangeStatusByIndexRequest request
+    ) {
         check(request);
-        @NonNull final String index = request.getIndex();
-        @NonNull final String userId = request.getUserId();
-        @NonNull final Status status = request.getStatus();
-        @NonNull final Project project = getProjectService().changeProjectStatusById(userId, index, status);
+        final Integer index = request.getIndex();
+        final String userId = request.getUserId();
+        final Status status = request.getStatus();
+        final Project project = getProjectService().changeProjectStatusByIndex(userId, index, status);
         return new ProjectChangeStatusByIndexResponse(project);
     }
 
@@ -63,11 +67,11 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @SneakyThrows
     public ProjectCreateResponse createProject(@NonNull final ProjectCreateRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final String name = request.getName();
-        @NonNull final String description = request.getDescription();
-        getProjectService().create(userId, name, description);
-        return new ProjectCreateResponse();
+        final String userId = request.getUserId();
+        final String name = request.getName();
+        final String description = request.getDescription();
+        final Project project = getProjectService().create(userId, name, description);
+        return new ProjectCreateResponse(project);
     }
 
     @NonNull
@@ -75,9 +79,9 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @SneakyThrows
     public ProjectGetByIdResponse getProjectById(@NonNull final ProjectGetByIdRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final String id = request.getId();
-        @NonNull final Project project = getProjectService().findOneById(userId, id);
+        final String userId = request.getUserId();
+        final String id = request.getId();
+        final Project project = getProjectService().findOneById(userId, id);
         return new ProjectGetByIdResponse(project);
     }
 
@@ -86,9 +90,9 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @SneakyThrows
     public ProjectGetByIndexResponse getProjectByIndex(@NonNull final ProjectGetByIndexRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final Integer index = request.getIndex();
-        @NonNull final Project project = getProjectService().findOneByIndex(userId, index);
+        final String userId = request.getUserId();
+        final Integer index = request.getIndex();
+        final Project project = getProjectService().findOneByIndex(userId, index);
         return new ProjectGetByIndexResponse(project);
     }
 
@@ -97,9 +101,9 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @SneakyThrows
     public ProjectListResponse listProject(@NonNull final ProjectListRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final Sort sort = request.getSort();
-        @NonNull final List<Project> projects = getProjectService().findAll(userId, sort);
+        final String userId = request.getUserId();
+        final Sort sort = request.getSort();
+        final List<Project> projects = getProjectService().findAll(userId, sort);
         return new ProjectListResponse(projects);
     }
 
@@ -108,9 +112,9 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @SneakyThrows
     public ProjectRemoveByIdResponse removeProjectById(@NonNull final ProjectRemoveByIdRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final String id = request.getId();
-        @NonNull final Project project = getProjectService().removeById(userId, id);
+        final String userId = request.getUserId();
+        final String id = request.getId();
+        final Project project = getProjectService().removeById(userId, id);
         return new ProjectRemoveByIdResponse(project);
     }
 
@@ -119,10 +123,10 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @SneakyThrows
     public ProjectRemoveByIndexResponse removeProjectByIndex(@NonNull final ProjectRemoveByIndexRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final Integer index = request.getIndex();
-        @NonNull final Project project = getProjectService().removeByIndex(userId, index);
-        return new ProjectRemoveByIndexResponse();
+        final String userId = request.getUserId();
+        final Integer index = request.getIndex();
+        final Project project = getProjectService().removeByIndex(userId, index);
+        return new ProjectRemoveByIndexResponse(project);
     }
 
     @NonNull
@@ -130,11 +134,11 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @SneakyThrows
     public ProjectUpdateByIdResponse updateProjectById(@NonNull final ProjectUpdateByIdRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final String id = request.getId();
-        @NonNull final String name = request.getName();
-        @NonNull final String description = request.getDescription();
-        @NonNull final Project project = getProjectService().updateById(userId, id, name, description);
+        final String userId = request.getUserId();
+        final String id = request.getId();
+        final String name = request.getName();
+        final String description = request.getDescription();
+        final Project project = getProjectService().updateById(userId, id, name, description);
         return new ProjectUpdateByIdResponse(project);
     }
 
@@ -143,12 +147,58 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @SneakyThrows
     public ProjectUpdateByIndexResponse updateProjectByIndex(@NonNull final ProjectUpdateByIndexRequest request) {
         check(request);
-        @NonNull final String userId = request.getUserId();
-        @NonNull final Integer index = request.getIndex();
-        @NonNull final String name = request.getName();
-        @NonNull final String description = request.getDescription();
-        @NonNull final Project project = getProjectService().updateByIndex(userId, index, name, description);
+        final String userId = request.getUserId();
+        final Integer index = request.getIndex();
+        final String name = request.getName();
+        final String description = request.getDescription();
+        final Project project = getProjectService().updateByIndex(userId, index, name, description);
         return new ProjectUpdateByIndexResponse(project);
+    }
+
+    @NonNull
+    @Override
+    @SneakyThrows
+    public ProjectCompleteByIdResponse completeProjectById(@NonNull final ProjectCompleteByIdRequest request) {
+        check(request);
+        final String id = request.getId();
+        final String userId = request.getUserId();
+        final Project project = getProjectService().changeProjectStatusById(userId, id, Status.COMPLETED);
+        return new ProjectCompleteByIdResponse(project);
+    }
+
+    @NonNull
+    @Override
+    @SneakyThrows
+    public ProjectCompleteByIndexResponse completeProjectByIndex(
+            @NonNull final ProjectCompleteByIndexRequest request
+    ) {
+        check(request);
+        final Integer index = request.getIndex();
+        final String userId = request.getUserId();
+        final Project project = getProjectService().changeProjectStatusByIndex(userId, index, Status.COMPLETED);
+        return new ProjectCompleteByIndexResponse(project);
+    }
+
+    @NonNull
+    @Override
+    @SneakyThrows
+    public ProjectStartByIdResponse startProjectById(@NonNull final ProjectStartByIdRequest request) {
+        check(request);
+        final String id = request.getId();
+        final String userId = request.getUserId();
+        final Project project = getProjectService().changeProjectStatusById(userId, id, Status.IN_PROGRESS);
+        return new ProjectStartByIdResponse(project);
+    }
+
+    @NonNull
+    @Override
+    @SneakyThrows
+    public ProjectStartByIndexResponse startProjectByIndex(@NonNull final ProjectStartByIndexRequest request) {
+        check(request);
+        final Integer index = request.getIndex();
+        final String userId = request.getUserId();
+        final Project project = getProjectService().changeProjectStatusByIndex(userId, index, Status.IN_PROGRESS);
+        return new ProjectStartByIndexResponse(project);
     }
 
 }

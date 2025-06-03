@@ -39,4 +39,16 @@ public interface IProjectEndpoint {
     @NonNull
     ProjectUpdateByIndexResponse updateProjectByIndex(@NonNull ProjectUpdateByIndexRequest request);
 
+    @NonNull
+    ProjectCompleteByIdResponse completeProjectById(@NonNull ProjectCompleteByIdRequest request);
+
+    @NonNull
+    ProjectCompleteByIndexResponse completeProjectByIndex(@NonNull ProjectCompleteByIndexRequest request);
+
+    @NonNull
+    ProjectStartByIdResponse startProjectById(@NonNull ProjectStartByIdRequest request);
+
+    @NonNull
+    ProjectStartByIndexResponse startProjectByIndex(@NonNull ProjectStartByIndexRequest request);
+
 }

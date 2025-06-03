@@ -48,4 +48,16 @@ public interface ITaskEndpoint {
     @NonNull
     TaskUpdateByIndexResponse updateTaskByIndex(@NonNull TaskUpdateByIndexRequest request);
 
+    @NonNull
+    TaskCompleteByIdResponse completeTaskById(@NonNull TaskCompleteByIdRequest request);
+
+    @NonNull
+    TaskCompleteByIndexResponse completeTaskByIndex(@NonNull TaskCompleteByIndexRequest request);
+
+    @NonNull
+    TaskStartByIdResponse startTaskById(@NonNull TaskStartByIdRequest request);
+
+    @NonNull
+    TaskStartByIndexResponse startTaskByIndex(@NonNull TaskStartByIndexRequest request);
+
 }
