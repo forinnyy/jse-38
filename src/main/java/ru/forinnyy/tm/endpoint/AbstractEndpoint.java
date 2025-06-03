@@ -8,6 +8,7 @@ import ru.forinnyy.tm.api.service.IUserService;
 import ru.forinnyy.tm.dto.request.AbstractUserRequest;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.user.AccessDeniedException;
+import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.User;
 
 
@@ -17,7 +18,7 @@ public abstract class AbstractEndpoint {
     @SneakyThrows
     protected void check(final AbstractUserRequest request, final Role role) {
         if (request == null) throw new AccessDeniedException();
-        if (role == null) throw new AccessDeniedException();
+        if (role == null) throw new PermissionException();
         final String userId = request.getUserId();
         if (userId == null || userId.isEmpty()) throw new AccessDeniedException();
         @NonNull final IServiceLocator serviceLocator = getServiceLocator();
@@ -26,7 +27,7 @@ public abstract class AbstractEndpoint {
         if (user == null) throw new AccessDeniedException();
         final Role roleUser = user.getRole();
         final boolean check = roleUser == role;
-        if (!check) throw new AccessDeniedException();
+        if (!check) throw new PermissionException();
     }
 
     @SneakyThrows

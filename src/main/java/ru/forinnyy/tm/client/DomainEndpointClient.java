@@ -131,12 +131,20 @@ public class DomainEndpointClient extends AbstractEndpointClient implements IDom
     public static void main(String[] args) {
         @NonNull final AuthEndpointClient authEndpointClient = new AuthEndpointClient();
         authEndpointClient.connect();
-        System.out.println(authEndpointClient.login(new UserLoginRequest("admin", "admin")).getSuccess());
+
         {
+            System.out.println(authEndpointClient.login(new UserLoginRequest("admin", "admin")).getSuccess());
             @NonNull final DomainEndpointClient domainEndpointClient = new DomainEndpointClient(authEndpointClient);
             domainEndpointClient.saveDataYamlFasterXml(new DataYamlSaveFasterXmlRequest());
-            System.out.println(authEndpointClient.logout(new UserLogoutRequest()));
-            authEndpointClient.disconnect();
+
+
         }
+        {
+            System.out.println(authEndpointClient.login(new UserLoginRequest("test", "test")).getSuccess());
+            @NonNull final DomainEndpointClient domainEndpointClient = new DomainEndpointClient(authEndpointClient);
+            domainEndpointClient.saveDataYamlFasterXml(new DataYamlSaveFasterXmlRequest());
+        }
+        System.out.println(authEndpointClient.logout(new UserLogoutRequest()));
+        authEndpointClient.disconnect();
     }
 }
