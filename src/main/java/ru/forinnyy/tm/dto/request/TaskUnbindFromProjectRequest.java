@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TaskUnbindFromProjectRequest extends AbstractUserRequest {
+public final class TaskUnbindFromProjectRequest extends AbstractUserRequest {
 
     private String taskId;
 

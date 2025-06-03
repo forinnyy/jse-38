@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProjectCreateRequest extends AbstractUserRequest {
+public final class ProjectCreateRequest extends AbstractUserRequest {
 
     private String name;
 

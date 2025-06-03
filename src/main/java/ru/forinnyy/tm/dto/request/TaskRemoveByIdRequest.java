@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TaskRemoveByIdRequest extends AbstractUserRequest {
+public final class TaskRemoveByIdRequest extends AbstractUserRequest {
 
     private String id;
 

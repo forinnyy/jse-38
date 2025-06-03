@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TaskCompleteByIndexRequest extends AbstractUserRequest {
+public final class TaskCompleteByIndexRequest extends AbstractUserRequest {
 
     private Integer index;
 

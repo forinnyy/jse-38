@@ -8,7 +8,7 @@ import ru.forinnyy.tm.model.Task;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TaskRemoveByIdResponse extends AbstractTaskResponse {
+public final class TaskRemoveByIdResponse extends AbstractTaskResponse {
 
     public TaskRemoveByIdResponse(Task task) {
         super(task);

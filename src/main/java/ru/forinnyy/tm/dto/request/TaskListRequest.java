@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TaskListRequest extends AbstractUserRequest {
+public final class TaskListRequest extends AbstractUserRequest {
 }

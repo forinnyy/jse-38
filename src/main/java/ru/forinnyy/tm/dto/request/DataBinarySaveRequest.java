@@ -1,4 +1,4 @@
 package ru.forinnyy.tm.dto.request;
 
-public class DataBinarySaveRequest extends AbstractUserRequest {
+public final class DataBinarySaveRequest extends AbstractUserRequest {
 }

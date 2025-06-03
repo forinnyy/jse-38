@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProjectListResponse extends AbstractResponse {
+public final class ProjectListResponse extends AbstractResponse {
 
     private List<Project> projects;
 

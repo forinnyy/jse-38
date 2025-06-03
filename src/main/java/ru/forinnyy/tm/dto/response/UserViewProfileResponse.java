@@ -1,5 +1,5 @@
 package ru.forinnyy.tm.dto.response;
 
-public class UserViewProfileResponse extends AbstractUserResponse {
+public final class UserViewProfileResponse extends AbstractUserResponse {
 
 }

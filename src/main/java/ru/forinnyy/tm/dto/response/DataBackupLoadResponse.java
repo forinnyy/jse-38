@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DataBackupLoadResponse extends AbstractResponse {
+public final class DataBackupLoadResponse extends AbstractResponse {
 }

@@ -8,7 +8,7 @@ import ru.forinnyy.tm.enumerated.Status;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProjectChangeStatusByIdRequest extends AbstractUserRequest {
+public final class ProjectChangeStatusByIdRequest extends AbstractUserRequest {
 
     private String id;
 

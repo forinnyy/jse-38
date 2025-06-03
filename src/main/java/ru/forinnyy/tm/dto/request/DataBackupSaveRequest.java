@@ -1,4 +1,4 @@
 package ru.forinnyy.tm.dto.request;
 
-public class DataBackupSaveRequest extends AbstractUserRequest {
+public final class DataBackupSaveRequest extends AbstractUserRequest {
 }

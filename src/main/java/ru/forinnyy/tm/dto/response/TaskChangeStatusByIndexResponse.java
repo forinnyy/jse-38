@@ -8,7 +8,7 @@ import ru.forinnyy.tm.model.Task;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TaskChangeStatusByIndexResponse extends AbstractTaskResponse {
+public final class TaskChangeStatusByIndexResponse extends AbstractTaskResponse {
 
     public TaskChangeStatusByIndexResponse(Task task) {
         super(task);

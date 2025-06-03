@@ -1,4 +1,4 @@
 package ru.forinnyy.tm.dto.request;
 
-public class UserLogoutRequest extends AbstractUserRequest {
+public final class UserLogoutRequest extends AbstractUserRequest {
 }

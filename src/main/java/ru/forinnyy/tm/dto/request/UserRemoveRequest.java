@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserRemoveRequest extends AbstractUserRequest {
+public final class UserRemoveRequest extends AbstractUserRequest {
 
     private String login;
 

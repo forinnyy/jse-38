@@ -1,4 +1,4 @@
 package ru.forinnyy.tm.dto.request;
 
-public class DataYamlSaveFasterXmlRequest extends AbstractUserRequest {
+public final class DataYamlSaveFasterXmlRequest extends AbstractUserRequest {
 }

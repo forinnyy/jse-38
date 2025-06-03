@@ -8,7 +8,7 @@ import ru.forinnyy.tm.model.User;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserRegistryResponse extends AbstractUserResponse {
+public final class UserRegistryResponse extends AbstractUserResponse {
 
     public UserRegistryResponse(User user) {
         super(user);

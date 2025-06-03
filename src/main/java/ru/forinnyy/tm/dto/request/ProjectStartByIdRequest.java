@@ -6,7 +6,7 @@ import ru.forinnyy.tm.enumerated.Status;
 
 @Getter
 @Setter
-public class ProjectStartByIdRequest extends AbstractUserRequest {
+public final class ProjectStartByIdRequest extends AbstractUserRequest {
 
     private String id;
 

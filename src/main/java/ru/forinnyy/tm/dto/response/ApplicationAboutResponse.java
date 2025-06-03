@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ApplicationAboutResponse extends AbstractResponse {
+public final class ApplicationAboutResponse extends AbstractResponse {
 
     private String email;
 

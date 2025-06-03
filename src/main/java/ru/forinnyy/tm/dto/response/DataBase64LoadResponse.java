@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DataBase64LoadResponse {
+public final class DataBase64LoadResponse {
 }

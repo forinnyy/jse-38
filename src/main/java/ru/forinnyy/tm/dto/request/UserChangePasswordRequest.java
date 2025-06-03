@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserChangePasswordRequest extends AbstractUserRequest {
+public final class UserChangePasswordRequest extends AbstractUserRequest {
 
     private String password;
 

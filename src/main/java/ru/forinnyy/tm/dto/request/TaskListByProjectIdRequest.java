@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TaskListByProjectIdRequest extends AbstractUserRequest {
+public final class TaskListByProjectIdRequest extends AbstractUserRequest {
 
     private String projectId;
 

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserLoginRequest extends AbstractRequest {
+public final class UserLoginRequest extends AbstractRequest {
 
     private String login;
 

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class TaskListByProjectIdResponse {
+public final class TaskListByProjectIdResponse {
 
     private final List<Task> tasks;
 

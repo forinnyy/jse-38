@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProjectRemoveByIdRequest extends AbstractUserRequest {
+public final class ProjectRemoveByIdRequest extends AbstractUserRequest {
 
     private String id;
 

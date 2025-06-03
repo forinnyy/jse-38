@@ -6,7 +6,7 @@ import ru.forinnyy.tm.enumerated.Status;
 
 @Getter
 @Setter
-public class TaskChangeStatusByIdRequest extends AbstractUserRequest {
+public final class TaskChangeStatusByIdRequest extends AbstractUserRequest {
 
     private String id;
 

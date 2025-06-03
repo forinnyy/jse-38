@@ -8,7 +8,7 @@ import ru.forinnyy.tm.model.User;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserRemoveResponse extends AbstractUserResponse {
+public final class UserRemoveResponse extends AbstractUserResponse {
 
     public UserRemoveResponse(User user) {
         super(user);

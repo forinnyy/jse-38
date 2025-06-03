@@ -1,4 +1,4 @@
 package ru.forinnyy.tm.dto.request;
 
-public class DataJsonSaveJaxBRequest extends AbstractUserRequest {
+public final class DataJsonSaveJaxBRequest extends AbstractUserRequest {
 }

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TaskCreateRequest extends AbstractUserRequest {
+public final class TaskCreateRequest extends AbstractUserRequest {
 
     private String name;
 

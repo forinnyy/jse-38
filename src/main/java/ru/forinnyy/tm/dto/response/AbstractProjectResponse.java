@@ -8,7 +8,7 @@ import ru.forinnyy.tm.model.Project;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AbstractProjectResponse extends AbstractResponse {
+public abstract class AbstractProjectResponse extends AbstractResponse {
 
     private Project project;
 

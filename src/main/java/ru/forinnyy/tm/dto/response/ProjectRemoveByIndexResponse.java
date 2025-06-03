@@ -8,7 +8,7 @@ import ru.forinnyy.tm.model.Project;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProjectRemoveByIndexResponse extends AbstractProjectResponse {
+public final class ProjectRemoveByIndexResponse extends AbstractProjectResponse {
 
     public ProjectRemoveByIndexResponse(Project project) {
         super(project);

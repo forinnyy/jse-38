@@ -8,7 +8,7 @@ import ru.forinnyy.tm.model.User;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AbstractUserResponse extends AbstractResponse {
+public abstract class AbstractUserResponse extends AbstractResponse {
 
     private User user;
 

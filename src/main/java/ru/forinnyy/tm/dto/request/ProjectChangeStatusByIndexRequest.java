@@ -6,7 +6,7 @@ import ru.forinnyy.tm.enumerated.Status;
 
 @Getter
 @Setter
-public class ProjectChangeStatusByIndexRequest extends AbstractUserRequest {
+public final class ProjectChangeStatusByIndexRequest extends AbstractUserRequest {
 
     private Integer index;
 

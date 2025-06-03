@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ProjectGetByIndexRequest extends AbstractUserRequest {
+public final class ProjectGetByIndexRequest extends AbstractUserRequest {
 
     private Integer index;
 

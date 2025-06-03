@@ -6,7 +6,7 @@ import ru.forinnyy.tm.enumerated.Sort;
 
 @Getter
 @Setter
-public class ProjectListRequest extends AbstractUserRequest {
+public final class ProjectListRequest extends AbstractUserRequest {
 
     private Sort sort;
 
