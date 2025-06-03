@@ -7,10 +7,10 @@ import lombok.SneakyThrows;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.forinnyy.tm.api.endpoint.IDomainEndpoint;
 import ru.forinnyy.tm.api.endpoint.IProjectEndpoint;
 import ru.forinnyy.tm.api.endpoint.ISystemEndpoint;
 import ru.forinnyy.tm.api.endpoint.ITaskEndpoint;
+import ru.forinnyy.tm.api.endpoint.IUserEndpoint;
 import ru.forinnyy.tm.api.repository.ICommandRepository;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
@@ -22,7 +22,10 @@ import ru.forinnyy.tm.command.data.DataBase64LoadCommand;
 import ru.forinnyy.tm.command.data.DataBinaryLoadCommand;
 import ru.forinnyy.tm.dto.request.ServerAboutRequest;
 import ru.forinnyy.tm.dto.request.ServerVersionRequest;
-import ru.forinnyy.tm.endpoint.*;
+import ru.forinnyy.tm.endpoint.ProjectEndpoint;
+import ru.forinnyy.tm.endpoint.SystemEndpoint;
+import ru.forinnyy.tm.endpoint.TaskEndpoint;
+import ru.forinnyy.tm.endpoint.UserEndpoint;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
@@ -121,6 +124,9 @@ public final class Bootstrap implements IServiceLocator {
 
     @NonNull
     private final IProjectEndpoint projectEndpoint = new ProjectEndpoint(this);
+
+    @NonNull
+    private final IUserEndpoint userEndpoint = new UserEndpoint(this);
 
     {
         @NonNull final Reflections reflections = new Reflections(PACKAGE_COMMANDS);

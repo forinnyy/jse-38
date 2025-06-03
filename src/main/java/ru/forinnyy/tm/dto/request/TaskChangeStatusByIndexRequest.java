@@ -1,6 +1,15 @@
 package ru.forinnyy.tm.dto.request;
 
-import ru.forinnyy.tm.dto.response.AbstractTaskResponse;
+import lombok.Getter;
+import lombok.Setter;
+import ru.forinnyy.tm.enumerated.Status;
 
+@Getter
+@Setter
 public class TaskChangeStatusByIndexRequest extends AbstractUserRequest {
+
+    private Status status;
+
+    private Integer index;
+
 }

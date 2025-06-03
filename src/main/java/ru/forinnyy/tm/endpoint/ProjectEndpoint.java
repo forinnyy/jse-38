@@ -28,11 +28,11 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @Override
     @SneakyThrows
     public ProjectChangeStatusByIdResponse changeProjectStatusById(@NonNull final ProjectChangeStatusByIdRequest request) {
-//        check(request);
-        final String id = request.getId();
-        final String userId = request.getUserId();
-        final Status status = request.getStatus();
-        final Project project = getProjectService().changeProjectStatusById(userId, id, status);
+        check(request);
+        @NonNull final String id = request.getId();
+        @NonNull final String userId = request.getUserId();
+        @NonNull final Status status = request.getStatus();
+        @NonNull final Project project = getProjectService().changeProjectStatusById(userId, id, status);
         return new ProjectChangeStatusByIdResponse(project);
     }
 
@@ -40,11 +40,11 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @Override
     @SneakyThrows
     public ProjectChangeStatusByIndexResponse changeProjectStatusByIndex(@NonNull final ProjectChangeStatusByIndexRequest request) {
-        //        check(request);
-        final String index = request.getIndex();
-        final String userId = request.getUserId();
-        final Status status = request.getStatus();
-        final Project project = getProjectService().changeProjectStatusById(userId, index, status);
+        check(request);
+        @NonNull final String index = request.getIndex();
+        @NonNull final String userId = request.getUserId();
+        @NonNull final Status status = request.getStatus();
+        @NonNull final Project project = getProjectService().changeProjectStatusById(userId, index, status);
         return new ProjectChangeStatusByIndexResponse(project);
     }
 
@@ -52,8 +52,8 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @Override
     @SneakyThrows
     public ProjectClearResponse clearProject(@NonNull final ProjectClearRequest request) {
-        //        check(request);
-        final String userId = request.getUserId();
+        check(request);
+        @NonNull final String userId = request.getUserId();
         getProjectService().clear(userId);
         return new ProjectClearResponse();
     }
@@ -62,10 +62,10 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @Override
     @SneakyThrows
     public ProjectCreateResponse createProject(@NonNull final ProjectCreateRequest request) {
-        //        check(request);
-        final String userId = request.getUserId();
-        final String name = request.getName();
-        final String description = request.getDescription();
+        check(request);
+        @NonNull final String userId = request.getUserId();
+        @NonNull final String name = request.getName();
+        @NonNull final String description = request.getDescription();
         getProjectService().create(userId, name, description);
         return new ProjectCreateResponse();
     }
@@ -74,10 +74,10 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @Override
     @SneakyThrows
     public ProjectGetByIdResponse getProjectById(@NonNull final ProjectGetByIdRequest request) {
-        //        check(request);
-        final String userId = request.getUserId();
-        final String id = request.getId();
-        final Project project = getProjectService().findOneById(userId, id);
+        check(request);
+        @NonNull final String userId = request.getUserId();
+        @NonNull final String id = request.getId();
+        @NonNull final Project project = getProjectService().findOneById(userId, id);
         return new ProjectGetByIdResponse(project);
     }
 
@@ -85,10 +85,10 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @Override
     @SneakyThrows
     public ProjectGetByIndexResponse getProjectByIndex(@NonNull final ProjectGetByIndexRequest request) {
-        //        check(request);
-        final String userId = request.getUserId();
-        final Integer index = request.getIndex();
-        final Project project = getProjectService().findOneByIndex(userId, index);
+        check(request);
+        @NonNull final String userId = request.getUserId();
+        @NonNull final Integer index = request.getIndex();
+        @NonNull final Project project = getProjectService().findOneByIndex(userId, index);
         return new ProjectGetByIndexResponse(project);
     }
 
@@ -96,10 +96,10 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @Override
     @SneakyThrows
     public ProjectListResponse listProject(@NonNull final ProjectListRequest request) {
-        //        check(request);
-        final String userId = request.getUserId();
-        final Sort sort = request.getSort();
-        final List<Project> projects = getProjectService().findAll(userId, sort);
+        check(request);
+        @NonNull final String userId = request.getUserId();
+        @NonNull final Sort sort = request.getSort();
+        @NonNull final List<Project> projects = getProjectService().findAll(userId, sort);
         return new ProjectListResponse(projects);
     }
 
@@ -107,10 +107,10 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @Override
     @SneakyThrows
     public ProjectRemoveByIdResponse removeProjectById(@NonNull final ProjectRemoveByIdRequest request) {
-        //        check(request);
-        final String userId = request.getUserId();
-        final String id = request.getId();
-        final Project project = getProjectService().removeById(userId, id);
+        check(request);
+        @NonNull final String userId = request.getUserId();
+        @NonNull final String id = request.getId();
+        @NonNull final Project project = getProjectService().removeById(userId, id);
         return new ProjectRemoveByIdResponse(project);
     }
 
@@ -118,10 +118,10 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @Override
     @SneakyThrows
     public ProjectRemoveByIndexResponse removeProjectByIndex(@NonNull final ProjectRemoveByIndexRequest request) {
-        //        check(request);
-        final String userId = request.getUserId();
-        final Integer index = request.getIndex();
-        final Project project = getProjectService().removeByIndex(userId, index);
+        check(request);
+        @NonNull final String userId = request.getUserId();
+        @NonNull final Integer index = request.getIndex();
+        @NonNull final Project project = getProjectService().removeByIndex(userId, index);
         return new ProjectRemoveByIndexResponse();
     }
 
@@ -129,12 +129,12 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @Override
     @SneakyThrows
     public ProjectUpdateByIdResponse updateProjectById(@NonNull final ProjectUpdateByIdRequest request) {
-        //        check(request);
-        final String userId = request.getUserId();
-        final String id = request.getId();
-        final String name = request.getName();
-        final String description = request.getDescription();
-        final Project project = getProjectService().updateById(userId, id, name, description);
+        check(request);
+        @NonNull final String userId = request.getUserId();
+        @NonNull final String id = request.getId();
+        @NonNull final String name = request.getName();
+        @NonNull final String description = request.getDescription();
+        @NonNull final Project project = getProjectService().updateById(userId, id, name, description);
         return new ProjectUpdateByIdResponse(project);
     }
 
@@ -142,12 +142,12 @@ public class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoin
     @Override
     @SneakyThrows
     public ProjectUpdateByIndexResponse updateProjectByIndex(@NonNull final ProjectUpdateByIndexRequest request) {
-        //        check(request);
-        final String userId = request.getUserId();
-        final Integer index = request.getIndex();
-        final String name = request.getName();
-        final String description = request.getDescription();
-        final Project project = getProjectService().updateByIndex(userId, index, name, description);
+        check(request);
+        @NonNull final String userId = request.getUserId();
+        @NonNull final Integer index = request.getIndex();
+        @NonNull final String name = request.getName();
+        @NonNull final String description = request.getDescription();
+        @NonNull final Project project = getProjectService().updateByIndex(userId, index, name, description);
         return new ProjectUpdateByIndexResponse(project);
     }
 

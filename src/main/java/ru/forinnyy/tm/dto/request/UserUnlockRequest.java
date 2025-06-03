@@ -8,4 +8,5 @@ import lombok.Setter;
 public class UserUnlockRequest extends AbstractUserRequest {
 
     private String login;
+
 }

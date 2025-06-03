@@ -16,7 +16,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataBackupLoadResponse loadDataBackup(@NonNull DataBackupLoadRequest request) {
-//        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().loadDataBackup();
         return new DataBackupLoadResponse();
     }
@@ -24,7 +24,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataBackupSaveResponse saveDataBackup(@NonNull DataBackupSaveRequest request) {
-//        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().saveDataBackup();
         return new DataBackupSaveResponse();
     }
@@ -32,7 +32,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataBase64LoadResponse loadDataBase64(@NonNull DataBase64LoadRequest request) {
-        //        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().loadDataBase64();
         return new DataBase64LoadResponse();
     }
@@ -40,7 +40,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataBase64SaveResponse saveDataBase64(@NonNull DataBase64SaveRequest request) {
-        //        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().saveDataBase64();
         return new DataBase64SaveResponse();
     }
@@ -48,7 +48,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataBinaryLoadResponse loadDataBinary(@NonNull DataBinaryLoadRequest request) {
-        //        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().loadDataBinary();
         return new DataBinaryLoadResponse();
     }
@@ -56,7 +56,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataBinarySaveResponse saveDataBinary(@NonNull DataBinarySaveRequest request) {
-        //        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().saveDataBinary();
         return new DataBinarySaveResponse();
     }
@@ -64,7 +64,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataJsonLoadFasterXmlResponse loadDataJsonFasterXml(@NonNull DataJsonLoadFasterXmlRequest request) {
-        //        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().loadDataJsonFasterXml();
         return new DataJsonLoadFasterXmlResponse();
     }
@@ -72,7 +72,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataJsonSaveFasterXmlResponse saveDataJsonFasterXml(@NonNull DataJsonSaveFasterXmlRequest request) {
-        //        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().saveDataJsonFasterXml();
         return new DataJsonSaveFasterXmlResponse();
     }
@@ -80,7 +80,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataJsonLoadJaxBResponse loadDataJsonJaxB(@NonNull DataJsonLoadJaxBRequest request) {
-        //        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().loadDataJsonJaxB();
         return new DataJsonLoadJaxBResponse();
     }
@@ -88,7 +88,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataJsonSaveJaxBResponse saveDataJsonJaxB(@NonNull DataJsonSaveJaxBRequest request) {
-        //        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().saveDataJsonJaxB();
         return new DataJsonSaveJaxBResponse();
     }
@@ -96,7 +96,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataXmlLoadFasterXmlResponse loadDataXmlFasterXml(@NonNull DataXmlLoadFasterXmlRequest request) {
-        //        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().loadDataXmlFasterXml();
         return new DataXmlLoadFasterXmlResponse();
     }
@@ -104,7 +104,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataXmlSaveFasterXmlResponse saveDataXmlFasterXml(@NonNull DataXmlSaveFasterXmlRequest request) {
-        //        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().saveDataXmlFasterXml();
         return new DataXmlSaveFasterXmlResponse();
     }
@@ -112,7 +112,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataXmlLoadJaxBResponse loadDataXmlJaxB(@NonNull DataXmlLoadJaxBRequest request) {
-        //        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().loadDataXmlJaxB();
         return new DataXmlLoadJaxBResponse();
     }
@@ -120,7 +120,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataXmlSaveJaxBResponse saveDataXmlJaxB(@NonNull DataXmlSaveJaxBRequest request) {
-        //        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().saveDataXmlJaxB();
         return new DataXmlSaveJaxBResponse();
     }
@@ -128,7 +128,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataYamlLoadFasterXmlResponse loadDataYamlFasterXml(@NonNull DataYamlLoadFasterXmlRequest request) {
-        //        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().loadDataYamlFasterXml();
         return new DataYamlLoadFasterXmlResponse();
     }
@@ -136,7 +136,7 @@ public class DomainEndpoint extends AbstractEndpoint implements IDomainEndpoint 
     @NonNull
     @Override
     public DataYamlSaveFasterXmlResponse saveDataYamlFasterXml(@NonNull DataYamlSaveFasterXmlRequest request) {
-        //        check(request, Role.ADMIN);
+        check(request, Role.ADMIN);
         getServiceLocator().getDomainService().saveDataYamlFasterXml();
         return new DataYamlSaveFasterXmlResponse();
     }

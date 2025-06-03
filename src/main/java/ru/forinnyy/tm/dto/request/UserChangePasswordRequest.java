@@ -1,4 +1,12 @@
 package ru.forinnyy.tm.dto.request;
 
-public class UserChangePasswordRequest {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class UserChangePasswordRequest extends AbstractUserRequest {
+
+    private String password;
+
 }

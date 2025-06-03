@@ -1,4 +1,16 @@
 package ru.forinnyy.tm.dto.request;
 
-public class UserUpdateProfileRequest {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class UserUpdateProfileRequest extends AbstractUserRequest {
+
+    private String firstName;
+
+    private String lastName;
+
+    private String middleName;
+
 }
