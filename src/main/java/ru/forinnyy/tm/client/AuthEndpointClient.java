@@ -45,12 +45,13 @@ public final class AuthEndpointClient extends AbstractEndpointClient implements 
         authEndpointClient.connect();
         System.out.println(authEndpointClient.profile(new UserProfileRequest()).getUser());
 
-//        System.out.println(authEndpointClient.login(new UserLoginRequest("test2", "test2")).getSuccess());
-//        System.out.println(authEndpointClient.profile(new UserProfileRequest()).getUser());
+        System.out.println(authEndpointClient.login(new UserLoginRequest("test2", "test2")).getSuccess());
+        System.out.println(authEndpointClient.profile(new UserProfileRequest()).getUser());
 
-        System.out.println(authEndpointClient.login(new UserLoginRequest("test", "test")).getSuccess());
+        System.out.println(authEndpointClient.login(new UserLoginRequest("admin", "admin")).getSuccess());
         System.out.println(authEndpointClient.profile(new UserProfileRequest()).getUser());
         System.out.println(authEndpointClient.logout(new UserLogoutRequest()));
+
 
         System.out.println(authEndpointClient.profile(new UserProfileRequest()).getUser());
         authEndpointClient.disconnect();

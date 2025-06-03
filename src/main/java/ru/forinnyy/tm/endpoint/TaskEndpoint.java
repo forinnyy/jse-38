@@ -8,6 +8,7 @@ import ru.forinnyy.tm.api.service.IServiceLocator;
 import ru.forinnyy.tm.api.service.ITaskService;
 import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
+import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.model.Task;
 
@@ -128,7 +129,8 @@ public final class TaskEndpoint extends AbstractEndpoint implements ITaskEndpoin
     public TaskListResponse listTask(@NonNull final TaskListRequest request) {
         check(request);
         final String userId = request.getUserId();
-        final List<Task> tasks = getTaskService().findAll(userId);
+        final Sort sort = request.getSort();
+        final List<Task> tasks = getTaskService().findAll(userId, sort);
         return new TaskListResponse(tasks);
     }
 

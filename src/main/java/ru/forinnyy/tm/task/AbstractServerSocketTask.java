@@ -28,4 +28,5 @@ public abstract class AbstractServerSocketTask extends AbstractServerTask {
         this.socket = socket;
         this.userId = userId;
     }
+    
 }

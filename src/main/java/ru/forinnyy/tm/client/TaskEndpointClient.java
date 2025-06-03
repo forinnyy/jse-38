@@ -147,7 +147,7 @@ public final class TaskEndpointClient extends AbstractEndpointClient implements 
         System.out.println(authEndpointClient.login(new UserLoginRequest("test", "test")));
         System.out.println(authEndpointClient.profile(new UserProfileRequest()).getUser().getRole());
 
-        @NonNull final TaskEndpointClient taskEndpointClient = new TaskEndpointClient();
+        @NonNull final TaskEndpointClient taskEndpointClient = new TaskEndpointClient(authEndpointClient);
         System.out.println(taskEndpointClient.createTask(new TaskCreateRequest("HELLO", "HOLA")));
         System.out.println(taskEndpointClient.listTask(new TaskListRequest()).getTasks());
 

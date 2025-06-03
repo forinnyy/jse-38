@@ -63,7 +63,7 @@ public final class ServerRequestTask extends AbstractServerSocketTask {
         @NonNull final OutputStream outputStream = socket.getOutputStream();
         @NonNull final ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
         objectOutputStream.writeObject(response);
-        server.submit(new ServerRequestTask(server, socket));
+        server.submit(new ServerRequestTask(server, socket, userId));
     }
 
     private void processUserId() {
@@ -84,7 +84,7 @@ public final class ServerRequestTask extends AbstractServerSocketTask {
             userId = user.getId();
             response = new UserLoginResponse();
         } catch (@NonNull final Exception e) {
-            response = new ApplicationErrorResponse(e);
+            response = new UserLoginResponse(e);
         }
     }
 

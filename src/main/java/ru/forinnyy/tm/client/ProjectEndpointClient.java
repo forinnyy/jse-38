@@ -126,8 +126,8 @@ public final class ProjectEndpointClient extends AbstractEndpointClient implemen
         System.out.println(authEndpointClient.login(new UserLoginRequest("test", "test")));
         System.out.println(authEndpointClient.profile(new UserProfileRequest()).getUser().getEmail());
 
-        @NonNull final ProjectEndpointClient projectEndpointClient = new ProjectEndpointClient();
-        System.out.println(projectEndpointClient.createProject(new ProjectCreateRequest("WWWWWWW", "ASDASDASD")));
+        @NonNull final ProjectEndpointClient projectEndpointClient = new ProjectEndpointClient(authEndpointClient);
+//        System.out.println(projectEndpointClient.createProject(new ProjectCreateRequest("WWWWWWW", "ASDASDASD")));
         System.out.println(projectEndpointClient.listProject(new ProjectListRequest()).getProjects());
 
         System.out.println(authEndpointClient.logout(new UserLogoutRequest()));

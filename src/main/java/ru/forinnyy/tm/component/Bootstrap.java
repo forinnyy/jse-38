@@ -195,7 +195,6 @@ public final class Bootstrap implements IServiceLocator {
         server.registry(UserRegistryRequest.class, userEndpoint::registryUser);
         server.registry(UserChangePasswordRequest.class, userEndpoint::changeUserPassword);
         server.registry(UserUpdateProfileRequest.class, userEndpoint::updateUserProfile);
-
     }
 
     private void initBackup() {
