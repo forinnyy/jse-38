@@ -20,8 +20,8 @@ import ru.forinnyy.tm.command.AbstractCommand;
 import ru.forinnyy.tm.command.data.AbstractDataCommand;
 import ru.forinnyy.tm.command.data.DataBase64LoadCommand;
 import ru.forinnyy.tm.command.data.DataBinaryLoadCommand;
-import ru.forinnyy.tm.dto.request.ServerAboutRequest;
-import ru.forinnyy.tm.dto.request.ServerVersionRequest;
+import ru.forinnyy.tm.dto.request.ApplicationAboutRequest;
+import ru.forinnyy.tm.dto.request.ApplicationVersionRequest;
 import ru.forinnyy.tm.endpoint.ProjectEndpoint;
 import ru.forinnyy.tm.endpoint.SystemEndpoint;
 import ru.forinnyy.tm.endpoint.TaskEndpoint;
@@ -136,8 +136,8 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     {
-        server.registry(ServerAboutRequest.class, systemEndpoint::getAbout);
-        server.registry(ServerVersionRequest.class, systemEndpoint::getVersion);
+        server.registry(ApplicationAboutRequest.class, systemEndpoint::getAbout);
+        server.registry(ApplicationVersionRequest.class, systemEndpoint::getVersion);
     }
 
     private void initBackup() {

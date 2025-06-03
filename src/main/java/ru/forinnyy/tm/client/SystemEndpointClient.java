@@ -3,36 +3,36 @@ package ru.forinnyy.tm.client;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import ru.forinnyy.tm.api.endpoint.ISystemEndpoint;
-import ru.forinnyy.tm.dto.request.ServerAboutRequest;
-import ru.forinnyy.tm.dto.request.ServerVersionRequest;
-import ru.forinnyy.tm.dto.response.ServerAboutResponse;
-import ru.forinnyy.tm.dto.response.ServerVersionResponse;
+import ru.forinnyy.tm.dto.request.ApplicationAboutRequest;
+import ru.forinnyy.tm.dto.request.ApplicationVersionRequest;
+import ru.forinnyy.tm.dto.response.ApplicationAboutResponse;
+import ru.forinnyy.tm.dto.response.ApplicationVersionResponse;
 
 public final class SystemEndpointClient extends AbstractClient implements ISystemEndpoint {
 
     @NonNull
     @Override
     @SneakyThrows
-    public ServerAboutResponse getAbout(@NonNull ServerAboutRequest request) {
-        return (ServerAboutResponse) call(request);
+    public ApplicationAboutResponse getAbout(@NonNull ApplicationAboutRequest request) {
+        return (ApplicationAboutResponse) call(request);
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public ServerVersionResponse getVersion(@NonNull ServerVersionRequest request) {
-        return (ServerVersionResponse) call(request);
+    public ApplicationVersionResponse getVersion(@NonNull ApplicationVersionRequest request) {
+        return (ApplicationVersionResponse) call(request);
     }
 
     @SneakyThrows
     public static void main(String[] args) {
         final SystemEndpointClient client = new SystemEndpointClient();
         client.connect();
-        final ServerAboutResponse serverAboutResponse = client.getAbout(new ServerAboutRequest());
-        System.out.println(serverAboutResponse.getEmail());
-        System.out.println(serverAboutResponse.getName());
-        final ServerVersionResponse serverVersionResponse = client.getVersion(new ServerVersionRequest());
-        System.out.println(serverVersionResponse.getVersion());
+        final ApplicationAboutResponse applicationAboutResponse = client.getAbout(new ApplicationAboutRequest());
+        System.out.println(applicationAboutResponse.getEmail());
+        System.out.println(applicationAboutResponse.getName());
+        final ApplicationVersionResponse applicationVersionResponse = client.getVersion(new ApplicationVersionRequest());
+        System.out.println(applicationVersionResponse.getVersion());
         client.disconnect();
     }
 

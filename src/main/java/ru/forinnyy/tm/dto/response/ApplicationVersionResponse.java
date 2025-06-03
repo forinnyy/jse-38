@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ServerVersionResponse extends AbstractResponse {
+public class ApplicationVersionResponse extends AbstractResponse {
 
     private String version;
 

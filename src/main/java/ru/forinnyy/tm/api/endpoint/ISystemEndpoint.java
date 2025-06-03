@@ -1,17 +1,17 @@
 package ru.forinnyy.tm.api.endpoint;
 
 import lombok.NonNull;
-import ru.forinnyy.tm.dto.request.ServerAboutRequest;
-import ru.forinnyy.tm.dto.request.ServerVersionRequest;
-import ru.forinnyy.tm.dto.response.ServerAboutResponse;
-import ru.forinnyy.tm.dto.response.ServerVersionResponse;
+import ru.forinnyy.tm.dto.request.ApplicationAboutRequest;
+import ru.forinnyy.tm.dto.request.ApplicationVersionRequest;
+import ru.forinnyy.tm.dto.response.ApplicationAboutResponse;
+import ru.forinnyy.tm.dto.response.ApplicationVersionResponse;
 
 public interface ISystemEndpoint {
 
     @NonNull
-    ServerAboutResponse getAbout(@NonNull ServerAboutRequest request);
+    ApplicationAboutResponse getAbout(@NonNull ApplicationAboutRequest request);
 
     @NonNull
-    ServerVersionResponse getVersion(@NonNull ServerVersionRequest request);
+    ApplicationVersionResponse getVersion(@NonNull ApplicationVersionRequest request);
 
 }
