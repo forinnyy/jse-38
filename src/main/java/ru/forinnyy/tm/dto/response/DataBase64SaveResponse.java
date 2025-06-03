@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public final class DataBase64SaveResponse {
+public final class DataBase64SaveResponse extends AbstractResponse {
 }

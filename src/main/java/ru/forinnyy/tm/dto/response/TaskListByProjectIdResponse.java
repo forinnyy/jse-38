@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public final class TaskListByProjectIdResponse {
+public final class TaskListByProjectIdResponse extends AbstractResponse {
 
     private final List<Task> tasks;
 

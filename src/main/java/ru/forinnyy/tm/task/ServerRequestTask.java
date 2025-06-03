@@ -88,13 +88,6 @@ public final class ServerRequestTask extends AbstractServerSocketTask {
         }
     }
 
-    private void processLogout() {
-        if (response != null) return;
-        if (!(request instanceof UserLogoutRequest)) return;
-        userId = null;
-        response = new UserLogoutResponse();
-    }
-
     @SneakyThrows
     private void processProfile() {
         if (response != null) return;
@@ -105,7 +98,7 @@ public final class ServerRequestTask extends AbstractServerSocketTask {
         }
         @NonNull final IUserService userService = server.getBootstrap().getUserService();
         final User user = userService.findOneById(userId);
-        response = new UserProfileResponse();
+        response = new UserProfileResponse(user);
     }
 
     private void processOperation() {
@@ -116,6 +109,13 @@ public final class ServerRequestTask extends AbstractServerSocketTask {
         } catch (Exception e) {
             response = new ApplicationErrorResponse(e);
         }
+    }
+
+    private void processLogout() {
+        if (response != null) return;
+        if (!(request instanceof UserLogoutRequest)) return;
+        userId = null;
+        response = new UserLogoutResponse();
     }
 
 }

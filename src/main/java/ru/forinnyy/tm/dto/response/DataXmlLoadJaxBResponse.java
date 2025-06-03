@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public final class DataXmlLoadJaxBResponse {
+public final class DataXmlLoadJaxBResponse extends AbstractResponse {
 }

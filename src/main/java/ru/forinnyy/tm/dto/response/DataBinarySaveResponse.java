@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public final class DataBinarySaveResponse {
+public final class DataBinarySaveResponse extends AbstractResponse {
 }

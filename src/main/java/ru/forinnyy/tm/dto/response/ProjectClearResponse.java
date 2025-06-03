@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public final class ProjectClearResponse {
+public final class ProjectClearResponse extends AbstractResponse {
 }

@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public final class DataJsonSaveFasterXmlResponse {
+public final class DataJsonSaveFasterXmlResponse extends AbstractResponse {
 }
