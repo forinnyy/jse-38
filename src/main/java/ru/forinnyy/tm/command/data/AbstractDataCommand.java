@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.data;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.api.service.IDomainService;
 import ru.forinnyy.tm.command.AbstractCommand;
 import ru.forinnyy.tm.dto.Domain;
 
@@ -37,6 +38,10 @@ public abstract class AbstractDataCommand extends AbstractCommand {
     public final String APPLICATION_TYPE_JSON = "application/json";
 
     public AbstractDataCommand() {
+    }
+
+    protected IDomainService getDomainService() {
+        return serviceLocator.getDomainService();
     }
 
     @NonNull

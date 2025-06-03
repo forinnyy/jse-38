@@ -17,11 +17,7 @@ public final class DataBinaryLoadCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        System.out.println("[DATA BINARY LOAD]");
-        @Cleanup @NonNull final FileInputStream fileInputStream = new FileInputStream(FILE_BINARY);
-        @Cleanup @NonNull final ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        @NonNull final Domain domain = (Domain) objectInputStream.readObject();
-        setDomain(domain);
+        getDomainService().loadDataBinary();
     }
 
     @Override

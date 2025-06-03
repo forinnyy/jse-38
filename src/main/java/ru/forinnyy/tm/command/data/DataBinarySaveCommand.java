@@ -20,17 +20,7 @@ public final class DataBinarySaveCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        System.out.println("[DATA SAVE BINARY]");
-        @NonNull final Domain domain = getDomain();
-        @NonNull final File file = new File(FILE_BINARY);
-        @NonNull final Path path = file.toPath();
-
-        Files.deleteIfExists(path);
-        Files.createFile(path);
-
-        @Cleanup @NonNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
-        @Cleanup @NonNull final ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeObject(domain);
+        getDomainService().saveDataBinary();
     }
 
     @Override

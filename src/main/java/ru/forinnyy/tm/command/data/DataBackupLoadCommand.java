@@ -19,15 +19,7 @@ public final class DataBackupLoadCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        @NonNull final byte[] base64Byte = Files.readAllBytes(Paths.get(FILE_BACKUP));
-        final String base64Date = new String(base64Byte);
-        final byte[] bytes = Base64.getDecoder().decode(base64Date);
-        @NonNull final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
-        @NonNull final ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-        @NonNull final Domain domain = (Domain) objectInputStream.readObject();
-        objectInputStream.close();
-        byteArrayInputStream.close();
-        setDomain(domain);
+        getDomainService().loadDataBackup();
     }
 
     @Override

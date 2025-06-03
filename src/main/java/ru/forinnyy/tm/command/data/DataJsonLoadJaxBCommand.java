@@ -37,14 +37,7 @@ public final class DataJsonLoadJaxBCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        System.out.println("[DATA LOAD JSON]");
-        System.setProperty(CONTEXT_FACTORY, CONTEXT_FACTORY_JAXB);
-        @NonNull JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
-        @NonNull final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        unmarshaller.setProperty(MEDIA_TYPE, APPLICATION_TYPE_JSON);
-        @NonNull final File file = new File(FILE_JSON);
-        @NonNull final Domain domain = (Domain) unmarshaller.unmarshal(file);
-        setDomain(domain);
+        getDomainService().loadDataJsonJaxB();
     }
 
 }

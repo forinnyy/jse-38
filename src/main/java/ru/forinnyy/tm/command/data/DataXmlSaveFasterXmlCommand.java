@@ -40,16 +40,7 @@ public final class DataXmlSaveFasterXmlCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        System.out.println("[DATA SAVE XML]");
-        @NonNull final Domain domain = getDomain();
-        @NonNull final File file = new File(FILE_XML);
-        Files.deleteIfExists(file.toPath());
-        Files.createFile(file.toPath());
-        @Cleanup @NonNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
-        @NonNull final ObjectMapper objectMapper = new XmlMapper();
-        @NonNull final String xml = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(domain);
-        fileOutputStream.write(xml.getBytes());
-        fileOutputStream.flush();
+        getDomainService().saveDataXmlFasterXml();
     }
 
 }

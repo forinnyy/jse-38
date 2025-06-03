@@ -37,12 +37,7 @@ public final class DataXmlLoadJaxBCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        System.out.println("[DATA LOAD XML]");
-        @NonNull JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
-        @NonNull final Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        @NonNull final File file = new File(FILE_XML);
-        @NonNull final Domain domain = (Domain) unmarshaller.unmarshal(file);
-        setDomain(domain);
+        getDomainService().loadDataXmlJaxB();
     }
 
 }

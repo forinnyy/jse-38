@@ -40,17 +40,7 @@ public final class DataXmlSaveJaxBCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        System.out.println("[DATA SAVE XML]");
-        @NonNull final Domain domain = getDomain();
-        @NonNull final File file = new File(FILE_XML);
-        Files.deleteIfExists(file.toPath());
-        Files.createFile(file.toPath());
-        @NonNull JAXBContext jaxbContext = JAXBContext.newInstance(Domain.class);
-        @NonNull final Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        @Cleanup @NonNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
-        jaxbMarshaller.marshal(domain, fileOutputStream);
-        fileOutputStream.flush();
+        getDomainService().saveDataXmlJaxB();
     }
 
 }

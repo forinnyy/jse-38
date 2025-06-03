@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.service;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import ru.forinnyy.tm.api.service.IAuthService;
 import ru.forinnyy.tm.api.service.IPropertyService;
 import ru.forinnyy.tm.api.service.IUserService;
@@ -89,6 +90,21 @@ public final class AuthService implements IAuthService {
         @NonNull final Role role = user.getRole();
         final boolean hasRole = Arrays.asList(roles).contains(role);
         if (!hasRole) throw new PermissionException();
+    }
+
+    @Override
+    @SneakyThrows
+    public User check(String login, String password) {
+        if (login == null || login.isEmpty()) throw new LoginEmptyException();
+        if (password == null || password.isEmpty()) throw new PasswordEmptyException();
+        final User user = userService.findByLogin(login);
+        if (user == null) throw new PermissionException();
+        final boolean locked = user.isLocked() == null || user.isLocked();
+        if (locked) throw new AccessDeniedException();
+        final String hash = HashUtil.salt(propertyService, password);
+        if (hash == null) throw new AuthenticationException();
+        if (!hash.equals(user.getPasswordHash())) throw new PermissionException();
+        return user;
     }
 
 }

@@ -1,14 +1,18 @@
 package ru.forinnyy.tm.client;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
+import lombok.SneakyThrows;
+import ru.forinnyy.tm.dto.response.ApplicationErrorResponse;
 
 import java.io.*;
 import java.net.Socket;
+import java.rmi.RemoteException;
 
 @Getter
 @Setter
-public abstract class AbstractClient {
+public abstract class AbstractEndpointClient {
 
     private String host = "localhost";
 
@@ -16,17 +20,26 @@ public abstract class AbstractClient {
 
     private Socket socket;
 
-    public AbstractClient() {
+    public AbstractEndpointClient() {
     }
 
-    public AbstractClient(String host, Integer port) {
-        this.host = host;
-        this.port = port;
+    public AbstractEndpointClient(@NonNull final AbstractEndpointClient client) {
+        this.host = client.host;
+        this.port = client.port;
+        this.socket = client.socket;
     }
 
-    protected Object call(final Object data) throws IOException, ClassNotFoundException {
+    @NonNull
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    protected <T> T call(final Object data, @NonNull final Class<T> clazz) throws IOException, ClassNotFoundException {
         getObjectOutputStream().writeObject(data);
-        return getObjectInputStream().readObject();
+        @NonNull final Object result = getObjectInputStream().readObject();
+        if (result instanceof ApplicationErrorResponse) {
+            @NonNull final ApplicationErrorResponse response = (ApplicationErrorResponse) result;
+            throw new RemoteException(response.getMessage());
+        }
+        return (T) result;
     }
 
     private ObjectOutputStream getObjectOutputStream() throws IOException {

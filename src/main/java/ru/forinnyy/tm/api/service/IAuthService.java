@@ -28,4 +28,6 @@ public interface IAuthService {
 
     void checkRoles(Role[] roles) throws AbstractUserException, AbstractFieldException;
 
+    User check(String login, String password);
+
 }

@@ -8,20 +8,20 @@ import ru.forinnyy.tm.dto.request.ApplicationVersionRequest;
 import ru.forinnyy.tm.dto.response.ApplicationAboutResponse;
 import ru.forinnyy.tm.dto.response.ApplicationVersionResponse;
 
-public final class SystemEndpointClient extends AbstractClient implements ISystemEndpoint {
+public final class SystemEndpointClient extends AbstractEndpointClient implements ISystemEndpoint {
 
     @NonNull
     @Override
     @SneakyThrows
     public ApplicationAboutResponse getAbout(@NonNull ApplicationAboutRequest request) {
-        return (ApplicationAboutResponse) call(request);
+        return (ApplicationAboutResponse) call(request, ApplicationAboutResponse.class);
     }
 
     @NonNull
     @Override
     @SneakyThrows
     public ApplicationVersionResponse getVersion(@NonNull ApplicationVersionRequest request) {
-        return (ApplicationVersionResponse) call(request);
+        return (ApplicationVersionResponse) call(request, ApplicationVersionResponse.class);
     }
 
     @SneakyThrows

@@ -10,6 +10,8 @@ public abstract class AbstractServerSocketTask extends AbstractServerTask {
     @NonNull
     protected final Socket socket;
 
+    protected String userId = null;
+
     public AbstractServerSocketTask(
             @NonNull final Server server,
             @NonNull final Socket socket) {
@@ -17,4 +19,13 @@ public abstract class AbstractServerSocketTask extends AbstractServerTask {
         this.socket = socket;
     }
 
+    public AbstractServerSocketTask(
+            @NonNull final Server server,
+            @NonNull final Socket socket,
+            String userId
+    ) {
+        super(server);
+        this.socket = socket;
+        this.userId = userId;
+    }
 }

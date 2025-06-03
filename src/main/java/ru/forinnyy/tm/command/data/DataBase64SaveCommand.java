@@ -22,23 +22,7 @@ public final class DataBase64SaveCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        System.out.println("[DATA BASE64 SAVE]");
-        @NonNull final Domain domain = getDomain();
-        @NonNull final File file = new File(FILE_BASE64);
-        @NonNull final Path path = file.toPath();
-        Files.deleteIfExists(path);
-        Files.createFile(path);
-
-        @Cleanup @NonNull final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        @Cleanup @NonNull final ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-        objectOutputStream.writeObject(domain);
-
-        @NonNull final byte[] bytes = byteArrayOutputStream.toByteArray();
-        @NonNull final String base64 = Base64.getEncoder().encodeToString(bytes);
-
-        @Cleanup @NonNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
-        fileOutputStream.write(base64.getBytes());
-        fileOutputStream.flush();
+        getDomainService().saveDataBase64();
     }
 
     @Override

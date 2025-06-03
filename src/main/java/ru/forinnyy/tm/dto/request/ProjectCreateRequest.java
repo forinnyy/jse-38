@@ -11,4 +11,9 @@ public final class ProjectCreateRequest extends AbstractUserRequest {
 
     private String description;
 
+    public ProjectCreateRequest(String description, String name) {
+        this.description = description;
+        this.name = name;
+    }
+
 }

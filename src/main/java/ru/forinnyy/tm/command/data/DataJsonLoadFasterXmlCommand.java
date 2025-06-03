@@ -38,12 +38,7 @@ public final class DataJsonLoadFasterXmlCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        System.out.println("[DATA LOAD JSON]");
-        @NonNull final byte[] bytes = Files.readAllBytes(Paths.get(FILE_JSON));
-        @NonNull final String json = new String(bytes);
-        @NonNull final ObjectMapper objectMapper = new JsonMapper();
-        @NonNull final Domain domain = objectMapper.readValue(json, Domain.class);
-        setDomain(domain);
+        getDomainService().loadDataJsonFasterXml();
     }
 
 }

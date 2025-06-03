@@ -25,6 +25,7 @@ public final class Server {
     @Getter
     private ServerSocket socketServer;
 
+    @Getter
     @NonNull
     private final Bootstrap bootstrap;
 

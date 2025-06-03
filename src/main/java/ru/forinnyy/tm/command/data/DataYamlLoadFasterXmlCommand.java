@@ -38,12 +38,7 @@ public final class DataYamlLoadFasterXmlCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        System.out.println("[DATA LOAD YAML]");
-        @NonNull final byte[] bytes = Files.readAllBytes(Paths.get(FILE_YAML));
-        @NonNull final String yaml = new String(bytes);
-        @NonNull final ObjectMapper objectMapper = new YAMLMapper();
-        @NonNull final Domain domain = objectMapper.readValue(yaml, Domain.class);
-        setDomain(domain);
+        getDomainService().loadDataYamlFasterXml();
     }
 
 }

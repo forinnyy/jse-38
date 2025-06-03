@@ -40,16 +40,7 @@ public final class DataYamlSaveFasterXmlCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        System.out.println("[DATA SAVE YAML]");
-        @NonNull final Domain domain = getDomain();
-        @NonNull final File file = new File(FILE_YAML);
-        Files.deleteIfExists(file.toPath());
-        Files.createFile(file.toPath());
-        @Cleanup @NonNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
-        @NonNull final ObjectMapper objectMapper = new YAMLMapper();
-        @NonNull final String yaml = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(domain);
-        fileOutputStream.write(yaml.getBytes());
-        fileOutputStream.flush();
+        getDomainService().saveDataYamlFasterXml();
     }
 
 }

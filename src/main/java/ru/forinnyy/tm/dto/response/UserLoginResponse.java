@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public final class UserLoginResponse {
+public final class UserLoginResponse extends AbstractResultResponse {
 }

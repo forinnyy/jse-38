@@ -40,16 +40,7 @@ public final class DataJsonSaveFasterXmlCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        System.out.println("[DATA SAVE JSON]");
-        @NonNull final Domain domain = getDomain();
-        @NonNull final File file = new File(FILE_JSON);
-        Files.deleteIfExists(file.toPath());
-        Files.createFile(file.toPath());
-        @Cleanup @NonNull final FileOutputStream fileOutputStream = new FileOutputStream(file);
-        @NonNull final ObjectMapper objectMapper = new JsonMapper();
-        @NonNull final String json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(domain);
-        fileOutputStream.write(json.getBytes());
-        fileOutputStream.flush();
+        getDomainService().saveDataJsonFasterXml();
     }
 
 }
