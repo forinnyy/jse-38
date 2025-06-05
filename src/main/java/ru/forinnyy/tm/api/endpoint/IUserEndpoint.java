@@ -24,13 +24,4 @@ public interface IUserEndpoint {
     @NonNull
     UserUpdateProfileResponse updateUserProfile(@NonNull UserUpdateProfileRequest request);
 
-    @NonNull
-    UserLoginResponse loginUser(@NonNull UserLoginRequest request);
-
-    @NonNull
-    UserLogoutResponse logoutUser(@NonNull UserLogoutRequest request);
-
-    @NonNull
-    UserViewProfileResponse viewProfileUser(@NonNull UserViewProfileRequest request);
-
 }

@@ -85,42 +85,5 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
         final User user = getUserService().updateUser(userId, firstName, lastName, middleName);
         return new UserUpdateProfileResponse(user);
     }
-
-    @NonNull
-    @Override
-    @SneakyThrows
-    public UserLoginResponse loginUser(@NonNull final UserLoginRequest request) {
-        final String login = request.getLogin();
-        final String password = request.getPassword();
-        getServiceLocator().getAuthService().login(login, password);
-        return new UserLoginResponse();
-    }
-
-    @NonNull
-    @Override
-    @SneakyThrows
-    public UserLogoutResponse logoutUser(@NonNull final UserLogoutRequest request) {
-        check(request);
-        getServiceLocator().getAuthService().logout();
-        return new UserLogoutResponse();
-    }
-
-    @NonNull
-    @Override
-    @SneakyThrows
-    public UserViewProfileResponse viewProfileUser(@NonNull final UserViewProfileRequest request) {
-        check(request);
-        final String userId = request.getUserId();
-        final User user = getUserService().findOneById(userId);
-        System.out.println("[USER VIEW PROFILE]");
-        System.out.println("ID: " + user.getId());
-        System.out.println("LOGIN: " + user.getLogin());
-        System.out.println("FIRST NAME: " + user.getFirstName());
-        System.out.println("MIDDLE NAME: " + user.getMiddleName());
-        System.out.println("LAST NAME: " + user.getLastName());
-        System.out.println("EMAIL: " + user.getEmail());
-        System.out.println("ROLE: " + user.getRole());
-        return new UserViewProfileResponse();
-    }
-
+    
 }
