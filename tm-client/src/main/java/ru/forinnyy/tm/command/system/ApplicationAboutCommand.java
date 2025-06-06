@@ -3,6 +3,11 @@ package ru.forinnyy.tm.command.system;
 
 import lombok.NonNull;
 import ru.forinnyy.tm.api.service.IPropertyService;
+import ru.forinnyy.tm.dto.request.ApplicationAboutRequest;
+import ru.forinnyy.tm.dto.request.ApplicationGitRequest;
+import ru.forinnyy.tm.dto.request.ApplicationVersionRequest;
+import ru.forinnyy.tm.dto.response.ApplicationAboutResponse;
+import ru.forinnyy.tm.dto.response.ApplicationGitResponse;
 
 public final class ApplicationAboutCommand extends AbstractSystemCommand {
 
@@ -17,19 +22,23 @@ public final class ApplicationAboutCommand extends AbstractSystemCommand {
 
     @Override
     public void execute() {
-        @NonNull final IPropertyService service = getPropertyService();
+        @NonNull final ApplicationAboutRequest requestA = new ApplicationAboutRequest();
+        @NonNull final ApplicationGitRequest requestG = new ApplicationGitRequest();
+        @NonNull final ApplicationAboutResponse responseA = getSystemEndpointClient().getAbout(requestA);
+        @NonNull final ApplicationGitResponse responseG = getSystemEndpointClient().getGit(requestG);
+
         System.out.println("[ABOUT]");
-        System.out.println("AUTHOR: " + service.getAuthorName());
-        System.out.println("E-MAIL: " + service.getAuthorEmail());
+        System.out.println("AUTHOR: " + responseA.getName());
+        System.out.println("E-MAIL: " + responseA.getEmail());
         System.out.println();
 
         System.out.println("[GIT]");
-        System.out.println("BRANCH: " + service.getGitBranch());
-        System.out.println("COMMIT ID: " + service.getGitCommitId());
-        System.out.println("COMMITTER: " + service.getGitCommitterName());
-        System.out.println("E-MAIL: " + service.getGitCommitterEmail());
-        System.out.println("MESSAGE: " + service.getGitCommitMessage());
-        System.out.println("TIME: " + service.getGitCommitTime());
+        System.out.println("BRANCH: " + responseG.getGitBranch());
+        System.out.println("COMMIT ID: " + responseG.getGitCommitId());
+        System.out.println("COMMITTER: " + responseG.getGitCommitterName());
+        System.out.println("E-MAIL: " + responseG.getGitCommitterEmail());
+        System.out.println("MESSAGE: " + responseG.getGitCommitMessage());
+        System.out.println("TIME: " + responseG.getGitCommitTime());
     }
 
     @NonNull

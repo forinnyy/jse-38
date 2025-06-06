@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.system;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.api.endpoint.ISystemEndpointClient;
 import ru.forinnyy.tm.api.service.ICommandService;
 import ru.forinnyy.tm.api.service.IPropertyService;
 import ru.forinnyy.tm.command.AbstractCommand;
@@ -16,6 +17,11 @@ public abstract class AbstractSystemCommand extends AbstractCommand {
     @NonNull
     protected IPropertyService getPropertyService() {
         return serviceLocator.getPropertyService();
+    }
+
+    @NonNull
+    protected ISystemEndpointClient getSystemEndpointClient() {
+        return serviceLocator.getSystemEndpointClient();
     }
 
     @Override

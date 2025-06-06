@@ -2,8 +2,10 @@ package ru.forinnyy.tm.api.endpoint;
 
 import lombok.NonNull;
 import ru.forinnyy.tm.dto.request.ApplicationAboutRequest;
+import ru.forinnyy.tm.dto.request.ApplicationGitRequest;
 import ru.forinnyy.tm.dto.request.ApplicationVersionRequest;
 import ru.forinnyy.tm.dto.response.ApplicationAboutResponse;
+import ru.forinnyy.tm.dto.response.ApplicationGitResponse;
 import ru.forinnyy.tm.dto.response.ApplicationVersionResponse;
 
 public interface ISystemEndpointClient extends IEndpointClient {
@@ -13,5 +15,8 @@ public interface ISystemEndpointClient extends IEndpointClient {
 
     @NonNull
     ApplicationVersionResponse getVersion(@NonNull ApplicationVersionRequest request);
+
+    @NonNull
+    ApplicationGitResponse getGit(@NonNull ApplicationGitRequest request);
 
 }
