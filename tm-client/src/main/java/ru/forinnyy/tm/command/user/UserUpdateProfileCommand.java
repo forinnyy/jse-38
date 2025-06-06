@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.user;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.UserUpdateProfileRequest;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -36,8 +37,12 @@ public final class UserUpdateProfileCommand extends AbstractUserCommand {
         @NonNull final String lastName = TerminalUtil.nextLine();
         System.out.println("ENTER MIDDLE NAME:");
         @NonNull final String middleName = TerminalUtil.nextLine();
-        @NonNull final String userId = getUserId();
-        getUserService().updateUser(userId, firstName, lastName, middleName);
+
+        @NonNull final UserUpdateProfileRequest request = new UserUpdateProfileRequest();
+        request.setFirstName(firstName);
+        request.setLastName(lastName);
+        request.setMiddleName(middleName);
+        getUserEndpointClient().updateUserProfile(request);
     }
 
     @NonNull

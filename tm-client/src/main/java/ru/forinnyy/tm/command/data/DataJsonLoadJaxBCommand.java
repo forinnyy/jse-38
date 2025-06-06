@@ -2,12 +2,8 @@ package ru.forinnyy.tm.command.data;
 
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import ru.forinnyy.tm.dto.Domain;
+import ru.forinnyy.tm.dto.request.DataJsonLoadJaxBRequest;
 import ru.forinnyy.tm.enumerated.Role;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
-import java.io.File;
 
 public final class DataJsonLoadJaxBCommand extends AbstractDataCommand {
 
@@ -37,7 +33,8 @@ public final class DataJsonLoadJaxBCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        getDomainService().loadDataJsonJaxB();
+        @NonNull final DataJsonLoadJaxBRequest request = new DataJsonLoadJaxBRequest();
+        getDomainEndpoint().loadDataJsonJaxB(request);
     }
 
 }

@@ -1,6 +1,8 @@
 package ru.forinnyy.tm.command.user;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.UserProfileRequest;
+import ru.forinnyy.tm.dto.response.UserProfileResponse;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
@@ -28,7 +30,10 @@ public final class UserViewProfileCommand extends AbstractUserCommand {
 
     @Override
     public void execute() throws AbstractFieldException, AbstractUserException {
-        @NonNull final User user = getAuthService().getUser();
+        @NonNull final UserProfileRequest request = new UserProfileRequest();
+        @NonNull final UserProfileResponse response = getAuthEndpointClient().profile(request);
+
+        @NonNull final User user = response.getUser();
         System.out.println("[USER VIEW PROFILE]");
         System.out.println("ID: " + user.getId());
         System.out.println("LOGIN: " + user.getLogin());

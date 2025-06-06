@@ -1,8 +1,5 @@
 package ru.forinnyy.tm.command.task;
 
-import lombok.NonNull;
-import ru.forinnyy.tm.api.service.IProjectTaskService;
-import ru.forinnyy.tm.api.service.ITaskService;
 import ru.forinnyy.tm.command.AbstractCommand;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.enumerated.Status;
@@ -11,16 +8,6 @@ import ru.forinnyy.tm.model.Task;
 import java.util.List;
 
 public abstract class AbstractTaskCommand extends AbstractCommand {
-
-    @NonNull
-    protected ITaskService getTaskService() {
-        return getServiceLocator().getTaskService();
-    }
-
-    @NonNull
-    protected IProjectTaskService getProjectTaskService() {
-        return getServiceLocator().getProjectTaskService();
-    }
 
     @Override
     public String getArgument() {

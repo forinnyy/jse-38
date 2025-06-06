@@ -33,6 +33,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>ru.forinnyy.tm</groupId>
+            <artifactId>tm-domain</artifactId>
+            <version>1.33.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.9.11</version>

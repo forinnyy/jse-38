@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.task;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.TaskBindToProjectRequest;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
@@ -33,8 +34,11 @@ public final class TaskBindToProjectCommand extends AbstractTaskCommand {
         @NonNull final String projectId = TerminalUtil.nextLine();
         System.out.println("ENTER TASK ID:");
         @NonNull final String taskId = TerminalUtil.nextLine();
-        @NonNull final String userId = getUserId();
-        getProjectTaskService().bindTaskToProject(userId, projectId, taskId);
+
+        @NonNull final TaskBindToProjectRequest request = new TaskBindToProjectRequest();
+        request.setProjectId(projectId);
+        request.setTaskId(taskId);
+        getTaskEndpointClient().bindTaskToProject(request);
     }
 
 }

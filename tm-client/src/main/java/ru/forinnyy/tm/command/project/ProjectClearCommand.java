@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.project;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.ProjectClearRequest;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 
@@ -27,8 +28,9 @@ public final class ProjectClearCommand extends AbstractProjectCommand {
     @Override
     public void execute() throws AbstractUserException, AbstractFieldException {
         System.out.println("[CLEAR PROJECTS]");
-        @NonNull final String userId = getUserId();
-        getProjectService().clear(userId);
+
+        @NonNull final ProjectClearRequest request = new ProjectClearRequest();
+        getProjectEndpointClient().clearProject(request);
     }
 
 }

@@ -1,14 +1,9 @@
 package ru.forinnyy.tm.command.data;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import ru.forinnyy.tm.dto.Domain;
+import ru.forinnyy.tm.dto.request.DataXmlLoadFasterXmlRequest;
 import ru.forinnyy.tm.enumerated.Role;
-
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public final class DataXmlLoadFasterXmlCommand extends AbstractDataCommand {
 
@@ -38,7 +33,8 @@ public final class DataXmlLoadFasterXmlCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        getDomainService().loadDataYamlFasterXml();
+        @NonNull final DataXmlLoadFasterXmlRequest request = new DataXmlLoadFasterXmlRequest();
+        getDomainEndpoint().loadDataXmlFasterXml(request);
     }
 
 }

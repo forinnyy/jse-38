@@ -1,11 +1,10 @@
 package ru.forinnyy.tm.command.project;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.ProjectRemoveByIndexRequest;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
-import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
-import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class ProjectRemoveByIndexCommand extends AbstractProjectCommand {
@@ -32,11 +31,13 @@ public final class ProjectRemoveByIndexCommand extends AbstractProjectCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[REMOVE PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
-        @NonNull final String userId = getUserId();
         @NonNull final Integer index = TerminalUtil.nextNumber() -1;
-        final Project project = getProjectService().findOneByIndex(userId, index);
-        if (project == null) throw new ProjectNotFoundException();
-        getProjectTaskService().removeProjectById(userId, project.getId());
+
+        @NonNull final ProjectRemoveByIndexRequest requestRemove = new ProjectRemoveByIndexRequest();
+        requestRemove.setIndex(index);
+        getProjectEndpointClient().removeProjectByIndex(requestRemove);
+
+        // TODO Recursive deleting?
     }
 
 }

@@ -1,13 +1,14 @@
 package ru.forinnyy.tm.command.task;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.TaskListByProjectIdRequest;
+import ru.forinnyy.tm.dto.response.TaskListByProjectIdResponse;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
-import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.util.TerminalUtil;
 
-import java.util.List;
+import java.util.Collections;
 
 public final class TaskListByProjectIdCommand extends AbstractTaskCommand {
 
@@ -34,9 +35,12 @@ public final class TaskListByProjectIdCommand extends AbstractTaskCommand {
         System.out.println("[TASK LIST BY PROJECT ID]");
         System.out.println("ENTER PROJECT ID:");
         @NonNull final String projectId = TerminalUtil.nextLine();
-        @NonNull final String userId = getUserId();
-        @NonNull final List<Task> tasks = getTaskService().findAllByProjectId(userId, projectId);
-        renderTasks(tasks);
+
+        @NonNull final TaskListByProjectIdRequest request = new TaskListByProjectIdRequest();
+        request.setProjectId(projectId);
+        @NonNull final TaskListByProjectIdResponse response = getTaskEndpointClient().listTaskByProjectId(request);
+        if (response.getTasks() == null) response.setTasks(Collections.emptyList());
+        renderTasks(response.getTasks());
     }
 
 }

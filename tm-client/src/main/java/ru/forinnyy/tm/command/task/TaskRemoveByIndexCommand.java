@@ -1,11 +1,10 @@
 package ru.forinnyy.tm.command.task;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.TaskRemoveByIndexRequest;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
-import ru.forinnyy.tm.exception.entity.TaskNotFoundException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
-import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class TaskRemoveByIndexCommand extends AbstractTaskCommand {
@@ -33,10 +32,10 @@ public final class TaskRemoveByIndexCommand extends AbstractTaskCommand {
         System.out.println("[REMOVE TASK BY INDEX]");
         System.out.println("ENTER INDEX:");
         @NonNull final Integer index = TerminalUtil.nextNumber() -1;
-        @NonNull final String userId = getUserId();
-        final Task task = getTaskService().findOneByIndex(userId, index);
-        if (task == null) throw new TaskNotFoundException();
-        getTaskService().removeByIndex(userId, index);
+
+        @NonNull final TaskRemoveByIndexRequest request = new TaskRemoveByIndexRequest();
+        request.setIndex(index);
+        getTaskEndpointClient().removeTaskByIndex(request);
     }
 
 }

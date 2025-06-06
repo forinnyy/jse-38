@@ -1,13 +1,9 @@
 package ru.forinnyy.tm.command.user;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.UserLoginRequest;
 import ru.forinnyy.tm.enumerated.Role;
-import ru.forinnyy.tm.exception.entity.AbstractEntityException;
-import ru.forinnyy.tm.exception.field.AbstractFieldException;
-import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.util.TerminalUtil;
-
-import javax.naming.AuthenticationException;
 
 public final class UserLoginCommand extends AbstractUserCommand {
 
@@ -30,15 +26,18 @@ public final class UserLoginCommand extends AbstractUserCommand {
     }
 
     @Override
-    public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException, AuthenticationException {
+    public void execute() {
         System.out.println("[USER LOGIN]");
         System.out.println("ENTER LOGIN:");
         @NonNull final String login = TerminalUtil.nextLine();
         System.out.println("ENTER PASSWORD:");
         @NonNull final String password = TerminalUtil.nextLine();
-        getAuthService().login(login, password);
+        @NonNull final UserLoginRequest request = new UserLoginRequest();
+        request.setLogin(login);
+        request.setPassword(password);
+        getAuthEndpointClient().login(request);
     }
-    
+
     @Override
     public Role[] getRoles() {
         return null;

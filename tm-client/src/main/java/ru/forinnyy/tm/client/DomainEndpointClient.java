@@ -1,19 +1,15 @@
 package ru.forinnyy.tm.client;
 
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import ru.forinnyy.tm.api.endpoint.IDomainEndpoint;
+import ru.forinnyy.tm.api.endpoint.IDomainEndpointClient;
 import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
 
 @NoArgsConstructor
-public class DomainEndpointClient extends AbstractEndpointClient implements IDomainEndpoint {
+public class DomainEndpointClient extends AbstractEndpointClient implements IDomainEndpointClient {
 
-    public DomainEndpointClient(@NonNull AbstractEndpointClient client) {
-        super(client);
-    }
 
     @NonNull
     @Override
@@ -127,24 +123,4 @@ public class DomainEndpointClient extends AbstractEndpointClient implements IDom
         return call(request, DataYamlSaveFasterXmlResponse.class);
     }
 
-    @SneakyThrows
-    public static void main(String[] args) {
-        @NonNull final AuthEndpointClient authEndpointClient = new AuthEndpointClient();
-        authEndpointClient.connect();
-
-        {
-            System.out.println(authEndpointClient.login(new UserLoginRequest("admin", "admin")).getSuccess());
-            @NonNull final DomainEndpointClient domainEndpointClient = new DomainEndpointClient(authEndpointClient);
-            domainEndpointClient.saveDataYamlFasterXml(new DataYamlSaveFasterXmlRequest());
-
-
-        }
-        {
-            System.out.println(authEndpointClient.login(new UserLoginRequest("test", "test")).getSuccess());
-            @NonNull final DomainEndpointClient domainEndpointClient = new DomainEndpointClient(authEndpointClient);
-            domainEndpointClient.saveDataYamlFasterXml(new DataYamlSaveFasterXmlRequest());
-        }
-        System.out.println(authEndpointClient.logout(new UserLogoutRequest()));
-        authEndpointClient.disconnect();
-    }
 }

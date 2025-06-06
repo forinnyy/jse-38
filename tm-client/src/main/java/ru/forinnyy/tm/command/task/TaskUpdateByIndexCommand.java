@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.task;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.TaskUpdateByIndexRequest;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
@@ -35,8 +36,12 @@ public final class TaskUpdateByIndexCommand extends AbstractTaskCommand {
         @NonNull final String name = TerminalUtil.nextLine();
         System.out.println("ENTER DESCRIPTION:");
         @NonNull final String description = TerminalUtil.nextLine();
-        @NonNull final String userId = getUserId();
-        getTaskService().updateByIndex(userId, index, name, description);
+
+        @NonNull final TaskUpdateByIndexRequest request = new TaskUpdateByIndexRequest();
+        request.setIndex(index);
+        request.setName(name);
+        request.setDescription(description);
+        getTaskEndpointClient().updateTaskByIndex(request);
     }
 
 }

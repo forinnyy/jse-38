@@ -2,14 +2,8 @@ package ru.forinnyy.tm.command.data;
 
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import ru.forinnyy.tm.dto.Domain;
+import ru.forinnyy.tm.dto.request.DataBase64LoadRequest;
 import ru.forinnyy.tm.enumerated.Role;
-
-import java.io.ByteArrayInputStream;
-import java.io.ObjectInputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Base64;
 
 public final class DataBase64LoadCommand extends AbstractDataCommand {
 
@@ -19,7 +13,8 @@ public final class DataBase64LoadCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        getDomainService().loadDataBase64();
+        @NonNull final DataBase64LoadRequest request = new DataBase64LoadRequest();
+        getDomainEndpoint().loadDataBase64(request);
     }
 
     @Override

@@ -1,11 +1,12 @@
 package ru.forinnyy.tm.command.task;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.TaskGetByIdRequest;
+import ru.forinnyy.tm.dto.response.TaskGetByIdResponse;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.TaskNotFoundException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
-import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class TaskShowByIdCommand extends AbstractTaskCommand {
@@ -33,10 +34,12 @@ public final class TaskShowByIdCommand extends AbstractTaskCommand {
         System.out.println("[SHOW TASK BY ID]");
         System.out.println("ENTER ID:");
         @NonNull final String id = TerminalUtil.nextLine();
-        @NonNull final String userId = getUserId();
-        final Task task = getTaskService().findOneById(userId, id);
-        if (task == null) throw new TaskNotFoundException();
-        showTask(task);
+        
+        @NonNull final TaskGetByIdRequest request = new TaskGetByIdRequest();
+        request.setId(id);
+        @NonNull final TaskGetByIdResponse response = getTaskEndpointClient().getTaskById(request);
+        if (response.getTask() == null) throw new TaskNotFoundException();
+        showTask(response.getTask());
     }
 
 }

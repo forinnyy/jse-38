@@ -1,8 +1,7 @@
 package ru.forinnyy.tm.command.project;
 
 import lombok.NonNull;
-import ru.forinnyy.tm.exception.field.AbstractFieldException;
-import ru.forinnyy.tm.exception.user.AbstractUserException;
+import ru.forinnyy.tm.dto.request.ProjectCreateRequest;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class ProjectCreateCommand extends AbstractProjectCommand {
@@ -26,14 +25,17 @@ public final class ProjectCreateCommand extends AbstractProjectCommand {
     }
 
     @Override
-    public void execute() throws AbstractFieldException, AbstractUserException {
+    public void execute() {
         System.out.println("[CREATE PROJECT]");
         System.out.println("ENTER NAME: ");
         @NonNull final String name = TerminalUtil.nextLine();
         System.out.println("ENTER DESCRIPTION: ");
         @NonNull final String description = TerminalUtil.nextLine();
-        @NonNull final String userId = getUserId();
-        getProjectService().create(userId, name, description);
+
+        @NonNull final ProjectCreateRequest request = new ProjectCreateRequest();
+        request.setName(name);
+        request.setDescription(description);
+        getProjectEndpointClient().createProject(request);
     }
 
 }

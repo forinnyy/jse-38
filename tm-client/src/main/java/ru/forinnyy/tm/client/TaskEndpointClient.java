@@ -3,16 +3,12 @@ package ru.forinnyy.tm.client;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import ru.forinnyy.tm.api.endpoint.ITaskEndpoint;
+import ru.forinnyy.tm.api.endpoint.ITaskEndpointClient;
 import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
 
 @NoArgsConstructor
-public final class TaskEndpointClient extends AbstractEndpointClient implements ITaskEndpoint {
-
-    public TaskEndpointClient(@NonNull AbstractEndpointClient client) {
-        super(client);
-    }
+public final class TaskEndpointClient extends AbstractEndpointClient implements ITaskEndpointClient {
 
     @NonNull
     @Override
@@ -138,21 +134,6 @@ public final class TaskEndpointClient extends AbstractEndpointClient implements 
     @SneakyThrows
     public TaskStartByIndexResponse startTaskByIndex(@NonNull TaskStartByIndexRequest request) {
         return call(request, TaskStartByIndexResponse.class);
-    }
-
-    @SneakyThrows
-    public static void main(String[] args) {
-        @NonNull final AuthEndpointClient authEndpointClient = new AuthEndpointClient();
-        authEndpointClient.connect();
-        System.out.println(authEndpointClient.login(new UserLoginRequest("test", "test")));
-        System.out.println(authEndpointClient.profile(new UserProfileRequest()).getUser().getRole());
-
-        @NonNull final TaskEndpointClient taskEndpointClient = new TaskEndpointClient(authEndpointClient);
-        System.out.println(taskEndpointClient.createTask(new TaskCreateRequest("HELLO", "HOLA")));
-        System.out.println(taskEndpointClient.listTask(new TaskListRequest()).getTasks());
-
-        System.out.println(authEndpointClient.logout(new UserLogoutRequest()));
-        authEndpointClient.disconnect();
     }
 
 }

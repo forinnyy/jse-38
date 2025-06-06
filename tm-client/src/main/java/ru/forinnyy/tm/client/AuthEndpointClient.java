@@ -3,7 +3,7 @@ package ru.forinnyy.tm.client;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import ru.forinnyy.tm.api.endpoint.IAuthEndpoint;
+import ru.forinnyy.tm.api.endpoint.IAuthEndpointClient;
 import ru.forinnyy.tm.dto.request.UserLoginRequest;
 import ru.forinnyy.tm.dto.request.UserLogoutRequest;
 import ru.forinnyy.tm.dto.request.UserProfileRequest;
@@ -12,11 +12,7 @@ import ru.forinnyy.tm.dto.response.UserLogoutResponse;
 import ru.forinnyy.tm.dto.response.UserProfileResponse;
 
 @NoArgsConstructor
-public final class AuthEndpointClient extends AbstractEndpointClient implements IAuthEndpoint {
-
-    public AuthEndpointClient(@NonNull AbstractEndpointClient client) {
-        super(client);
-    }
+public final class AuthEndpointClient extends AbstractEndpointClient implements IAuthEndpointClient {
 
     @NonNull
     @Override
@@ -37,24 +33,6 @@ public final class AuthEndpointClient extends AbstractEndpointClient implements 
     @SneakyThrows
     public UserProfileResponse profile(@NonNull final UserProfileRequest request) {
         return call(request, UserProfileResponse.class);
-    }
-
-    @SneakyThrows
-    public static void main(String[] args) {
-        @NonNull final AuthEndpointClient authEndpointClient = new AuthEndpointClient();
-        authEndpointClient.connect();
-        System.out.println(authEndpointClient.profile(new UserProfileRequest()).getUser());
-
-        System.out.println(authEndpointClient.login(new UserLoginRequest("test2", "test2")).getSuccess());
-        System.out.println(authEndpointClient.profile(new UserProfileRequest()).getUser());
-
-        System.out.println(authEndpointClient.login(new UserLoginRequest("admin", "admin")).getSuccess());
-        System.out.println(authEndpointClient.profile(new UserProfileRequest()).getUser());
-        System.out.println(authEndpointClient.logout(new UserLogoutRequest()));
-
-
-        System.out.println(authEndpointClient.profile(new UserProfileRequest()).getUser());
-        authEndpointClient.disconnect();
     }
 
 }

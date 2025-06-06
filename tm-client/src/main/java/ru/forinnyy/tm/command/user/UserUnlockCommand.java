@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.user;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.UserUnlockRequest;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -40,7 +41,10 @@ public final class UserUnlockCommand extends AbstractUserCommand {
         System.out.println("[USER UNLOCK]");
         System.out.println("ENTER LOGIN");
         @NonNull final String login = TerminalUtil.nextLine();
-        getUserService().unlockUserByLogin(login);
+
+        @NonNull final UserUnlockRequest request = new UserUnlockRequest();
+        request.setLogin(login);
+        getUserEndpointClient().unlockUser(request);
     }
 
 }

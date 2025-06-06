@@ -3,16 +3,12 @@ package ru.forinnyy.tm.client;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import ru.forinnyy.tm.api.endpoint.IProjectEndpoint;
+import ru.forinnyy.tm.api.endpoint.IProjectEndpointClient;
 import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
 
 @NoArgsConstructor
-public final class ProjectEndpointClient extends AbstractEndpointClient implements IProjectEndpoint {
-
-    public ProjectEndpointClient(@NonNull AbstractEndpointClient client) {
-        super(client);
-    }
+public final class ProjectEndpointClient extends AbstractEndpointClient implements IProjectEndpointClient {
 
     @NonNull
     @Override
@@ -119,18 +115,4 @@ public final class ProjectEndpointClient extends AbstractEndpointClient implemen
         return call(request, ProjectStartByIndexResponse.class);
     }
 
-    @SneakyThrows
-    public static void main(String[] args) {
-        @NonNull final AuthEndpointClient authEndpointClient = new AuthEndpointClient();
-        authEndpointClient.connect();
-        System.out.println(authEndpointClient.login(new UserLoginRequest("test", "test")));
-        System.out.println(authEndpointClient.profile(new UserProfileRequest()).getUser().getEmail());
-
-        @NonNull final ProjectEndpointClient projectEndpointClient = new ProjectEndpointClient(authEndpointClient);
-//        System.out.println(projectEndpointClient.createProject(new ProjectCreateRequest("WWWWWWW", "ASDASDASD")));
-        System.out.println(projectEndpointClient.listProject(new ProjectListRequest()).getProjects());
-
-        System.out.println(authEndpointClient.logout(new UserLogoutRequest()));
-        authEndpointClient.disconnect();
-    }
 }

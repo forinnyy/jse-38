@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.user;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.UserChangePasswordRequest;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -32,8 +33,10 @@ public class UserChangePasswordCommand extends AbstractUserCommand {
         System.out.println("[USER CHANGE PASSWORD]");
         System.out.println("ENTER NEW PASSWORD:");
         @NonNull final String password = TerminalUtil.nextLine();
-        @NonNull final String userId = getUserId();
-        getUserService().setPassword(userId, password);
+
+        @NonNull final UserChangePasswordRequest request = new UserChangePasswordRequest();
+        request.setPassword(password);
+        getUserEndpointClient().changeUserPassword(request);
     }
 
     @Override

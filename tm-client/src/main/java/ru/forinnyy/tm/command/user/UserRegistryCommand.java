@@ -1,12 +1,11 @@
 package ru.forinnyy.tm.command.user;
 
 import lombok.NonNull;
-import ru.forinnyy.tm.api.service.IAuthService;
+import ru.forinnyy.tm.dto.request.UserRegistryRequest;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
-import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 
@@ -37,9 +36,12 @@ public final class UserRegistryCommand extends AbstractUserCommand {
         @NonNull final String password = TerminalUtil.nextLine();
         System.out.println("ENTER EMAIL:");
         @NonNull final String email = TerminalUtil.nextLine();
-        @NonNull final IAuthService authService = getAuthService();
-        @NonNull final User user = authService.registry(login, password, email);
-        showUser(user);
+
+        @NonNull final UserRegistryRequest request = new UserRegistryRequest();
+        request.setLogin(login);
+        request.setEmail(email);
+        request.setPassword(password);
+        getUserEndpointClient().registryUser(request);
     }
 
     @Override

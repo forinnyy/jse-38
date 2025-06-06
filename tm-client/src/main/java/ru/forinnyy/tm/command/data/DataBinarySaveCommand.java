@@ -1,16 +1,9 @@
 package ru.forinnyy.tm.command.data;
 
-import lombok.Cleanup;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import ru.forinnyy.tm.dto.Domain;
+import ru.forinnyy.tm.dto.request.DataBinarySaveRequest;
 import ru.forinnyy.tm.enumerated.Role;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 public final class DataBinarySaveCommand extends AbstractDataCommand {
 
@@ -20,7 +13,8 @@ public final class DataBinarySaveCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        getDomainService().saveDataBinary();
+        @NonNull final DataBinarySaveRequest request = new DataBinarySaveRequest();
+        getDomainEndpoint().saveDataBinary(request);
     }
 
     @Override

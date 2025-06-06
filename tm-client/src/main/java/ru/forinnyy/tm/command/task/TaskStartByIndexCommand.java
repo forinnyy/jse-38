@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.task;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.TaskChangeStatusByIndexRequest;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -32,8 +33,11 @@ public final class TaskStartByIndexCommand extends AbstractTaskCommand {
         System.out.println("[START TASK BY INDEX]");
         System.out.println("ENTER INDEX:");
         @NonNull final Integer index = TerminalUtil.nextNumber() - 1;
-        @NonNull final String userId = getUserId();
-        getTaskService().changeTaskStatusByIndex(userId, index, Status.IN_PROGRESS);
+
+        @NonNull final TaskChangeStatusByIndexRequest request = new TaskChangeStatusByIndexRequest();
+        request.setIndex(index);
+        request.setStatus(Status.IN_PROGRESS);
+        getTaskEndpointClient().changeTaskStatusByIndex(request);
     }
 
 }

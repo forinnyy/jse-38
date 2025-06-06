@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.task;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.TaskCreateRequest;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
@@ -33,8 +34,11 @@ public final class TaskCreateCommand extends AbstractTaskCommand {
         @NonNull final String name = TerminalUtil.nextLine();
         System.out.println("[ENTER DESCRIPTION]");
         @NonNull final String description = TerminalUtil.nextLine();
-        @NonNull final String userId = getUserId();
-        getTaskService().create(userId, name, description);
+
+        @NonNull final TaskCreateRequest request = new TaskCreateRequest();
+        request.setName(name);
+        request.setDescription(description);
+        getTaskEndpointClient().createTask(request);
     }
 
 }

@@ -2,14 +2,8 @@ package ru.forinnyy.tm.command.data;
 
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import ru.forinnyy.tm.dto.Domain;
+import ru.forinnyy.tm.dto.request.DataBackupLoadRequest;
 import ru.forinnyy.tm.enumerated.Role;
-
-import java.io.ByteArrayInputStream;
-import java.io.ObjectInputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.Base64;
 
 public final class DataBackupLoadCommand extends AbstractDataCommand {
 
@@ -19,7 +13,8 @@ public final class DataBackupLoadCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        getDomainService().loadDataBackup();
+        @NonNull final DataBackupLoadRequest request = new DataBackupLoadRequest();
+        getDomainEndpoint().loadDataBackup(request);
     }
 
     @Override

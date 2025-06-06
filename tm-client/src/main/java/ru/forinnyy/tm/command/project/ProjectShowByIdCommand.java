@@ -1,9 +1,10 @@
 package ru.forinnyy.tm.command.project;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.ProjectGetByIdRequest;
+import ru.forinnyy.tm.dto.response.ProjectGetByIdResponse;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
-import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class ProjectShowByIdCommand extends AbstractProjectCommand {
@@ -31,9 +32,11 @@ public final class ProjectShowByIdCommand extends AbstractProjectCommand {
         System.out.println("[SHOW PROJECT BY ID]");
         System.out.println("ENTER ID:");
         @NonNull final String id = TerminalUtil.nextLine();
-        @NonNull final String userId = getUserId();
-        final Project project = getProjectService().findOneById(userId, id);
-        showProject(project);
+
+        @NonNull final ProjectGetByIdRequest request = new ProjectGetByIdRequest();
+        request.setId(id);
+        final ProjectGetByIdResponse response = getProjectEndpointClient().getProjectById(request);
+        renderProject(response.getProject());
     }
 
 }

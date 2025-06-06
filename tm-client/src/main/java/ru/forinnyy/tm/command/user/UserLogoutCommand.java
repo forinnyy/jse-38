@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.user;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.UserLogoutRequest;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -29,7 +30,8 @@ public final class UserLogoutCommand extends AbstractUserCommand {
     @Override
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[USER LOGOUT]");
-        getAuthService().logout();
+        @NonNull final UserLogoutRequest request = new UserLogoutRequest();
+        getAuthEndpointClient().logout(request);
     }
 
     @Override

@@ -4,10 +4,11 @@ package ru.forinnyy.tm.command;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
+import ru.forinnyy.tm.api.endpoint.IAuthEndpointClient;
+import ru.forinnyy.tm.api.endpoint.IProjectEndpointClient;
+import ru.forinnyy.tm.api.endpoint.ITaskEndpointClient;
 import ru.forinnyy.tm.api.model.ICommand;
-import ru.forinnyy.tm.api.service.IAuthService;
 import ru.forinnyy.tm.api.service.IServiceLocator;
-import ru.forinnyy.tm.exception.user.AbstractUserException;
 
 
 @Setter
@@ -17,14 +18,18 @@ public abstract class AbstractCommand implements ICommand {
     @NonNull
     protected IServiceLocator serviceLocator;
 
-    @NonNull
-    public IAuthService getAuthService() {
-        return serviceLocator.getAuthService();
+    protected IAuthEndpointClient getAuthEndpointClient() {
+        return serviceLocator.getAuthEndpointClient();
     }
 
     @NonNull
-    public String getUserId() throws AbstractUserException {
-        return getAuthService().getUserId();
+    protected ITaskEndpointClient getTaskEndpointClient() {
+        return getServiceLocator().getTaskEndpointClient();
+    }
+
+    @NonNull
+    protected IProjectEndpointClient getProjectEndpointClient() {
+        return getServiceLocator().getProjectEndpointClient();
     }
 
     @NonNull

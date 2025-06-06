@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.project;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.ProjectChangeStatusByIndexRequest;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -32,8 +33,11 @@ public final class ProjectStartByIndexCommand extends AbstractProjectCommand {
         System.out.println("[START PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         @NonNull final Integer index = TerminalUtil.nextNumber() - 1;
-        @NonNull final String userId = getUserId();
-        getProjectService().changeProjectStatusByIndex(userId, index, Status.IN_PROGRESS);
+
+        @NonNull final ProjectChangeStatusByIndexRequest request = new ProjectChangeStatusByIndexRequest();
+        request.setIndex(index);
+        request.setStatus(Status.IN_PROGRESS);
+        getProjectEndpointClient().changeProjectStatusByIndex(request);
     }
 
 }

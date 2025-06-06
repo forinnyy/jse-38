@@ -1,31 +1,35 @@
 package ru.forinnyy.tm.api.service;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.api.endpoint.*;
 
 public interface IServiceLocator {
-
-    @NonNull
-    ICommandService getCommandService();
-
-    @NonNull
-    IProjectService getProjectService();
-
-    @NonNull
-    IProjectTaskService getProjectTaskService();
-
-    @NonNull
-    ITaskService getTaskService();
-
-    @NonNull
-    IUserService getUserService();
-
-    @NonNull
-    IAuthService getAuthService();
 
     @NonNull
     IPropertyService getPropertyService();
 
     @NonNull
-    IDomainService getDomainService();
+    ICommandService getCommandService();
+
+    @NonNull
+    IEndpointClient getConnectionEndpointClient();
+
+    @NonNull
+    ISystemEndpointClient getSystemEndpointClient();
+
+    @NonNull
+    IDomainEndpointClient getDomainEndpointClient();
+
+    @NonNull
+    IProjectEndpointClient getProjectEndpointClient();
+
+    @NonNull
+    ITaskEndpointClient getTaskEndpointClient();
+
+    @NonNull
+    IAuthEndpointClient getAuthEndpointClient();
+
+    @NonNull
+    IUserEndpointClient getUserEndpointClient();
 
 }

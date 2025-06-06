@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.user;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.UserLockRequest;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -40,7 +41,10 @@ public final class UserLockCommand extends AbstractUserCommand {
         System.out.println("[USER LOCK]");
         System.out.println("ENTER LOGIN");
         @NonNull final String login = TerminalUtil.nextLine();
-        getUserService().lockUserByLogin(login);
+
+        @NonNull final UserLockRequest request = new UserLockRequest();
+        request.setLogin(login);
+        getUserEndpointClient().lockUser(request);
     }
 
 }

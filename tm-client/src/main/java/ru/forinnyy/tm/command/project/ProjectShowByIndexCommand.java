@@ -1,9 +1,10 @@
 package ru.forinnyy.tm.command.project;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.ProjectGetByIndexRequest;
+import ru.forinnyy.tm.dto.response.ProjectGetByIndexResponse;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
-import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class ProjectShowByIndexCommand extends AbstractProjectCommand {
@@ -31,9 +32,11 @@ public final class ProjectShowByIndexCommand extends AbstractProjectCommand {
         System.out.println("[SHOW PROJECT BY INDEX]");
         System.out.println("ENTER INDEX:");
         @NonNull final Integer index = TerminalUtil.nextNumber() -1;
-        @NonNull final String userId = getUserId();
-        final Project project = getProjectService().findOneByIndex(userId, index);
-        showProject(project);
+
+        @NonNull final ProjectGetByIndexRequest request = new ProjectGetByIndexRequest();
+        request.setIndex(index);
+        final ProjectGetByIndexResponse response = getProjectEndpointClient().getProjectByIndex(request);
+        renderProject(response.getProject());
     }
 
 }

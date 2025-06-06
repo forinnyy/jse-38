@@ -1,13 +1,9 @@
 package ru.forinnyy.tm.command.data;
 
-import lombok.Cleanup;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import ru.forinnyy.tm.dto.Domain;
+import ru.forinnyy.tm.dto.request.DataBinaryLoadRequest;
 import ru.forinnyy.tm.enumerated.Role;
-
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
 
 public final class DataBinaryLoadCommand extends AbstractDataCommand {
 
@@ -17,7 +13,8 @@ public final class DataBinaryLoadCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        getDomainService().loadDataBinary();
+        @NonNull final DataBinaryLoadRequest request = new DataBinaryLoadRequest();
+        getDomainEndpoint().loadDataBinary(request);
     }
 
     @Override

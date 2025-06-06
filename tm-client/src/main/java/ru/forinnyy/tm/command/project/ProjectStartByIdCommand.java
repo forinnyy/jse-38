@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.project;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.ProjectChangeStatusByIdRequest;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -32,8 +33,11 @@ public final class ProjectStartByIdCommand extends AbstractProjectCommand {
         System.out.println("[START PROJECT BY ID]");
         System.out.println("ENTER ID:");
         @NonNull final String id = TerminalUtil.nextLine();
-        @NonNull final String userId = getUserId();
-        getProjectService().changeProjectStatusById(userId, id, Status.IN_PROGRESS);
+
+        @NonNull final ProjectChangeStatusByIdRequest request = new ProjectChangeStatusByIdRequest();
+        request.setId(id);
+        request.setStatus(Status.IN_PROGRESS);
+        getProjectEndpointClient().changeProjectStatusById(request);
     }
 
 }

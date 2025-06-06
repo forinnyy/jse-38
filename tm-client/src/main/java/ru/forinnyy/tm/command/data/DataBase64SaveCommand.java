@@ -1,18 +1,9 @@
 package ru.forinnyy.tm.command.data;
 
-import lombok.Cleanup;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import ru.forinnyy.tm.dto.Domain;
+import ru.forinnyy.tm.dto.request.DataBase64SaveRequest;
 import ru.forinnyy.tm.enumerated.Role;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Base64;
 
 public final class DataBase64SaveCommand extends AbstractDataCommand {
 
@@ -22,7 +13,8 @@ public final class DataBase64SaveCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        getDomainService().saveDataBase64();
+        @NonNull final DataBase64SaveRequest request = new DataBase64SaveRequest();
+        getDomainEndpoint().saveDataBase64(request);
     }
 
     @Override

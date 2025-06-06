@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.user;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.UserRemoveRequest;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -40,7 +41,10 @@ public final class UserRemoveCommand extends AbstractUserCommand {
         System.out.println("[USER REMOVE]");
         System.out.println("ENTER LOGIN");
         @NonNull final String login = TerminalUtil.nextLine();
-        getUserService().removeByLogin(login);
+
+        @NonNull final UserRemoveRequest request = new UserRemoveRequest();
+        request.setLogin(login);
+        getUserEndpointClient().removeUser(request);
     }
 
 }

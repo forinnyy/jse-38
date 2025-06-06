@@ -1,9 +1,7 @@
 package ru.forinnyy.tm.client;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-import lombok.SneakyThrows;
+import lombok.*;
+import ru.forinnyy.tm.api.endpoint.IEndpointClient;
 import ru.forinnyy.tm.dto.response.ApplicationErrorResponse;
 
 import java.io.*;
@@ -12,16 +10,14 @@ import java.rmi.RemoteException;
 
 @Getter
 @Setter
-public abstract class AbstractEndpointClient {
+@NoArgsConstructor
+public abstract class AbstractEndpointClient implements IEndpointClient {
 
-    private String host = "localhost";
+    protected String host = "localhost";
 
-    private Integer port = 6060;
+    protected Integer port = 6060;
 
-    private Socket socket;
-
-    public AbstractEndpointClient() {
-    }
+    protected Socket socket;
 
     public AbstractEndpointClient(@NonNull final AbstractEndpointClient client) {
         this.host = client.host;
@@ -58,11 +54,13 @@ public abstract class AbstractEndpointClient {
         return socket.getInputStream();
     }
 
-    public void connect() throws IOException {
-        socket = new Socket(host, port);
+    @SneakyThrows
+    public Socket connect() {
+        return new Socket(host, port);
     }
 
-    public void disconnect() throws IOException {
+    @SneakyThrows
+    public void disconnect() {
         socket.close();
     }
 

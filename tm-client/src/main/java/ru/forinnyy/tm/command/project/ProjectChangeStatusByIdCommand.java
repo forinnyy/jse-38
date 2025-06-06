@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.project;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.ProjectChangeStatusByIdRequest;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -38,8 +39,11 @@ public final class ProjectChangeStatusByIdCommand extends AbstractProjectCommand
         System.out.println(Arrays.toString(Status.values()));
         @NonNull final String statusValue = TerminalUtil.nextLine();
         final Status status = Status.toStatus(statusValue);
-        @NonNull final String userId = getUserId();
-        getProjectService().changeProjectStatusById(userId, id, status);
+
+        @NonNull final ProjectChangeStatusByIdRequest request = new ProjectChangeStatusByIdRequest();
+        request.setId(id);
+        request.setStatus(status);
+        getProjectEndpointClient().changeProjectStatusById(request);
     }
 
 }

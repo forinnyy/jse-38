@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.task;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.TaskChangeStatusByIdRequest;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -38,8 +39,11 @@ public final class TaskChangeStatusByIdCommand extends AbstractTaskCommand {
         System.out.println(Arrays.toString(Status.values()));
         @NonNull final String statusValue = TerminalUtil.nextLine();
         final Status status = Status.toStatus(statusValue);
-        @NonNull final String userId = getUserId();
-        getTaskService().changeTaskStatusById(userId, id, status);
+
+        @NonNull final TaskChangeStatusByIdRequest request = new TaskChangeStatusByIdRequest();
+        request.setId(id);
+        request.setStatus(status);
+        getTaskEndpointClient().changeTaskStatusById(request);
     }
 
 }

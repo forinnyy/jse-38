@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.command.project;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.ProjectUpdateByIndexRequest;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
@@ -35,8 +36,12 @@ public final class ProjectUpdateByIndexCommand extends AbstractProjectCommand {
         @NonNull final String name = TerminalUtil.nextLine();
         System.out.println("ENTER DESCRIPTION:");
         @NonNull final String description = TerminalUtil.nextLine();
-        @NonNull final String userId = getUserId();
-        getProjectService().updateByIndex(userId, index, name, description);
+
+        @NonNull final ProjectUpdateByIndexRequest request = new ProjectUpdateByIndexRequest();
+        request.setIndex(index);
+        request.setName(name);
+        request.setDescription(description);
+        getProjectEndpointClient().updateProjectByIndex(request);
     }
 
 }

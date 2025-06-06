@@ -1,11 +1,10 @@
 package ru.forinnyy.tm.command.project;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.ProjectRemoveByIdRequest;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
-import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
-import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.util.TerminalUtil;
 
 public final class ProjectRemoveByIdCommand extends AbstractProjectCommand {
@@ -32,11 +31,11 @@ public final class ProjectRemoveByIdCommand extends AbstractProjectCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[REMOVE PROJECT BY ID]");
         System.out.println("ENTER ID:");
-        @NonNull final String userId = getUserId();
         @NonNull final String id = TerminalUtil.nextLine();
-        final Project project = getProjectService().findOneById(userId, id);
-        if (project == null) throw new ProjectNotFoundException();
-        getProjectTaskService().removeProjectById(userId, project.getId());
+
+        @NonNull final ProjectRemoveByIdRequest request = new ProjectRemoveByIdRequest();
+        request.setId(id);
+        getProjectEndpointClient().removeProjectById(request); // TODO recursive?
     }
 
 }
