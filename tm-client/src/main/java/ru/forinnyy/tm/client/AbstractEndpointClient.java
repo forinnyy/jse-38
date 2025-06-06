@@ -56,7 +56,8 @@ public abstract class AbstractEndpointClient implements IEndpointClient {
 
     @SneakyThrows
     public Socket connect() {
-        return new Socket(host, port);
+        this.socket = new Socket(host, port);
+        return socket;
     }
 
     @SneakyThrows

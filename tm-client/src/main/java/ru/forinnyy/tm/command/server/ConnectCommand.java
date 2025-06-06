@@ -44,7 +44,7 @@ public final class ConnectCommand extends AbstractCommand {
 
     @Override
     public @NonNull String getName() {
-        return "";
+        return NAME;
     }
 
     @Override
