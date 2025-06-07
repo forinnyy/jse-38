@@ -4,6 +4,7 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import ru.forinnyy.tm.api.endpoint.IProjectEndpoint;
 import ru.forinnyy.tm.api.service.IProjectService;
+import ru.forinnyy.tm.api.service.IProjectTaskService;
 import ru.forinnyy.tm.api.service.IServiceLocator;
 import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
@@ -22,6 +23,11 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
     @NonNull
     private IProjectService getProjectService() {
         return getServiceLocator().getProjectService();
+    }
+
+    @NonNull
+    private IProjectTaskService getProjectTaskService() {
+        return getServiceLocator().getProjectTaskService();
     }
 
     @NonNull
@@ -58,7 +64,10 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
     public ProjectClearResponse clearProject(@NonNull final ProjectClearRequest request) {
         check(request);
         @NonNull final String userId = request.getUserId();
-        getProjectService().clear(userId);
+        final List<Project> projects = getProjectService().findAll(userId);
+        for (Project project: projects) {
+            getProjectTaskService().removeProjectById(userId, project.getId());
+        }
         return new ProjectClearResponse();
     }
 
@@ -114,8 +123,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         check(request);
         final String userId = request.getUserId();
         final String id = request.getId();
-        final Project project = getProjectService().removeById(userId, id);
-        return new ProjectRemoveByIdResponse(project);
+        getProjectTaskService().removeProjectById(userId, id);
+        return new ProjectRemoveByIdResponse();
     }
 
     @NonNull
@@ -125,8 +134,9 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         check(request);
         final String userId = request.getUserId();
         final Integer index = request.getIndex();
-        final Project project = getProjectService().removeByIndex(userId, index);
-        return new ProjectRemoveByIndexResponse(project);
+        final Project project = getProjectService().findOneByIndex(userId, index);
+        getProjectTaskService().removeProjectById(userId, project.getId());
+        return new ProjectRemoveByIndexResponse();
     }
 
     @NonNull
