@@ -1,13 +1,10 @@
 package ru.forinnyy.tm.api.service;
 
 import lombok.NonNull;
-import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.User;
-
-import javax.naming.AuthenticationException;
 
 public interface IAuthService {
 

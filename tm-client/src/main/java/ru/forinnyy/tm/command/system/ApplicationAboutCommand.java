@@ -2,12 +2,8 @@ package ru.forinnyy.tm.command.system;
 
 
 import lombok.NonNull;
-import ru.forinnyy.tm.api.service.IPropertyService;
 import ru.forinnyy.tm.dto.request.ApplicationAboutRequest;
-import ru.forinnyy.tm.dto.request.ApplicationGitRequest;
-import ru.forinnyy.tm.dto.request.ApplicationVersionRequest;
 import ru.forinnyy.tm.dto.response.ApplicationAboutResponse;
-import ru.forinnyy.tm.dto.response.ApplicationGitResponse;
 
 public final class ApplicationAboutCommand extends AbstractSystemCommand {
 

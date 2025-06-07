@@ -16,30 +16,6 @@ import static java.lang.ClassLoader.getSystemResourceAsStream;
 public final class PropertyService implements IPropertyService {
 
     @NonNull
-    public static final String GIT_BRANCH = "gitBranch";
-
-    @NonNull
-    public static final String GIT_COMMIT_ID = "gitCommitId";
-
-    @NonNull
-    public static final String GIT_COMMITTER_NAME = "gitCommitterName";
-
-    @NonNull
-    public static final String GIT_COMMITTER_EMAIL = "gitCommitterEmail";
-
-    @NonNull
-    public static final String GIT_COMMIT_MESSAGE = "gitCommitMessage";
-
-    @NonNull
-    public static final String GIT_COMMIT_TIME = "gitCommitTime";
-
-    @NonNull
-    public static final String APPLICATION_NAME_KEY = "application.name";
-
-    @NonNull
-    public static final String APPLICATION_NAME_DEFAULT = "tm";
-
-    @NonNull
     public static final String APPLICATION_FILE_NAME_KEY = "config";
 
     @NonNull
@@ -47,24 +23,6 @@ public final class PropertyService implements IPropertyService {
 
     @NonNull
     public static final String APPLICATION_VERSION_KEY = "buildNumber";
-
-    @NonNull
-    public static final String AUTHOR_EMAIL_KEY = "email";
-
-    @NonNull
-    public static final String AUTHOR_NAME_KEY = "developer";
-
-    @NonNull
-    public static final String PASSWORD_ITERATION_DEFAULT = "25456";
-
-    @NonNull
-    public static final String PASSWORD_ITERATION_KEY = "password.iteration";
-
-    @NonNull
-    public static final String PASSWORD_SECRET_DEFAULT = "345345345345";
-
-    @NonNull
-    public static final String PASSWORD_SECRET_KEY = "password.secret";
 
     @NonNull
     public static final String PORT = "server.port";
@@ -110,32 +68,8 @@ public final class PropertyService implements IPropertyService {
 
     @NonNull
     @Override
-    public String getApplicationName() {
-        return getStringValue(APPLICATION_NAME_KEY, APPLICATION_NAME_DEFAULT);
-    }
-
-    @NonNull
-    @Override
     public String getApplicationConfig() {
         return getStringValue(APPLICATION_FILE_NAME_KEY, APPLICATION_FILE_NAME_DEFAULT);
-    }
-
-    @NonNull
-    @Override
-    public String getApplicationVersion() {
-        return read(APPLICATION_VERSION_KEY);
-    }
-
-    @NonNull
-    @Override
-    public String getAuthorEmail() {
-        return read(AUTHOR_EMAIL_KEY);
-    }
-
-    @NonNull
-    @Override
-    public String getAuthorName() {
-        return read(AUTHOR_NAME_KEY);
     }
 
     @NonNull
@@ -146,36 +80,6 @@ public final class PropertyService implements IPropertyService {
     }
 
     @Override
-    public @NonNull String getGitBranch() {
-        return read(GIT_BRANCH);
-    }
-
-    @Override
-    public @NonNull String getGitCommitId() {
-        return read(GIT_COMMIT_ID);
-    }
-
-    @Override
-    public @NonNull String getGitCommitterName() {
-        return read(GIT_COMMITTER_NAME);
-    }
-
-    @Override
-    public @NonNull String getGitCommitterEmail() {
-        return read(GIT_COMMITTER_EMAIL);
-    }
-
-    @Override
-    public @NonNull String getGitCommitMessage() {
-        return read(GIT_COMMIT_MESSAGE);
-    }
-
-    @Override
-    public @NonNull String getGitCommitTime() {
-        return read(GIT_COMMIT_TIME);
-    }
-
-    @Override
     public @NonNull Integer getServerPort() {
         return getIntegerValue(PORT, PORT_DEFAULT);
     }
@@ -183,18 +87,6 @@ public final class PropertyService implements IPropertyService {
     @NonNull
     private String getEnvKey(@NonNull final String key) {
         return key.replace(".", "_").toUpperCase();
-    }
-
-    @NonNull
-    @Override
-    public Integer getPasswordIteration() {
-        return getIntegerValue(PASSWORD_ITERATION_KEY, PASSWORD_ITERATION_DEFAULT);
-    }
-
-    @NonNull
-    @Override
-    public String getPasswordSecret() {
-        return getStringValue(PASSWORD_SECRET_KEY, PASSWORD_SECRET_DEFAULT);
     }
 
     @NonNull

@@ -6,10 +6,8 @@ import ru.forinnyy.tm.api.endpoint.ISystemEndpoint;
 import ru.forinnyy.tm.api.service.IPropertyService;
 import ru.forinnyy.tm.api.service.IServiceLocator;
 import ru.forinnyy.tm.dto.request.ApplicationAboutRequest;
-import ru.forinnyy.tm.dto.request.ApplicationGitRequest;
 import ru.forinnyy.tm.dto.request.ApplicationVersionRequest;
 import ru.forinnyy.tm.dto.response.ApplicationAboutResponse;
-import ru.forinnyy.tm.dto.response.ApplicationGitResponse;
 import ru.forinnyy.tm.dto.response.ApplicationVersionResponse;
 
 public final class SystemEndpoint implements ISystemEndpoint {

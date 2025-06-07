@@ -5,7 +5,6 @@ import lombok.SneakyThrows;
 import ru.forinnyy.tm.api.service.IAuthService;
 import ru.forinnyy.tm.api.service.IPropertyService;
 import ru.forinnyy.tm.api.service.IUserService;
-import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.LoginEmptyException;
@@ -17,7 +16,6 @@ import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.util.HashUtil;
 
 import javax.naming.AuthenticationException;
-import java.util.Arrays;
 
 public final class AuthService implements IAuthService {
 

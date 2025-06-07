@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.component;
 
 import lombok.NonNull;
-import ru.forinnyy.tm.dto.Domain;
 import ru.forinnyy.tm.service.DomainService;
 
 import java.nio.file.Files;
