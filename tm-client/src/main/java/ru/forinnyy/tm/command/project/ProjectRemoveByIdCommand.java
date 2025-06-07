@@ -39,18 +39,9 @@ public final class ProjectRemoveByIdCommand extends AbstractProjectCommand {
         System.out.println("ENTER ID:");
         @NonNull final String id = TerminalUtil.nextLine();
 
-        @NonNull final ProjectRemoveByIdRequest requestRemove = new ProjectRemoveByIdRequest();
-        @NonNull final TaskListByProjectIdRequest requestTasks = new TaskListByProjectIdRequest();
-        requestRemove.setId(id);
-        requestTasks.setProjectId(id);
-        @NonNull final TaskListByProjectIdResponse responseTasks = getTaskEndpointClient().listTaskByProjectId(requestTasks);
-        final List<Task> tasks = responseTasks.getTasks();
-        for (@NonNull final Task task: tasks) {
-            @NonNull final TaskRemoveByIdRequest request = new TaskRemoveByIdRequest();
-            request.setId(task.getId());
-            getTaskEndpointClient().removeTaskById(request);
-        }
-        getProjectEndpointClient().removeProjectById(requestRemove);
+        @NonNull final ProjectRemoveByIdRequest request = new ProjectRemoveByIdRequest();
+        request.setId(id);
+        getProjectEndpointClient().removeProjectById(request);
     }
 
 }

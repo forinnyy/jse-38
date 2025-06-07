@@ -38,23 +38,6 @@ public final class ProjectClearCommand extends AbstractProjectCommand {
     public void execute() throws AbstractUserException, AbstractFieldException {
         System.out.println("[CLEAR PROJECTS]");
 
-        @NonNull final ProjectListRequest requestProjectList = new ProjectListRequest();
-        @NonNull final ProjectListResponse responseProjectList = getProjectEndpointClient().listProject(requestProjectList);
-        if (responseProjectList.getProjects() != null) {
-            List<Project> projects = responseProjectList.getProjects();
-            for (@NonNull final Project project: projects) {
-                @NonNull final TaskListByProjectIdRequest requestTasks = new TaskListByProjectIdRequest();
-                requestTasks.setProjectId(project.getId());
-                @NonNull final TaskListByProjectIdResponse responseTasks = getTaskEndpointClient().listTaskByProjectId(requestTasks);
-                final List<Task> tasks = responseTasks.getTasks();
-                for (@NonNull final Task task: tasks) {
-                    @NonNull final TaskRemoveByIdRequest request = new TaskRemoveByIdRequest();
-                    request.setId(task.getId());
-                    getTaskEndpointClient().removeTaskById(request);
-                }
-            }
-        }
-
         @NonNull final ProjectClearRequest request = new ProjectClearRequest();
         getProjectEndpointClient().clearProject(request);
     }

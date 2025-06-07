@@ -41,23 +41,9 @@ public final class ProjectRemoveByIndexCommand extends AbstractProjectCommand {
         System.out.println("ENTER INDEX:");
         @NonNull final Integer index = TerminalUtil.nextNumber() -1;
 
-        @NonNull final ProjectGetByIndexRequest requestGetByIndex = new ProjectGetByIndexRequest();
-        requestGetByIndex.setIndex(index);
-        @NonNull final ProjectGetByIndexResponse response = getProjectEndpointClient().getProjectByIndex(requestGetByIndex);
-        final String projectId = response.getProject().getId();
-        @NonNull final TaskListByProjectIdRequest requestTasks = new TaskListByProjectIdRequest();
-        requestTasks.setProjectId(projectId);
-        @NonNull final TaskListByProjectIdResponse responseTasks = getTaskEndpointClient().listTaskByProjectId(requestTasks);
-        final List<Task> tasks = responseTasks.getTasks();
-        for (@NonNull final Task task: tasks) {
-            @NonNull final TaskRemoveByIdRequest request = new TaskRemoveByIdRequest();
-            request.setId(task.getId());
-            getTaskEndpointClient().removeTaskById(request);
-        }
-        @NonNull final ProjectRemoveByIndexRequest requestRemove = new ProjectRemoveByIndexRequest();
-        requestRemove.setIndex(index);
-        getProjectEndpointClient().removeProjectByIndex(requestRemove);
-
+        @NonNull final ProjectRemoveByIndexRequest request = new ProjectRemoveByIndexRequest();
+        request.setIndex(index);
+        getProjectEndpointClient().removeProjectByIndex(request);
     }
 
 }
