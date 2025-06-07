@@ -102,11 +102,14 @@ public final class ServerRequestTask extends AbstractServerSocketTask {
     }
 
     private void processOperation() {
+        System.out.println("[DEBUG] Login failed: OPERATION 1");
         if (response != null) return;
         try {
+            System.out.println("[DEBUG] Login failed: OPERATION 2");
             final Object result = server.call(request);
             response = (AbstractResponse) result;
         } catch (Exception e) {
+            System.out.println("[DEBUG] Login failed: OPERATION 3");
             response = new ApplicationErrorResponse(e);
         }
     }
