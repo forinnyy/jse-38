@@ -48,7 +48,7 @@ public final class FileScanner {
                     file.delete();
                     bootstrap.processCommand(fileName);
                 } catch (@NonNull final Exception e) {
-                    System.out.println("[ERROR : ]" + e); // TODO logger
+                    throw new RuntimeException(e);
                 }
             }
         }

@@ -6,12 +6,10 @@ import ru.forinnyy.tm.dto.request.ProjectRemoveByIndexRequest;
 import ru.forinnyy.tm.dto.request.TaskListByProjectIdRequest;
 import ru.forinnyy.tm.dto.request.TaskRemoveByIdRequest;
 import ru.forinnyy.tm.dto.response.ProjectGetByIndexResponse;
-import ru.forinnyy.tm.dto.response.ProjectRemoveByIndexResponse;
 import ru.forinnyy.tm.dto.response.TaskListByProjectIdResponse;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
-import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.util.TerminalUtil;
 

@@ -141,35 +141,6 @@ public final class Bootstrap implements IServiceLocator {
         file.deleteOnExit();
     }
 
-//    @SneakyThrows
-//    private void initData() {
-//        final boolean checkBinary = Files.exists(Paths.get(AbstractDataCommand.FILE_BINARY));
-//        if (checkBinary) processCommand(DataBinaryLoadCommand.NAME, false);
-//        if (checkBinary) return;
-//        final boolean checkBase64 = Files.exists(Paths.get(AbstractDataCommand.FILE_BASE64));
-//        if (checkBase64) processCommand(DataBase64LoadCommand.NAME, false);
-//    }
-
-//    private void initDemoData() throws AbstractFieldException, AbstractUserException, AbstractEntityException {
-//        @NonNull final User test = userService.create("test", "test", "test@test.ru");
-//        @NonNull final User user = userService.create("user", "user", "user@user.ru");
-//        @NonNull final User admin = userService.create("admin", "admin", Role.ADMIN);
-//
-//        projectService.add(user.getId(), new Project("USER PROJECT", Status.IN_PROGRESS));
-//        projectService.add(admin.getId(), new Project("ADMIN PROJECT", Status.NOT_STARTED));
-//
-//        projectService.add(test.getId(), new Project("TEST PROJECT", Status.IN_PROGRESS));
-//        projectService.add(test.getId(), new Project("DEMO PROJECT", Status.NOT_STARTED));
-//        projectService.add(test.getId(), new Project("ALPHA PROJECT", Status.IN_PROGRESS));
-//        projectService.add(test.getId(), new Project("BETA PROJECT", Status.COMPLETED));
-//
-//        taskService.add(test.getId(), new Task("MEGA TASK"));
-//        taskService.add(test.getId(), new Task("BETA TASK"));
-//    }
-
-//    private void initLogger() {
-//    }
-
     private void initCommands() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
@@ -188,20 +159,15 @@ public final class Bootstrap implements IServiceLocator {
     @SneakyThrows
     private void prepareStartup() {
         initPID();
-//        initDemoData();
         LOGGER_LIFECYCLE.info("** WELCOME TO TASK-MANAGER **");
         Runtime.getRuntime().addShutdownHook(new Thread(this::prepareShutdown));
-//        initBackup();
         initFileScanner();
-//        server.start();
     }
 
     @SneakyThrows
     private void prepareShutdown() {
         LOGGER_LIFECYCLE.info("** TASK-MANAGER IS SHUTTING DOWN **");
-//        backup.stop();
         fileScanner.stop();
-//        server.stop();
     }
 
     public void run(final String[] args) {

@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.command.project;
 
 import lombok.NonNull;
-import org.jetbrains.annotations.PropertyKey;
 import ru.forinnyy.tm.dto.request.ProjectClearRequest;
 import ru.forinnyy.tm.dto.request.ProjectListRequest;
 import ru.forinnyy.tm.dto.request.TaskListByProjectIdRequest;
