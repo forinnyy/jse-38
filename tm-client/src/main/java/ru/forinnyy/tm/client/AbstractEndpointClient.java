@@ -15,7 +15,7 @@ public abstract class AbstractEndpointClient implements IEndpointClient {
 
     protected String host = "localhost";
 
-    protected Integer port = 6060;
+    protected Integer port;
 
     protected Socket socket;
 

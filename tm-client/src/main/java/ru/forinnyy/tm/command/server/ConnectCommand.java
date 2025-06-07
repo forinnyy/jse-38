@@ -19,7 +19,9 @@ public final class ConnectCommand extends AbstractCommand {
     public void execute() {
         try {
             @NonNull final IServiceLocator sl = getServiceLocator();
+            @NonNull final Integer port = sl.getPropertyService().getServerPort();
             @NonNull final IEndpointClient endpointClient = sl.getConnectionEndpointClient();
+            endpointClient.setPort(port);
             final Socket socket = endpointClient.connect();
             sl.getAuthEndpointClient().setSocket(socket);
             sl.getSystemEndpointClient().setSocket(socket);
@@ -28,7 +30,7 @@ public final class ConnectCommand extends AbstractCommand {
             sl.getTaskEndpointClient().setSocket(socket);
             sl.getUserEndpointClient().setSocket(socket);
         } catch (@NonNull final Exception e) {
-            System.out.println("Error " + e.getMessage()); // TODO
+            throw new RuntimeException(e);
         }
     }
 

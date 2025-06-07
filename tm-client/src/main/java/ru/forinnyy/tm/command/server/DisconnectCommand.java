@@ -16,7 +16,7 @@ public class DisconnectCommand extends AbstractCommand {
         try {
             getServiceLocator().getConnectionEndpointClient().disconnect();
         } catch (@NonNull final Exception e) {
-            System.out.println("ERROR " + e.getMessage()); // TODO
+            throw new RuntimeException(e);
         }
     }
 

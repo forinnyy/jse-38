@@ -11,4 +11,6 @@ public interface IEndpointClient {
 
     void setSocket(Socket socket);
 
+    void setPort(Integer port);
+
 }
