@@ -1,6 +1,8 @@
 package ru.forinnyy.tm.command.system;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.dto.request.ApplicationVersionRequest;
+import ru.forinnyy.tm.dto.response.ApplicationVersionResponse;
 
 public final class ApplicationVersionCommand extends AbstractSystemCommand {
 
@@ -16,7 +18,10 @@ public final class ApplicationVersionCommand extends AbstractSystemCommand {
     @Override
     public void execute() {
         System.out.println("[VERSION]");
-        System.out.println(getPropertyService().getApplicationVersion());
+
+        @NonNull final ApplicationVersionRequest request = new ApplicationVersionRequest();
+        @NonNull final ApplicationVersionResponse response = getSystemEndpointClient().getVersion(request);
+        System.out.println(response.getVersion());
     }
 
     @NonNull

@@ -32,6 +32,12 @@ public final class SystemEndpoint implements ISystemEndpoint {
         @NonNull final ApplicationAboutResponse response = new ApplicationAboutResponse();
         response.setEmail(getPropertyService().getAuthorEmail());
         response.setName(getPropertyService().getAuthorName());
+        response.setGitBranch(getPropertyService().getGitBranch());
+        response.setGitCommitId(getPropertyService().getGitCommitId());
+        response.setGitCommitMessage(getPropertyService().getGitCommitMessage());
+        response.setGitCommitTime(getPropertyService().getGitCommitTime());
+        response.setGitCommitterName(getPropertyService().getGitCommitterName());
+        response.setGitCommitterEmail(getPropertyService().getGitCommitterEmail());
         return response;
     }
 
@@ -40,18 +46,6 @@ public final class SystemEndpoint implements ISystemEndpoint {
     public ApplicationVersionResponse getVersion(@NotNull final ApplicationVersionRequest request) {
         @NonNull final ApplicationVersionResponse response = new ApplicationVersionResponse();
         response.setVersion(getPropertyService().getApplicationVersion());
-        return response;
-    }
-
-    @Override
-    public @NonNull ApplicationGitResponse getGit(@NonNull ApplicationGitRequest request) {
-        @NonNull final ApplicationGitResponse response = new ApplicationGitResponse();
-        response.setGitBranch(getPropertyService().getGitBranch());
-        response.setGitCommitId(getPropertyService().getGitCommitId());
-        response.setGitCommitMessage(getPropertyService().getGitCommitMessage());
-        response.setGitCommitTime(getPropertyService().getGitCommitTime());
-        response.setGitCommitterName(getPropertyService().getGitCommitterName());
-        response.setGitCommitterEmail(getPropertyService().getGitCommitterEmail());
         return response;
     }
 

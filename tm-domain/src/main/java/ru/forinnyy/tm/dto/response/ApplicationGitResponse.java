@@ -9,16 +9,4 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ApplicationGitResponse extends AbstractResponse {
 
-    private String gitBranch;
-
-    private String gitCommitId;
-
-    private String gitCommitterName;
-
-    private String gitCommitterEmail;
-
-    private String gitCommitMessage;
-
-    private String gitCommitTime;
-
 }

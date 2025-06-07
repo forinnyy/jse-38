@@ -16,7 +16,4 @@ public interface ISystemEndpoint {
     @NonNull
     ApplicationVersionResponse getVersion(@NonNull ApplicationVersionRequest request);
 
-    @NonNull
-    ApplicationGitResponse getGit(@NonNull ApplicationGitRequest request);
-
 }

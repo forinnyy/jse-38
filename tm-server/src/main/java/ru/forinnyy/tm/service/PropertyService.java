@@ -123,19 +123,22 @@ public final class PropertyService implements IPropertyService {
     @NonNull
     @Override
     public String getApplicationVersion() {
-        return read(APPLICATION_VERSION_KEY);
+//        return read(APPLICATION_VERSION_KEY);
+        return "1.1.1";
     }
 
     @NonNull
     @Override
     public String getAuthorEmail() {
-        return read(AUTHOR_EMAIL_KEY);
+//        return read(AUTHOR_EMAIL_KEY);
+        return "AUTHOR_EMAIL_KEY";
     }
 
     @NonNull
     @Override
     public String getAuthorName() {
-        return read(AUTHOR_NAME_KEY);
+//        return read(AUTHOR_NAME_KEY);
+        return "AUTHOR_NAME_KEY";
     }
 
     @NonNull
@@ -147,37 +150,44 @@ public final class PropertyService implements IPropertyService {
 
     @Override
     public @NonNull String getGitBranch() {
-        return read(GIT_BRANCH);
+//        return read(GIT_BRANCH);
+        return "GIT_BRANCH";
     }
 
     @Override
     public @NonNull String getGitCommitId() {
-        return read(GIT_COMMIT_ID);
+//        return read(GIT_COMMIT_ID);
+        return "GIT_COMMIT_ID";
     }
 
     @Override
     public @NonNull String getGitCommitterName() {
-        return read(GIT_COMMITTER_NAME);
+//        return read(GIT_COMMITTER_NAME);
+        return "GIT_COMMITTER_NAME";
     }
 
     @Override
     public @NonNull String getGitCommitterEmail() {
-        return read(GIT_COMMITTER_EMAIL);
+//        return read(GIT_COMMITTER_EMAIL);
+        return "GIT_COMMITTER_EMAIL";
     }
 
     @Override
     public @NonNull String getGitCommitMessage() {
-        return read(GIT_COMMIT_MESSAGE);
+//        return read(GIT_COMMIT_MESSAGE);
+        return "GIT_COMMIT_MESSAGE";
     }
 
     @Override
     public @NonNull String getGitCommitTime() {
-        return read(GIT_COMMIT_TIME);
+//        return read(GIT_COMMIT_TIME);
+        return "GIT_COMMIT_TIME";
     }
 
     @Override
     public @NonNull Integer getServerPort() {
-        return getIntegerValue(PORT, PORT_DEFAULT);
+//        return getIntegerValue(PORT, PORT_DEFAULT);
+        return 6060;
     }
 
     @NonNull

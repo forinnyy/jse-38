@@ -7,6 +7,7 @@ import ru.forinnyy.tm.api.service.IUserService;
 import ru.forinnyy.tm.component.Server;
 import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
+import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.User;
 
 import java.io.InputStream;

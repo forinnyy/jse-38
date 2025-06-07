@@ -13,4 +13,16 @@ public final class ApplicationAboutResponse extends AbstractResponse {
 
     private String name;
 
+    private String gitBranch;
+
+    private String gitCommitId;
+
+    private String gitCommitterName;
+
+    private String gitCommitterEmail;
+
+    private String gitCommitMessage;
+
+    private String gitCommitTime;
+
 }

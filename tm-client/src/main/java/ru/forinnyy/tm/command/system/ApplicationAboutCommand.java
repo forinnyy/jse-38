@@ -22,23 +22,22 @@ public final class ApplicationAboutCommand extends AbstractSystemCommand {
 
     @Override
     public void execute() {
-        @NonNull final ApplicationAboutRequest requestA = new ApplicationAboutRequest();
-        @NonNull final ApplicationGitRequest requestG = new ApplicationGitRequest();
-        @NonNull final ApplicationAboutResponse responseA = getSystemEndpointClient().getAbout(requestA);
-        @NonNull final ApplicationGitResponse responseG = getSystemEndpointClient().getGit(requestG);
+        @NonNull final ApplicationAboutRequest request = new ApplicationAboutRequest();
+        @NonNull final ApplicationAboutResponse response = getSystemEndpointClient().getAbout(request);
 
+        System.out.println();
         System.out.println("[ABOUT]");
-        System.out.println("AUTHOR: " + responseA.getName());
-        System.out.println("E-MAIL: " + responseA.getEmail());
+        System.out.println("AUTHOR: " + response.getName());
+        System.out.println("E-MAIL: " + response.getEmail());
         System.out.println();
 
         System.out.println("[GIT]");
-        System.out.println("BRANCH: " + responseG.getGitBranch());
-        System.out.println("COMMIT ID: " + responseG.getGitCommitId());
-        System.out.println("COMMITTER: " + responseG.getGitCommitterName());
-        System.out.println("E-MAIL: " + responseG.getGitCommitterEmail());
-        System.out.println("MESSAGE: " + responseG.getGitCommitMessage());
-        System.out.println("TIME: " + responseG.getGitCommitTime());
+        System.out.println("BRANCH: " + response.getGitBranch());
+        System.out.println("COMMIT ID: " + response.getGitCommitId());
+        System.out.println("COMMITTER: " + response.getGitCommitterName());
+        System.out.println("E-MAIL: " + response.getGitCommitterEmail());
+        System.out.println("MESSAGE: " + response.getGitCommitMessage());
+        System.out.println("TIME: " + response.getGitCommitTime());
     }
 
     @NonNull
