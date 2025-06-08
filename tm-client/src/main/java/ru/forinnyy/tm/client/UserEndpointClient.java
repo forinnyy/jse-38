@@ -6,7 +6,7 @@ import ru.forinnyy.tm.api.endpoint.IUserEndpointClient;
 import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
 
-public class UserEndpointClient extends AbstractEndpointClient implements IUserEndpointClient {
+public final class UserEndpointClient extends AbstractEndpointClient implements IUserEndpointClient {
 
     @NotNull
     @Override

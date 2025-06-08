@@ -8,7 +8,7 @@ import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
 
 @NoArgsConstructor
-public class DomainEndpointClient extends AbstractEndpointClient implements IDomainEndpointClient {
+public final class DomainEndpointClient extends AbstractEndpointClient implements IDomainEndpointClient {
 
 
     @NonNull
