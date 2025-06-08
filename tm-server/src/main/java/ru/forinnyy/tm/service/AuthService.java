@@ -47,7 +47,7 @@ public final class AuthService implements IAuthService {
         final User user = userService.findByLogin(login);
         if (user == null) throw new PermissionException();
         final boolean locked = user.isLocked() == null || user.isLocked();
-        if (locked) throw new AccessDeniedException();
+        if (locked) throw new PermissionException();
         final String hash = HashUtil.salt(propertyService, password);
         if (hash == null) throw new AuthenticationException();
         if (!hash.equals(user.getPasswordHash())) throw new PermissionException();
