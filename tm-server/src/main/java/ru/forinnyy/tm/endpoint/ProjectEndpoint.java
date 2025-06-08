@@ -40,8 +40,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         final String id = request.getId();
         final String userId = request.getUserId();
         final Status status = request.getStatus();
-        final Project project = getProjectService().changeProjectStatusById(userId, id, status);
-        return new ProjectChangeStatusByIdResponse(project);
+        getProjectService().changeProjectStatusById(userId, id, status);
+        return new ProjectChangeStatusByIdResponse();
     }
 
     @NonNull
@@ -54,8 +54,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         final Integer index = request.getIndex();
         final String userId = request.getUserId();
         final Status status = request.getStatus();
-        final Project project = getProjectService().changeProjectStatusByIndex(userId, index, status);
-        return new ProjectChangeStatusByIndexResponse(project);
+        getProjectService().changeProjectStatusByIndex(userId, index, status);
+        return new ProjectChangeStatusByIndexResponse();
     }
 
     @NonNull
@@ -79,8 +79,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         final String userId = request.getUserId();
         final String name = request.getName();
         final String description = request.getDescription();
-        final Project project = getProjectService().create(userId, name, description);
-        return new ProjectCreateResponse(project);
+        getProjectService().create(userId, name, description);
+        return new ProjectCreateResponse();
     }
 
     @NonNull
@@ -148,8 +148,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         final String id = request.getId();
         final String name = request.getName();
         final String description = request.getDescription();
-        final Project project = getProjectService().updateById(userId, id, name, description);
-        return new ProjectUpdateByIdResponse(project);
+        getProjectService().updateById(userId, id, name, description);
+        return new ProjectUpdateByIdResponse();
     }
 
     @NonNull
@@ -161,8 +161,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         final Integer index = request.getIndex();
         final String name = request.getName();
         final String description = request.getDescription();
-        final Project project = getProjectService().updateByIndex(userId, index, name, description);
-        return new ProjectUpdateByIndexResponse(project);
+        getProjectService().updateByIndex(userId, index, name, description);
+        return new ProjectUpdateByIndexResponse();
     }
 
     @NonNull
@@ -172,8 +172,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         check(request);
         final String id = request.getId();
         final String userId = request.getUserId();
-        final Project project = getProjectService().changeProjectStatusById(userId, id, Status.COMPLETED);
-        return new ProjectCompleteByIdResponse(project);
+        getProjectService().changeProjectStatusById(userId, id, Status.COMPLETED);
+        return new ProjectCompleteByIdResponse();
     }
 
     @NonNull
@@ -185,8 +185,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         check(request);
         final Integer index = request.getIndex();
         final String userId = request.getUserId();
-        final Project project = getProjectService().changeProjectStatusByIndex(userId, index, Status.COMPLETED);
-        return new ProjectCompleteByIndexResponse(project);
+        getProjectService().changeProjectStatusByIndex(userId, index, Status.COMPLETED);
+        return new ProjectCompleteByIndexResponse();
     }
 
     @NonNull
@@ -196,8 +196,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         check(request);
         final String id = request.getId();
         final String userId = request.getUserId();
-        final Project project = getProjectService().changeProjectStatusById(userId, id, Status.IN_PROGRESS);
-        return new ProjectStartByIdResponse(project);
+        getProjectService().changeProjectStatusById(userId, id, Status.IN_PROGRESS);
+        return new ProjectStartByIdResponse();
     }
 
     @NonNull
@@ -207,8 +207,8 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
         check(request);
         final Integer index = request.getIndex();
         final String userId = request.getUserId();
-        final Project project = getProjectService().changeProjectStatusByIndex(userId, index, Status.IN_PROGRESS);
-        return new ProjectStartByIndexResponse(project);
+        getProjectService().changeProjectStatusByIndex(userId, index, Status.IN_PROGRESS);
+        return new ProjectStartByIndexResponse();
     }
 
 }

@@ -9,9 +9,4 @@ import ru.forinnyy.tm.model.User;
 @Setter
 @NoArgsConstructor
 public final class UserChangePasswordResponse extends AbstractUserResponse {
-
-    public UserChangePasswordResponse(User user) {
-        super(user);
-    }
-
 }

@@ -9,9 +9,4 @@ import ru.forinnyy.tm.model.User;
 @Setter
 @NoArgsConstructor
 public final class UserUpdateProfileResponse extends AbstractUserResponse {
-
-    public UserUpdateProfileResponse(User user) {
-        super(user);
-    }
-
 }

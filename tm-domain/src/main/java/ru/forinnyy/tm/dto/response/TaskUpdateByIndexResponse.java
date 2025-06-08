@@ -8,10 +8,5 @@ import ru.forinnyy.tm.model.Task;
 @Getter
 @Setter
 @NoArgsConstructor
-public final class TaskUpdateByIndexResponse extends AbstractTaskResponse {
-
-    public TaskUpdateByIndexResponse(Task task) {
-        super(task);
-    }
-
+public final class TaskUpdateByIndexResponse extends AbstractResponse {
 }

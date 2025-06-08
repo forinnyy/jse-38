@@ -8,10 +8,5 @@ import ru.forinnyy.tm.model.Project;
 @Getter
 @Setter
 @NoArgsConstructor
-public final class ProjectCompleteByIdResponse extends AbstractProjectResponse {
-
-    public ProjectCompleteByIdResponse(Project project) {
-        super(project);
-    }
-
+public final class ProjectCompleteByIdResponse extends AbstractResponse {
 }

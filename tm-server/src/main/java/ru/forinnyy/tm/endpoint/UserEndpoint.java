@@ -47,8 +47,8 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
     public UserRemoveResponse removeUser(@NonNull final UserRemoveRequest request) {
         check(request, Role.ADMIN);
         final String login = request.getLogin();
-        final User user = getUserService().removeByLogin(login);
-        return new UserRemoveResponse(user);
+        getUserService().removeByLogin(login);
+        return new UserRemoveResponse();
     }
 
     @NonNull
@@ -58,8 +58,8 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
         final String login = request.getLogin();
         final String email = request.getEmail();
         final String password = request.getPassword();
-        final User user = getUserService().create(login, password, email);
-        return new UserRegistryResponse(user);
+        getUserService().create(login, password, email);
+        return new UserRegistryResponse();
     }
 
     @NonNull
@@ -69,8 +69,8 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
         check(request);
         final String userId = request.getUserId();
         final String password = request.getPassword();
-        final User user = getUserService().setPassword(userId, password);
-        return new UserChangePasswordResponse(user);
+        getUserService().setPassword(userId, password);
+        return new UserChangePasswordResponse();
     }
 
     @NonNull
@@ -82,8 +82,8 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
         final String firstName = request.getFirstName();
         final String lastName = request.getLastName();
         final String middleName = request.getMiddleName();
-        final User user = getUserService().updateUser(userId, firstName, lastName, middleName);
-        return new UserUpdateProfileResponse(user);
+        getUserService().updateUser(userId, firstName, lastName, middleName);
+        return new UserUpdateProfileResponse();
     }
 
 }

@@ -9,9 +9,4 @@ import ru.forinnyy.tm.model.User;
 @Setter
 @NoArgsConstructor
 public final class UserRemoveResponse extends AbstractUserResponse {
-
-    public UserRemoveResponse(User user) {
-        super(user);
-    }
-
 }

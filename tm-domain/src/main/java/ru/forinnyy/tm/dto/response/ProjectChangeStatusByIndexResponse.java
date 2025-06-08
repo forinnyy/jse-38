@@ -8,10 +8,6 @@ import ru.forinnyy.tm.model.Project;
 @Getter
 @Setter
 @NoArgsConstructor
-public final class ProjectChangeStatusByIndexResponse extends AbstractProjectResponse {
-
-    public ProjectChangeStatusByIndexResponse(Project project) {
-        super(project);
-    }
+public final class ProjectChangeStatusByIndexResponse extends AbstractResponse {
 
 }

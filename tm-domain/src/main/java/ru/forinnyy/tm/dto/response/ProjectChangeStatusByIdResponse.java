@@ -6,10 +6,5 @@ import ru.forinnyy.tm.model.Project;
 
 @Getter
 @Setter
-public final class ProjectChangeStatusByIdResponse extends AbstractProjectResponse {
-
-    public ProjectChangeStatusByIdResponse(Project project) {
-        super(project);
-    }
-
+public final class ProjectChangeStatusByIdResponse extends AbstractResponse {
 }

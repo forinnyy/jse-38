@@ -8,10 +8,5 @@ import ru.forinnyy.tm.model.Task;
 @Getter
 @Setter
 @NoArgsConstructor
-public final class TaskChangeStatusByIdResponse extends AbstractTaskResponse {
-
-    public TaskChangeStatusByIdResponse(Task task) {
-        super(task);
-    }
-
+public final class TaskChangeStatusByIdResponse extends AbstractResponse {
 }
