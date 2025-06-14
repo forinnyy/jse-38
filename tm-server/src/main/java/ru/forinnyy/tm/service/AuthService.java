@@ -10,7 +10,6 @@ import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.LoginEmptyException;
 import ru.forinnyy.tm.exception.field.PasswordEmptyException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
-import ru.forinnyy.tm.exception.user.AccessDeniedException;
 import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.util.HashUtil;

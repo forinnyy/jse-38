@@ -11,7 +11,6 @@ import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.api.repository.IUserRepository;
 import ru.forinnyy.tm.api.service.*;
-import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.endpoint.*;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.enumerated.Status;
@@ -27,6 +26,7 @@ import ru.forinnyy.tm.repository.UserRepository;
 import ru.forinnyy.tm.service.*;
 import ru.forinnyy.tm.util.SystemUtil;
 
+import javax.xml.ws.Endpoint;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -77,9 +77,6 @@ public final class Bootstrap implements IServiceLocator {
     @NonNull
     private final Backup backup = new Backup(this);
 
-    @NonNull
-    private final Server server = new Server(this);
-
     @Getter
     @NonNull
     private final IDomainService domainService = new DomainService(this);
@@ -97,67 +94,21 @@ public final class Bootstrap implements IServiceLocator {
     private final IUserEndpoint userEndpoint = new UserEndpoint(this);
 
     {
-        server.registry(ApplicationAboutRequest.class, systemEndpoint::getAbout);
-        server.registry(ApplicationVersionRequest.class, systemEndpoint::getVersion);
+//        registry(authService);
+        registry(systemEndpoint);
+//        registry(userEndpoint);
+//        registry(domainEndpoint);
+//        registry(projectEndpoint);
+//        registry(taskRepository);
+    }
 
-        server.registry(DataBackupLoadRequest.class, domainEndpoint::loadDataBackup);
-        server.registry(DataBackupSaveRequest.class, domainEndpoint::saveDataBackup);
-        server.registry(DataBase64LoadRequest.class, domainEndpoint::loadDataBase64);
-        server.registry(DataBase64SaveRequest.class, domainEndpoint::saveDataBase64);
-        server.registry(DataBinaryLoadRequest.class, domainEndpoint::loadDataBinary);
-        server.registry(DataBinarySaveRequest.class, domainEndpoint::saveDataBinary);
-        server.registry(DataJsonLoadFasterXmlRequest.class, domainEndpoint::loadDataJsonFasterXml);
-        server.registry(DataJsonLoadJaxBRequest.class, domainEndpoint::loadDataJsonJaxB);
-        server.registry(DataJsonSaveFasterXmlRequest.class, domainEndpoint::saveDataJsonFasterXml);
-        server.registry(DataJsonSaveJaxBRequest.class, domainEndpoint::saveDataJsonJaxB);
-        server.registry(DataXmlLoadFasterXmlRequest.class, domainEndpoint::loadDataXmlFasterXml);
-        server.registry(DataXmlLoadJaxBRequest.class, domainEndpoint::loadDataXmlJaxB);
-        server.registry(DataXmlSaveFasterXmlRequest.class, domainEndpoint::saveDataXmlFasterXml);
-        server.registry(DataXmlSaveJaxBRequest.class, domainEndpoint::saveDataXmlJaxB);
-        server.registry(DataYamlLoadFasterXmlRequest.class, domainEndpoint::loadDataYamlFasterXml);
-        server.registry(DataYamlSaveFasterXmlRequest.class, domainEndpoint::saveDataYamlFasterXml);
-
-        server.registry(ProjectChangeStatusByIdRequest.class, projectEndpoint::changeProjectStatusById);
-        server.registry(ProjectChangeStatusByIndexRequest.class, projectEndpoint::changeProjectStatusByIndex);
-        server.registry(ProjectClearRequest.class, projectEndpoint::clearProject);
-        server.registry(ProjectCreateRequest.class, projectEndpoint::createProject);
-        server.registry(ProjectGetByIdRequest.class, projectEndpoint::getProjectById);
-        server.registry(ProjectGetByIndexRequest.class, projectEndpoint::getProjectByIndex);
-        server.registry(ProjectListRequest.class, projectEndpoint::listProject);
-        server.registry(ProjectRemoveByIdRequest.class, projectEndpoint::removeProjectById);
-        server.registry(ProjectRemoveByIndexRequest.class, projectEndpoint::removeProjectByIndex);
-        server.registry(ProjectUpdateByIdRequest.class, projectEndpoint::updateProjectById);
-        server.registry(ProjectUpdateByIndexRequest.class, projectEndpoint::updateProjectByIndex);
-        server.registry(ProjectCompleteByIdRequest.class, projectEndpoint::completeProjectById);
-        server.registry(ProjectCompleteByIndexRequest.class, projectEndpoint::completeProjectByIndex);
-        server.registry(ProjectStartByIdRequest.class, projectEndpoint::startProjectById);
-        server.registry(ProjectStartByIndexRequest.class, projectEndpoint::startProjectByIndex);
-
-        server.registry(TaskBindToProjectRequest.class, taskEndpoint::bindTaskToProject);
-        server.registry(TaskChangeStatusByIdRequest.class, taskEndpoint::changeTaskStatusById);
-        server.registry(TaskChangeStatusByIndexRequest.class, taskEndpoint::changeTaskStatusByIndex);
-        server.registry(TaskClearRequest.class, taskEndpoint::clearTask);
-        server.registry(TaskCreateRequest.class, taskEndpoint::createTask);
-        server.registry(TaskGetByIdRequest.class, taskEndpoint::getTaskById);
-        server.registry(TaskGetByIndexRequest.class, taskEndpoint::getTaskByIndex);
-        server.registry(TaskListByProjectIdRequest.class, taskEndpoint::listTaskByProjectId);
-        server.registry(TaskListRequest.class, taskEndpoint::listTask);
-        server.registry(TaskRemoveByIdRequest.class, taskEndpoint::removeTaskById);
-        server.registry(TaskRemoveByIndexRequest.class, taskEndpoint::removeTaskByIndex);
-        server.registry(TaskUnbindFromProjectRequest.class, taskEndpoint::unbindTaskFromProject);
-        server.registry(TaskUpdateByIdRequest.class, taskEndpoint::updateTaskById);
-        server.registry(TaskUpdateByIndexRequest.class, taskEndpoint::updateTaskByIndex);
-        server.registry(TaskCompleteByIdRequest.class, taskEndpoint::completeTaskById);
-        server.registry(TaskCompleteByIndexRequest.class, taskEndpoint::completeTaskByIndex);
-        server.registry(TaskStartByIdRequest.class, taskEndpoint::startTaskById);
-        server.registry(TaskStartByIndexRequest.class, taskEndpoint::startTaskByIndex);
-
-        server.registry(UserLockRequest.class, userEndpoint::lockUser);
-        server.registry(UserUnlockRequest.class, userEndpoint::unlockUser);
-        server.registry(UserRemoveRequest.class, userEndpoint::removeUser);
-        server.registry(UserRegistryRequest.class, userEndpoint::registryUser);
-        server.registry(UserChangePasswordRequest.class, userEndpoint::changeUserPassword);
-        server.registry(UserUpdateProfileRequest.class, userEndpoint::updateUserProfile);
+    private void registry(@NonNull final Object endpoint) {
+        @NonNull final String host = "0.0.0.0"; // TODO getPropertyService
+        @NonNull final String port = "8080";
+        @NonNull final String name = endpoint.getClass().getSimpleName();
+        @NonNull final String url = "http://" + host + ":" + port + "/" + name + "?wsdl";
+        Endpoint.publish(url, endpoint);
+        System.out.println(url);
     }
 
     private void initBackup() {
@@ -197,14 +148,12 @@ public final class Bootstrap implements IServiceLocator {
         LOGGER_LIFECYCLE.info("** WELCOME TO TASK-MANAGER **");
         Runtime.getRuntime().addShutdownHook(new Thread(this::prepareShutdown));
         initBackup();
-        server.start();
     }
 
     @SneakyThrows
     private void prepareShutdown() {
         LOGGER_LIFECYCLE.info("** TASK-MANAGER IS SHUTTING DOWN **");
         backup.stop();
-        server.stop();
     }
 
 }

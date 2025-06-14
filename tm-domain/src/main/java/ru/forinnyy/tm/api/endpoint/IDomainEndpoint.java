@@ -4,7 +4,7 @@ import lombok.NonNull;
 import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
 
-public interface IDomainEndpoint {
+public interface IDomainEndpoint extends IEndpoint {
 
     @NonNull
     DataBackupLoadResponse loadDataBackup(@NonNull DataBackupLoadRequest request);

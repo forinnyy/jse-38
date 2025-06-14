@@ -8,15 +8,38 @@ import ru.forinnyy.tm.dto.response.UserLoginResponse;
 import ru.forinnyy.tm.dto.response.UserLogoutResponse;
 import ru.forinnyy.tm.dto.response.UserProfileResponse;
 
-public interface IAuthEndpoint {
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+@WebService
+public interface IAuthEndpoint extends IEndpoint {
 
     @NonNull
-    UserLoginResponse login(@NonNull UserLoginRequest request);
+    String NAME = "AuthEndpoint";
 
     @NonNull
-    UserLogoutResponse logout(@NonNull UserLogoutRequest request);
+    String PART = NAME  + "Service";
 
     @NonNull
-    UserProfileResponse profile(@NonNull UserProfileRequest request);
+    @WebMethod
+    UserLoginResponse login(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull UserLoginRequest request
+    );
+
+    @NonNull
+    @WebMethod
+    UserLogoutResponse logout(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull UserLogoutRequest request
+    );
+
+    @NonNull
+    @WebMethod
+    UserProfileResponse profile(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull UserProfileRequest request
+    );
 
 }

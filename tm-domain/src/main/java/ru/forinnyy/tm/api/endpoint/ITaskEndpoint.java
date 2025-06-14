@@ -4,7 +4,13 @@ import lombok.NonNull;
 import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
 
-public interface ITaskEndpoint {
+public interface ITaskEndpoint extends IEndpoint {
+
+    @NonNull
+    String NAME = "TaskEndpoint";
+
+    @NonNull
+    String PART = NAME + "Service";
 
     @NonNull
     TaskBindToProjectResponse bindTaskToProject(@NonNull TaskBindToProjectRequest request);

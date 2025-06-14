@@ -2,17 +2,8 @@ package ru.forinnyy.tm.command.project;
 
 import lombok.NonNull;
 import ru.forinnyy.tm.dto.request.ProjectClearRequest;
-import ru.forinnyy.tm.dto.request.ProjectListRequest;
-import ru.forinnyy.tm.dto.request.TaskListByProjectIdRequest;
-import ru.forinnyy.tm.dto.request.TaskRemoveByIdRequest;
-import ru.forinnyy.tm.dto.response.ProjectListResponse;
-import ru.forinnyy.tm.dto.response.TaskListByProjectIdResponse;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
-import ru.forinnyy.tm.model.Project;
-import ru.forinnyy.tm.model.Task;
-
-import java.util.List;
 
 public final class ProjectClearCommand extends AbstractProjectCommand {
 

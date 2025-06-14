@@ -1,54 +1,144 @@
 package ru.forinnyy.tm.api.endpoint;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
 
-public interface IProjectEndpoint {
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+@WebService
+public interface IProjectEndpoint extends IEndpoint {
 
     @NonNull
-    ProjectChangeStatusByIdResponse changeProjectStatusById(@NonNull ProjectChangeStatusByIdRequest request);
+    String NAME = "ProjectEndpoint";
 
     @NonNull
-    ProjectChangeStatusByIndexResponse changeProjectStatusByIndex(@NonNull ProjectChangeStatusByIndexRequest request);
+    String PART = NAME + "Service";
+
+    @SneakyThrows
+    @WebMethod(exclude = true)
+    static IProjectEndpoint newInstance() {
+        return newInstance(HOST, PORT);
+    }
+
+    @SneakyThrows
+    @WebMethod(exclude = true)
+    static IProjectEndpoint newInstance(@NonNull final IConnectionProvider connectionProvider) {
+        return IEndpoint.newInstance(connectionProvider, NAME, SPACE, PART, IProjectEndpoint.class);
+    }
+
+    @SneakyThrows
+    @WebMethod(exclude = true)
+    static IProjectEndpoint newInstance(@NonNull final String host, @NonNull final String port) {
+        return IEndpoint.newInstanse(host, port, NAME, SPACE, PART, IProjectEndpoint.class);
+    }
 
     @NonNull
-    ProjectClearResponse clearProject(@NonNull ProjectClearRequest request);
+    @WebMethod
+    ProjectChangeStatusByIdResponse changeProjectStatusById(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull ProjectChangeStatusByIdRequest request
+    );
 
     @NonNull
-    ProjectCreateResponse createProject(@NonNull ProjectCreateRequest request);
+    @WebMethod
+    ProjectChangeStatusByIndexResponse changeProjectStatusByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull ProjectChangeStatusByIndexRequest request
+    );
 
     @NonNull
-    ProjectGetByIdResponse getProjectById(@NonNull ProjectGetByIdRequest request);
+    @WebMethod
+    ProjectClearResponse clearProject(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull ProjectClearRequest request
+    );
 
     @NonNull
-    ProjectGetByIndexResponse getProjectByIndex(@NonNull ProjectGetByIndexRequest request);
+    @WebMethod
+    ProjectCreateResponse createProject(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull ProjectCreateRequest request
+    );
 
     @NonNull
-    ProjectListResponse listProject(@NonNull ProjectListRequest request);
+    @WebMethod
+    ProjectGetByIdResponse getProjectById(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull ProjectGetByIdRequest request
+    );
 
     @NonNull
-    ProjectRemoveByIdResponse removeProjectById(@NonNull ProjectRemoveByIdRequest request);
+    @WebMethod
+    ProjectGetByIndexResponse getProjectByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull ProjectGetByIndexRequest request
+    );
 
     @NonNull
-    ProjectRemoveByIndexResponse removeProjectByIndex(@NonNull ProjectRemoveByIndexRequest request);
+    @WebMethod
+    ProjectListResponse listProject(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull ProjectListRequest request
+    );
 
     @NonNull
-    ProjectUpdateByIdResponse updateProjectById(@NonNull ProjectUpdateByIdRequest request);
+    @WebMethod
+    ProjectRemoveByIdResponse removeProjectById(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull ProjectRemoveByIdRequest request
+    );
 
     @NonNull
-    ProjectUpdateByIndexResponse updateProjectByIndex(@NonNull ProjectUpdateByIndexRequest request);
+    @WebMethod
+    ProjectRemoveByIndexResponse removeProjectByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull ProjectRemoveByIndexRequest request
+    );
 
     @NonNull
-    ProjectCompleteByIdResponse completeProjectById(@NonNull ProjectCompleteByIdRequest request);
+    @WebMethod
+    ProjectUpdateByIdResponse updateProjectById(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull ProjectUpdateByIdRequest request
+    );
 
     @NonNull
-    ProjectCompleteByIndexResponse completeProjectByIndex(@NonNull ProjectCompleteByIndexRequest request);
+    @WebMethod
+    ProjectUpdateByIndexResponse updateProjectByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull ProjectUpdateByIndexRequest request
+    );
 
     @NonNull
-    ProjectStartByIdResponse startProjectById(@NonNull ProjectStartByIdRequest request);
+    @WebMethod
+    ProjectCompleteByIdResponse completeProjectById(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull ProjectCompleteByIdRequest request
+    );
 
     @NonNull
-    ProjectStartByIndexResponse startProjectByIndex(@NonNull ProjectStartByIndexRequest request);
+    @WebMethod
+    ProjectCompleteByIndexResponse completeProjectByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull ProjectCompleteByIndexRequest request
+    );
+
+    @NonNull
+    @WebMethod
+    ProjectStartByIdResponse startProjectById(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull ProjectStartByIdRequest request
+    );
+
+    @NonNull
+    @WebMethod
+    ProjectStartByIndexResponse startProjectByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull ProjectStartByIndexRequest request
+    );
 
 }

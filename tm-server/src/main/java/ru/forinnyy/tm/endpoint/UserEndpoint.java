@@ -8,7 +8,6 @@ import ru.forinnyy.tm.api.service.IUserService;
 import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
 import ru.forinnyy.tm.enumerated.Role;
-import ru.forinnyy.tm.model.User;
 
 public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoint {
 
