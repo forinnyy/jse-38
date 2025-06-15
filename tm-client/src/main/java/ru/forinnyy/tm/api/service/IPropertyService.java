@@ -1,14 +1,12 @@
 package ru.forinnyy.tm.api.service;
 
 import lombok.NonNull;
+import ru.forinnyy.tm.api.endpoint.IConnectionProvider;
 
-public interface IPropertyService {
-
-    @NonNull
-    String getApplicationConfig();
-
+public interface IPropertyService extends IConnectionProvider {
 
     @NonNull
-    Integer getServerPort();
+    String getApplicationVersion();
+
 
 }

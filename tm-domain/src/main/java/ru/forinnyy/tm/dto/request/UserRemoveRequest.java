@@ -9,4 +9,8 @@ public final class UserRemoveRequest extends AbstractUserRequest {
 
     private String login;
 
+    public UserRemoveRequest(String token) {
+        super(token);
+    }
+
 }

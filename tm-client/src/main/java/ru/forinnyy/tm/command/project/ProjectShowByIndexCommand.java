@@ -33,7 +33,7 @@ public final class ProjectShowByIndexCommand extends AbstractProjectCommand {
         System.out.println("ENTER INDEX:");
         @NonNull final Integer index = TerminalUtil.nextNumber() -1;
 
-        @NonNull final ProjectGetByIndexRequest request = new ProjectGetByIndexRequest();
+        @NonNull final ProjectGetByIndexRequest request = new ProjectGetByIndexRequest(getToken());
         request.setIndex(index);
         final ProjectGetByIndexResponse response = getProjectEndpointClient().getProjectByIndex(request);
         renderProject(response.getProject());

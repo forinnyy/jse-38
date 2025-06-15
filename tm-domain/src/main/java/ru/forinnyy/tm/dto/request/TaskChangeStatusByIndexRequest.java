@@ -12,4 +12,8 @@ public final class TaskChangeStatusByIndexRequest extends AbstractUserRequest {
 
     private Integer index;
 
+    public TaskChangeStatusByIndexRequest(String token) {
+        super(token);
+    }
+
 }

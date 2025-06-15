@@ -35,7 +35,7 @@ public final class TaskCreateCommand extends AbstractTaskCommand {
         System.out.println("[ENTER DESCRIPTION]");
         @NonNull final String description = TerminalUtil.nextLine();
 
-        @NonNull final TaskCreateRequest request = new TaskCreateRequest();
+        @NonNull final TaskCreateRequest request = new TaskCreateRequest(getToken());
         request.setName(name);
         request.setDescription(description);
         getTaskEndpointClient().createTask(request);

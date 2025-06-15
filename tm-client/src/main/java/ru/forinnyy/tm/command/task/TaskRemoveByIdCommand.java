@@ -33,7 +33,7 @@ public final class TaskRemoveByIdCommand extends AbstractTaskCommand {
         System.out.println("ENTER ID:");
         @NonNull final String id = TerminalUtil.nextLine();
 
-        @NonNull final TaskRemoveByIdRequest request = new TaskRemoveByIdRequest();
+        @NonNull final TaskRemoveByIdRequest request = new TaskRemoveByIdRequest(getToken());
         request.setId(id);
         getTaskEndpointClient().removeTaskById(request);
     }

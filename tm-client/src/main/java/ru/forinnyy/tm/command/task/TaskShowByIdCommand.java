@@ -35,7 +35,7 @@ public final class TaskShowByIdCommand extends AbstractTaskCommand {
         System.out.println("ENTER ID:");
         @NonNull final String id = TerminalUtil.nextLine();
         
-        @NonNull final TaskGetByIdRequest request = new TaskGetByIdRequest();
+        @NonNull final TaskGetByIdRequest request = new TaskGetByIdRequest(getToken());
         request.setId(id);
         @NonNull final TaskGetByIdResponse response = getTaskEndpointClient().getTaskById(request);
         if (response.getTask() == null) throw new TaskNotFoundException();

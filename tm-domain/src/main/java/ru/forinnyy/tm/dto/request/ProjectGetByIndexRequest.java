@@ -9,4 +9,8 @@ public final class ProjectGetByIndexRequest extends AbstractUserRequest {
 
     private Integer index;
 
+    public ProjectGetByIndexRequest(String token) {
+        super(token);
+    }
+
 }

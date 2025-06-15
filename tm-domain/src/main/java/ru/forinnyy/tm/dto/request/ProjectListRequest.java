@@ -10,4 +10,8 @@ public final class ProjectListRequest extends AbstractUserRequest {
 
     private Sort sort;
 
+    public ProjectListRequest(String token) {
+        super(token);
+    }
+
 }

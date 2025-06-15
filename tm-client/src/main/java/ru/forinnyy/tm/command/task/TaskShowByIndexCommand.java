@@ -35,7 +35,7 @@ public final class TaskShowByIndexCommand extends AbstractTaskCommand {
         System.out.println("ENTER INDEX:");
         @NonNull final Integer index = TerminalUtil.nextNumber() -1;
 
-        @NonNull final TaskGetByIndexRequest request = new TaskGetByIndexRequest();
+        @NonNull final TaskGetByIndexRequest request = new TaskGetByIndexRequest(getToken());
         request.setIndex(index);
         @NonNull final TaskGetByIndexResponse response = getTaskEndpointClient().getTaskByIndex(request);
         if (response.getTask() == null) throw new TaskNotFoundException();

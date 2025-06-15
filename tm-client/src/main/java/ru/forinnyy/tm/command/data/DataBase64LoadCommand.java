@@ -13,7 +13,7 @@ public final class DataBase64LoadCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        @NonNull final DataBase64LoadRequest request = new DataBase64LoadRequest();
+        @NonNull final DataBase64LoadRequest request = new DataBase64LoadRequest(getToken());
         getDomainEndpoint().loadDataBase64(request);
     }
 

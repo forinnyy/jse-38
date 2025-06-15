@@ -9,4 +9,8 @@ public final class ProjectRemoveByIndexRequest extends AbstractUserRequest {
 
     private Integer index;
 
+    public ProjectRemoveByIndexRequest(String token) {
+        super(token);
+    }
+
 }

@@ -12,4 +12,8 @@ public final class ProjectChangeStatusByIndexRequest extends AbstractUserRequest
 
     private Status status;
 
+    public ProjectChangeStatusByIndexRequest(String token) {
+        super(token);
+    }
+
 }

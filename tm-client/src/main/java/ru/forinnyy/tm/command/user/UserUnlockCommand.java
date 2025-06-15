@@ -42,9 +42,9 @@ public final class UserUnlockCommand extends AbstractUserCommand {
         System.out.println("ENTER LOGIN");
         @NonNull final String login = TerminalUtil.nextLine();
 
-        @NonNull final UserUnlockRequest request = new UserUnlockRequest();
+        @NonNull final UserUnlockRequest request = new UserUnlockRequest(getToken());
         request.setLogin(login);
-        getUserEndpointClient().unlockUser(request);
+        getUserEndpoint().unlockUser(request);
     }
 
 }

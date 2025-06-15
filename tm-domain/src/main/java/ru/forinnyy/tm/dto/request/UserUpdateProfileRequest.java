@@ -13,4 +13,8 @@ public final class UserUpdateProfileRequest extends AbstractUserRequest {
 
     private String middleName;
 
+    public UserUpdateProfileRequest(String token) {
+        super(token);
+    }
+
 }

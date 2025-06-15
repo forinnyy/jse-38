@@ -9,4 +9,8 @@ public final class ProjectStartByIdRequest extends AbstractUserRequest {
 
     private String id;
 
+    public ProjectStartByIdRequest(String token) {
+        super(token);
+    }
+
 }

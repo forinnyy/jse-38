@@ -30,7 +30,7 @@ public final class TaskClearCommand extends AbstractTaskCommand {
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[CLEAR TASKS]");
 
-        @NonNull final TaskClearRequest request = new TaskClearRequest();
+        @NonNull final TaskClearRequest request = new TaskClearRequest(getToken());
         getTaskEndpointClient().clearTask(request);
     }
 

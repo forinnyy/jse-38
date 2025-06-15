@@ -41,7 +41,7 @@ public final class UserRegistryCommand extends AbstractUserCommand {
         request.setLogin(login);
         request.setEmail(email);
         request.setPassword(password);
-        getUserEndpointClient().registryUser(request);
+        getUserEndpoint().registryUser(request);
     }
 
     @Override

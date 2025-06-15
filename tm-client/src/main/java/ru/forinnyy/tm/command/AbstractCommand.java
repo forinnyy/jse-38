@@ -4,9 +4,9 @@ package ru.forinnyy.tm.command;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import ru.forinnyy.tm.api.endpoint.IAuthEndpointClient;
-import ru.forinnyy.tm.api.endpoint.IProjectEndpointClient;
-import ru.forinnyy.tm.api.endpoint.ITaskEndpointClient;
+import ru.forinnyy.tm.api.endpoint.IAuthEndpoint;
+import ru.forinnyy.tm.api.endpoint.IProjectEndpoint;
+import ru.forinnyy.tm.api.endpoint.ITaskEndpoint;
 import ru.forinnyy.tm.api.model.ICommand;
 import ru.forinnyy.tm.api.service.IServiceLocator;
 
@@ -15,21 +15,29 @@ import ru.forinnyy.tm.api.service.IServiceLocator;
 @Getter
 public abstract class AbstractCommand implements ICommand {
 
+    protected String getToken() {
+        return getServiceLocator().getTokenService().getToken();
+    }
+
+    protected void setToken(final String token) {
+        getServiceLocator().getTokenService().setToken(token);
+    }
+
     @NonNull
     protected IServiceLocator serviceLocator;
 
-    protected IAuthEndpointClient getAuthEndpointClient() {
-        return serviceLocator.getAuthEndpointClient();
+    protected IAuthEndpoint getAuthEndpoint() {
+        return serviceLocator.getAuthEndpoint();
     }
 
     @NonNull
-    protected ITaskEndpointClient getTaskEndpointClient() {
-        return getServiceLocator().getTaskEndpointClient();
+    protected ITaskEndpoint getTaskEndpointClient() {
+        return getServiceLocator().getTaskEndpoint();
     }
 
     @NonNull
-    protected IProjectEndpointClient getProjectEndpointClient() {
-        return getServiceLocator().getProjectEndpointClient();
+    protected IProjectEndpoint getProjectEndpointClient() {
+        return getServiceLocator().getProjectEndpoint();
     }
 
     @NonNull

@@ -9,4 +9,8 @@ public final class TaskCompleteByIndexRequest extends AbstractUserRequest {
 
     private Integer index;
 
+    public TaskCompleteByIndexRequest(String token) {
+        super(token);
+    }
+
 }

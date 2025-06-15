@@ -36,7 +36,7 @@ public final class TaskListByProjectIdCommand extends AbstractTaskCommand {
         System.out.println("ENTER PROJECT ID:");
         @NonNull final String projectId = TerminalUtil.nextLine();
 
-        @NonNull final TaskListByProjectIdRequest request = new TaskListByProjectIdRequest();
+        @NonNull final TaskListByProjectIdRequest request = new TaskListByProjectIdRequest(getToken());
         request.setProjectId(projectId);
         @NonNull final TaskListByProjectIdResponse response = getTaskEndpointClient().listTaskByProjectId(request);
         if (response.getTasks() == null) response.setTasks(Collections.emptyList());

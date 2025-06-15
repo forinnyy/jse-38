@@ -9,4 +9,8 @@ public final class UserUnlockRequest extends AbstractUserRequest {
 
     private String login;
 
+    public UserUnlockRequest(String token) {
+        super(token);
+    }
+
 }

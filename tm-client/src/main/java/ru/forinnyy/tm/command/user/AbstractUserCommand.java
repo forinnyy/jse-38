@@ -1,8 +1,7 @@
 package ru.forinnyy.tm.command.user;
 
 import lombok.NonNull;
-import ru.forinnyy.tm.api.endpoint.IAuthEndpointClient;
-import ru.forinnyy.tm.api.endpoint.IUserEndpointClient;
+import ru.forinnyy.tm.api.endpoint.IUserEndpoint;
 import ru.forinnyy.tm.command.AbstractCommand;
 import ru.forinnyy.tm.exception.entity.UserNotFoundException;
 import ru.forinnyy.tm.model.User;
@@ -10,13 +9,8 @@ import ru.forinnyy.tm.model.User;
 public abstract class AbstractUserCommand extends AbstractCommand {
 
     @NonNull
-    public IUserEndpointClient getUserEndpointClient() {
-        return serviceLocator.getUserEndpointClient();
-    }
-
-    @NonNull
-    public IAuthEndpointClient getAuthEndpointClient() {
-        return super.getAuthEndpointClient();
+    public IUserEndpoint getUserEndpoint() {
+        return serviceLocator.getUserEndpoint();
     }
 
     protected void showUser(final User user) throws UserNotFoundException {

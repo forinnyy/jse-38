@@ -9,4 +9,8 @@ public final class UserChangePasswordRequest extends AbstractUserRequest {
 
     private String password;
 
+    public UserChangePasswordRequest(String token) {
+        super(token);
+    }
+
 }

@@ -12,13 +12,14 @@ import ru.forinnyy.tm.api.repository.ICommandRepository;
 import ru.forinnyy.tm.api.service.ICommandService;
 import ru.forinnyy.tm.api.service.IPropertyService;
 import ru.forinnyy.tm.api.service.IServiceLocator;
-import ru.forinnyy.tm.client.*;
+import ru.forinnyy.tm.api.service.ITokenService;
 import ru.forinnyy.tm.command.AbstractCommand;
 import ru.forinnyy.tm.exception.system.ArgumentNotSupportedException;
 import ru.forinnyy.tm.exception.system.CommandNotSupportedException;
 import ru.forinnyy.tm.repository.CommandRepository;
 import ru.forinnyy.tm.service.CommandService;
 import ru.forinnyy.tm.service.PropertyService;
+import ru.forinnyy.tm.service.TokenService;
 import ru.forinnyy.tm.util.SystemUtil;
 import ru.forinnyy.tm.util.TerminalUtil;
 
@@ -52,36 +53,36 @@ public final class Bootstrap implements IServiceLocator {
     @NonNull
     private final IPropertyService propertyService = new PropertyService();
 
+    @Getter
+    @NonNull
+    private final ITokenService tokenService = new TokenService();
+
     @NonNull
     private final FileScanner fileScanner = new FileScanner(this);
 
     @Getter
     @NonNull
-    private final IEndpointClient connectionEndpointClient = new ConnectionEndpointClient();
+    private final ISystemEndpoint systemEndpoint = ISystemEndpoint.newInstance(propertyService);
 
     @Getter
     @NonNull
-    private final ISystemEndpointClient systemEndpointClient = new SystemEndpointClient();
+    private final IDomainEndpoint domainEndpoint = IDomainEndpoint.newInstance(propertyService);
 
     @Getter
     @NonNull
-    private final IDomainEndpointClient domainEndpointClient = new DomainEndpointClient();
+    private final IProjectEndpoint projectEndpoint = IProjectEndpoint.newInstance(propertyService);
 
     @Getter
     @NonNull
-    private final IProjectEndpointClient projectEndpointClient = new ProjectEndpointClient();
+    private final ITaskEndpoint taskEndpoint = ITaskEndpoint.newInstance(propertyService);
 
     @Getter
     @NonNull
-    private final ITaskEndpointClient taskEndpointClient = new TaskEndpointClient();
+    private final IAuthEndpoint authEndpoint = IAuthEndpoint.newInstance(propertyService);
 
     @Getter
     @NonNull
-    private final IAuthEndpointClient authEndpointClient = new AuthEndpointClient();
-
-    @Getter
-    @NonNull
-    private final IUserEndpointClient userEndpointClient = new UserEndpointClient();
+    private final IUserEndpoint userEndpoint = IUserEndpoint.newInstance(propertyService);
 
     {
         @NonNull final Reflections reflections = new Reflections(PACKAGE_COMMANDS);

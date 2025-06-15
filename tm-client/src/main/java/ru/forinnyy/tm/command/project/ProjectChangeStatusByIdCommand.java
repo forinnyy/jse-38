@@ -40,7 +40,7 @@ public final class ProjectChangeStatusByIdCommand extends AbstractProjectCommand
         @NonNull final String statusValue = TerminalUtil.nextLine();
         final Status status = Status.toStatus(statusValue);
 
-        @NonNull final ProjectChangeStatusByIdRequest request = new ProjectChangeStatusByIdRequest();
+        @NonNull final ProjectChangeStatusByIdRequest request = new ProjectChangeStatusByIdRequest(getToken());
         request.setId(id);
         request.setStatus(status);
         getProjectEndpointClient().changeProjectStatusById(request);

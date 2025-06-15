@@ -34,7 +34,7 @@ public final class TaskCompleteByIndexCommand extends AbstractTaskCommand {
         System.out.println("ENTER INDEX:");
         @NonNull final Integer index = TerminalUtil.nextNumber() - 1;
 
-        @NonNull final TaskChangeStatusByIndexRequest request = new TaskChangeStatusByIndexRequest();
+        @NonNull final TaskChangeStatusByIndexRequest request = new TaskChangeStatusByIndexRequest(getToken());
         request.setIndex(index);
         request.setStatus(Status.COMPLETED);
         getTaskEndpointClient().changeTaskStatusByIndex(request);

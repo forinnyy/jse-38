@@ -11,4 +11,8 @@ public final class TaskUnbindFromProjectRequest extends AbstractUserRequest {
 
     private String projectId;
 
+    public TaskUnbindFromProjectRequest(String token) {
+        super(token);
+    }
+
 }

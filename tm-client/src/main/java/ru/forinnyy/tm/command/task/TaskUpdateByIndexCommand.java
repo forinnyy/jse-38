@@ -37,7 +37,7 @@ public final class TaskUpdateByIndexCommand extends AbstractTaskCommand {
         System.out.println("ENTER DESCRIPTION:");
         @NonNull final String description = TerminalUtil.nextLine();
 
-        @NonNull final TaskUpdateByIndexRequest request = new TaskUpdateByIndexRequest();
+        @NonNull final TaskUpdateByIndexRequest request = new TaskUpdateByIndexRequest(getToken());
         request.setIndex(index);
         request.setName(name);
         request.setDescription(description);

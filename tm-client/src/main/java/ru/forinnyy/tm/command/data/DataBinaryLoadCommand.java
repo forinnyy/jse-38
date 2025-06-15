@@ -13,7 +13,7 @@ public final class DataBinaryLoadCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        @NonNull final DataBinaryLoadRequest request = new DataBinaryLoadRequest();
+        @NonNull final DataBinaryLoadRequest request = new DataBinaryLoadRequest(getToken());
         getDomainEndpoint().loadDataBinary(request);
     }
 

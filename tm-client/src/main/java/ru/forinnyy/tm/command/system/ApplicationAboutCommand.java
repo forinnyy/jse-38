@@ -19,7 +19,7 @@ public final class ApplicationAboutCommand extends AbstractSystemCommand {
     @Override
     public void execute() {
         @NonNull final ApplicationAboutRequest request = new ApplicationAboutRequest();
-        @NonNull final ApplicationAboutResponse response = getSystemEndpointClient().getAbout(request);
+        @NonNull final ApplicationAboutResponse response = getSystemEndpoint().getAbout(request);
 
         System.out.println();
         System.out.println("[ABOUT]");

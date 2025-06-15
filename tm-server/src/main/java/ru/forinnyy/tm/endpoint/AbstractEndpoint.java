@@ -4,13 +4,11 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import ru.forinnyy.tm.api.service.IServiceLocator;
-import ru.forinnyy.tm.api.service.IUserService;
 import ru.forinnyy.tm.dto.request.AbstractUserRequest;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.user.AccessDeniedException;
 import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.Session;
-import ru.forinnyy.tm.model.User;
 
 
 @Getter

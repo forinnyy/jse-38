@@ -42,9 +42,9 @@ public final class UserRemoveCommand extends AbstractUserCommand {
         System.out.println("ENTER LOGIN");
         @NonNull final String login = TerminalUtil.nextLine();
 
-        @NonNull final UserRemoveRequest request = new UserRemoveRequest();
+        @NonNull final UserRemoveRequest request = new UserRemoveRequest(getToken());
         request.setLogin(login);
-        getUserEndpointClient().removeUser(request);
+        getUserEndpoint().removeUser(request);
     }
 
 }

@@ -38,7 +38,7 @@ public final class TaskChangeStatusByIndexCommand extends AbstractTaskCommand {
         @NonNull final String statusValue = TerminalUtil.nextLine();
         final Status status = Status.toStatus(statusValue);
 
-        @NonNull final TaskChangeStatusByIndexRequest request = new TaskChangeStatusByIndexRequest();
+        @NonNull final TaskChangeStatusByIndexRequest request = new TaskChangeStatusByIndexRequest(getToken());
         request.setIndex(index);
         request.setStatus(status);
         getTaskEndpointClient().changeTaskStatusByIndex(request);

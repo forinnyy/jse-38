@@ -9,4 +9,8 @@ public final class TaskGetByIdRequest extends AbstractUserRequest {
 
     private String id;
 
+    public TaskGetByIdRequest(String token) {
+        super(token);
+    }
+
 }

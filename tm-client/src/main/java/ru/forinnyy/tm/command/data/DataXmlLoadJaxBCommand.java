@@ -33,7 +33,7 @@ public final class DataXmlLoadJaxBCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        @NonNull final DataXmlLoadJaxBRequest request = new DataXmlLoadJaxBRequest();
+        @NonNull final DataXmlLoadJaxBRequest request = new DataXmlLoadJaxBRequest(getToken());
         getDomainEndpoint().loadDataXmlJaxB(request);
     }
 

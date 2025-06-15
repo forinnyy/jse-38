@@ -38,11 +38,11 @@ public final class UserUpdateProfileCommand extends AbstractUserCommand {
         System.out.println("ENTER MIDDLE NAME:");
         @NonNull final String middleName = TerminalUtil.nextLine();
 
-        @NonNull final UserUpdateProfileRequest request = new UserUpdateProfileRequest();
+        @NonNull final UserUpdateProfileRequest request = new UserUpdateProfileRequest(getToken());
         request.setFirstName(firstName);
         request.setLastName(lastName);
         request.setMiddleName(middleName);
-        getUserEndpointClient().updateUserProfile(request);
+        getUserEndpoint().updateUserProfile(request);
     }
 
     @NonNull

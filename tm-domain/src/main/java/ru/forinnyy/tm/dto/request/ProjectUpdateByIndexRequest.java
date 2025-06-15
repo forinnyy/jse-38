@@ -13,4 +13,8 @@ public final class ProjectUpdateByIndexRequest extends AbstractUserRequest {
 
     private String description;
 
+    public ProjectUpdateByIndexRequest(String token) {
+        super(token);
+    }
+
 }

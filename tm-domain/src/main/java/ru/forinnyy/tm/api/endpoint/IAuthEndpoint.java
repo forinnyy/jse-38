@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.api.endpoint;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import ru.forinnyy.tm.dto.request.UserLoginRequest;
 import ru.forinnyy.tm.dto.request.UserLogoutRequest;
 import ru.forinnyy.tm.dto.request.UserProfileRequest;
@@ -20,6 +21,24 @@ public interface IAuthEndpoint extends IEndpoint {
 
     @NonNull
     String PART = NAME  + "Service";
+
+    @SneakyThrows
+    @WebMethod(exclude = true)
+    static IAuthEndpoint newInstance() {
+        return newInstance(HOST, PORT);
+    }
+
+    @SneakyThrows
+    @WebMethod(exclude = true)
+    static IAuthEndpoint newInstance(@NonNull final IConnectionProvider connectionProvider) {
+        return IEndpoint.newInstance(connectionProvider, NAME, SPACE, PART, IAuthEndpoint.class);
+    }
+
+    @SneakyThrows
+    @WebMethod(exclude = true)
+    static IAuthEndpoint newInstance(@NonNull final String host, @NonNull final String port) {
+        return IEndpoint.newInstanse(host, port, NAME, SPACE, PART, IAuthEndpoint.class);
+    }
 
     @NonNull
     @WebMethod

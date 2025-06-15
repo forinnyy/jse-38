@@ -13,4 +13,8 @@ public final class ProjectUpdateByIdRequest extends AbstractUserRequest {
 
     private String description;
 
+    public ProjectUpdateByIdRequest(String token) {
+        super(token);
+    }
+
 }

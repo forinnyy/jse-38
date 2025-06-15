@@ -37,7 +37,7 @@ public final class ProjectUpdateByIndexCommand extends AbstractProjectCommand {
         System.out.println("ENTER DESCRIPTION:");
         @NonNull final String description = TerminalUtil.nextLine();
 
-        @NonNull final ProjectUpdateByIndexRequest request = new ProjectUpdateByIndexRequest();
+        @NonNull final ProjectUpdateByIndexRequest request = new ProjectUpdateByIndexRequest(getToken());
         request.setIndex(index);
         request.setName(name);
         request.setDescription(description);

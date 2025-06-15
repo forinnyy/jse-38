@@ -9,4 +9,8 @@ public final class TaskRemoveByIdRequest extends AbstractUserRequest {
 
     private String id;
 
+    public TaskRemoveByIdRequest(String token) {
+        super(token);
+    }
+
 }

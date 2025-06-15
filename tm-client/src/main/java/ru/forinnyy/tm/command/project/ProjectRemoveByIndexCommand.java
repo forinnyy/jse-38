@@ -33,7 +33,7 @@ public final class ProjectRemoveByIndexCommand extends AbstractProjectCommand {
         System.out.println("ENTER INDEX:");
         @NonNull final Integer index = TerminalUtil.nextNumber() -1;
 
-        @NonNull final ProjectRemoveByIndexRequest request = new ProjectRemoveByIndexRequest();
+        @NonNull final ProjectRemoveByIndexRequest request = new ProjectRemoveByIndexRequest(getToken());
         request.setIndex(index);
         getProjectEndpointClient().removeProjectByIndex(request);
     }

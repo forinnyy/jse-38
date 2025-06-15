@@ -33,7 +33,7 @@ public final class TaskRemoveByIndexCommand extends AbstractTaskCommand {
         System.out.println("ENTER INDEX:");
         @NonNull final Integer index = TerminalUtil.nextNumber() -1;
 
-        @NonNull final TaskRemoveByIndexRequest request = new TaskRemoveByIndexRequest();
+        @NonNull final TaskRemoveByIndexRequest request = new TaskRemoveByIndexRequest(getToken());
         request.setIndex(index);
         getTaskEndpointClient().removeTaskByIndex(request);
     }

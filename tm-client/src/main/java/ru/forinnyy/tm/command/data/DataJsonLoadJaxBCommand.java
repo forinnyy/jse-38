@@ -33,7 +33,7 @@ public final class DataJsonLoadJaxBCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        @NonNull final DataJsonLoadJaxBRequest request = new DataJsonLoadJaxBRequest();
+        @NonNull final DataJsonLoadJaxBRequest request = new DataJsonLoadJaxBRequest(getToken());
         getDomainEndpoint().loadDataJsonJaxB(request);
     }
 

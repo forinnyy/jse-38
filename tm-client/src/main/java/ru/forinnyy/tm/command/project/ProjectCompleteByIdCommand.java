@@ -33,7 +33,7 @@ public final class ProjectCompleteByIdCommand extends AbstractProjectCommand {
         System.out.println("ENTER ID:");
         @NonNull final String id = TerminalUtil.nextLine();
 
-        @NonNull final ProjectChangeStatusByIdRequest request = new ProjectChangeStatusByIdRequest();
+        @NonNull final ProjectChangeStatusByIdRequest request = new ProjectChangeStatusByIdRequest(getToken());
         request.setId(id);
         getProjectEndpointClient().changeProjectStatusById(request);
     }

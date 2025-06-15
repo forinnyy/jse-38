@@ -30,8 +30,8 @@ public final class UserViewProfileCommand extends AbstractUserCommand {
 
     @Override
     public void execute() throws AbstractFieldException, AbstractUserException {
-        @NonNull final UserProfileRequest request = new UserProfileRequest();
-        @NonNull final UserProfileResponse response = getAuthEndpointClient().profile(request);
+        @NonNull final UserProfileRequest request = new UserProfileRequest(getToken());
+        @NonNull final UserProfileResponse response = getAuthEndpoint().profile(request);
 
         @NonNull final User user = response.getUser();
         System.out.println("[USER VIEW PROFILE]");

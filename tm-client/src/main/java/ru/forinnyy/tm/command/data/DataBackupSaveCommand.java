@@ -13,7 +13,7 @@ public final class DataBackupSaveCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        @NonNull final DataBackupSaveRequest request = new DataBackupSaveRequest();
+        @NonNull final DataBackupSaveRequest request = new DataBackupSaveRequest(getToken());
         getDomainEndpoint().saveDataBackup(request);
     }
 

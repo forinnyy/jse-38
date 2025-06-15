@@ -12,4 +12,8 @@ public final class TaskChangeStatusByIdRequest extends AbstractUserRequest {
 
     private Status status;
 
+    public TaskChangeStatusByIdRequest(String token) {
+        super(token);
+    }
+
 }

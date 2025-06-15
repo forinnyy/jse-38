@@ -20,7 +20,7 @@ public final class ApplicationVersionCommand extends AbstractSystemCommand {
         System.out.println("[VERSION]");
 
         @NonNull final ApplicationVersionRequest request = new ApplicationVersionRequest();
-        @NonNull final ApplicationVersionResponse response = getSystemEndpointClient().getVersion(request);
+        @NonNull final ApplicationVersionResponse response = getSystemEndpoint().getVersion(request);
         System.out.println(response.getVersion());
     }
 

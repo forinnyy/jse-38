@@ -29,7 +29,7 @@ public final class ProjectClearCommand extends AbstractProjectCommand {
     public void execute() throws AbstractUserException, AbstractFieldException {
         System.out.println("[CLEAR PROJECTS]");
 
-        @NonNull final ProjectClearRequest request = new ProjectClearRequest();
+        @NonNull final ProjectClearRequest request = new ProjectClearRequest(getToken());
         getProjectEndpointClient().clearProject(request);
     }
 

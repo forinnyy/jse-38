@@ -30,8 +30,8 @@ public final class UserLogoutCommand extends AbstractUserCommand {
     @Override
     public void execute() throws AbstractEntityException, AbstractFieldException, AbstractUserException {
         System.out.println("[USER LOGOUT]");
-        @NonNull final UserLogoutRequest request = new UserLogoutRequest();
-        getAuthEndpointClient().logout(request);
+        @NonNull final UserLogoutRequest request = new UserLogoutRequest(getToken());
+        getAuthEndpoint().logout(request);
     }
 
     @Override

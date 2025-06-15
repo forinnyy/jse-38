@@ -33,7 +33,7 @@ public final class DataJsonSaveJaxBCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        @NonNull final DataJsonSaveJaxBRequest request = new DataJsonSaveJaxBRequest();
+        @NonNull final DataJsonSaveJaxBRequest request = new DataJsonSaveJaxBRequest(getToken());
         getDomainEndpoint().saveDataJsonJaxB(request);
     }
 

@@ -1,18 +1,13 @@
 package ru.forinnyy.tm.service;
 
 import com.jcabi.manifests.Manifests;
-import lombok.Cleanup;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.SneakyThrows;
 import ru.forinnyy.tm.api.service.IPropertyService;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.Properties;
 
-import static java.lang.ClassLoader.getSystemResourceAsStream;
-
+@NoArgsConstructor
 public final class PropertyService implements IPropertyService {
 
     @NonNull
@@ -37,51 +32,11 @@ public final class PropertyService implements IPropertyService {
     @NonNull
     private final Properties properties = new Properties();
 
-    @SneakyThrows
-    public PropertyService() {
-        final boolean existsConfig = isExistsExternalConfig();
-        if (existsConfig) loadExternalConfig(properties);
-        else loadInternalConfig(properties);
-    }
-
-    @SneakyThrows
-    private void loadInternalConfig(@NonNull final Properties properties) {
-        @NonNull final String name = APPLICATION_FILE_NAME_DEFAULT;
-        @Cleanup final InputStream inputStream = getSystemResourceAsStream(name);
-        if (inputStream == null) return;
-        properties.load(inputStream);
-    }
-
-    @SneakyThrows
-    private void loadExternalConfig(@NonNull final Properties properties) {
-        @NonNull final String name = getApplicationConfig();
-        @NonNull final File file = new File(name);
-        @Cleanup @NonNull final InputStream inputStream = new FileInputStream(file);
-        properties.load(inputStream);
-    }
-
-    private boolean isExistsExternalConfig() {
-        @NonNull final String name = getApplicationConfig();
-        @NonNull final File file = new File(name);
-        return file.exists();
-    }
-
-    @NonNull
-    @Override
-    public String getApplicationConfig() {
-        return getStringValue(APPLICATION_FILE_NAME_KEY, APPLICATION_FILE_NAME_DEFAULT);
-    }
-
     @NonNull
     private String read(final String key) {
         if (key == null || key.isEmpty()) return EMPTY_VALUE;
         if (!Manifests.exists(key)) return EMPTY_VALUE;
         return Manifests.read(key);
-    }
-
-    @Override
-    public @NonNull Integer getServerPort() {
-        return getIntegerValue(PORT, PORT_DEFAULT);
     }
 
     @NonNull
@@ -107,4 +62,18 @@ public final class PropertyService implements IPropertyService {
         return getStringValue(key, EMPTY_VALUE);
     }
 
+    @Override
+    public @NonNull String getApplicationVersion() {
+        return "1.1.1";
+    }
+
+    @Override
+    public @NonNull String getHost() {
+        return "localhost";
+    }
+
+    @Override
+    public @NonNull String getPort() {
+        return "8080";
+    }
 }

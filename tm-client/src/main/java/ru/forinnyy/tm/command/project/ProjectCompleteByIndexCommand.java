@@ -34,7 +34,7 @@ public final class ProjectCompleteByIndexCommand extends AbstractProjectCommand 
         System.out.println("ENTER INDEX:");
         @NonNull final Integer index = TerminalUtil.nextNumber() - 1;
 
-        @NonNull final ProjectChangeStatusByIndexRequest request = new ProjectChangeStatusByIndexRequest();
+        @NonNull final ProjectChangeStatusByIndexRequest request = new ProjectChangeStatusByIndexRequest(getToken());
         request.setIndex(index);
         request.setStatus(Status.COMPLETED);
         getProjectEndpointClient().changeProjectStatusByIndex(request);

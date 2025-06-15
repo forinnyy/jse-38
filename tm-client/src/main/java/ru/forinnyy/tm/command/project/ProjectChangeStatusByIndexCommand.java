@@ -40,7 +40,7 @@ public final class ProjectChangeStatusByIndexCommand extends AbstractProjectComm
         @NonNull final String statusValue = TerminalUtil.nextLine();
         final Status status = Status.toStatus(statusValue);
 
-        @NonNull final ProjectChangeStatusByIndexRequest request = new ProjectChangeStatusByIndexRequest();
+        @NonNull final ProjectChangeStatusByIndexRequest request = new ProjectChangeStatusByIndexRequest(getToken());
         request.setIndex(index);
         request.setStatus(status);
         getProjectEndpointClient().changeProjectStatusByIndex(request);

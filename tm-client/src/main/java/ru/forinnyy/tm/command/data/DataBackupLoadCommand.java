@@ -13,7 +13,7 @@ public final class DataBackupLoadCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        @NonNull final DataBackupLoadRequest request = new DataBackupLoadRequest();
+        @NonNull final DataBackupLoadRequest request = new DataBackupLoadRequest(getToken());
         getDomainEndpoint().loadDataBackup(request);
     }
 

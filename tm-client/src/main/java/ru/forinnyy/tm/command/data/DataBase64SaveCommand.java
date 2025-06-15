@@ -13,7 +13,7 @@ public final class DataBase64SaveCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        @NonNull final DataBase64SaveRequest request = new DataBase64SaveRequest();
+        @NonNull final DataBase64SaveRequest request = new DataBase64SaveRequest(getToken());
         getDomainEndpoint().saveDataBase64(request);
     }
 

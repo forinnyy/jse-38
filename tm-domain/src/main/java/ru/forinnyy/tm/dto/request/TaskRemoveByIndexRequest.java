@@ -9,4 +9,8 @@ public final class TaskRemoveByIndexRequest extends AbstractUserRequest {
 
     private Integer index;
 
+    public TaskRemoveByIndexRequest(String token) {
+        super(token);
+    }
+
 }

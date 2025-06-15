@@ -13,7 +13,7 @@ public final class DataBinarySaveCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        @NonNull final DataBinarySaveRequest request = new DataBinarySaveRequest();
+        @NonNull final DataBinarySaveRequest request = new DataBinarySaveRequest(getToken());
         getDomainEndpoint().saveDataBinary(request);
     }
 

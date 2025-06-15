@@ -33,7 +33,7 @@ public final class ProjectRemoveByIdCommand extends AbstractProjectCommand {
         System.out.println("ENTER ID:");
         @NonNull final String id = TerminalUtil.nextLine();
 
-        @NonNull final ProjectRemoveByIdRequest request = new ProjectRemoveByIdRequest();
+        @NonNull final ProjectRemoveByIdRequest request = new ProjectRemoveByIdRequest(getToken());
         request.setId(id);
         getProjectEndpointClient().removeProjectById(request);
     }

@@ -40,7 +40,7 @@ public final class TaskChangeStatusByIdCommand extends AbstractTaskCommand {
         @NonNull final String statusValue = TerminalUtil.nextLine();
         final Status status = Status.toStatus(statusValue);
 
-        @NonNull final TaskChangeStatusByIdRequest request = new TaskChangeStatusByIdRequest();
+        @NonNull final TaskChangeStatusByIdRequest request = new TaskChangeStatusByIdRequest(getToken());
         request.setId(id);
         request.setStatus(status);
         getTaskEndpointClient().changeTaskStatusById(request);

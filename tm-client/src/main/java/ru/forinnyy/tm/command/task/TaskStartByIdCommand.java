@@ -34,7 +34,7 @@ public final class TaskStartByIdCommand extends AbstractTaskCommand {
         System.out.println("ENTER ID:");
         @NonNull final String id = TerminalUtil.nextLine();
 
-        @NonNull final TaskChangeStatusByIdRequest request = new TaskChangeStatusByIdRequest();
+        @NonNull final TaskChangeStatusByIdRequest request = new TaskChangeStatusByIdRequest(getToken());
         request.setId(id);
         request.setStatus(Status.IN_PROGRESS);
         getTaskEndpointClient().changeTaskStatusById(request);

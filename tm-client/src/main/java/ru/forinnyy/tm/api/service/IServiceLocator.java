@@ -12,24 +12,24 @@ public interface IServiceLocator {
     ICommandService getCommandService();
 
     @NonNull
-    IEndpointClient getConnectionEndpointClient();
+    ISystemEndpoint getSystemEndpoint();
 
     @NonNull
-    ISystemEndpointClient getSystemEndpointClient();
+    IDomainEndpoint getDomainEndpoint();
 
     @NonNull
-    IDomainEndpointClient getDomainEndpointClient();
+    IProjectEndpoint getProjectEndpoint();
 
     @NonNull
-    IProjectEndpointClient getProjectEndpointClient();
+    ITaskEndpoint getTaskEndpoint();
 
     @NonNull
-    ITaskEndpointClient getTaskEndpointClient();
+    IAuthEndpoint getAuthEndpoint();
 
     @NonNull
-    IAuthEndpointClient getAuthEndpointClient();
+    IUserEndpoint getUserEndpoint();
 
     @NonNull
-    IUserEndpointClient getUserEndpointClient();
+    ITokenService getTokenService();
 
 }

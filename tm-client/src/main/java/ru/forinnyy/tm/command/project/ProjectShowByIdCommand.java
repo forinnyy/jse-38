@@ -33,7 +33,7 @@ public final class ProjectShowByIdCommand extends AbstractProjectCommand {
         System.out.println("ENTER ID:");
         @NonNull final String id = TerminalUtil.nextLine();
 
-        @NonNull final ProjectGetByIdRequest request = new ProjectGetByIdRequest();
+        @NonNull final ProjectGetByIdRequest request = new ProjectGetByIdRequest(getToken());
         request.setId(id);
         final ProjectGetByIdResponse response = getProjectEndpointClient().getProjectById(request);
         renderProject(response.getProject());

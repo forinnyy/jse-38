@@ -13,4 +13,8 @@ public final class TaskUpdateByIndexRequest extends AbstractUserRequest {
 
     private String description;
 
+    public TaskUpdateByIndexRequest(String token) {
+        super(token);
+    }
+
 }

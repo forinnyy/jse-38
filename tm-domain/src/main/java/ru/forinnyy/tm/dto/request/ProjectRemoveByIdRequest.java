@@ -9,4 +9,8 @@ public final class ProjectRemoveByIdRequest extends AbstractUserRequest {
 
     private String id;
 
+    public ProjectRemoveByIdRequest(String token) {
+        super(token);
+    }
+
 }

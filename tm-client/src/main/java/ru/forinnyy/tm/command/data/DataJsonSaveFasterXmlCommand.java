@@ -33,7 +33,7 @@ public final class DataJsonSaveFasterXmlCommand extends AbstractDataCommand {
     @Override
     @SneakyThrows
     public void execute() {
-        @NonNull final DataJsonSaveFasterXmlRequest request = new DataJsonSaveFasterXmlRequest();
+        @NonNull final DataJsonSaveFasterXmlRequest request = new DataJsonSaveFasterXmlRequest(getToken());
         getDomainEndpoint().saveDataJsonFasterXml(request);
     }
 
