@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.forinnyy.tm.api.endpoint.*;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
+import ru.forinnyy.tm.api.repository.ISessionRepository;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.api.repository.IUserRepository;
 import ru.forinnyy.tm.api.service.*;
@@ -21,6 +22,7 @@ import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.repository.ProjectRepository;
+import ru.forinnyy.tm.repository.SessionRepository;
 import ru.forinnyy.tm.repository.TaskRepository;
 import ru.forinnyy.tm.repository.UserRepository;
 import ru.forinnyy.tm.service.*;
@@ -63,6 +65,12 @@ public final class Bootstrap implements IServiceLocator {
     @NonNull
     private final IPropertyService propertyService = new PropertyService();
 
+    @NonNull
+    private final ISessionRepository sessionRepository = new SessionRepository();
+
+    @NonNull
+    private final ISessionService sessionService = new SessionService(sessionRepository);
+
     @Getter
     @NonNull
     private final IUserService userService = new UserService(propertyService, userRepository, projectRepository, taskRepository);
@@ -72,7 +80,7 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NonNull
-    private final IAuthService authService = new AuthService(propertyService, userService);
+    private final IAuthService authService = new AuthService(propertyService, userService, sessionService);
 
     @NonNull
     private final Backup backup = new Backup(this);
@@ -93,13 +101,16 @@ public final class Bootstrap implements IServiceLocator {
     @NonNull
     private final IUserEndpoint userEndpoint = new UserEndpoint(this);
 
+    @NonNull
+    private final IAuthEndpoint authEndpoint = new AuthEndpoint(this);
+
     {
-//        registry(authService);
+        registry(authEndpoint);
         registry(systemEndpoint);
-//        registry(userEndpoint);
-//        registry(domainEndpoint);
-//        registry(projectEndpoint);
-//        registry(taskRepository);
+        registry(userEndpoint);
+        registry(domainEndpoint);
+        registry(projectEndpoint);
+        registry(taskEndpoint);
     }
 
     private void registry(@NonNull final Object endpoint) {

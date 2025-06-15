@@ -1,57 +1,151 @@
 package ru.forinnyy.tm.api.endpoint;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+@WebService
 public interface IDomainEndpoint extends IEndpoint {
 
     @NonNull
-    DataBackupLoadResponse loadDataBackup(@NonNull DataBackupLoadRequest request);
+    String NAME = "DomainEndpoint";
 
     @NonNull
-    DataBackupSaveResponse saveDataBackup(@NonNull DataBackupSaveRequest request);
+    String PART = NAME + "Service";
+
+    @SneakyThrows
+    @WebMethod(exclude = true)
+    static IDomainEndpoint newInstance() {
+        return newInstance(HOST, PORT);
+    }
+
+    @SneakyThrows
+    @WebMethod(exclude = true)
+    static IDomainEndpoint newInstance(@NonNull final IConnectionProvider connectionProvider) {
+        return IEndpoint.newInstance(connectionProvider, NAME, SPACE, PART, IDomainEndpoint.class);
+    }
+
+    @SneakyThrows
+    @WebMethod(exclude = true)
+    static IDomainEndpoint newInstance(@NonNull final String host, @NonNull final String port) {
+        return IEndpoint.newInstanse(host, port, NAME, SPACE, PART, IDomainEndpoint.class);
+    }
 
     @NonNull
-    DataBase64LoadResponse loadDataBase64(@NonNull DataBase64LoadRequest request);
+    @WebMethod
+    DataBackupLoadResponse loadDataBackup(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataBackupLoadRequest request
+    );
 
     @NonNull
-    DataBase64SaveResponse saveDataBase64(@NonNull DataBase64SaveRequest request);
+    @WebMethod
+    DataBackupSaveResponse saveDataBackup(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataBackupSaveRequest request
+    );
 
     @NonNull
-    DataBinaryLoadResponse loadDataBinary(@NonNull DataBinaryLoadRequest request);
+    @WebMethod
+    DataBase64LoadResponse loadDataBase64(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataBase64LoadRequest request
+    );
 
     @NonNull
-    DataBinarySaveResponse saveDataBinary(@NonNull DataBinarySaveRequest request);
+    @WebMethod
+    DataBase64SaveResponse saveDataBase64(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataBase64SaveRequest request
+    );
 
     @NonNull
-    DataJsonLoadFasterXmlResponse loadDataJsonFasterXml(@NonNull DataJsonLoadFasterXmlRequest request);
+    @WebMethod
+    DataBinaryLoadResponse loadDataBinary(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataBinaryLoadRequest request
+    );
 
     @NonNull
-    DataJsonSaveFasterXmlResponse saveDataJsonFasterXml(@NonNull DataJsonSaveFasterXmlRequest request);
+    @WebMethod
+    DataBinarySaveResponse saveDataBinary(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataBinarySaveRequest request)
+            ;
 
     @NonNull
-    DataJsonLoadJaxBResponse loadDataJsonJaxB(@NonNull DataJsonLoadJaxBRequest request);
+    @WebMethod
+    DataJsonLoadFasterXmlResponse loadDataJsonFasterXml(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataJsonLoadFasterXmlRequest request
+    );
 
     @NonNull
-    DataJsonSaveJaxBResponse saveDataJsonJaxB(@NonNull DataJsonSaveJaxBRequest request);
+    @WebMethod
+    DataJsonSaveFasterXmlResponse saveDataJsonFasterXml(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataJsonSaveFasterXmlRequest request
+    );
 
     @NonNull
-    DataXmlLoadFasterXmlResponse loadDataXmlFasterXml(@NonNull DataXmlLoadFasterXmlRequest request);
+    @WebMethod
+    DataJsonLoadJaxBResponse loadDataJsonJaxB(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataJsonLoadJaxBRequest request
+    );
 
     @NonNull
-    DataXmlSaveFasterXmlResponse saveDataXmlFasterXml(@NonNull DataXmlSaveFasterXmlRequest request);
+    @WebMethod
+    DataJsonSaveJaxBResponse saveDataJsonJaxB(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataJsonSaveJaxBRequest request
+    );
 
     @NonNull
-    DataXmlLoadJaxBResponse loadDataXmlJaxB(@NonNull DataXmlLoadJaxBRequest request);
+    @WebMethod
+    DataXmlLoadFasterXmlResponse loadDataXmlFasterXml(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataXmlLoadFasterXmlRequest request
+    );
 
     @NonNull
-    DataXmlSaveJaxBResponse saveDataXmlJaxB(@NonNull DataXmlSaveJaxBRequest request);
+    @WebMethod
+    DataXmlSaveFasterXmlResponse saveDataXmlFasterXml(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataXmlSaveFasterXmlRequest request
+    );
 
     @NonNull
-    DataYamlLoadFasterXmlResponse loadDataYamlFasterXml(@NonNull DataYamlLoadFasterXmlRequest request);
+    @WebMethod
+    DataXmlLoadJaxBResponse loadDataXmlJaxB(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataXmlLoadJaxBRequest request
+    );
 
     @NonNull
-    DataYamlSaveFasterXmlResponse saveDataYamlFasterXml(@NonNull DataYamlSaveFasterXmlRequest request);
+    @WebMethod
+    DataXmlSaveJaxBResponse saveDataXmlJaxB(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataXmlSaveJaxBRequest request
+    );
+
+    @NonNull
+    @WebMethod
+    DataYamlLoadFasterXmlResponse loadDataYamlFasterXml(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataYamlLoadFasterXmlRequest request
+    );
+
+    @NonNull
+    @WebMethod
+    DataYamlSaveFasterXmlResponse saveDataYamlFasterXml(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataYamlSaveFasterXmlRequest request
+    );
 
 }

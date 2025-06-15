@@ -8,6 +8,7 @@ import ru.forinnyy.tm.api.service.IUserService;
 import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
 import ru.forinnyy.tm.enumerated.Role;
+import ru.forinnyy.tm.model.Session;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -90,8 +91,8 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NonNull final UserChangePasswordRequest request
     ) {
-        check(request);
-        final String userId = request.getUserId();
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final String password = request.getPassword();
         getUserService().setPassword(userId, password);
         return new UserChangePasswordResponse();
@@ -105,8 +106,8 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
             @WebParam(name = REQUEST, partName = REQUEST)
             @NonNull final UserUpdateProfileRequest request
     ) {
-        check(request);
-        final String userId = request.getUserId();
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final String firstName = request.getFirstName();
         final String lastName = request.getLastName();
         final String middleName = request.getMiddleName();

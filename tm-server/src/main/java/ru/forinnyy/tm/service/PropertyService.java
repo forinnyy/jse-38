@@ -75,6 +75,14 @@ public final class PropertyService implements IPropertyService {
     @NonNull
     public static final String EMPTY_VALUE = "---";
 
+    @NonNull
+    public static final String SESSION_KEY = "session.key";
+
+    @NonNull
+    public static final String SESSION_TIMEOUT = "session.timeout";
+
+    @NonNull
+    public static final String SESSION_TIMEOUT_DEFAULT = "10800";
 
     @NonNull
     private final Properties properties = new Properties();
@@ -106,6 +114,16 @@ public final class PropertyService implements IPropertyService {
         @NonNull final String name = getApplicationConfig();
         @NonNull final File file = new File(name);
         return file.exists();
+    }
+
+    @Override
+    public @NonNull String getSessionKey() {
+        return getStringValue(SESSION_KEY);
+    }
+
+    @Override
+    public @NonNull Integer getSessionTimeout() {
+        return getIntegerValue(SESSION_TIMEOUT, SESSION_TIMEOUT_DEFAULT);
     }
 
     @NonNull

@@ -9,8 +9,4 @@ public abstract class AbstractUserRequest extends AbstractRequest {
 
     private String token;
 
-    public AbstractUserRequest(String token) {
-        this.token = token;
-    }
-
 }

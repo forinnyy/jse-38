@@ -1,27 +1,81 @@
 package ru.forinnyy.tm.api.endpoint;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+@WebService
 public interface IUserEndpoint extends IEndpoint {
 
     @NonNull
-    UserLockResponse lockUser(@NonNull UserLockRequest request);
+    String NAME = "UserEndpoint";
 
     @NonNull
-    UserUnlockResponse unlockUser(@NonNull UserUnlockRequest request);
+    String PART = NAME + "Service";
+
+    @SneakyThrows
+    @WebMethod(exclude = true)
+    static IUserEndpoint newInstance() {
+        return newInstance(HOST, PORT);
+    }
+
+    @SneakyThrows
+    @WebMethod(exclude = true)
+    static IUserEndpoint newInstance(@NonNull final IConnectionProvider connectionProvider) {
+        return IEndpoint.newInstance(connectionProvider, NAME, SPACE, PART, IUserEndpoint.class);
+    }
+
+    @SneakyThrows
+    @WebMethod(exclude = true)
+    static IUserEndpoint newInstance(@NonNull final String host, @NonNull final String port) {
+        return IEndpoint.newInstanse(host, port, NAME, SPACE, PART, IUserEndpoint.class);
+    }
 
     @NonNull
-    UserRemoveResponse removeUser(@NonNull UserRemoveRequest request);
+    @WebMethod
+    UserLockResponse lockUser(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull UserLockRequest request
+    );
 
     @NonNull
-    UserRegistryResponse registryUser(@NonNull UserRegistryRequest request);
+    @WebMethod
+    UserUnlockResponse unlockUser(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull UserUnlockRequest request
+    );
 
     @NonNull
-    UserChangePasswordResponse changeUserPassword(@NonNull UserChangePasswordRequest request);
+    @WebMethod
+    UserRemoveResponse removeUser(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull UserRemoveRequest request
+    );
 
     @NonNull
-    UserUpdateProfileResponse updateUserProfile(@NonNull UserUpdateProfileRequest request);
+    @WebMethod
+    UserRegistryResponse registryUser(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull UserRegistryRequest request
+    );
+
+    @NonNull
+    @WebMethod
+    UserChangePasswordResponse changeUserPassword(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull UserChangePasswordRequest request
+    );
+
+    @NonNull
+    @WebMethod
+    UserUpdateProfileResponse updateUserProfile(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull UserUpdateProfileRequest request
+    );
 
 }

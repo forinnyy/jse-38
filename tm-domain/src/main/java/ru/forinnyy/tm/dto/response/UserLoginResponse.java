@@ -10,6 +10,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public final class UserLoginResponse extends AbstractResultResponse {
 
+    @NonNull
+    private String token;
+
+    public UserLoginResponse(@NonNull String token) {
+        this.token = token;
+    }
+
     public UserLoginResponse(@NonNull Throwable throwable) {
         super(throwable);
     }
