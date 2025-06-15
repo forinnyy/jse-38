@@ -36,14 +36,9 @@ public final class UserLoginCommand extends AbstractUserCommand {
         @NonNull final UserLoginRequest request = new UserLoginRequest();
         request.setLogin(login);
         request.setPassword(password);
-
-        @NonNull final UserLoginResponse response = getAuthEndpoint().login(request);
-        @NonNull final String token = response.getToken();
+        @NonNull final String token = getAuthEndpoint().login(request).getToken();
         setToken(token);
         System.out.println(token);
-        if (!response.getSuccess()) {
-            throw new RuntimeException(response.getMessage());
-        }
     }
 
     @Override
