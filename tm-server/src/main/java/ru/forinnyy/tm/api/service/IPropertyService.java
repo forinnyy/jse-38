@@ -39,7 +39,10 @@ public interface IPropertyService extends ISaltProvider {
     String getGitCommitTime();
 
     @NonNull
-    Integer getServerPort();
+    String getHost();
+
+    @NonNull
+    String getPort();
 
     @NonNull
     String getSessionKey();

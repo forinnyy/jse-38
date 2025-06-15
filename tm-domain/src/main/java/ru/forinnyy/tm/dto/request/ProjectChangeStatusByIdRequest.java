@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.dto.request;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.forinnyy.tm.enumerated.Status;
 

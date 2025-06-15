@@ -50,7 +50,7 @@ public final class AuthService implements IAuthService {
     public String login(final String login, final String password) {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
-        final User user = userService.findOneById(login);
+        final User user = userService.findByLogin(login);
         if (user == null) throw new AuthenticationException();
         if (user.isLocked()) throw new AccessDeniedException();
         final String hash = HashUtil.salt(propertyService, password);

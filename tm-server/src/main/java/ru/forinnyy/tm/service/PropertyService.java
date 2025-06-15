@@ -70,7 +70,10 @@ public final class PropertyService implements IPropertyService {
     public static final String PORT = "server.port";
 
     @NonNull
-    public static final String PORT_DEFAULT = "6060";
+    public static final String PORT_DEFAULT = "8080";
+
+    @NonNull
+    public static final String HOST = "server.host";
 
     @NonNull
     public static final String EMPTY_VALUE = "---";
@@ -202,10 +205,18 @@ public final class PropertyService implements IPropertyService {
         return "GIT_COMMIT_TIME";
     }
 
+    @NonNull
     @Override
-    public @NonNull Integer getServerPort() {
-//        return getIntegerValue(PORT, PORT_DEFAULT);
-        return 6060;
+    public String getPort() {
+        return "8080";
+//        return getStringValue(PORT, PORT_DEFAULT);
+    }
+
+    @NonNull
+    @Override
+    public String getHost() {
+        return "0.0.0.0";
+//        return getStringValue(HOST);
     }
 
     @NonNull

@@ -2,6 +2,7 @@ package ru.forinnyy.tm.command.user;
 
 import lombok.NonNull;
 import ru.forinnyy.tm.dto.request.UserLoginRequest;
+import ru.forinnyy.tm.dto.response.UserLoginResponse;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.util.TerminalUtil;
 
@@ -35,14 +36,14 @@ public final class UserLoginCommand extends AbstractUserCommand {
         @NonNull final UserLoginRequest request = new UserLoginRequest();
         request.setLogin(login);
         request.setPassword(password);
-        @NonNull final String token = getAuthEndpoint().login(request).getToken();
+
+        @NonNull final UserLoginResponse response = getAuthEndpoint().login(request);
+        @NonNull final String token = response.getToken();
         setToken(token);
         System.out.println(token);
-
-//        @NonNull final UserLoginResponse response = getAuthEndpointClient().login(request);
-//        if (!response.getSuccess()) {
-//            throw new RuntimeException(response.getMessage());
-//        }
+        if (!response.getSuccess()) {
+            throw new RuntimeException(response.getMessage());
+        }
     }
 
     @Override

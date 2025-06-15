@@ -23,7 +23,7 @@ public final class PropertyService implements IPropertyService {
     public static final String PORT = "server.port";
 
     @NonNull
-    public static final String PORT_DEFAULT = "6060";
+    public static final String PORT_DEFAULT = "8080";
 
     @NonNull
     public static final String EMPTY_VALUE = "---";

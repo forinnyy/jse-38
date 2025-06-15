@@ -114,8 +114,8 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     private void registry(@NonNull final Object endpoint) {
-        @NonNull final String host = "0.0.0.0"; // TODO getPropertyService
-        @NonNull final String port = "8080";
+        @NonNull final String host = getPropertyService().getHost();
+        @NonNull final String port = getPropertyService().getPort();
         @NonNull final String name = endpoint.getClass().getSimpleName();
         @NonNull final String url = "http://" + host + ":" + port + "/" + name + "?wsdl";
         Endpoint.publish(url, endpoint);
