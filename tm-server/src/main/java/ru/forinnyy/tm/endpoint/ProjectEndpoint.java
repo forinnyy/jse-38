@@ -11,9 +11,14 @@ import ru.forinnyy.tm.dto.response.*;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.model.Project;
+import ru.forinnyy.tm.model.Session;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
 import java.util.List;
 
+@WebService(endpointInterface = "ru.forinnyy.tm.api.endpoint.IProjectEndpoint")
 public final class ProjectEndpoint extends AbstractEndpoint implements IProjectEndpoint { //
 
     public ProjectEndpoint(IServiceLocator serviceLocator) {
@@ -32,13 +37,15 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
     public ProjectChangeStatusByIdResponse changeProjectStatusById(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NonNull final ProjectChangeStatusByIdRequest request
     ) {
-        check(request);
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final String id = request.getId();
-        final String userId = request.getUserId();
         final Status status = request.getStatus();
         getProjectService().changeProjectStatusById(userId, id, status);
         return new ProjectChangeStatusByIdResponse();
@@ -46,13 +53,15 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
     public ProjectChangeStatusByIndexResponse changeProjectStatusByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NonNull final ProjectChangeStatusByIndexRequest request
     ) {
-        check(request);
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final Integer index = request.getIndex();
-        final String userId = request.getUserId();
         final Status status = request.getStatus();
         getProjectService().changeProjectStatusByIndex(userId, index, status);
         return new ProjectChangeStatusByIndexResponse();
@@ -60,10 +69,14 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public ProjectClearResponse clearProject(@NonNull final ProjectClearRequest request) {
-        check(request);
-        @NonNull final String userId = request.getUserId();
+    public ProjectClearResponse clearProject(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final ProjectClearRequest request
+    ) {
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final List<Project> projects = getProjectService().findAll(userId);
         for (Project project: projects) {
             getProjectTaskService().removeProjectById(userId, project.getId());
@@ -73,10 +86,14 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public ProjectCreateResponse createProject(@NonNull final ProjectCreateRequest request) {
-        check(request);
-        final String userId = request.getUserId();
+    public ProjectCreateResponse createProject(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final ProjectCreateRequest request
+    ) {
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final String name = request.getName();
         final String description = request.getDescription();
         getProjectService().create(userId, name, description);
@@ -85,10 +102,14 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public ProjectGetByIdResponse getProjectById(@NonNull final ProjectGetByIdRequest request) {
-        check(request);
-        final String userId = request.getUserId();
+    public ProjectGetByIdResponse getProjectById(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final ProjectGetByIdRequest request
+    ) {
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final String id = request.getId();
         final Project project = getProjectService().findOneById(userId, id);
         return new ProjectGetByIdResponse(project);
@@ -96,10 +117,14 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public ProjectGetByIndexResponse getProjectByIndex(@NonNull final ProjectGetByIndexRequest request) {
-        check(request);
-        final String userId = request.getUserId();
+    public ProjectGetByIndexResponse getProjectByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final ProjectGetByIndexRequest request
+    ) {
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final Integer index = request.getIndex();
         final Project project = getProjectService().findOneByIndex(userId, index);
         return new ProjectGetByIndexResponse(project);
@@ -107,10 +132,14 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public ProjectListResponse listProject(@NonNull final ProjectListRequest request) {
-        check(request);
-        final String userId = request.getUserId();
+    public ProjectListResponse listProject(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final ProjectListRequest request
+    ) {
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final Sort sort = request.getSort();
         final List<Project> projects = getProjectService().findAll(userId, sort);
         return new ProjectListResponse(projects);
@@ -118,10 +147,14 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public ProjectRemoveByIdResponse removeProjectById(@NonNull final ProjectRemoveByIdRequest request) {
-        check(request);
-        final String userId = request.getUserId();
+    public ProjectRemoveByIdResponse removeProjectById(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final ProjectRemoveByIdRequest request
+    ) {
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final String id = request.getId();
         getProjectTaskService().removeProjectById(userId, id);
         return new ProjectRemoveByIdResponse();
@@ -129,10 +162,14 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public ProjectRemoveByIndexResponse removeProjectByIndex(@NonNull final ProjectRemoveByIndexRequest request) {
-        check(request);
-        final String userId = request.getUserId();
+    public ProjectRemoveByIndexResponse removeProjectByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final ProjectRemoveByIndexRequest request
+    ) {
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final Integer index = request.getIndex();
         final Project project = getProjectService().findOneByIndex(userId, index);
         getProjectTaskService().removeProjectById(userId, project.getId());
@@ -141,10 +178,14 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public ProjectUpdateByIdResponse updateProjectById(@NonNull final ProjectUpdateByIdRequest request) {
-        check(request);
-        final String userId = request.getUserId();
+    public ProjectUpdateByIdResponse updateProjectById(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final ProjectUpdateByIdRequest request
+    ) {
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final String id = request.getId();
         final String name = request.getName();
         final String description = request.getDescription();
@@ -154,10 +195,14 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public ProjectUpdateByIndexResponse updateProjectByIndex(@NonNull final ProjectUpdateByIndexRequest request) {
-        check(request);
-        final String userId = request.getUserId();
+    public ProjectUpdateByIndexResponse updateProjectByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final ProjectUpdateByIndexRequest request
+    ) {
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final Integer index = request.getIndex();
         final String name = request.getName();
         final String description = request.getDescription();
@@ -167,46 +212,60 @@ public final class ProjectEndpoint extends AbstractEndpoint implements IProjectE
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public ProjectCompleteByIdResponse completeProjectById(@NonNull final ProjectCompleteByIdRequest request) {
-        check(request);
+    public ProjectCompleteByIdResponse completeProjectById(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final ProjectCompleteByIdRequest request
+    ) {
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final String id = request.getId();
-        final String userId = request.getUserId();
         getProjectService().changeProjectStatusById(userId, id, Status.COMPLETED);
         return new ProjectCompleteByIdResponse();
     }
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
     public ProjectCompleteByIndexResponse completeProjectByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
             @NonNull final ProjectCompleteByIndexRequest request
     ) {
-        check(request);
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final Integer index = request.getIndex();
-        final String userId = request.getUserId();
         getProjectService().changeProjectStatusByIndex(userId, index, Status.COMPLETED);
         return new ProjectCompleteByIndexResponse();
     }
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public ProjectStartByIdResponse startProjectById(@NonNull final ProjectStartByIdRequest request) {
-        check(request);
+    public ProjectStartByIdResponse startProjectById(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final ProjectStartByIdRequest request
+    ) {
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final String id = request.getId();
-        final String userId = request.getUserId();
         getProjectService().changeProjectStatusById(userId, id, Status.IN_PROGRESS);
         return new ProjectStartByIdResponse();
     }
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public ProjectStartByIndexResponse startProjectByIndex(@NonNull final ProjectStartByIndexRequest request) {
-        check(request);
+    public ProjectStartByIndexResponse startProjectByIndex(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final ProjectStartByIndexRequest request
+    ) {
+        @NonNull final Session session = check(request);
+        final String userId = session.getUserId();
         final Integer index = request.getIndex();
-        final String userId = request.getUserId();
         getProjectService().changeProjectStatusByIndex(userId, index, Status.IN_PROGRESS);
         return new ProjectStartByIndexResponse();
     }

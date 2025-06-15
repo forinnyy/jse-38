@@ -9,32 +9,32 @@ import ru.forinnyy.tm.dto.request.AbstractUserRequest;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.user.AccessDeniedException;
 import ru.forinnyy.tm.exception.user.PermissionException;
+import ru.forinnyy.tm.model.Session;
 import ru.forinnyy.tm.model.User;
 
 
 @Getter
 public abstract class AbstractEndpoint {
 
+    @NonNull
     @SneakyThrows
-    protected void check(final AbstractUserRequest request, final Role role) {
+    protected Session check(final AbstractUserRequest request, final Role role) {
         if (request == null) throw new AccessDeniedException();
         if (role == null) throw new PermissionException();
-        final String userId = request.getUserId();
-        if (userId == null || userId.isEmpty()) throw new AccessDeniedException();
-        @NonNull final IServiceLocator serviceLocator = getServiceLocator();
-        @NonNull final IUserService userService = serviceLocator.getUserService();
-        final User user = userService.findOneById(userId);
-        if (user == null) throw new AccessDeniedException();
-        final Role roleUser = user.getRole();
-        final boolean check = roleUser == role;
-        if (!check) throw new PermissionException();
+        final String token = request.getToken();
+        @NonNull final Session session = serviceLocator.getAuthService().validateToken(token);
+        if (session.getRole() == null) throw new AccessDeniedException();
+        if (!session.getRole().equals(role)) throw new AccessDeniedException();
+        return session;
     }
 
+    @NonNull
     @SneakyThrows
-    protected void check(final AbstractUserRequest request) {
+    protected Session check(final AbstractUserRequest request) {
         if (request == null) throw new AccessDeniedException();
-        final String userId = request.getUserId();
-        if (userId == null || userId.isEmpty()) throw new AccessDeniedException();
+        final String token = request.getToken();
+        if (token == null || token.isEmpty()) throw new AccessDeniedException();
+        return serviceLocator.getAuthService().validateToken(token);
     }
 
     @NonNull

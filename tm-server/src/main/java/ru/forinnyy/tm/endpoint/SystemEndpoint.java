@@ -10,6 +10,11 @@ import ru.forinnyy.tm.dto.request.ApplicationVersionRequest;
 import ru.forinnyy.tm.dto.response.ApplicationAboutResponse;
 import ru.forinnyy.tm.dto.response.ApplicationVersionResponse;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+@WebService(endpointInterface = "ru.forinnyy.tm.api.endpoint.ISystemEndpoint")
 public final class SystemEndpoint implements ISystemEndpoint {
 
     @NonNull
@@ -26,7 +31,11 @@ public final class SystemEndpoint implements ISystemEndpoint {
 
     @NotNull
     @Override
-    public ApplicationAboutResponse getAbout(@NotNull final ApplicationAboutRequest request) {
+    @WebMethod
+    public ApplicationAboutResponse getAbout(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final ApplicationAboutRequest request
+    ) {
         @NonNull final ApplicationAboutResponse response = new ApplicationAboutResponse();
         response.setEmail(getPropertyService().getAuthorEmail());
         response.setName(getPropertyService().getAuthorName());
@@ -41,7 +50,11 @@ public final class SystemEndpoint implements ISystemEndpoint {
 
     @NotNull
     @Override
-    public ApplicationVersionResponse getVersion(@NotNull final ApplicationVersionRequest request) {
+    @WebMethod
+    public ApplicationVersionResponse getVersion(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NotNull final ApplicationVersionRequest request
+    ) {
         @NonNull final ApplicationVersionResponse response = new ApplicationVersionResponse();
         response.setVersion(getPropertyService().getApplicationVersion());
         return response;

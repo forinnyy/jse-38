@@ -7,6 +7,10 @@ import lombok.Setter;
 @Setter
 public abstract class AbstractUserRequest extends AbstractRequest {
 
-    private String userId;
+    private String token;
+
+    public AbstractUserRequest(String token) {
+        this.token = token;
+    }
 
 }

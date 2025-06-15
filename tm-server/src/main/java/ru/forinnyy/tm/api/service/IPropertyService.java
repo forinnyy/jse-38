@@ -41,4 +41,10 @@ public interface IPropertyService extends ISaltProvider {
     @NonNull
     Integer getServerPort();
 
+    @NonNull
+    String getSessionKey();
+
+    @NonNull
+    Integer getSessionTimeout();
+
 }

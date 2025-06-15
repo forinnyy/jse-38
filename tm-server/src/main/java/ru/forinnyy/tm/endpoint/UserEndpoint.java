@@ -9,6 +9,11 @@ import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
 import ru.forinnyy.tm.enumerated.Role;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
+@WebService(endpointInterface = "ru.forinnyy.tm.api.endpoint.IUserEndpoint")
 public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoint {
 
     public UserEndpoint(IServiceLocator serviceLocator) {
@@ -22,8 +27,12 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public UserLockResponse lockUser(@NonNull final UserLockRequest request) {
+    public UserLockResponse lockUser(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final UserLockRequest request
+    ) {
         check(request, Role.ADMIN);
         final String login = request.getLogin();
         getUserService().lockUserByLogin(login);
@@ -32,8 +41,12 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public UserUnlockResponse unlockUser(@NonNull final UserUnlockRequest request) {
+    public UserUnlockResponse unlockUser(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final UserUnlockRequest request
+    ) {
         check(request, Role.ADMIN);
         final String login = request.getLogin();
         getUserService().unlockUserByLogin(login);
@@ -42,8 +55,12 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public UserRemoveResponse removeUser(@NonNull final UserRemoveRequest request) {
+    public UserRemoveResponse removeUser(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final UserRemoveRequest request
+    ) {
         check(request, Role.ADMIN);
         final String login = request.getLogin();
         getUserService().removeByLogin(login);
@@ -52,8 +69,12 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public UserRegistryResponse registryUser(@NonNull final UserRegistryRequest request) {
+    public UserRegistryResponse registryUser(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final UserRegistryRequest request
+    ) {
         final String login = request.getLogin();
         final String email = request.getEmail();
         final String password = request.getPassword();
@@ -63,8 +84,12 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public UserChangePasswordResponse changeUserPassword(@NonNull final UserChangePasswordRequest request) {
+    public UserChangePasswordResponse changeUserPassword(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final UserChangePasswordRequest request
+    ) {
         check(request);
         final String userId = request.getUserId();
         final String password = request.getPassword();
@@ -74,8 +99,12 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
 
     @NonNull
     @Override
+    @WebMethod
     @SneakyThrows
-    public UserUpdateProfileResponse updateUserProfile(@NonNull final UserUpdateProfileRequest request) {
+    public UserUpdateProfileResponse updateUserProfile(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final UserUpdateProfileRequest request
+    ) {
         check(request);
         final String userId = request.getUserId();
         final String firstName = request.getFirstName();

@@ -4,7 +4,7 @@ import lombok.NonNull;
 import ru.forinnyy.tm.dto.request.*;
 import ru.forinnyy.tm.dto.response.*;
 
-public interface IUserEndpoint {
+public interface IUserEndpoint extends IEndpoint {
 
     @NonNull
     UserLockResponse lockUser(@NonNull UserLockRequest request);
