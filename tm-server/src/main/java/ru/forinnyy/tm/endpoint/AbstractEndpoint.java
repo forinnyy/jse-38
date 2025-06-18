@@ -22,7 +22,7 @@ public abstract class AbstractEndpoint {
         final String token = request.getToken();
         @NonNull final Session session = serviceLocator.getAuthService().validateToken(token);
         if (session.getRole() == null) throw new AccessDeniedException();
-        if (!session.getRole().equals(role)) throw new AccessDeniedException();
+        if (!session.getRole().equals(role)) throw new PermissionException();
         return session;
     }
 
