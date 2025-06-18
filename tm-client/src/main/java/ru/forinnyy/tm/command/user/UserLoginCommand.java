@@ -2,7 +2,6 @@ package ru.forinnyy.tm.command.user;
 
 import lombok.NonNull;
 import ru.forinnyy.tm.dto.request.UserLoginRequest;
-import ru.forinnyy.tm.dto.response.UserLoginResponse;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.util.TerminalUtil;
 
