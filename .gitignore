@@ -104,3 +104,5 @@ data.json
 data.xml
 data.yaml
 backup.base64
+
+/assemly/release/bin/startup.sh
