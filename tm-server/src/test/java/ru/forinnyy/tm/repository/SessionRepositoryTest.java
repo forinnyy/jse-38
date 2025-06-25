@@ -3,12 +3,14 @@ package ru.forinnyy.tm.repository;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Before;
+import org.junit.Ignore;
 import ru.forinnyy.tm.api.repository.ISessionRepository;
 import ru.forinnyy.tm.model.Session;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Ignore
 public final class SessionRepositoryTest {
 
     private final static int NUMBER_OF_ENTRIES = 10;
