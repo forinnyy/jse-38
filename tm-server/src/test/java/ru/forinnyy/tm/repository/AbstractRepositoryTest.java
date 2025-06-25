@@ -6,25 +6,27 @@ import org.junit.Test;
 import ru.forinnyy.tm.model.AbstractModel;
 
 
-public abstract class AbstractRepositoryTest<M extends AbstractModel> {
+public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Data {
 
     protected AbstractRepository<M> repository;
 
-    protected abstract AbstractRepository<M> getRepository();
+    protected abstract AbstractRepository<M> createRepository();
     protected abstract M createModel();
 
     @Before
     public void init() {
-        repository = getRepository();
+        repository = createRepository();
         repository.clear();
     }
 
     @Test
     public void testAddAndFindOneById() {
-        M model = createModel();
-        repository.add(model);
-        M found = repository.findOneById(model.getId());
-        Assert.assertEquals(model, found);
+        M expectedModel = createModel();
+        repository.add(expectedModel);
+        M model = repository.findOneById(expectedModel.getId());
+        Assert.assertEquals(expectedModel, model);
+        Assert.assertThrows(NullPointerException.class, () -> repository.add((M) null));
+        Assert.assertThrows(NullPointerException.class, () -> repository.findOneById(null));
     }
 
     @Test

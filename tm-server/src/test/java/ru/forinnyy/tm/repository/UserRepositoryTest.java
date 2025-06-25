@@ -5,7 +5,17 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.forinnyy.tm.model.User;
 
-public final class UserRepositoryTest extends Data {
+public final class UserRepositoryTest extends AbstractRepositoryTest<User> {
+
+    @Override
+    protected AbstractRepository<User> createRepository() {
+        return new UserRepository();
+    }
+
+    @Override
+    protected User createModel() {
+        return new User();
+    }
 
     @Test
     @SneakyThrows

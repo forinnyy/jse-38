@@ -7,7 +7,17 @@ import ru.forinnyy.tm.model.Task;
 
 import java.util.List;
 
-public final class TaskRepositoryTest extends Data {
+public final class TaskRepositoryTest extends AbstractRepositoryTest<Task> {
+
+    @Override
+    protected AbstractRepository<Task> createRepository() {
+        return new TaskRepository();
+    }
+
+    @Override
+    protected Task createModel() {
+        return new Task();
+    }
 
     @Test
     @SneakyThrows

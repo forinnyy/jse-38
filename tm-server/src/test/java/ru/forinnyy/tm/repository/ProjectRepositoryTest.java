@@ -6,7 +6,17 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.forinnyy.tm.model.Project;
 
-public final class ProjectRepositoryTest extends Data {
+public final class ProjectRepositoryTest extends AbstractRepositoryTest<Project> {
+
+    @Override
+    protected AbstractRepository<Project> createRepository() {
+        return new ProjectRepository();
+    }
+
+    @Override
+    protected Project createModel() {
+        return new Project();
+    }
 
     @Test
     @SneakyThrows
