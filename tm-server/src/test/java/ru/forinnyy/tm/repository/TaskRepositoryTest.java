@@ -7,7 +7,7 @@ import ru.forinnyy.tm.model.Task;
 
 import java.util.List;
 
-public class TaskRepositoryTest extends Data {
+public final class TaskRepositoryTest extends Data {
 
     @Test
     @SneakyThrows
@@ -40,6 +40,7 @@ public class TaskRepositoryTest extends Data {
     @Test
     @SneakyThrows
     public void testFindAllByProjectId() {
+        System.out.println(testUser.getId());
         List<Task> filteredTasks = taskRepository.findAllByProjectId(testUser.getId(), project_two.getId());
         List<Task> allTasks = taskRepository.findAll();
 

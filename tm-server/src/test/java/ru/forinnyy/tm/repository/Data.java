@@ -38,11 +38,13 @@ public class Data {
         testUser.setId("550e8400-e29b-41d4-a716-0000000TEST1");
         testUser.setLogin("test");
         testUser.setRole(Role.USUAL);
+        testUser.setEmail("test@test.ru");
 
         adminUser = new User();
         adminUser.setId("550e8400-e29b-41d4-a716-0000000ADMIN");
         adminUser.setLogin("admin");
         adminUser.setRole(Role.ADMIN);
+
 
         testUserSession = new Session();
         testUserSession.setId("test-session-id");
@@ -106,6 +108,12 @@ public class Data {
         taskRepository.add(task_two);
         taskRepository.add(task_three);
         taskRepository.add(task_four);
+
+        userRepository.add(adminUser);
+        userRepository.add(testUser);
+
+        sessionRepository.add(adminSession);
+        sessionRepository.add(testUserSession);
     }
 
 }
