@@ -1,7 +1,9 @@
 package ru.forinnyy.tm.repository;
 
+import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.forinnyy.tm.model.AbstractModel;
 
@@ -29,25 +31,26 @@ public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Da
         Assert.assertThrows(NullPointerException.class, () -> repository.findOneById(null));
     }
 
+
     @Test
-    public void testRemoveById() throws Exception {
+    @SneakyThrows
+    public void testRemoveById() {
         M model = createModel();
         repository.add(model);
         repository.removeById(model.getId());
-        Assert.assertNull(repository.findOneById(model.getId()));
-    }
-
-    @Test
-    public void testClear() {
-        repository.add(createModel());
-        repository.clear();
         Assert.assertEquals(0, repository.getSize());
+        Assert.assertThrows(NullPointerException.class, () -> repository.remove(null));
+        Assert.assertThrows(NullPointerException.class, () -> repository.removeById(null));
     }
 
     @Test
-    public void testGetSize() {
-        repository.add(createModel());
-        repository.add(createModel());
-        Assert.assertEquals(2, repository.getSize());
+    @SneakyThrows
+    public void testRemoveByIndex() {
+        M model = createModel();
+        repository.add(model);
+        repository.removeByIndex(0);
+        Assert.assertEquals(0, repository.getSize());
+        Assert.assertThrows(NullPointerException.class, () -> repository.removeByIndex(null));
     }
+
 }

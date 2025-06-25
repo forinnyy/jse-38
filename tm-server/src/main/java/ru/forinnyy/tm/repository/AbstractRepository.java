@@ -84,13 +84,13 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
     }
 
     @Override
-    public M removeById(final String id) throws AbstractEntityException {
+    public M removeById(@NonNull final String id) throws AbstractEntityException {
         final M model = findOneById(id);
         return remove(model);
     }
     
     @Override
-    public M removeByIndex(final Integer index) throws AbstractEntityException {
+    public M removeByIndex(@NonNull final Integer index) throws AbstractEntityException {
         final M model = findOneByIndex(index);
         return remove(model);
     }
