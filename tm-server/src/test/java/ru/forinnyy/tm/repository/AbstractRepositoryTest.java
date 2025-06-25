@@ -31,7 +31,6 @@ public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Da
         Assert.assertThrows(NullPointerException.class, () -> repository.findOneById(null));
     }
 
-
     @Test
     @SneakyThrows
     public void testRemoveById() {
