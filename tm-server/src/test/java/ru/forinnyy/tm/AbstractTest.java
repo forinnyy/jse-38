@@ -1,4 +1,4 @@
-package ru.forinnyy.tm.repository;
+package ru.forinnyy.tm;
 
 import lombok.SneakyThrows;
 import org.junit.Before;
@@ -11,6 +11,10 @@ import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Session;
 import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.model.User;
+import ru.forinnyy.tm.repository.ProjectRepository;
+import ru.forinnyy.tm.repository.SessionRepository;
+import ru.forinnyy.tm.repository.TaskRepository;
+import ru.forinnyy.tm.repository.UserRepository;
 
 public abstract class AbstractTest {
 
@@ -64,41 +68,41 @@ public abstract class AbstractTest {
         sessionRepository = new SessionRepository();
 
         project_one = new Project();
-        project_one.setName("Project one");
+        project_one.setName("PROJECT ONE");
         project_one.setDescription("Description");
         project_one.setId("00000000-0000-0000-0000-000-PROJECT-1");
         project_one.setUserId(adminUser.getId());
 
         project_two = new Project();
-        project_two.setName("Project two");
+        project_two.setName("PROJECT TWO");
         project_two.setDescription("Description");
         project_two.setId("00000000-0000-0000-0000-000-PROJECT-2");
         project_two.setUserId(testUser.getId());
 
         task_one = new Task();
-        task_one.setName("Task one");
-        task_one.setDescription("Description");
+        task_one.setName("TASK ONE");
+        task_one.setDescription("DESCRIPTION");
         task_one.setId("00000000-0000-0000-0000-000000-TASK-1");
         task_one.setUserId(adminUser.getId());
         task_one.setProjectId(project_one.getId());
 
         task_two = new Task();
-        task_two.setName("Task two");
-        task_two.setDescription("Description");
+        task_two.setName("TASK TWO");
+        task_two.setDescription("DESCRIPTION");
         task_two.setId("00000000-0000-0000-0000-000000-TASK-2");
         task_two.setUserId(testUser.getId());
         task_two.setProjectId(project_two.getId());
 
         task_three = new Task();
-        task_three.setName("Task three");
-        task_three.setDescription("Description");
+        task_three.setName("TASK THREE");
+        task_three.setDescription("DESCRIPTION");
         task_three.setId("00000000-0000-0000-0000-000000-TASK-3");
         task_three.setUserId(testUser.getId());
         task_three.setProjectId(project_two.getId());
 
         task_four = new Task();
-        task_four.setName("Task four");
-        task_four.setDescription("Description");
+        task_four.setName("TASK FOUR");
+        task_four.setDescription("DESCRIPTION");
         task_four.setId("00000000-0000-0000-0000-000000-TASK-4");
         task_four.setUserId(testUser.getId());
         task_four.setProjectId(project_one.getId());

@@ -18,21 +18,23 @@ import java.util.List;
 public abstract class AbstractService<M extends AbstractModel, R extends IRepository<M>>
         implements IService<M> {
 
-    @Override
-    public @NonNull Collection<M> add(@NonNull Collection<M> models) {
-        return repository.add(models);
-    }
-
-    @Override
-    public @NonNull Collection<M> set(@NonNull Collection<M> models) {
-        return repository.set(models);
-    }
-
     @NonNull
     protected final R repository;
 
     public AbstractService(@NonNull final R repository) {
         this.repository = repository;
+    }
+
+    @NonNull
+    @Override
+    public Collection<M> add(@NonNull Collection<M> models) {
+        return repository.add(models);
+    }
+
+    @NonNull
+    @Override
+    public Collection<M> set(@NonNull Collection<M> models) {
+        return repository.set(models);
     }
 
     @Override
@@ -54,8 +56,8 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     }
 
     @NonNull
-    @SuppressWarnings("unchecked")
     @Override
+    @SuppressWarnings("unchecked")
     public List<M> findAll(final Sort sort) {
         if (sort == null) return findAll();
         return repository.findAll(sort.getComparator());
@@ -91,6 +93,7 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
         return repository.getSize();
     }
 
+    @NonNull
     @Override
     public M remove(final M model) throws AbstractEntityException {
         if (model == null) throw new EntityNotFoundException();
