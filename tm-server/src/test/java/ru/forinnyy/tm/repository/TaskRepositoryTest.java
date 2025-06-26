@@ -22,27 +22,25 @@ public final class TaskRepositoryTest extends AbstractRepositoryTest<Task> {
     @Test
     @SneakyThrows
     public void testCreateWithName() {
-        Task task = taskRepository.create(testUser.getId(), "Task");
+        Task task = taskRepository.create("1", "Task");
         Assert.assertNotNull(task);
         Assert.assertEquals(task, taskRepository.findOneById(task.getId()));
 
-        Assert.assertThrows(NullPointerException.class, () ->
-                taskRepository.create(testUser.getId(), null));
-        Assert.assertThrows(NullPointerException.class, () ->
-                taskRepository.create(null, "Task"));
+        Assert.assertThrows(NullPointerException.class, () -> taskRepository.create("1", null));
+        Assert.assertThrows(NullPointerException.class, () -> taskRepository.create(null, "Task"));
     }
 
     @Test
     @SneakyThrows
     public void testCreateWithNameAndDescription() {
-        Task task = taskRepository.create(testUser.getId(), "Task", "Description");
+        Task task = taskRepository.create("1", "Task", "Description");
         Assert.assertNotNull(task);
         Assert.assertEquals(task, taskRepository.findOneById(task.getId()));
 
         Assert.assertThrows(NullPointerException.class, () ->
-                taskRepository.create(testUser.getId(), null, "Description"));
+                taskRepository.create("1", null, "Description"));
         Assert.assertThrows(NullPointerException.class, () ->
-                taskRepository.create(testUser.getId(), "Task", null));
+                taskRepository.create("1", "Task", null));
         Assert.assertThrows(NullPointerException.class, () ->
                 taskRepository.create(null, "Task", "Description"));
     }
@@ -50,7 +48,6 @@ public final class TaskRepositoryTest extends AbstractRepositoryTest<Task> {
     @Test
     @SneakyThrows
     public void testFindAllByProjectId() {
-        System.out.println(testUser.getId());
         List<Task> filteredTasks = taskRepository.findAllByProjectId(testUser.getId(), project_two.getId());
         List<Task> allTasks = taskRepository.findAll();
 

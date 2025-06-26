@@ -80,7 +80,7 @@ public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Ab
         Assert.assertEquals(expectedModel, model);
         Assert.assertThrows(NullPointerException.class, () -> repository.add((M) null));
         Assert.assertThrows(NullPointerException.class, () -> repository.findOneById(null));
-        Assert.assertEquals(null, repository.findOneByIndex(null));
+        Assert.assertNull(repository.findOneByIndex(null));
     }
 
 
