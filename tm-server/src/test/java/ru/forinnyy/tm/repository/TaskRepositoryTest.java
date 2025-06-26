@@ -7,10 +7,10 @@ import ru.forinnyy.tm.model.Task;
 
 import java.util.List;
 
-public final class TaskRepositoryTest extends AbstractRepositoryTest<Task> {
+public final class TaskRepositoryTest extends AbstractUserOwnedRepositoryTest<Task> {
 
     @Override
-    protected AbstractRepository<Task> createRepository() {
+    protected AbstractUserOwnedRepository<Task> createRepository() {
         return new TaskRepository();
     }
 

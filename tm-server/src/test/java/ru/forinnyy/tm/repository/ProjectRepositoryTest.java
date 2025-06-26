@@ -14,7 +14,7 @@ import java.util.List;
 public final class ProjectRepositoryTest extends AbstractUserOwnedRepositoryTest<Project> {
 
     @Override
-    protected AbstractRepository<Project> createRepository() {
+    protected AbstractUserOwnedRepository<Project> createRepository() {
         return new ProjectRepository();
     }
 

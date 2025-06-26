@@ -22,7 +22,6 @@ public final class UserRepositoryTest extends AbstractRepositoryTest<User> {
     public void testFindByLogin() {
         User user = userRepository.findByLogin("admin");
         Assert.assertEquals(adminUser, user);
-
         Assert.assertThrows(NullPointerException.class, () -> userRepository.findByLogin(null));
     }
 
@@ -31,7 +30,6 @@ public final class UserRepositoryTest extends AbstractRepositoryTest<User> {
     public void testFindByEmail() {
         User user = userRepository.findByEmail("test@test.ru");
         Assert.assertEquals(testUser, user);
-
         Assert.assertThrows(NullPointerException.class, () -> userRepository.findByEmail(null));
     }
 

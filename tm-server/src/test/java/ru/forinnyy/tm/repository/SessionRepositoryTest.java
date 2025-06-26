@@ -2,10 +2,10 @@ package ru.forinnyy.tm.repository;
 
 import ru.forinnyy.tm.model.Session;
 
-public final class SessionRepositoryTest extends AbstractRepositoryTest<Session> {
+public final class SessionRepositoryTest extends AbstractUserOwnedRepositoryTest<Session> {
 
     @Override
-    protected AbstractRepository<Session> createRepository() {
+    protected AbstractUserOwnedRepository<Session> createRepository() {
         return new SessionRepository();
     }
 
