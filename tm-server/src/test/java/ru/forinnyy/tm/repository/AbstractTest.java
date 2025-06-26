@@ -12,7 +12,7 @@ import ru.forinnyy.tm.model.Session;
 import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.model.User;
 
-public abstract class Data {
+public abstract class AbstractTest {
 
     protected User testUser;
     protected User adminUser;

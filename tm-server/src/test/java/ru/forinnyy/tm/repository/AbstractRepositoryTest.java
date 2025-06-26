@@ -6,8 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.forinnyy.tm.model.AbstractModel;
 
+import java.util.*;
 
-public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Data {
+
+public abstract class AbstractRepositoryTest<M extends AbstractModel> extends AbstractTest {
 
     protected AbstractRepository<M> repository;
 
@@ -21,6 +23,56 @@ public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Da
     }
 
     @Test
+    public void testRemoveAll() {
+        List<M> models = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            models.add(createModel());
+        }
+        repository.add(models);
+        repository.removeAll(models);
+        repository.removeAll(null);
+        Assert.assertEquals(Collections.emptyList(), repository.findAll());
+    }
+
+    @Test
+    public void testExistsById() {
+        final M model = createModel();
+        model.setId("1");
+        repository.add(model);
+        Assert.assertTrue(repository.existsById("1"));
+        Assert.assertFalse(repository.existsById("2"));
+    }
+
+    @Test
+    public void testSet() {
+        List<M> models = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            models.add(createModel());
+        }
+        repository.add(models);
+        List<M> expectedModels = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            models.add(createModel());
+        }
+        repository.set(expectedModels);
+        Assert.assertFalse(repository.findAll().containsAll(models));
+        Assert.assertTrue(repository.findAll().containsAll(expectedModels));
+        Assert.assertThrows(NullPointerException.class, () -> repository.set(null));
+    }
+
+    @Test
+    public void testFindAllAndAddCollection() {
+        List<M> models = new LinkedList<>();
+        for (int i = 0; i < 5; i++) {
+            models.add(createModel());
+        }
+        repository.add(models);
+        Assert.assertEquals(repository.getSize(), repository.findAll().size());
+        Assert.assertTrue(repository.findAll().containsAll(models));
+        Assert.assertThrows(NullPointerException.class, () -> repository.add((List<M>) null));
+    }
+
+    @Test
     public void testAddAndFindOneById() {
         M expectedModel = createModel();
         repository.add(expectedModel);
@@ -28,7 +80,9 @@ public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Da
         Assert.assertEquals(expectedModel, model);
         Assert.assertThrows(NullPointerException.class, () -> repository.add((M) null));
         Assert.assertThrows(NullPointerException.class, () -> repository.findOneById(null));
+        Assert.assertEquals(null, repository.findOneByIndex(null));
     }
+
 
     @Test
     @SneakyThrows

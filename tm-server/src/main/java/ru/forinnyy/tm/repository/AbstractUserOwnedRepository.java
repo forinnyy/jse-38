@@ -97,14 +97,12 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
     @Override
     public M removeById(@NonNull final String userId, @NonNull final String id) throws AbstractEntityException, AbstractUserException {
         final M model = findOneById(userId, id);
-        if (model == null) return null;
         return remove(model);
     }
     
     @Override
     public M removeByIndex(@NonNull final String userId, @NonNull final Integer index) throws AbstractEntityException {
         final M model = findOneByIndex(userId, index);
-        if (model == null) return null;
         return remove(model);
     }
 
