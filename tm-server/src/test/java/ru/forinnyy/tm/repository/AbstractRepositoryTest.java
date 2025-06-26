@@ -25,9 +25,8 @@ public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Ab
     @Test
     public void testRemoveAll() {
         List<M> models = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            models.add(createModel());
-        }
+        models.add(createModel());
+        models.add(createModel());
         repository.add(models);
         repository.removeAll(models);
         repository.removeAll(null);
@@ -37,23 +36,21 @@ public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Ab
     @Test
     public void testExistsById() {
         final M model = createModel();
-        model.setId("1");
+        model.setId(UUID1);
         repository.add(model);
-        Assert.assertTrue(repository.existsById("1"));
-        Assert.assertFalse(repository.existsById("2"));
+        Assert.assertTrue(repository.existsById(UUID1));
+        Assert.assertFalse(repository.existsById(UUID2));
     }
 
     @Test
     public void testSet() {
         List<M> models = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            models.add(createModel());
-        }
+        models.add(createModel());
+        models.add(createModel());
         repository.add(models);
         List<M> expectedModels = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            models.add(createModel());
-        }
+        expectedModels.add(createModel());
+        expectedModels.add(createModel());
         repository.set(expectedModels);
         Assert.assertFalse(repository.findAll().containsAll(models));
         Assert.assertTrue(repository.findAll().containsAll(expectedModels));
@@ -63,9 +60,8 @@ public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Ab
     @Test
     public void testFindAllAndAddCollection() {
         List<M> models = new LinkedList<>();
-        for (int i = 0; i < 5; i++) {
-            models.add(createModel());
-        }
+        models.add(createModel());
+        models.add(createModel());
         repository.add(models);
         Assert.assertEquals(repository.getSize(), repository.findAll().size());
         Assert.assertTrue(repository.findAll().containsAll(models));

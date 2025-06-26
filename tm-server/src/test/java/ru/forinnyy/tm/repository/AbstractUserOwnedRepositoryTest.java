@@ -20,14 +20,14 @@ public abstract class AbstractUserOwnedRepositoryTest<M extends AbstractUserOwne
         M modelUserA = createModel();
         M modelUserB = createModel();
         M modelUserC = createModel();
-        modelUserA.setUserId("1");
-        modelUserB.setUserId("2");
-        modelUserC.setUserId("2");
-        getUserOwnedRepository().add("1", modelUserA);
-        getUserOwnedRepository().add("2", modelUserB);
-        getUserOwnedRepository().add("2", modelUserC);
-        getUserOwnedRepository().clear("2");
-        Assert.assertEquals(0, getUserOwnedRepository().findAll("2").size());
+        modelUserA.setUserId(UUID1);
+        modelUserB.setUserId(UUID2);
+        modelUserC.setUserId(UUID2);
+        getUserOwnedRepository().add(UUID1, modelUserA);
+        getUserOwnedRepository().add(UUID2, modelUserB);
+        getUserOwnedRepository().add(UUID2, modelUserC);
+        getUserOwnedRepository().clear(UUID2);
+        Assert.assertEquals(0, getUserOwnedRepository().findAll(UUID2).size());
         Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().clear(null));
         Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().findAll((String) null));
     }
@@ -58,52 +58,52 @@ public abstract class AbstractUserOwnedRepositoryTest<M extends AbstractUserOwne
     @SneakyThrows
     public void testRemoveByIdWithUserId() {
         M model = createModel();
-        getUserOwnedRepository().add("1", model);
-        getUserOwnedRepository().removeById("1", model.getId());
+        getUserOwnedRepository().add(UUID1, model);
+        getUserOwnedRepository().removeById(UUID1, model.getId());
         Assert.assertEquals(0, getUserOwnedRepository().getSize());
-        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().removeById("1", null));
-        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().removeById(null, "1"));
-        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().findOneById(null, "1"));
-        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().findOneById("1", null));
+        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().removeById(UUID1, null));
+        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().removeById(null, UUID2));
+        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().findOneById(null, UUID2));
+        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().findOneById(UUID1, null));
     }
 
     @Test
     @SneakyThrows
     public void testRemoveByIndexWithUserId() {
         M model = createModel();
-        getUserOwnedRepository().add("1", model);
-        getUserOwnedRepository().removeByIndex("1", 0);
+        getUserOwnedRepository().add(UUID1, model);
+        getUserOwnedRepository().removeByIndex(UUID1, 0);
         Assert.assertEquals(0, getUserOwnedRepository().getSize());
-        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().removeByIndex("1", null));
+        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().removeByIndex(UUID1, null));
         Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().removeByIndex(null, 0));
         Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().findOneByIndex(null, 0));
-        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().findOneByIndex("1", null));
+        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().findOneByIndex(UUID1, null));
     }
 
     @Test
     @SneakyThrows
     public void testRemoveWithUserId() {
         M model = createModel();
-        getUserOwnedRepository().add("1", model);
-        getUserOwnedRepository().remove("1", model);
+        getUserOwnedRepository().add(UUID1, model);
+        getUserOwnedRepository().remove(UUID1, model);
         Assert.assertEquals(0, getUserOwnedRepository().getSize());
-        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().remove("1", null));
+        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().remove(UUID1, null));
         Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().remove(null, model));
     }
 
     @Test
     @SneakyThrows
     public void testGetSizeWithUserId() {
-        getUserOwnedRepository().add("1", createModel());
-        getUserOwnedRepository().add("1", createModel());
-        getUserOwnedRepository().add("2", createModel());
-        Assert.assertEquals(2, getUserOwnedRepository().getSize("1"));
+        getUserOwnedRepository().add(UUID1, createModel());
+        getUserOwnedRepository().add(UUID1, createModel());
+        getUserOwnedRepository().add(UUID2, createModel());
+        Assert.assertEquals(2, getUserOwnedRepository().getSize(UUID1));
         Assert.assertThrows(UserIdEmptyException.class, () -> getUserOwnedRepository().getSize(null));
     }
 
     @Test
     public void testAddNPEWithUserId() {
-        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().add("2", null));
+        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().add(UUID2, null));
         Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().add(null, createModel()));
     }
 
