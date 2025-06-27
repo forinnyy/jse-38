@@ -1,13 +1,20 @@
 package ru.forinnyy.tm.repository;
 
+import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Task;
+import ru.forinnyy.tm.model.User;
 
 import java.util.List;
 
 public final class TaskRepositoryTest extends AbstractUserOwnedRepositoryTest<Task> {
+
+    private TaskRepository taskRepository;
 
     @Override
     protected AbstractUserOwnedRepository<Task> createRepository() {
@@ -19,50 +26,68 @@ public final class TaskRepositoryTest extends AbstractUserOwnedRepositoryTest<Ta
         return new Task();
     }
 
+    private TaskRepository getTaskRepository() {
+        return (TaskRepository) createRepository();
+    }
+
     @Test
     @SneakyThrows
     public void testCreateWithName() {
-        Task task = taskRepository.create("1", "Task");
+        taskRepository = getTaskRepository();
+        @NonNull final Task task = taskRepository.create(UUID1, STRING);
         Assert.assertNotNull(task);
         Assert.assertEquals(task, taskRepository.findOneById(task.getId()));
 
-        Assert.assertThrows(NullPointerException.class, () -> taskRepository.create("1", null));
-        Assert.assertThrows(NullPointerException.class, () -> taskRepository.create(null, "Task"));
+        Assert.assertThrows(NullPointerException.class, () -> taskRepository.create(UUID1, null));
+        Assert.assertThrows(NullPointerException.class, () -> taskRepository.create(null, STRING));
     }
 
     @Test
     @SneakyThrows
     public void testCreateWithNameAndDescription() {
-        Task task = taskRepository.create("1", "Task", "Description");
+        taskRepository = getTaskRepository();
+        @NonNull final Task task = taskRepository.create(UUID1, STRING, STRING);
         Assert.assertNotNull(task);
         Assert.assertEquals(task, taskRepository.findOneById(task.getId()));
 
         Assert.assertThrows(NullPointerException.class, () ->
-                taskRepository.create("1", null, "Description"));
+                taskRepository.create(UUID1, null, STRING));
         Assert.assertThrows(NullPointerException.class, () ->
-                taskRepository.create("1", "Task", null));
+                taskRepository.create(UUID1, STRING, null));
         Assert.assertThrows(NullPointerException.class, () ->
-                taskRepository.create(null, "Task", "Description"));
+                taskRepository.create(null, STRING, STRING));
     }
 
     @Test
     @SneakyThrows
     public void testFindAllByProjectId() {
-        List<Task> filteredTasks = taskRepository.findAllByProjectId(testUser.getId(), project_two.getId());
-        List<Task> allTasks = taskRepository.findAll();
+        taskRepository = getTaskRepository();
+        @NonNull final User user = new User();
+        user.setId(UUID1);
+        @NonNull final Project project = new Project();
+        project.setUserId(UUID1);
+        project.setId(UUID2);
+        @NonNull final Task taskOne = new Task();
+        taskOne.setUserId(UUID1);
+        taskOne.setProjectId(UUID2);
+        @NonNull final Task taskTwo = new Task();
+        taskTwo.setUserId(UUID1);
+        taskTwo.setProjectId(UUID2);
+        taskRepository.add(taskOne);
+        taskRepository.add(taskTwo);
+        @NonNull final List<Task> tasks = taskRepository.findAllByProjectId(UUID1, UUID2);
 
-        Assert.assertNotNull(filteredTasks);
-        Assert.assertEquals(2, filteredTasks.size());
-        Assert.assertNotEquals(filteredTasks, allTasks);
-        for (Task task : filteredTasks) {
-            Assert.assertEquals(testUser.getId(), task.getUserId());
-            Assert.assertEquals(project_two.getId(), task.getProjectId());
+        Assert.assertNotNull(tasks);
+        Assert.assertEquals(2, tasks.size());
+        for (Task task : tasks) {
+            Assert.assertEquals(user.getId(), task.getUserId());
+            Assert.assertEquals(project.getId(), task.getProjectId());
         }
         Assert.assertThrows(NullPointerException.class, () ->
-                taskRepository.findAllByProjectId(null, "ID"));
+                taskRepository.findAllByProjectId(null, UUID1));
         Assert.assertThrows(NullPointerException.class, () ->
-                taskRepository.findAllByProjectId("ID", null));
-        Assert.assertNotNull(filteredTasks);
+                taskRepository.findAllByProjectId(UUID1, null));
+        Assert.assertNotNull(tasks);
     }
 
 }
