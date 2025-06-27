@@ -3,8 +3,6 @@ package ru.forinnyy.tm.repository;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Task;
@@ -66,19 +64,25 @@ public final class TaskRepositoryTest extends AbstractUserOwnedRepositoryTest<Ta
     @SneakyThrows
     public void testFindAllByProjectId() {
         initTaskRepository();
+
         @NonNull final User user = new User();
         user.setId(UUID1);
+
         @NonNull final Project project = new Project();
         project.setUserId(UUID1);
         project.setId(UUID2);
+
         @NonNull final Task taskOne = new Task();
         taskOne.setUserId(UUID1);
         taskOne.setProjectId(UUID2);
+
         @NonNull final Task taskTwo = new Task();
         taskTwo.setUserId(UUID1);
         taskTwo.setProjectId(UUID2);
+
         taskRepository.add(taskOne);
         taskRepository.add(taskTwo);
+
         @NonNull final List<Task> tasks = taskRepository.findAllByProjectId(UUID1, UUID2);
 
         Assert.assertNotNull(tasks);
@@ -87,6 +91,7 @@ public final class TaskRepositoryTest extends AbstractUserOwnedRepositoryTest<Ta
             Assert.assertEquals(user.getId(), task.getUserId());
             Assert.assertEquals(project.getId(), task.getProjectId());
         }
+
         Assert.assertThrows(NullPointerException.class, () ->
                 taskRepository.findAllByProjectId(null, UUID1));
         Assert.assertThrows(NullPointerException.class, () ->

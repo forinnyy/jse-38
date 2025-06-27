@@ -20,7 +20,6 @@ public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRe
 
     @Before
     public void setUp() {
-        super.initData();
         repository = createRepository();
         service = createService();
     }

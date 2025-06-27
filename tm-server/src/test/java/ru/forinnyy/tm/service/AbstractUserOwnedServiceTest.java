@@ -20,7 +20,7 @@ public abstract class AbstractUserOwnedServiceTest<M extends AbstractUserOwnedMo
     @SneakyThrows
     public void testAddWithUser() {
         M model = createModel();
-        M result = getUserOwnedService().add(testUser.getId(), model);
+        M result = getUserOwnedService().add(UUID1, model);
         assertNotNull(result);
     }
 
@@ -28,8 +28,8 @@ public abstract class AbstractUserOwnedServiceTest<M extends AbstractUserOwnedMo
     @SneakyThrows
     public void testFindAllWithUser() {
         M model = createModel();
-        getUserOwnedService().add(testUser.getId(), model);
-        List<M> models = getUserOwnedService().findAll(testUser.getId());
+        getUserOwnedService().add(UUID1, model);
+        List<M> models = getUserOwnedService().findAll(UUID1);
         assertFalse(models.isEmpty());
     }
 
@@ -37,9 +37,9 @@ public abstract class AbstractUserOwnedServiceTest<M extends AbstractUserOwnedMo
     @SneakyThrows
     public void testRemoveByUser() {
         M model = createModel();
-        getUserOwnedService().add(testUser.getId(), model);
-        getUserOwnedService().remove(testUser.getId(), model);
-        List<M> models = getUserOwnedService().findAll(testUser.getId());
+        getUserOwnedService().add(UUID1, model);
+        getUserOwnedService().remove(UUID1, model);
+        List<M> models = getUserOwnedService().findAll(UUID1);
         assertTrue(models.isEmpty());
     }
 
@@ -47,8 +47,8 @@ public abstract class AbstractUserOwnedServiceTest<M extends AbstractUserOwnedMo
     @SneakyThrows
     public void testFindById() {
         M model = createModel();
-        M result = getUserOwnedService().add(testUser.getId(), model);
-        M foundModel = getUserOwnedService().findOneById(testUser.getId(), result.getId());
+        M result = getUserOwnedService().add(UUID1, model);
+        M foundModel = getUserOwnedService().findOneById(UUID1, result.getId());
         assertNotNull(foundModel);
         assertEquals(result.getId(), foundModel.getId());
     }
@@ -57,10 +57,10 @@ public abstract class AbstractUserOwnedServiceTest<M extends AbstractUserOwnedMo
     @SneakyThrows
     public void testRemoveOneByUser() {
         M model = createModel();
-        getUserOwnedService().add(testUser.getId(), model);
+        getUserOwnedService().add(UUID1, model);
         getUserOwnedService().removeOne(model);
 
-        List<M> models = getUserOwnedService().findAll(testUser.getId());
+        List<M> models = getUserOwnedService().findAll(UUID1);
         assertTrue(models.isEmpty());
     }
 

@@ -40,6 +40,7 @@ public final class ProjectRepositoryTest extends AbstractUserOwnedRepositoryTest
     @SneakyThrows
     public void testCreateWithName() {
         initProjectRepository();
+
         @NonNull final Project project = projectRepository.create(UUID1, STRING);
         Assert.assertNotNull(project);
         Assert.assertEquals(project, projectRepository.findOneById(project.getId()));
@@ -52,6 +53,7 @@ public final class ProjectRepositoryTest extends AbstractUserOwnedRepositoryTest
     @SneakyThrows
     public void testCreateWithNameAndDescription() {
         initProjectRepository();
+
         @NonNull final Project project = projectRepository.create(UUID1, STRING, STRING);
         Assert.assertNotNull(project);
         Assert.assertEquals(project, projectRepository.findOneById(project.getId()));
@@ -67,6 +69,7 @@ public final class ProjectRepositoryTest extends AbstractUserOwnedRepositoryTest
     @Test
     public void testFindAllWithComparing() {
         initProjectRepository();
+
         Project projectC = createModel();
         projectC.setName("C");
         projectRepository.add(projectC);
