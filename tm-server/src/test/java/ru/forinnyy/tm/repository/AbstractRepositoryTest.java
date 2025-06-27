@@ -7,7 +7,10 @@ import org.junit.Test;
 import ru.forinnyy.tm.AbstractTest;
 import ru.forinnyy.tm.model.AbstractModel;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public abstract class AbstractRepositoryTest<M extends AbstractModel> extends AbstractTest {

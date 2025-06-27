@@ -6,7 +6,7 @@ import org.junit.Test;
 import ru.forinnyy.tm.exception.field.UserIdEmptyException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
 
-import java.util.*;
+import java.util.Collections;
 
 
 public abstract class AbstractUserOwnedRepositoryTest<M extends AbstractUserOwnedModel> extends AbstractRepositoryTest<M> {
