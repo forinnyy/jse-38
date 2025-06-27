@@ -4,7 +4,6 @@ package ru.forinnyy.tm.repository;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.model.Project;
@@ -33,10 +32,14 @@ public final class ProjectRepositoryTest extends AbstractUserOwnedRepositoryTest
         return (ProjectRepository) createRepository();
     }
 
+    private void initProjectRepository() {
+        projectRepository = getProjectRepository();
+    }
+
     @Test
     @SneakyThrows
     public void testCreateWithName() {
-        projectRepository = getProjectRepository();
+        initProjectRepository();
         @NonNull final Project project = projectRepository.create(UUID1, STRING);
         Assert.assertNotNull(project);
         Assert.assertEquals(project, projectRepository.findOneById(project.getId()));
@@ -48,10 +51,11 @@ public final class ProjectRepositoryTest extends AbstractUserOwnedRepositoryTest
     @Test
     @SneakyThrows
     public void testCreateWithNameAndDescription() {
-        projectRepository = getProjectRepository();
+        initProjectRepository();
         @NonNull final Project project = projectRepository.create(UUID1, STRING, STRING);
         Assert.assertNotNull(project);
         Assert.assertEquals(project, projectRepository.findOneById(project.getId()));
+
         Assert.assertThrows(NullPointerException.class, () ->
                 projectRepository.create(UUID1, null, STRING));
         Assert.assertThrows(NullPointerException.class, () ->
@@ -62,7 +66,7 @@ public final class ProjectRepositoryTest extends AbstractUserOwnedRepositoryTest
 
     @Test
     public void testFindAllWithComparing() {
-        projectRepository = getProjectRepository();
+        initProjectRepository();
         Project projectC = createModel();
         projectC.setName("C");
         projectRepository.add(projectC);
@@ -78,12 +82,13 @@ public final class ProjectRepositoryTest extends AbstractUserOwnedRepositoryTest
         List<Project> sortedExpected = Arrays.asList(projectA, projectB, projectC);
         List<Project> sortedActual = projectRepository.findAll(Comparator.comparing(Project::getName));
         Assert.assertEquals(sortedExpected, sortedActual);
-        Assert.assertThrows(NullPointerException.class, () -> projectRepository.findAll((String) null));
+
+        Assert.assertThrows(NullPointerException.class, () -> repository.findAll(null));
     }
 
     @Test
     public void testFindAllWithComparator() {
-        projectRepository = getProjectRepository();
+        initProjectRepository();
         Project projectC = createModel();
         projectC.setName("C");
         projectRepository.add(UUID1, projectC);
@@ -99,10 +104,9 @@ public final class ProjectRepositoryTest extends AbstractUserOwnedRepositoryTest
         List<Project> sortedExpected = Arrays.asList(projectA, projectB);
         List<Project> sortedActual = projectRepository.findAll(UUID2, Comparator.comparing(Project::getName));
         Assert.assertEquals(sortedExpected, sortedActual);
-        Assert.assertThrows(
-                NullPointerException.class,
-                () -> projectRepository.findAll(null, Comparator.comparing(Project::getName))
-        );
+
+        Assert.assertThrows(NullPointerException.class,
+                () -> projectRepository.findAll(null, Comparator.comparing(Project::getName)));
     }
 
     @Test
@@ -124,14 +128,11 @@ public final class ProjectRepositoryTest extends AbstractUserOwnedRepositoryTest
         List<Project> sortedExpected = Arrays.asList(projectA, projectB);
         List<Project> sortedActual = projectRepository.findAll(UUID2, Sort.BY_NAME);
         Assert.assertEquals(sortedExpected, sortedActual);
-        Assert.assertThrows(
-                NullPointerException.class,
-                () -> projectRepository.findAll(null, Sort.BY_NAME)
-        );
-        Assert.assertThrows(
-                NullPointerException.class,
-                () -> projectRepository.findAll(UUID2, (Sort) null)
-        );
+
+        Assert.assertThrows(NullPointerException.class,
+                () -> projectRepository.findAll(null, Sort.BY_NAME));
+        Assert.assertThrows(NullPointerException.class,
+                () -> projectRepository.findAll(UUID2, (Sort) null));
     }
 
 }

@@ -30,10 +30,14 @@ public final class TaskRepositoryTest extends AbstractUserOwnedRepositoryTest<Ta
         return (TaskRepository) createRepository();
     }
 
+    private void initTaskRepository() {
+        taskRepository = getTaskRepository();
+    }
+
     @Test
     @SneakyThrows
     public void testCreateWithName() {
-        taskRepository = getTaskRepository();
+        initTaskRepository();
         @NonNull final Task task = taskRepository.create(UUID1, STRING);
         Assert.assertNotNull(task);
         Assert.assertEquals(task, taskRepository.findOneById(task.getId()));
@@ -45,7 +49,7 @@ public final class TaskRepositoryTest extends AbstractUserOwnedRepositoryTest<Ta
     @Test
     @SneakyThrows
     public void testCreateWithNameAndDescription() {
-        taskRepository = getTaskRepository();
+        initTaskRepository();
         @NonNull final Task task = taskRepository.create(UUID1, STRING, STRING);
         Assert.assertNotNull(task);
         Assert.assertEquals(task, taskRepository.findOneById(task.getId()));
@@ -61,7 +65,7 @@ public final class TaskRepositoryTest extends AbstractUserOwnedRepositoryTest<Ta
     @Test
     @SneakyThrows
     public void testFindAllByProjectId() {
-        taskRepository = getTaskRepository();
+        initTaskRepository();
         @NonNull final User user = new User();
         user.setId(UUID1);
         @NonNull final Project project = new Project();
