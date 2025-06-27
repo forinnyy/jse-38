@@ -96,8 +96,7 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     public Task changeTaskStatusByIndex(final String userId, final Integer index, @NonNull final Status status)
             throws AbstractFieldException, AbstractEntityException, AbstractUserException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        if (index == null || index < 0 || index > repository.getSize()) throw new IndexIncorrectException();
-        if (index >= repository.getSize()) throw new IndexIncorrectException();
+        if (index == null || index < 0 || index >= repository.getSize()) throw new IndexIncorrectException();
         final Task task = findOneByIndex(userId, index);
         if (task == null) throw new TaskNotFoundException();
         if (!task.getUserId().equals(userId)) throw new PermissionException();

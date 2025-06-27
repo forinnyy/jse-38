@@ -13,7 +13,6 @@ import ru.forinnyy.tm.repository.ProjectRepository;
 
 public class ProjectServiceTest extends AbstractUserOwnedServiceTest<Project, IProjectRepository> {
 
-
     @Override
     protected IProjectRepository createRepository() {
         return new ProjectRepository();
