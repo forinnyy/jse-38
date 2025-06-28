@@ -6,13 +6,15 @@ import org.junit.Assert;
 import org.junit.Test;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.enumerated.Status;
-import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
 import ru.forinnyy.tm.exception.entity.TaskNotFoundException;
 import ru.forinnyy.tm.exception.field.*;
-import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Task;
+import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.repository.TaskRepository;
+
+import java.util.Collections;
+import java.util.List;
 
 public class TaskServiceTest extends AbstractUserOwnedServiceTest<Task, ITaskRepository> {
 
@@ -35,6 +37,43 @@ public class TaskServiceTest extends AbstractUserOwnedServiceTest<Task, ITaskRep
 
     protected TaskService getTaskService() {
         return (TaskService) createService();
+    }
+
+    @Test
+    @SneakyThrows
+    public void testFindAllByProjectId() {
+        @NonNull final User user = new User();
+        user.setId(UUID1);
+
+        @NonNull final Project project = new Project();
+        project.setUserId(UUID1);
+        project.setId(UUID2);
+
+        @NonNull final Task taskOne = new Task();
+        taskOne.setUserId(UUID1);
+        taskOne.setProjectId(UUID2);
+
+        @NonNull final Task taskTwo = new Task();
+        taskTwo.setUserId(UUID1);
+        taskTwo.setProjectId(UUID2);
+
+        getTaskService().add(UUID1, taskOne);
+        getTaskService().add(UUID1, taskTwo);
+
+        @NonNull final List<Task> tasks = getTaskService().findAllByProjectId(UUID1, UUID2);
+
+        Assert.assertEquals(2, tasks.size());
+        for (Task task : tasks) {
+            Assert.assertEquals(user.getId(), task.getUserId());
+            Assert.assertEquals(project.getId(), task.getProjectId());
+        }
+        Assert.assertThrows(UserIdEmptyException.class,
+                () -> getTaskService().findAllByProjectId(null, UUID2));
+        Assert.assertThrows(UserIdEmptyException.class,
+                () -> getTaskService().findAllByProjectId("", UUID2));
+
+        Assert.assertEquals(Collections.emptyList(), getTaskService().findAllByProjectId(UUID1, null));
+        Assert.assertEquals(Collections.emptyList(), getTaskService().findAllByProjectId(UUID1, ""));
     }
 
     @Test
