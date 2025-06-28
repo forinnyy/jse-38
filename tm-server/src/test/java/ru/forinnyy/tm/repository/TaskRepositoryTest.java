@@ -4,15 +4,16 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Test;
-import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Task;
+import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.User;
+import ru.forinnyy.tm.enumerated.Sort;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public final class TaskRepositoryTest extends AbstractUserOwnedRepositoryTest<Task> {
-
-    private TaskRepository taskRepository;
 
     @Override
     protected AbstractUserOwnedRepository<Task> createRepository() {
@@ -24,47 +25,104 @@ public final class TaskRepositoryTest extends AbstractUserOwnedRepositoryTest<Ta
         return new Task();
     }
 
-    private TaskRepository getTaskRepository() {
-        return (TaskRepository) createRepository();
-    }
-
-    private void initTaskRepository() {
-        taskRepository = getTaskRepository();
+    public TaskRepository getTaskRepository() {
+        return (TaskRepository) repository;
     }
 
     @Test
     @SneakyThrows
     public void testCreateWithName() {
-        initTaskRepository();
-        @NonNull final Task task = taskRepository.create(UUID1, STRING);
+        @NonNull final Task task = getTaskRepository().create(UUID1, STRING);
         Assert.assertNotNull(task);
-        Assert.assertEquals(task, taskRepository.findOneById(task.getId()));
+        Assert.assertEquals(task, getUserOwnedRepository().findOneById(task.getId()));
 
-        Assert.assertThrows(NullPointerException.class, () -> taskRepository.create(UUID1, null));
-        Assert.assertThrows(NullPointerException.class, () -> taskRepository.create(null, STRING));
+        Assert.assertThrows(NullPointerException.class, () -> getTaskRepository().create(UUID1, null));
+        Assert.assertThrows(NullPointerException.class, () -> getTaskRepository().create(null, STRING));
     }
 
     @Test
     @SneakyThrows
     public void testCreateWithNameAndDescription() {
-        initTaskRepository();
-        @NonNull final Task task = taskRepository.create(UUID1, STRING, STRING);
+        @NonNull final Task task = getTaskRepository().create(UUID1, STRING, STRING);
         Assert.assertNotNull(task);
-        Assert.assertEquals(task, taskRepository.findOneById(task.getId()));
+        Assert.assertEquals(task, getUserOwnedRepository().findOneById(task.getId()));
 
-        Assert.assertThrows(NullPointerException.class, () ->
-                taskRepository.create(UUID1, null, STRING));
-        Assert.assertThrows(NullPointerException.class, () ->
-                taskRepository.create(UUID1, STRING, null));
-        Assert.assertThrows(NullPointerException.class, () ->
-                taskRepository.create(null, STRING, STRING));
+        Assert.assertThrows(NullPointerException.class, () -> getTaskRepository().create(UUID1, null, STRING));
+        Assert.assertThrows(NullPointerException.class, () -> getTaskRepository().create(UUID1, STRING, null));
+        Assert.assertThrows(NullPointerException.class, () -> getTaskRepository().create(null, STRING, STRING));
+    }
+
+    @Test
+    public void testFindAllWithComparing() {
+        @NonNull final Task taskC = createModel();
+        taskC.setName("C");
+        getUserOwnedRepository().add(taskC);
+
+        @NonNull final Task taskB = createModel();
+        taskB.setName("B");
+        getUserOwnedRepository().add(taskB);
+
+        @NonNull final Task taskA = createModel();
+        taskA.setName("A");
+        getUserOwnedRepository().add(taskA);
+
+        List<Task> sortedExpected = Arrays.asList(taskA, taskB, taskC);
+        List<Task> sortedActual = getUserOwnedRepository().findAll(Comparator.comparing(Task::getName));
+        Assert.assertEquals(sortedExpected, sortedActual);
+
+        Assert.assertThrows(NullPointerException.class, () -> repository.findAll(null));
+    }
+
+    @Test
+    public void testFindAllWithComparator() {
+        @NonNull final Task taskC = createModel();
+        taskC.setName("C");
+        getUserOwnedRepository().add(UUID1, taskC);
+
+        @NonNull final Task taskB = createModel();
+        taskB.setName("B");
+        getUserOwnedRepository().add(UUID2, taskB);
+
+        @NonNull final Task taskA = createModel();
+        taskA.setName("A");
+        getUserOwnedRepository().add(UUID2, taskA);
+
+        @NonNull final List<Task> sortedExpected = Arrays.asList(taskA, taskB);
+        @NonNull final List<Task> sortedActual = getUserOwnedRepository().findAll(UUID2, Comparator.comparing(Task::getName));
+        Assert.assertEquals(sortedExpected, sortedActual);
+
+        Assert.assertThrows(NullPointerException.class,
+                () -> getTaskRepository().findAll(null, Comparator.comparing(Task::getName)));
+    }
+
+    @Test
+    @SneakyThrows
+    public void testFindAllWithSort() {
+        @NonNull final Task taskC = createModel();
+        taskC.setName("C");
+        getTaskRepository().add(UUID1, taskC);
+
+        @NonNull final Task taskB = createModel();
+        taskB.setName("B");
+        getTaskRepository().add(UUID2, taskB);
+
+        @NonNull final Task taskA = createModel();
+        taskA.setName("A");
+        getTaskRepository().add(UUID2, taskA);
+
+        @NonNull final List<Task> sortedExpected = Arrays.asList(taskA, taskB);
+        @NonNull final List<Task> sortedActual = getTaskRepository().findAll(UUID2, Sort.BY_NAME);
+        Assert.assertEquals(sortedExpected, sortedActual);
+
+        Assert.assertThrows(NullPointerException.class,
+                () -> getTaskRepository().findAll(null, Sort.BY_NAME));
+        Assert.assertThrows(NullPointerException.class,
+                () -> getTaskRepository().findAll(UUID2, (Sort) null));
     }
 
     @Test
     @SneakyThrows
     public void testFindAllByProjectId() {
-        initTaskRepository();
-
         @NonNull final User user = new User();
         user.setId(UUID1);
 
@@ -72,18 +130,18 @@ public final class TaskRepositoryTest extends AbstractUserOwnedRepositoryTest<Ta
         project.setUserId(UUID1);
         project.setId(UUID2);
 
-        @NonNull final Task taskOne = new Task();
+        @NonNull final Task taskOne = createModel();
         taskOne.setUserId(UUID1);
         taskOne.setProjectId(UUID2);
 
-        @NonNull final Task taskTwo = new Task();
+        @NonNull final Task taskTwo = createModel();
         taskTwo.setUserId(UUID1);
         taskTwo.setProjectId(UUID2);
 
-        taskRepository.add(taskOne);
-        taskRepository.add(taskTwo);
+        getTaskRepository().add(taskOne);
+        getTaskRepository().add(taskTwo);
 
-        @NonNull final List<Task> tasks = taskRepository.findAllByProjectId(UUID1, UUID2);
+        @NonNull final List<Task> tasks = getTaskRepository().findAllByProjectId(UUID1, UUID2);
 
         Assert.assertNotNull(tasks);
         Assert.assertEquals(2, tasks.size());
@@ -93,10 +151,9 @@ public final class TaskRepositoryTest extends AbstractUserOwnedRepositoryTest<Ta
         }
 
         Assert.assertThrows(NullPointerException.class, () ->
-                taskRepository.findAllByProjectId(null, UUID1));
+                getTaskRepository().findAllByProjectId(null, UUID1));
         Assert.assertThrows(NullPointerException.class, () ->
-                taskRepository.findAllByProjectId(UUID1, null));
-        Assert.assertNotNull(tasks);
+                getTaskRepository().findAllByProjectId(UUID1, null));
     }
 
 }

@@ -3,9 +3,9 @@ package ru.forinnyy.tm.repository;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.forinnyy.tm.model.User;
-
 
 public final class UserRepositoryTest extends AbstractRepositoryTest<User> {
 
@@ -22,6 +22,10 @@ public final class UserRepositoryTest extends AbstractRepositoryTest<User> {
         return user;
     }
 
+    private UserRepository getUserRepository() {
+        return (UserRepository) createRepository();
+    }
+
     public void initUserAndUserRepository() {
         @NonNull final User user = createModel();
         userRepository = getUserRepository();
@@ -29,10 +33,6 @@ public final class UserRepositoryTest extends AbstractRepositoryTest<User> {
         user.setLogin("user");
         user.setEmail("user@user.ru");
         userRepository.add(user);
-    }
-
-    private UserRepository getUserRepository() {
-        return (UserRepository) createRepository();
     }
 
     @Test
