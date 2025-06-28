@@ -16,7 +16,7 @@ import ru.forinnyy.tm.repository.TaskRepository;
 import java.util.Collections;
 import java.util.List;
 
-public class TaskServiceTest extends AbstractUserOwnedServiceTest<Task, ITaskRepository> {
+public final class TaskServiceTest extends AbstractUserOwnedServiceTest<Task, ITaskRepository> {
 
     @Override
     protected ITaskRepository createRepository() {
@@ -63,7 +63,7 @@ public class TaskServiceTest extends AbstractUserOwnedServiceTest<Task, ITaskRep
         @NonNull final List<Task> tasks = getTaskService().findAllByProjectId(UUID1, UUID2);
 
         Assert.assertEquals(2, tasks.size());
-        for (Task task : tasks) {
+        for (@NonNull final Task task : tasks) {
             Assert.assertEquals(user.getId(), task.getUserId());
             Assert.assertEquals(project.getId(), task.getProjectId());
         }

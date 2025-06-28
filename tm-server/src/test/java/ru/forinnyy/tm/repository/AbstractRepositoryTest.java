@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.repository;
 
+import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,7 +29,7 @@ public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Ab
 
     @Test
     public void testRemoveAll() {
-        List<M> models = new ArrayList<>();
+        @NonNull final List<M> models = new ArrayList<>();
         models.add(createModel());
         models.add(createModel());
         repository.add(models);
@@ -48,11 +49,11 @@ public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Ab
 
     @Test
     public void testSet() {
-        List<M> models = new ArrayList<>();
+        @NonNull final List<M> models = new ArrayList<>();
         models.add(createModel());
         models.add(createModel());
         repository.add(models);
-        List<M> expectedModels = new ArrayList<>();
+        @NonNull final List<M> expectedModels = new ArrayList<>();
         expectedModels.add(createModel());
         expectedModels.add(createModel());
         repository.set(expectedModels);
@@ -63,7 +64,7 @@ public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Ab
 
     @Test
     public void testFindAllAndAddCollection() {
-        List<M> models = new LinkedList<>();
+        @NonNull final List<M> models = new LinkedList<>();
         models.add(createModel());
         models.add(createModel());
         repository.add(models);
@@ -74,9 +75,9 @@ public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Ab
 
     @Test
     public void testAddAndFindOneById() {
-        M expectedModel = createModel();
+        @NonNull final M expectedModel = createModel();
         repository.add(expectedModel);
-        M model = repository.findOneById(expectedModel.getId());
+        @NonNull final M model = repository.findOneById(expectedModel.getId());
         Assert.assertEquals(expectedModel, model);
         Assert.assertThrows(NullPointerException.class, () -> repository.add((M) null));
         Assert.assertThrows(NullPointerException.class, () -> repository.findOneById(null));
@@ -87,7 +88,7 @@ public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Ab
     @Test
     @SneakyThrows
     public void testRemoveById() {
-        M model = createModel();
+        @NonNull final M model = createModel();
         repository.add(model);
         repository.removeById(model.getId());
         Assert.assertEquals(0, repository.getSize());
@@ -98,7 +99,7 @@ public abstract class AbstractRepositoryTest<M extends AbstractModel> extends Ab
     @Test
     @SneakyThrows
     public void testRemoveByIndex() {
-        M model = createModel();
+        @NonNull final M model = createModel();
         repository.add(model);
         repository.removeByIndex(0);
         Assert.assertEquals(0, repository.getSize());

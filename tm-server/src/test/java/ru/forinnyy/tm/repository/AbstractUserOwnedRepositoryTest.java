@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.repository;
 
+import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,9 +18,9 @@ public abstract class AbstractUserOwnedRepositoryTest<M extends AbstractUserOwne
 
     @Test
     public void testClearAndFindAllWithUserId() {
-        M modelUserA = createModel();
-        M modelUserB = createModel();
-        M modelUserC = createModel();
+        @NonNull final M modelUserA = createModel();
+        @NonNull final M modelUserB = createModel();
+        @NonNull final M modelUserC = createModel();
         modelUserA.setUserId(UUID1);
         modelUserB.setUserId(UUID2);
         modelUserC.setUserId(UUID2);
@@ -35,29 +36,29 @@ public abstract class AbstractUserOwnedRepositoryTest<M extends AbstractUserOwne
     @Test
     @SneakyThrows
     public void testExistsByIdWithUserId() {
-        final M model = createModel();
-        model.setId("1");
-        model.setUserId("1");
-        getUserOwnedRepository().add("1", model);
-        Assert.assertTrue(getUserOwnedRepository().existsById("1", "1"));
-        Assert.assertFalse(getUserOwnedRepository().existsById("2", "2"));
-        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().existsById(null, "1"));
-        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().existsById("1", null));
+        @NonNull final M model = createModel();
+        model.setId(UUID1);
+        model.setUserId(UUID1);
+        getUserOwnedRepository().add(UUID1, model);
+        Assert.assertTrue(getUserOwnedRepository().existsById(UUID1, UUID1));
+        Assert.assertFalse(getUserOwnedRepository().existsById(UUID2, UUID2));
+        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().existsById(null, UUID1));
+        Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().existsById(UUID1, null));
     }
 
     @Test
     public void testRemoveAllWithUserId() {
-        getUserOwnedRepository().add("1", createModel());
-        getUserOwnedRepository().add("2", createModel());
-        getUserOwnedRepository().removeAll("1");
-        Assert.assertEquals(Collections.emptyList(), getUserOwnedRepository().findAll("1"));
+        getUserOwnedRepository().add(UUID1, createModel());
+        getUserOwnedRepository().add(UUID2, createModel());
+        getUserOwnedRepository().removeAll(UUID1);
+        Assert.assertEquals(Collections.emptyList(), getUserOwnedRepository().findAll(UUID1));
         Assert.assertThrows(NullPointerException.class, () -> getUserOwnedRepository().removeAll((String) null));
     }
 
     @Test
     @SneakyThrows
     public void testRemoveByIdWithUserId() {
-        M model = createModel();
+        @NonNull final M model = createModel();
         getUserOwnedRepository().add(UUID1, model);
         getUserOwnedRepository().removeById(UUID1, model.getId());
         Assert.assertEquals(0, getUserOwnedRepository().getSize());
@@ -70,7 +71,7 @@ public abstract class AbstractUserOwnedRepositoryTest<M extends AbstractUserOwne
     @Test
     @SneakyThrows
     public void testRemoveByIndexWithUserId() {
-        M model = createModel();
+        @NonNull final M model = createModel();
         getUserOwnedRepository().add(UUID1, model);
         getUserOwnedRepository().removeByIndex(UUID1, 0);
         Assert.assertEquals(0, getUserOwnedRepository().getSize());
@@ -83,7 +84,7 @@ public abstract class AbstractUserOwnedRepositoryTest<M extends AbstractUserOwne
     @Test
     @SneakyThrows
     public void testRemoveWithUserId() {
-        M model = createModel();
+        @NonNull final M model = createModel();
         getUserOwnedRepository().add(UUID1, model);
         getUserOwnedRepository().remove(UUID1, model);
         Assert.assertEquals(0, getUserOwnedRepository().getSize());

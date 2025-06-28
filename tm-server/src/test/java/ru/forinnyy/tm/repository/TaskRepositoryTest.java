@@ -87,7 +87,7 @@ public final class TaskRepositoryTest extends AbstractUserOwnedRepositoryTest<Ta
 
         Assert.assertNotNull(tasks);
         Assert.assertEquals(2, tasks.size());
-        for (Task task : tasks) {
+        for (@NonNull final Task task : tasks) {
             Assert.assertEquals(user.getId(), task.getUserId());
             Assert.assertEquals(project.getId(), task.getProjectId());
         }

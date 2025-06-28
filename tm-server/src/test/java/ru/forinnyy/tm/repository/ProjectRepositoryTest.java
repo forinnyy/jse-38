@@ -70,15 +70,15 @@ public final class ProjectRepositoryTest extends AbstractUserOwnedRepositoryTest
     public void testFindAllWithComparing() {
         initProjectRepository();
 
-        Project projectC = createModel();
+        @NonNull final Project projectC = createModel();
         projectC.setName("C");
         projectRepository.add(projectC);
 
-        Project projectB = createModel();
+        @NonNull final Project projectB = createModel();
         projectB.setName("B");
         projectRepository.add(projectB);
 
-        Project projectA = createModel();
+        @NonNull final Project projectA = createModel();
         projectA.setName("A");
         projectRepository.add(projectA);
 
@@ -92,20 +92,20 @@ public final class ProjectRepositoryTest extends AbstractUserOwnedRepositoryTest
     @Test
     public void testFindAllWithComparator() {
         initProjectRepository();
-        Project projectC = createModel();
+        @NonNull final Project projectC = createModel();
         projectC.setName("C");
         projectRepository.add(UUID1, projectC);
 
-        Project projectB = createModel();
+        @NonNull final Project projectB = createModel();
         projectB.setName("B");
         projectRepository.add(UUID2, projectB);
 
-        Project projectA = createModel();
+        @NonNull final Project projectA = createModel();
         projectA.setName("A");
         projectRepository.add(UUID2, projectA);
 
-        List<Project> sortedExpected = Arrays.asList(projectA, projectB);
-        List<Project> sortedActual = projectRepository.findAll(UUID2, Comparator.comparing(Project::getName));
+        @NonNull final List<Project> sortedExpected = Arrays.asList(projectA, projectB);
+        @NonNull final List<Project> sortedActual = projectRepository.findAll(UUID2, Comparator.comparing(Project::getName));
         Assert.assertEquals(sortedExpected, sortedActual);
 
         Assert.assertThrows(NullPointerException.class,
@@ -116,20 +116,20 @@ public final class ProjectRepositoryTest extends AbstractUserOwnedRepositoryTest
     @SneakyThrows
     public void testFindAllWithSort() {
         projectRepository = getProjectRepository();
-        Project projectC = createModel();
+        @NonNull final Project projectC = createModel();
         projectC.setName("C");
         projectRepository.add(UUID1, projectC);
 
-        Project projectB = createModel();
+        @NonNull final Project projectB = createModel();
         projectB.setName("B");
         projectRepository.add(UUID2, projectB);
 
-        Project projectA = createModel();
+        @NonNull final Project projectA = createModel();
         projectA.setName("A");
         projectRepository.add(UUID2, projectA);
 
-        List<Project> sortedExpected = Arrays.asList(projectA, projectB);
-        List<Project> sortedActual = projectRepository.findAll(UUID2, Sort.BY_NAME);
+        @NonNull final List<Project> sortedExpected = Arrays.asList(projectA, projectB);
+        @NonNull final List<Project> sortedActual = projectRepository.findAll(UUID2, Sort.BY_NAME);
         Assert.assertEquals(sortedExpected, sortedActual);
 
         Assert.assertThrows(NullPointerException.class,

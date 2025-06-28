@@ -11,7 +11,7 @@ import ru.forinnyy.tm.exception.field.*;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.repository.ProjectRepository;
 
-public class ProjectServiceTest extends AbstractUserOwnedServiceTest<Project, IProjectRepository> {
+public final class ProjectServiceTest extends AbstractUserOwnedServiceTest<Project, IProjectRepository> {
 
     @Override
     protected IProjectRepository createRepository() {
