@@ -32,22 +32,27 @@ public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRe
 
     @Test
     @SneakyThrows
-    public void testAdd() {
+    public void testAddMethod() {
         @NonNull final M model_one = createModel();
         service.add(model_one);
         Assert.assertTrue(service.findAll().contains(model_one));
         Assert.assertThrows(NullPointerException.class, () -> service.add((M) null));
+    }
+
+    @Test
+    @SneakyThrows
+    public void testAddCollectionMethod() {
         @NonNull final M model_two = createModel();
         @NonNull final M model_three = createModel();
         @NonNull final Collection<M> collection = Arrays.asList(model_two, model_three);
         service.add(collection);
-        Assert.assertTrue(service.findAll().containsAll(Arrays.asList(model_one, model_two, model_three)));
+        Assert.assertTrue(service.findAll().containsAll(Arrays.asList(model_two, model_three)));
         Assert.assertThrows(NullPointerException.class, () -> service.add((Collection<M>) null));
     }
 
     @Test
     @SneakyThrows
-    public void testSet() {
+    public void testSetMethod() {
         @NonNull final M model = createModel();
         service.set(Arrays.asList(model));
         Assert.assertTrue(service.findAll().contains(model));
@@ -56,7 +61,7 @@ public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRe
 
     @Test
     @SneakyThrows
-    public void testFindAll() {
+    public void testFindAllMethod() {
         service.add(Arrays.asList(createModel()));
         @NonNull final List<M> models = service.findAll();
         Assert.assertTrue(models.containsAll(service.findAll()));
@@ -64,7 +69,7 @@ public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRe
 
     @Test
     @SneakyThrows
-    public void testClear() {
+    public void testClearMethod() {
         service.add(createModel());
         service.clear();
         Assert.assertTrue(service.findAll().isEmpty());
@@ -72,7 +77,7 @@ public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRe
 
     @Test
     @SneakyThrows
-    public void testRemove() {
+    public void testRemoveMethod() {
         @NonNull final M model = createModel();
         service.add(Arrays.asList(model));
         service.remove(model);
@@ -84,7 +89,7 @@ public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRe
     }
 
     @Test
-    public void testRemoveAll() {
+    public void testRemoveAllMethod() {
         @NonNull final List<M> models = Arrays.asList(createModel(), createModel());
         service.set(models);
         Assert.assertEquals(2, service.getSize());
@@ -97,7 +102,7 @@ public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRe
 
     @Test
     @SneakyThrows
-    public void testFindOneById() {
+    public void testFindOneByIdMethod() {
         @NonNull final M model = createModel();
         service.add(model);
         Assert.assertEquals(model, service.findOneById(model.getId()));
@@ -108,7 +113,7 @@ public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRe
 
     @Test
     @SneakyThrows
-    public void testFindByIndex() {
+    public void testFindByIndexMethod() {
         @NonNull final M model = createModel();
         service.add(model);
         Assert.assertEquals(model, service.findOneByIndex(0));
@@ -118,7 +123,7 @@ public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRe
 
     @Test
     @SneakyThrows
-    public void testRemoveById() {
+    public void testRemoveByIdMethod() {
         @NonNull final M model = createModel();
         service.add(model);
         Assert.assertTrue(service.findAll().contains(model));
@@ -131,7 +136,7 @@ public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRe
 
     @Test
     @SneakyThrows
-    public void testRemoveByIndex() {
+    public void testRemoveByIndexMethod() {
         @NonNull final M model = createModel();
         service.add(model);
         Assert.assertTrue(service.findAll().contains(model));
@@ -143,7 +148,7 @@ public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRe
 
     @Test
     @SneakyThrows
-    public void testExistsById() {
+    public void testExistsByIdMethod() {
         @NonNull final M model = createModel();
         service.add(model);
         Assert.assertTrue(service.existsById(model.getId()));
