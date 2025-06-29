@@ -102,7 +102,7 @@ public final class UserService extends AbstractService<User, IUserRepository>
     public User removeByLogin(final String login) throws AbstractFieldException, AbstractEntityException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         final User user = findByLogin(login);
-        return this.removeOne(user);
+        return this.remove(user);
     }
 
     @NonNull
@@ -110,12 +110,12 @@ public final class UserService extends AbstractService<User, IUserRepository>
     public User removeByEmail(final String email) throws AbstractUserException, AbstractFieldException, AbstractEntityException {
         if (email == null || email.isEmpty()) throw new EmailEmptyException();
         final User user = findByEmail(email);
-        return this.removeOne(user);
+        return this.remove(user);
     }
 
     @NonNull
     public User removeOne(@NonNull final User model) throws AbstractEntityException, AbstractFieldException {
-        @NonNull final User user = super.removeOne(model);
+        @NonNull final User user = super.remove(model);
         @NonNull final String userId = user.getId();
         taskRepository.removeAll(userId);
         projectRepository.removeAll(userId);

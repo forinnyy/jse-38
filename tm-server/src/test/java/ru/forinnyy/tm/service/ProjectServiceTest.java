@@ -3,13 +3,19 @@ package ru.forinnyy.tm.service;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
+import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
 import ru.forinnyy.tm.exception.field.*;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.repository.ProjectRepository;
+
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 public final class ProjectServiceTest extends AbstractUserOwnedServiceTest<Project, IProjectRepository> {
 
@@ -201,6 +207,48 @@ public final class ProjectServiceTest extends AbstractUserOwnedServiceTest<Proje
 
         Assert.assertThrows(NullPointerException.class,
                 () -> getProjectService().changeProjectStatusByIndex(UUID1, 0, null));
+    }
+
+    @Test
+    @SneakyThrows
+    public void testFindAllWithComparatorAndSort() {
+        @NonNull final Project projectA = createModel();
+        projectA.setName("A");
+        @NonNull final Project projectB = createModel();
+        projectB.setName("B");
+        repository.add(projectB);
+        repository.add(projectA);
+        @NonNull final List<Project> expectedList = Arrays.asList(projectA, projectB);
+        Assert.assertEquals(expectedList, getProjectService().findAll(Comparator.comparing(Project::getName)));
+        Assert.assertEquals(getProjectService().findAll(), getProjectService().findAll((Comparator<Project>) null));
+        Assert.assertEquals(expectedList, getProjectService().findAll(Sort.BY_NAME));
+        Assert.assertEquals(getProjectService().findAll(), getProjectService().findAll((Sort) null));
+    }
+
+    @Test
+    @SneakyThrows
+    public void testFindAllWithComparatorAndSortWithUserId() {
+        @NonNull final Project projectA = createModel();
+        projectA.setName("A");
+        @NonNull final Project projectB = createModel();
+        projectB.setName("B");
+        repository.add(UUID1, projectB);
+        repository.add(UUID1, projectA);
+        @NonNull final List<Project> expectedList = Arrays.asList(projectA, projectB);
+        Assert.assertEquals(expectedList, getProjectService().findAll(UUID1, Comparator.comparing(Project::getName)));
+        Assert.assertEquals(getProjectService().findAll(), getProjectService().findAll(UUID1, (Comparator<Project>) null));
+        Assert.assertEquals(expectedList, getProjectService().findAll(UUID1, Sort.BY_NAME));
+        Assert.assertEquals(getProjectService().findAll(), getProjectService().findAll(UUID1, (Sort) null));
+
+        Assert.assertThrows(UserIdEmptyException.class,
+                () -> getProjectService().findAll(null, Comparator.comparing(Project::getName)));
+        Assert.assertThrows(UserIdEmptyException.class,
+                () -> getProjectService().findAll(EMPTY_STRING, Comparator.comparing(Project::getName)));
+
+        Assert.assertThrows(UserIdEmptyException.class,
+                () -> getProjectService().findAll(null, Sort.BY_NAME));
+        Assert.assertThrows(UserIdEmptyException.class,
+                () -> getProjectService().findAll(EMPTY_STRING, Sort.BY_NAME));
     }
 
 }

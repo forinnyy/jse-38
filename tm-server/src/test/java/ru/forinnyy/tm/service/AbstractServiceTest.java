@@ -2,17 +2,18 @@ package ru.forinnyy.tm.service;
 
 import lombok.NonNull;
 import lombok.SneakyThrows;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import ru.forinnyy.tm.AbstractTest;
 import ru.forinnyy.tm.api.repository.IRepository;
+import ru.forinnyy.tm.exception.entity.EntityNotFoundException;
+import ru.forinnyy.tm.exception.field.IdEmptyException;
+import ru.forinnyy.tm.exception.field.IndexIncorrectException;
 import ru.forinnyy.tm.model.AbstractModel;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRepository<M>> extends AbstractTest {
 
@@ -32,10 +33,16 @@ public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRe
     @Test
     @SneakyThrows
     public void testAdd() {
-        @NonNull final M model = createModel();
-        service.add(Arrays.asList(model));
-        List<M> allModels = service.findAll();
-        assertTrue(allModels.contains(model));
+        @NonNull final M model_one = createModel();
+        service.add(model_one);
+        Assert.assertTrue(service.findAll().contains(model_one));
+        Assert.assertThrows(NullPointerException.class, () -> service.add((M) null));
+        @NonNull final M model_two = createModel();
+        @NonNull final M model_three = createModel();
+        @NonNull final Collection<M> collection = Arrays.asList(model_two, model_three);
+        service.add(collection);
+        Assert.assertTrue(service.findAll().containsAll(Arrays.asList(model_one, model_two, model_three)));
+        Assert.assertThrows(NullPointerException.class, () -> service.add((Collection<M>) null));
     }
 
     @Test
@@ -43,27 +50,24 @@ public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRe
     public void testSet() {
         @NonNull final M model = createModel();
         service.set(Arrays.asList(model));
-        @NonNull final List<M> allModels = service.findAll();
-        assertTrue(allModels.contains(model));
+        Assert.assertTrue(service.findAll().contains(model));
+        Assert.assertThrows(NullPointerException.class, () -> service.set(null));
     }
 
     @Test
     @SneakyThrows
     public void testFindAll() {
-        @NonNull final M model = createModel();
-        service.add(Arrays.asList(model));
-        @NonNull final List<M> allModels = service.findAll();
-        assertFalse(allModels.isEmpty());
+        service.add(Arrays.asList(createModel()));
+        @NonNull final List<M> models = service.findAll();
+        Assert.assertTrue(models.containsAll(service.findAll()));
     }
 
     @Test
     @SneakyThrows
     public void testClear() {
-        @NonNull final M model = createModel();
-        service.add(Arrays.asList(model));
+        service.add(createModel());
         service.clear();
-        @NonNull final List<M> allModels = service.findAll();
-        assertTrue(allModels.isEmpty());
+        Assert.assertTrue(service.findAll().isEmpty());
     }
 
     @Test
@@ -72,7 +76,79 @@ public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRe
         @NonNull final M model = createModel();
         service.add(Arrays.asList(model));
         service.remove(model);
-        @NonNull final List<M> allModels = service.findAll();
-        assertFalse(allModels.contains(model));
+        @NonNull final List<M> models = service.findAll();
+        Assert.assertFalse(models.contains(model));
+
+        Assert.assertThrows(EntityNotFoundException.class,
+                () -> service.remove(null));
     }
+
+    @Test
+    public void testRemoveAll() {
+        @NonNull final List<M> models = Arrays.asList(createModel(), createModel());
+        service.set(models);
+        Assert.assertEquals(2, service.getSize());
+        service.removeAll(models);
+        service.removeAll(null);
+        @NonNull final List<M> emptyList = new ArrayList<>();
+        service.removeAll(emptyList);
+        Assert.assertEquals(0, service.getSize());
+    }
+
+    @Test
+    @SneakyThrows
+    public void testFindOneById() {
+        @NonNull final M model = createModel();
+        service.add(model);
+        Assert.assertEquals(model, service.findOneById(model.getId()));
+
+        Assert.assertThrows(IdEmptyException.class, () -> service.findOneById(null));
+        Assert.assertThrows(IdEmptyException.class, () -> service.findOneById(""));
+    }
+
+    @Test
+    @SneakyThrows
+    public void testFindByIndex() {
+        @NonNull final M model = createModel();
+        service.add(model);
+        Assert.assertEquals(model, service.findOneByIndex(0));
+
+        Assert.assertThrows(IndexIncorrectException.class, () -> service.findOneByIndex(null));
+    }
+
+    @Test
+    @SneakyThrows
+    public void testRemoveById() {
+        @NonNull final M model = createModel();
+        service.add(model);
+        Assert.assertTrue(service.findAll().contains(model));
+        service.removeById(model.getId());
+        Assert.assertFalse(service.findAll().contains(model));
+
+        Assert.assertThrows(IdEmptyException.class, () -> service.removeById(null));
+        Assert.assertThrows(IdEmptyException.class, () -> service.removeById(""));
+    }
+
+    @Test
+    @SneakyThrows
+    public void testRemoveByIndex() {
+        @NonNull final M model = createModel();
+        service.add(model);
+        Assert.assertTrue(service.findAll().contains(model));
+        service.removeByIndex(0);
+        Assert.assertFalse(service.findAll().contains(model));
+
+        Assert.assertThrows(IndexIncorrectException.class, () -> service.removeByIndex(null));
+    }
+
+    @Test
+    @SneakyThrows
+    public void testExistsById() {
+        @NonNull final M model = createModel();
+        service.add(model);
+        Assert.assertTrue(service.existsById(model.getId()));
+        Assert.assertFalse(service.existsById(null));
+        Assert.assertFalse(service.existsById(EMPTY_STRING));
+    }
+
 }

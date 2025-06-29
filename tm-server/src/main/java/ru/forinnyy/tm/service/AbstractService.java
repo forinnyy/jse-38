@@ -118,10 +118,4 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
         repository.removeAll(collection);
     }
 
-    @NonNull
-    @Override
-    public M removeOne(@NonNull final M model) throws AbstractEntityException, AbstractFieldException {
-        return repository.remove(model);
-    }
-
 }
