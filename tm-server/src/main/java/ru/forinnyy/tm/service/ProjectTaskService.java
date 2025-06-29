@@ -43,10 +43,9 @@ public final class ProjectTaskService implements IProjectTaskService {
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
         final Project project = projectRepository.findOneById(userId, projectId);
         final Task task = taskRepository.findOneById(userId, taskId);
-        if (task == null) throw new TaskNotFoundException();
         if (project == null) throw new ProjectNotFoundException();
-        if (!projectRepository.existsById(userId, projectId)) throw new ProjectNotFoundException();
         if (!project.getUserId().equals(userId)) throw new PermissionException();
+        if (task == null) throw new TaskNotFoundException();
         if (!task.getUserId().equals(userId)) throw new PermissionException();
         task.setProjectId(projectId);
         return task;

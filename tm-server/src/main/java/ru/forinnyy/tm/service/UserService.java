@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.service;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.api.repository.IUserRepository;
@@ -114,7 +115,8 @@ public final class UserService extends AbstractService<User, IUserRepository>
     }
 
     @NonNull
-    public User removeOne(@NonNull final User model) throws AbstractEntityException, AbstractFieldException {
+    @SneakyThrows
+    public User remove(@NonNull final User model) throws AbstractEntityException {
         @NonNull final User user = super.remove(model);
         @NonNull final String userId = user.getId();
         taskRepository.removeAll(userId);
