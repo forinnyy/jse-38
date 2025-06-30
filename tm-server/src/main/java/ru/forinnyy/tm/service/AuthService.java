@@ -51,10 +51,8 @@ public final class AuthService implements IAuthService {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         final User user = userService.findByLogin(login);
-        if (user == null) throw new AuthenticationException();
         if (user.isLocked()) throw new AccessDeniedException();
         final String hash = HashUtil.salt(propertyService, password);
-        if (hash == null) throw new AuthenticationException();
         if (!hash.equals(user.getPasswordHash())) throw new javax.security.sasl.AuthenticationException();
         return getToken(user);
     }
@@ -128,7 +126,6 @@ public final class AuthService implements IAuthService {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         final User user = userService.findByLogin(login);
-        if (user == null) throw new PermissionException();
         final boolean locked = user.isLocked() == null || user.isLocked();
         if (locked) throw new PermissionException();
         final String hash = HashUtil.salt(propertyService, password);
