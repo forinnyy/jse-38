@@ -3,7 +3,6 @@ package ru.forinnyy.tm.service;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.enumerated.Sort;

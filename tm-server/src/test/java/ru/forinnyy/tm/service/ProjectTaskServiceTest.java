@@ -6,14 +6,11 @@ import org.junit.Test;
 import ru.forinnyy.tm.AbstractTest;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
-
-
 import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
 import ru.forinnyy.tm.exception.entity.TaskNotFoundException;
 import ru.forinnyy.tm.exception.field.ProjectIdEmptyException;
 import ru.forinnyy.tm.exception.field.TaskIdEmptyException;
 import ru.forinnyy.tm.exception.field.UserIdEmptyException;
-import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.repository.ProjectRepository;

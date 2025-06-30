@@ -4,10 +4,10 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Test;
-import ru.forinnyy.tm.model.Task;
-import ru.forinnyy.tm.model.Project;
-import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.enumerated.Sort;
+import ru.forinnyy.tm.model.Project;
+import ru.forinnyy.tm.model.Task;
+import ru.forinnyy.tm.model.User;
 
 import java.util.Arrays;
 import java.util.Comparator;

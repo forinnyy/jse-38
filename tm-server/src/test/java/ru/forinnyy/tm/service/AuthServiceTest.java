@@ -1,6 +1,5 @@
 package ru.forinnyy.tm.service;
 
-import lombok.Data;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
@@ -13,7 +12,6 @@ import ru.forinnyy.tm.api.repository.IUserRepository;
 import ru.forinnyy.tm.api.service.IPropertyService;
 import ru.forinnyy.tm.api.service.ISessionService;
 import ru.forinnyy.tm.api.service.IUserService;
-import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.field.LoginEmptyException;
 import ru.forinnyy.tm.exception.field.PasswordEmptyException;
 import ru.forinnyy.tm.exception.user.AccessDeniedException;
@@ -24,10 +22,8 @@ import ru.forinnyy.tm.repository.ProjectRepository;
 import ru.forinnyy.tm.repository.SessionRepository;
 import ru.forinnyy.tm.repository.TaskRepository;
 import ru.forinnyy.tm.repository.UserRepository;
-import ru.forinnyy.tm.util.HashUtil;
 
 import javax.security.sasl.AuthenticationException;
-import java.time.Instant;
 import java.util.Date;
 
 

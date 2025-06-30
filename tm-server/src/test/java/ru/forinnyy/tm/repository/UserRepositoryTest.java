@@ -3,7 +3,6 @@ package ru.forinnyy.tm.repository;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import ru.forinnyy.tm.model.User;
 
