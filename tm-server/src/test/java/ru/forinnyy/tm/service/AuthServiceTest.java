@@ -1,5 +1,6 @@
 package ru.forinnyy.tm.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
@@ -12,6 +13,7 @@ import ru.forinnyy.tm.api.repository.IUserRepository;
 import ru.forinnyy.tm.api.service.IPropertyService;
 import ru.forinnyy.tm.api.service.ISessionService;
 import ru.forinnyy.tm.api.service.IUserService;
+import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.field.LoginEmptyException;
 import ru.forinnyy.tm.exception.field.PasswordEmptyException;
 import ru.forinnyy.tm.exception.user.AccessDeniedException;
@@ -22,6 +24,7 @@ import ru.forinnyy.tm.repository.ProjectRepository;
 import ru.forinnyy.tm.repository.SessionRepository;
 import ru.forinnyy.tm.repository.TaskRepository;
 import ru.forinnyy.tm.repository.UserRepository;
+import ru.forinnyy.tm.util.CryptUtil;
 
 import javax.security.sasl.AuthenticationException;
 import java.util.Date;
@@ -92,18 +95,6 @@ public final class AuthServiceTest extends AbstractTest {
 
     }
 
-    @Test
-    @SneakyThrows
-    public void testTimeout() {
-        userService.create("testUser", "testPassword", "testUser@example.com");
-        String token = authService.login("testUser", "testPassword");
-        Session session = authService.validateToken(token);
-        Date timeoutSessionDate = Date.from(session.getDate().toInstant().plusSeconds(3 * 60 * 1000 + 1000));
-        session.setDate(timeoutSessionDate);
-
-
-//        Assert.assertThrows(AccessDeniedException.class, () -> authService.validateToken(token));
-    }
 
     @Test
     @SneakyThrows
@@ -152,6 +143,30 @@ public final class AuthServiceTest extends AbstractTest {
                 () -> authService.check("lockedUser", "lockedPassword"));
         Assert.assertThrows(PermissionException.class,
                 () -> authService.check("testUser", "wrongPassword"));
+    }
+
+    @Test
+    @SneakyThrows
+    public void testTimeout() {
+        User user = userService.create("testUser", "testPassword");
+        Assert.assertThrows(AccessDeniedException.class, () -> authService.validateToken(getTokenWithTimeout(user)));
+    }
+
+    @NonNull
+    @SneakyThrows
+    private String getTokenWithTimeout(@NonNull final User user) {
+        @NonNull final Session session = new Session();
+        session.setUserId(user.getId());
+        @NonNull final Role role = user.getRole();
+        session.setRole(role);
+        session.setDate(new Date(System.currentTimeMillis() - (3 * 60 * 60 * 1000 + 1000)));
+        sessionService.add(session);
+
+        @NonNull final ObjectMapper objectMapper = new ObjectMapper();
+        @NonNull final String token = objectMapper.writeValueAsString(session);
+        @NonNull final String sessionKey = propertyService.getSessionKey();
+
+        return CryptUtil.encrypt(sessionKey, token);
     }
 
 }

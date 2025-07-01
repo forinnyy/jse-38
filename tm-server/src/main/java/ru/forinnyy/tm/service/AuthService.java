@@ -100,6 +100,7 @@ public final class AuthService implements IAuthService {
         @NonNull final Date currentDate = new Date();
         @NonNull final Date sessionDate = session.getDate();
         final long delta = (currentDate.getTime() - sessionDate.getTime()) / 1000;
+
         @NonNull final int timeout = propertyService.getSessionTimeout();
         if (delta > timeout) throw new AccessDeniedException();
         if (!sessionService.existsById(session.getId())) throw new AccessDeniedException();
