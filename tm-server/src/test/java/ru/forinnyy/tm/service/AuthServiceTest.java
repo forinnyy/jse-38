@@ -94,30 +94,13 @@ public final class AuthServiceTest extends AbstractTest {
 
     @Test
     @SneakyThrows
-    public void testInvalidate() {
-        userService.create("testUser", "testPassword", "testUser@example.com");
-
-        String token = authService.login("testUser", "testPassword");
-        Session session = authService.validateToken(token);
-        System.out.println(session.getDate());
-        Date timeoutSessionDate = Date.from(session.getDate().toInstant().plusMillis(11000));
-        session.setDate(timeoutSessionDate);
-        System.out.println(session.getDate());
-    }
-
-    @Test
-    @SneakyThrows
     public void testTimeout() {
         userService.create("testUser", "testPassword", "testUser@example.com");
         String token = authService.login("testUser", "testPassword");
         Session session = authService.validateToken(token);
-
-        System.out.println(session.getDate());
-
         Date timeoutSessionDate = Date.from(session.getDate().toInstant().plusSeconds(3 * 60 * 1000 + 1000));
         session.setDate(timeoutSessionDate);
 
-        System.out.println(session.getDate());
 
 //        Assert.assertThrows(AccessDeniedException.class, () -> authService.validateToken(token));
     }

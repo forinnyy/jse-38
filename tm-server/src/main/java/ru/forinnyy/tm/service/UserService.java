@@ -167,7 +167,6 @@ public final class UserService extends AbstractService<User, IUserRepository>
     public void lockUserByLogin(final String login) throws AbstractFieldException, AbstractEntityException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         final User user = findByLogin(login);
-        if (user == null) throw new UserNotFoundException();
         user.setLocked(true);
     }
 
@@ -175,7 +174,6 @@ public final class UserService extends AbstractService<User, IUserRepository>
     public void unlockUserByLogin(final String login) throws AbstractFieldException, AbstractEntityException {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         final User user = findByLogin(login);
-        if (user == null) throw new UserNotFoundException();
         user.setLocked(false);
     }
 

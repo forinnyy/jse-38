@@ -126,7 +126,7 @@ public final class AuthService implements IAuthService {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
         final User user = userService.findByLogin(login);
-        final boolean locked = user.isLocked() == null || user.isLocked();
+        final boolean locked = user.isLocked();
         if (locked) throw new PermissionException();
         final String hash = HashUtil.salt(propertyService, password);
         if (hash == null) throw new AuthenticationException();
