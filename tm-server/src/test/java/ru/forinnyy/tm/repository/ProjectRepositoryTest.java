@@ -5,7 +5,9 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import ru.forinnyy.tm.enumerated.Sort;
+import ru.forinnyy.tm.marker.UnitCategory;
 import ru.forinnyy.tm.model.Project;
 
 import java.util.Arrays;
@@ -13,6 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 
 
+@Category(UnitCategory.class)
 public final class ProjectRepositoryTest extends AbstractUserOwnedRepositoryTest<Project> {
 
     @Override

@@ -5,6 +5,7 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import ru.forinnyy.tm.AbstractTest;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.api.repository.ISessionRepository;
@@ -18,6 +19,7 @@ import ru.forinnyy.tm.exception.field.LoginEmptyException;
 import ru.forinnyy.tm.exception.field.PasswordEmptyException;
 import ru.forinnyy.tm.exception.user.AccessDeniedException;
 import ru.forinnyy.tm.exception.user.PermissionException;
+import ru.forinnyy.tm.marker.UnitCategory;
 import ru.forinnyy.tm.model.Session;
 import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.repository.ProjectRepository;
@@ -30,6 +32,7 @@ import javax.security.sasl.AuthenticationException;
 import java.util.Date;
 
 
+@Category(UnitCategory.class)
 public final class AuthServiceTest extends AbstractTest {
 
     private final IUserRepository userRepository = new UserRepository();

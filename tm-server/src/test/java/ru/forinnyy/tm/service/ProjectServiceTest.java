@@ -4,11 +4,13 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
 import ru.forinnyy.tm.exception.field.*;
+import ru.forinnyy.tm.marker.UnitCategory;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.repository.ProjectRepository;
 
@@ -16,6 +18,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+
+@Category(UnitCategory.class)
 public final class ProjectServiceTest extends AbstractUserOwnedServiceTest<Project, IProjectRepository> {
 
     @Override

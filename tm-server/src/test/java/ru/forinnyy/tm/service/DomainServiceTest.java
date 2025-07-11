@@ -1,14 +1,17 @@
 package ru.forinnyy.tm.service;
 
+import lombok.SneakyThrows;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import ru.forinnyy.tm.AbstractTest;
 import ru.forinnyy.tm.component.Bootstrap;
 import ru.forinnyy.tm.dto.Domain;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.enumerated.Status;
+import ru.forinnyy.tm.marker.UnitCategory;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.model.User;
@@ -21,22 +24,32 @@ import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
+@Category(UnitCategory.class)
 public class DomainServiceTest extends AbstractTest {
 
     private DomainService domainService;
     private List<Project> projects;
     private List<Task> tasks;
     private List<User> users;
+    private Bootstrap bootstrap;
 
     @Before
     public void init() {
-        Bootstrap bootstrap = new Bootstrap();
+        bootstrap = new Bootstrap();
         domainService = (DomainService) bootstrap.getDomainService();
+        domainService.setDomain(null);
+        domainService.setDomain(initDataDomain());
+    }
+
+    public Domain initDataDomain() {
         projects = Arrays.asList(
                 new Project("Test Project 1", Status.NOT_STARTED),
                 new Project("Test Project 2", Status.COMPLETED)
         );
-        tasks = Arrays.asList(new Task("Test Task 1"), new Task("Test Task 2"));
+        tasks = Arrays.asList(
+                new Task("Test Task 1"),
+                new Task("Test Task 2")
+        );
 
         User admin = new User();
         admin.setLogin("admin");
@@ -49,121 +62,123 @@ public class DomainServiceTest extends AbstractTest {
         test.setPasswordHash(HashUtil.salt(bootstrap.getPropertyService(), "password"));
         test.setEmail("test@mail.ru");
         test.setRole(Role.USUAL);
-
         users = Arrays.asList(admin, test);
-    }
 
-    private void setData() {
         Domain domain = new Domain();
         domain.setProjects(projects);
         domain.setTasks(tasks);
         domain.setUsers(users);
-        domainService.setDomain(domain);
+        return domain;
     }
 
-    @Ignore
     @Test
     public void testSetDomain() {
-        setData();
+        domainService.setDomain(null);
 
-        Domain domain = domainService.getDomain();
+        Domain domain = initDataDomain();
+        domainService.setDomain(domain);
 
-        assertNotNull(domain.getProjects());
-        assertNotNull(domain.getTasks());
-        assertNotNull(domain.getUsers());
+        Assert.assertEquals(2, domain.getProjects().size());
+        Assert.assertEquals("Test Project 1", domain.getProjects().get(0).getName());
+        Assert.assertEquals("Test Project 2", domain.getProjects().get(1).getName());
 
-        assertEquals(2, domain.getProjects().size());
-        assertEquals("Test Project 1", domain.getProjects().get(0).getName());
-        assertEquals("Test Project 2", domain.getProjects().get(1).getName());
+        Assert.assertEquals(2, domain.getTasks().size());
+        Assert.assertEquals("Test Task 1", domain.getTasks().get(0).getName());
+        Assert.assertEquals("Test Task 2", domain.getTasks().get(1).getName());
 
-        assertEquals(2, domain.getTasks().size());
-        assertEquals("Test Task 1", domain.getTasks().get(0).getName());
-        assertEquals("Test Task 2", domain.getTasks().get(1).getName());
-
-        assertEquals(2, domain.getUsers().size());
-        assertEquals("admin", domain.getUsers().get(0).getLogin());
-        assertEquals("test", domain.getUsers().get(1).getLogin());
+        Assert.assertEquals(2, domain.getUsers().size());
+        Assert.assertEquals("admin", domain.getUsers().get(0).getLogin());
+        Assert.assertEquals("test", domain.getUsers().get(1).getLogin());
     }
 
-    @Ignore
+    @Test
+    public void testGetDomain() {
+        Domain domain = domainService.getDomain();
+        Assert.assertEquals(2, domain.getProjects().size());
+        Assert.assertEquals("Test Project 1", domain.getProjects().get(0).getName());
+        Assert.assertEquals("Test Project 2", domain.getProjects().get(1).getName());
+
+        Assert.assertEquals(2, domain.getTasks().size());
+        Assert.assertEquals("Test Task 1", domain.getTasks().get(0).getName());
+        Assert.assertEquals("Test Task 2", domain.getTasks().get(1).getName());
+
+        Assert.assertEquals(2, domain.getUsers().size());
+        Assert.assertEquals("admin", domain.getUsers().get(0).getLogin());
+        Assert.assertEquals("test", domain.getUsers().get(1).getLogin());
+    }
+
     @Test
     public void testSaveAndLoadDataBackup() throws Exception {
-        setData();
         domainService.saveDataBackup();
         domainService.loadDataBackup();
 
         Domain domain = domainService.getDomain();
 
-        assertNotNull(domain.getProjects());
-        assertNotNull(domain.getTasks());
-        assertNotNull(domain.getUsers());
+        Assert.assertNotNull(domain.getProjects());
+        Assert.assertNotNull(domain.getTasks());
+        Assert.assertNotNull(domain.getUsers());
 
-        assertEquals(2, domain.getProjects().size());
-        assertEquals("Test Project 1", domain.getProjects().get(0).getName());
-        assertEquals("Test Project 2", domain.getProjects().get(1).getName());
+        Assert.assertEquals(2, domain.getProjects().size());
+        Assert.assertEquals("Test Project 1", domain.getProjects().get(0).getName());
+        Assert.assertEquals("Test Project 2", domain.getProjects().get(1).getName());
 
-        assertEquals(2, domain.getTasks().size());
-        assertEquals("Test Task 1", domain.getTasks().get(0).getName());
-        assertEquals("Test Task 2", domain.getTasks().get(1).getName());
+        Assert.assertEquals(2, domain.getTasks().size());
+        Assert.assertEquals("Test Task 1", domain.getTasks().get(0).getName());
+        Assert.assertEquals("Test Task 2", domain.getTasks().get(1).getName());
 
-        assertEquals(2, domain.getUsers().size());
-        assertEquals("admin", domain.getUsers().get(0).getLogin());
-        assertEquals("test", domain.getUsers().get(1).getLogin());
+        Assert.assertEquals(2, domain.getUsers().size());
+        Assert.assertEquals("admin", domain.getUsers().get(0).getLogin());
+        Assert.assertEquals("test", domain.getUsers().get(1).getLogin());
     }
 
-    @Ignore
     @Test
     public void testSaveAndLoadDataBase64() throws Exception {
-        setData();
         domainService.saveDataBase64();
         domainService.loadDataBase64();
 
         Domain domain = domainService.getDomain();
 
-        assertNotNull(domain.getProjects());
-        assertNotNull(domain.getTasks());
-        assertNotNull(domain.getUsers());
+        Assert.assertNotNull(domain.getProjects());
+        Assert.assertNotNull(domain.getTasks());
+        Assert.assertNotNull(domain.getUsers());
 
-        assertEquals(2, domain.getProjects().size());
-        assertEquals("Test Project 1", domain.getProjects().get(0).getName());
-        assertEquals("Test Project 2", domain.getProjects().get(1).getName());
+        Assert.assertEquals(2, domain.getProjects().size());
+        Assert.assertEquals("Test Project 1", domain.getProjects().get(0).getName());
+        Assert.assertEquals("Test Project 2", domain.getProjects().get(1).getName());
 
-        assertEquals(2, domain.getTasks().size());
-        assertEquals("Test Task 1", domain.getTasks().get(0).getName());
-        assertEquals("Test Task 2", domain.getTasks().get(1).getName());
+        Assert.assertEquals(2, domain.getTasks().size());
+        Assert.assertEquals("Test Task 1", domain.getTasks().get(0).getName());
+        Assert.assertEquals("Test Task 2", domain.getTasks().get(1).getName());
 
-        assertEquals(2, domain.getUsers().size());
-        assertEquals("admin", domain.getUsers().get(0).getLogin());
-        assertEquals("test", domain.getUsers().get(1).getLogin());
+        Assert.assertEquals(2, domain.getUsers().size());
+        Assert.assertEquals("admin", domain.getUsers().get(0).getLogin());
+        Assert.assertEquals("test", domain.getUsers().get(1).getLogin());
     }
 
-    @Ignore
     @Test
     public void testSaveAndLoadDataJson() throws Exception {
-        setData();
         domainService.saveDataJsonFasterXml();
         domainService.loadDataJsonFasterXml();
 
         Domain domain = domainService.getDomain();
 
-        assertNotNull(domain.getProjects());
-        assertNotNull(domain.getTasks());
-        assertNotNull(domain.getUsers());
+        Assert.assertNotNull(domain.getProjects());
+        Assert.assertNotNull(domain.getTasks());
+        Assert.assertNotNull(domain.getUsers());
 
-        assertEquals(2, domain.getProjects().size());
-        assertEquals("Test Project 1", domain.getProjects().get(0).getName());
-        assertEquals("Test Project 2", domain.getProjects().get(1).getName());
+        Assert.assertEquals(2, domain.getProjects().size());
+        Assert.assertEquals("Test Project 1", domain.getProjects().get(0).getName());
+        Assert.assertEquals("Test Project 2", domain.getProjects().get(1).getName());
 
-        assertEquals(2, domain.getTasks().size());
-        assertEquals("Test Task 1", domain.getTasks().get(0).getName());
-        assertEquals("Test Task 2", domain.getTasks().get(1).getName());
+        Assert.assertEquals(2, domain.getTasks().size());
+        Assert.assertEquals("Test Task 1", domain.getTasks().get(0).getName());
+        Assert.assertEquals("Test Task 2", domain.getTasks().get(1).getName());
 
-        assertEquals(2, domain.getUsers().size());
-        assertEquals("admin", domain.getUsers().get(0).getLogin());
-        assertEquals("test", domain.getUsers().get(1).getLogin());
+        Assert.assertEquals(2, domain.getUsers().size());
+        Assert.assertEquals("admin", domain.getUsers().get(0).getLogin());
+        Assert.assertEquals("test", domain.getUsers().get(1).getLogin());
     }
 
-    @Ignore
     @Test
     public void testFileExistenceAfterSave() throws Exception {
         File backupFile = new File(DomainService.FILE_BACKUP);
@@ -171,31 +186,164 @@ public class DomainServiceTest extends AbstractTest {
             backupFile.delete();
         }
         domainService.saveDataBackup();
-        assertTrue(backupFile.exists());
+        Assert.assertTrue(backupFile.exists());
         backupFile.delete();
     }
 
-    @Ignore
     @Test
     public void testFilterProjects() {
-        setData();
-
         List<Project> completedProjects = domainService.getDomain().getProjects().stream()
                 .filter(project -> project.getStatus() == Status.COMPLETED)
                 .collect(Collectors.toList());
 
-        assertEquals(1, completedProjects.size());
-        assertEquals("Test Project 2", completedProjects.get(0).getName());
+        Assert.assertEquals(1, completedProjects.size());
+        Assert.assertEquals("Test Project 2", completedProjects.get(0).getName());
+    }
+
+    @Test
+    public void testSaveAndLoadDataBinary() throws Exception {
+        domainService.saveDataBinary();
+        domainService.loadDataBinary();
+
+        Domain domain = domainService.getDomain();
+
+        Assert.assertNotNull(domain.getProjects());
+        Assert.assertNotNull(domain.getTasks());
+        Assert.assertNotNull(domain.getUsers());
+
+        Assert.assertEquals(2, domain.getProjects().size());
+        Assert.assertEquals("Test Project 1", domain.getProjects().get(0).getName());
+        Assert.assertEquals("Test Project 2", domain.getProjects().get(1).getName());
+
+        Assert.assertEquals(2, domain.getTasks().size());
+        Assert.assertEquals("Test Task 1", domain.getTasks().get(0).getName());
+        Assert.assertEquals("Test Task 2", domain.getTasks().get(1).getName());
+
+        Assert.assertEquals(2, domain.getUsers().size());
+        Assert.assertEquals("admin", domain.getUsers().get(0).getLogin());
+        Assert.assertEquals("test", domain.getUsers().get(1).getLogin());
+    }
+
+    @Test
+    public void testSaveAndLoadDataJsonJaxB() throws Exception {
+        domainService.saveDataJsonJaxB();
+        domainService.loadDataJsonJaxB();
+
+        Domain domain = domainService.getDomain();
+
+        Assert.assertNotNull(domain.getProjects());
+        Assert.assertNotNull(domain.getTasks());
+        Assert.assertNotNull(domain.getUsers());
+
+        Assert.assertEquals(2, domain.getProjects().size());
+        Assert.assertEquals("Test Project 1", domain.getProjects().get(0).getName());
+        Assert.assertEquals("Test Project 2", domain.getProjects().get(1).getName());
+
+        Assert.assertEquals(2, domain.getTasks().size());
+        Assert.assertEquals("Test Task 1", domain.getTasks().get(0).getName());
+        Assert.assertEquals("Test Task 2", domain.getTasks().get(1).getName());
+
+        Assert.assertEquals(2, domain.getUsers().size());
+        Assert.assertEquals("admin", domain.getUsers().get(0).getLogin());
+        Assert.assertEquals("test", domain.getUsers().get(1).getLogin());
+    }
+
+    @Test
+    public void testSaveAndLoadDataXmlJaxB() throws Exception {
+        domainService.saveDataXmlJaxB();
+        domainService.loadDataXmlJaxB();
+
+        Domain domain = domainService.getDomain();
+
+        Assert.assertNotNull(domain.getProjects());
+        Assert.assertNotNull(domain.getTasks());
+        Assert.assertNotNull(domain.getUsers());
+
+        Assert.assertEquals(2, domain.getProjects().size());
+        Assert.assertEquals("Test Project 1", domain.getProjects().get(0).getName());
+        Assert.assertEquals("Test Project 2", domain.getProjects().get(1).getName());
+
+        Assert.assertEquals(2, domain.getTasks().size());
+        Assert.assertEquals("Test Task 1", domain.getTasks().get(0).getName());
+        Assert.assertEquals("Test Task 2", domain.getTasks().get(1).getName());
+
+        Assert.assertEquals(2, domain.getUsers().size());
+        Assert.assertEquals("admin", domain.getUsers().get(0).getLogin());
+        Assert.assertEquals("test", domain.getUsers().get(1).getLogin());
+    }
+
+    @Test
+    public void testSaveAndLoadDataYamlFasterXml() throws Exception {
+        domainService.saveDataYamlFasterXml();
+        domainService.loadDataYamlFasterXml();
+
+        Domain domain = domainService.getDomain();
+
+        Assert.assertNotNull(domain.getProjects());
+        Assert.assertNotNull(domain.getTasks());
+        Assert.assertNotNull(domain.getUsers());
+
+        Assert.assertEquals(2, domain.getProjects().size());
+        Assert.assertEquals("Test Project 1", domain.getProjects().get(0).getName());
+        Assert.assertEquals("Test Project 2", domain.getProjects().get(1).getName());
+
+        Assert.assertEquals(2, domain.getTasks().size());
+        Assert.assertEquals("Test Task 1", domain.getTasks().get(0).getName());
+        Assert.assertEquals("Test Task 2", domain.getTasks().get(1).getName());
+
+        Assert.assertEquals(2, domain.getUsers().size());
+        Assert.assertEquals("admin", domain.getUsers().get(0).getLogin());
+        Assert.assertEquals("test", domain.getUsers().get(1).getLogin());
+    }
+
+    @Test
+    public void testSaveDataXmlFasterXml() throws Exception {
+        domainService.saveDataXmlFasterXml();
+
+        File xmlFile = new File(DomainService.FILE_XML);
+        Assert.assertTrue(xmlFile.exists());
+    }
+
+    @Test
+    public void testLoadDataXmlFasterXml() throws Exception {
+        domainService.saveDataXmlFasterXml();
+
+        domainService.loadDataXmlFasterXml();
+
+        Domain domain = domainService.getDomain();
+
+        Assert.assertNotNull(domain.getProjects());
+        Assert.assertNotNull(domain.getTasks());
+        Assert.assertNotNull(domain.getUsers());
+
+        Assert.assertEquals(2, domain.getProjects().size());
+        Assert.assertEquals("Test Project 1", domain.getProjects().get(0).getName());
+        Assert.assertEquals("Test Project 2", domain.getProjects().get(1).getName());
+
+        Assert.assertEquals(2, domain.getTasks().size());
+        Assert.assertEquals("Test Task 1", domain.getTasks().get(0).getName());
+        Assert.assertEquals("Test Task 2", domain.getTasks().get(1).getName());
+
+        Assert.assertEquals(2, domain.getUsers().size());
+        Assert.assertEquals("admin", domain.getUsers().get(0).getLogin());
+        Assert.assertEquals("test", domain.getUsers().get(1).getLogin());
     }
 
     @After
+    @SneakyThrows
     public void cleanup() {
-        new File(DomainService.FILE_BACKUP).delete();
-        new File(DomainService.FILE_BASE64).delete();
-        new File(DomainService.FILE_JSON).delete();
-        new File(DomainService.FILE_XML).delete();
-        new File(DomainService.FILE_YAML).delete();
-        domainService.setDomain(null);
+        deleteFileIfExists(DomainService.FILE_BACKUP);
+        deleteFileIfExists(DomainService.FILE_BASE64);
+        deleteFileIfExists(DomainService.FILE_JSON);
+        deleteFileIfExists(DomainService.FILE_XML);
+        deleteFileIfExists(DomainService.FILE_YAML);
+    }
+
+    private void deleteFileIfExists(String filePath) {
+        File file = new File(filePath);
+        if (file.exists()) {
+            file.delete();
+        }
     }
 
 }

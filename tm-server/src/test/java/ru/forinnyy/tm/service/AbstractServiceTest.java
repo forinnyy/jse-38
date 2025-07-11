@@ -5,11 +5,13 @@ import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import ru.forinnyy.tm.AbstractTest;
 import ru.forinnyy.tm.api.repository.IRepository;
 import ru.forinnyy.tm.exception.entity.EntityNotFoundException;
 import ru.forinnyy.tm.exception.field.IdEmptyException;
 import ru.forinnyy.tm.exception.field.IndexIncorrectException;
+import ru.forinnyy.tm.marker.UnitCategory;
 import ru.forinnyy.tm.model.AbstractModel;
 
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import java.util.Collection;
 import java.util.List;
 
 
+@Category(UnitCategory.class)
 public abstract class AbstractServiceTest<M extends AbstractModel, R extends IRepository<M>> extends AbstractTest {
 
     protected AbstractService<M, R> service;

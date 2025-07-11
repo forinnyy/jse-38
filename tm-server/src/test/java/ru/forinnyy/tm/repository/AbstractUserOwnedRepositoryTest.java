@@ -4,12 +4,14 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import ru.forinnyy.tm.exception.field.UserIdEmptyException;
+import ru.forinnyy.tm.marker.UnitCategory;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
 
 import java.util.Collections;
 
-
+@Category(UnitCategory.class)
 public abstract class AbstractUserOwnedRepositoryTest<M extends AbstractUserOwnedModel> extends AbstractRepositoryTest<M> {
 
     protected AbstractUserOwnedRepository<M> getUserOwnedRepository() {

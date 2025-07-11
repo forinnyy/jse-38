@@ -32,6 +32,8 @@ import javax.xml.ws.Endpoint;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -104,14 +106,6 @@ public final class Bootstrap implements IServiceLocator {
     @NonNull
     private final IAuthEndpoint authEndpoint = new AuthEndpoint(this);
 
-    {
-        registry(authEndpoint);
-        registry(systemEndpoint);
-        registry(userEndpoint);
-        registry(domainEndpoint);
-        registry(projectEndpoint);
-        registry(taskEndpoint);
-    }
 
     private void registry(@NonNull final Object endpoint) {
         @NonNull final String host = getPropertyService().getHost();
@@ -154,6 +148,13 @@ public final class Bootstrap implements IServiceLocator {
 
     @SneakyThrows
     public void start() {
+        registry(authEndpoint);
+        registry(systemEndpoint);
+        registry(userEndpoint);
+        registry(domainEndpoint);
+        registry(projectEndpoint);
+        registry(taskEndpoint);
+
         initPID();
         initDemoData();
         LOGGER_LIFECYCLE.info("** WELCOME TO TASK-MANAGER **");

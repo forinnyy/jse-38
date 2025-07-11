@@ -5,7 +5,9 @@ import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import ru.forinnyy.tm.AbstractTest;
+import ru.forinnyy.tm.marker.UnitCategory;
 import ru.forinnyy.tm.model.AbstractModel;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
+@Category(UnitCategory.class)
 public abstract class AbstractRepositoryTest<M extends AbstractModel> extends AbstractTest {
 
     protected AbstractRepository<M> repository;

@@ -4,14 +4,17 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import ru.forinnyy.tm.api.repository.IUserOwnedRepository;
 import ru.forinnyy.tm.exception.entity.EntityNotFoundException;
 import ru.forinnyy.tm.exception.field.IdEmptyException;
 import ru.forinnyy.tm.exception.field.IndexIncorrectException;
 import ru.forinnyy.tm.exception.field.UserIdEmptyException;
+import ru.forinnyy.tm.marker.UnitCategory;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
 
 
+@Category(UnitCategory.class)
 public abstract class AbstractUserOwnedServiceTest<M extends AbstractUserOwnedModel, R extends IUserOwnedRepository<M>>
         extends AbstractServiceTest<M, R> {
 

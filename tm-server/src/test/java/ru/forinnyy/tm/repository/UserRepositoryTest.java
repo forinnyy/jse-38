@@ -4,8 +4,12 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import ru.forinnyy.tm.marker.UnitCategory;
 import ru.forinnyy.tm.model.User;
 
+
+@Category(UnitCategory.class)
 public final class UserRepositoryTest extends AbstractRepositoryTest<User> {
 
     private UserRepository userRepository;

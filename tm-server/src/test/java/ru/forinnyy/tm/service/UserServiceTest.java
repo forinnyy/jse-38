@@ -5,18 +5,22 @@ import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import ru.forinnyy.tm.AbstractTest;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.UserNotFoundException;
 import ru.forinnyy.tm.exception.field.*;
 import ru.forinnyy.tm.exception.user.ExistsEmailException;
 import ru.forinnyy.tm.exception.user.ExistsLoginException;
+import ru.forinnyy.tm.marker.UnitCategory;
 import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.repository.ProjectRepository;
 import ru.forinnyy.tm.repository.TaskRepository;
 import ru.forinnyy.tm.repository.UserRepository;
 import ru.forinnyy.tm.util.HashUtil;
 
+
+@Category(UnitCategory.class)
 public final class UserServiceTest extends AbstractTest {
 
     private UserService userService;

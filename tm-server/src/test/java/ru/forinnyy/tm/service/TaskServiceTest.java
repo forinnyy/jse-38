@@ -4,10 +4,12 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.TaskNotFoundException;
 import ru.forinnyy.tm.exception.field.*;
+import ru.forinnyy.tm.marker.UnitCategory;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Task;
 import ru.forinnyy.tm.model.User;
@@ -16,6 +18,8 @@ import ru.forinnyy.tm.repository.TaskRepository;
 import java.util.Collections;
 import java.util.List;
 
+
+@Category(UnitCategory.class)
 public final class TaskServiceTest extends AbstractUserOwnedServiceTest<Task, ITaskRepository> {
 
     @Override
