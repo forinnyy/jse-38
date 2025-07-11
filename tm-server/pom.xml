@@ -48,7 +48,7 @@
                 <activeByDefault>false</activeByDefault>
             </activation>
             <properties>
-                <test.category>ru.forinnyy.tm.marker.DomainCategory</test.category>
+                <test.category>ru.forinnyy.tm.marker.SoapCategory</test.category>
             </properties>
         </profile>
     </profiles>

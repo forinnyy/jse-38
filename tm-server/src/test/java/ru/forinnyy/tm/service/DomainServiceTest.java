@@ -22,8 +22,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
-
 @Category(UnitCategory.class)
 public class DomainServiceTest extends AbstractTest {
 
@@ -334,6 +332,7 @@ public class DomainServiceTest extends AbstractTest {
     public void cleanup() {
         deleteFileIfExists(DomainService.FILE_BACKUP);
         deleteFileIfExists(DomainService.FILE_BASE64);
+        deleteFileIfExists(DomainService.FILE_BINARY);
         deleteFileIfExists(DomainService.FILE_JSON);
         deleteFileIfExists(DomainService.FILE_XML);
         deleteFileIfExists(DomainService.FILE_YAML);

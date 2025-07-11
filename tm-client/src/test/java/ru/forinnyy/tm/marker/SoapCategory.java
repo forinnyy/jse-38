@@ -1,4 +1,4 @@
 package ru.forinnyy.tm.marker;
 
-public interface DomainCategory {
+public interface SoapCategory {
 }
