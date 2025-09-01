@@ -43,7 +43,7 @@
             </properties>
         </profile>
         <profile>
-            <id>DOMAIN</id>
+            <id>SOAP</id>
             <activation>
                 <activeByDefault>false</activeByDefault>
             </activation>

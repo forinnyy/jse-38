@@ -1,7 +1,6 @@
 package ru.forinnyy.tm.endpoint;
 
 import lombok.NonNull;
-import lombok.SneakyThrows;
 import org.junit.*;
 import org.junit.experimental.categories.Category;
 import ru.forinnyy.tm.api.endpoint.IAuthEndpoint;
@@ -14,7 +13,6 @@ import ru.forinnyy.tm.dto.request.UserLoginRequest;
 import ru.forinnyy.tm.marker.SoapCategory;
 import ru.forinnyy.tm.service.PropertyService;
 
-import java.io.File;
 
 @Category(SoapCategory.class)
 public final class DomainEndpointTest {
@@ -23,83 +21,82 @@ public final class DomainEndpointTest {
     private static final IPropertyService propertyService = new PropertyService();
 
     @NonNull
-    private static final IAuthEndpoint authEndpoint = IAuthEndpoint.newInstance();
+    private static final IAuthEndpoint authEndpoint = IAuthEndpoint.newInstance(propertyService);
 
     @NonNull
-    private static final IDomainEndpoint domainEndpoint = IDomainEndpoint.newInstance();
+    private static final IDomainEndpoint domainEndpoint = IDomainEndpoint.newInstance(propertyService);
 
-    private static String token;
+    private static String adminToken;
 
     @BeforeClass
     public static void init() {
         @NonNull final UserLoginRequest loginRequest = new UserLoginRequest();
         loginRequest.setLogin("admin");
         loginRequest.setPassword("admin");
-        token = authEndpoint.login(loginRequest).getToken();
-        System.out.println(token);
+        adminToken = authEndpoint.login(loginRequest).getToken();
     }
 
     @Test
     public void backupSaveAndLoadData() {
-        @NonNull final DataBackupSaveRequest saveRequest = new DataBackupSaveRequest(token);
+        @NonNull final DataBackupSaveRequest saveRequest = new DataBackupSaveRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.saveDataBackup(saveRequest));
-        @NonNull final DataBackupLoadRequest loadRequest = new DataBackupLoadRequest(token);
+        @NonNull final DataBackupLoadRequest loadRequest = new DataBackupLoadRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.loadDataBackup(loadRequest));
     }
 
     @Test
     public void binarySaveAndLoadData() {
-        @NonNull final DataBinarySaveRequest saveRequest = new DataBinarySaveRequest(token);
+        @NonNull final DataBinarySaveRequest saveRequest = new DataBinarySaveRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.saveDataBinary(saveRequest));
-        @NonNull final DataBinaryLoadRequest loadRequest = new DataBinaryLoadRequest(token);
+        @NonNull final DataBinaryLoadRequest loadRequest = new DataBinaryLoadRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.loadDataBinary(loadRequest));
     }
 
     @Test
     public void base64SaveAndLoadData() {
-        @NonNull final DataBase64SaveRequest saveRequest = new DataBase64SaveRequest(token);
+        @NonNull final DataBase64SaveRequest saveRequest = new DataBase64SaveRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.saveDataBase64(saveRequest));
-        @NonNull final DataBase64LoadRequest loadRequest = new DataBase64LoadRequest(token);
+        @NonNull final DataBase64LoadRequest loadRequest = new DataBase64LoadRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.loadDataBase64(loadRequest));
     }
 
     @Test
     public void jsonFasterXmlSaveAndLoadData() {
-        @NonNull final DataJsonSaveFasterXmlRequest saveRequest = new DataJsonSaveFasterXmlRequest(token);
+        @NonNull final DataJsonSaveFasterXmlRequest saveRequest = new DataJsonSaveFasterXmlRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.saveDataJsonFasterXml(saveRequest));
-        @NonNull final DataJsonLoadFasterXmlRequest loadRequest = new DataJsonLoadFasterXmlRequest(token);
+        @NonNull final DataJsonLoadFasterXmlRequest loadRequest = new DataJsonLoadFasterXmlRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.loadDataJsonFasterXml(loadRequest));
     }
 
     @Test
     public void xmlFasterXmlSaveAndLoadData() {
-        @NonNull final DataXmlSaveFasterXmlRequest saveRequest = new DataXmlSaveFasterXmlRequest(token);
+        @NonNull final DataXmlSaveFasterXmlRequest saveRequest = new DataXmlSaveFasterXmlRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.saveDataXmlFasterXml(saveRequest));
-        @NonNull final DataXmlLoadFasterXmlRequest loadRequest = new DataXmlLoadFasterXmlRequest(token);
+        @NonNull final DataXmlLoadFasterXmlRequest loadRequest = new DataXmlLoadFasterXmlRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.loadDataXmlFasterXml(loadRequest));
     }
 
     @Test
     public void jsonJaxBSaveAndLoadData() {
-        @NonNull final DataJsonSaveJaxBRequest saveRequest = new DataJsonSaveJaxBRequest(token);
+        @NonNull final DataJsonSaveJaxBRequest saveRequest = new DataJsonSaveJaxBRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.saveDataJsonJaxB(saveRequest));
-        @NonNull final DataJsonLoadJaxBRequest loadRequest = new DataJsonLoadJaxBRequest(token);
+        @NonNull final DataJsonLoadJaxBRequest loadRequest = new DataJsonLoadJaxBRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.loadDataJsonJaxB(loadRequest));
     }
 
     @Test
     public void xmlJaxBSaveAndLoadData() {
-        @NonNull final DataXmlSaveJaxBRequest saveRequest = new DataXmlSaveJaxBRequest(token);
+        @NonNull final DataXmlSaveJaxBRequest saveRequest = new DataXmlSaveJaxBRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.saveDataXmlJaxB(saveRequest));
-        @NonNull final DataXmlLoadJaxBRequest loadRequest = new DataXmlLoadJaxBRequest(token);
+        @NonNull final DataXmlLoadJaxBRequest loadRequest = new DataXmlLoadJaxBRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.loadDataXmlJaxB(loadRequest));
     }
 
     @Test
     public void yamlFasterXmlSaveAndLoadData() {
-        @NonNull final DataYamlSaveFasterXmlRequest saveRequest = new DataYamlSaveFasterXmlRequest(token);
+        @NonNull final DataYamlSaveFasterXmlRequest saveRequest = new DataYamlSaveFasterXmlRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.saveDataYamlFasterXml(saveRequest));
-        @NonNull final DataYamlLoadFasterXmlRequest loadRequest = new DataYamlLoadFasterXmlRequest(token);
+        @NonNull final DataYamlLoadFasterXmlRequest loadRequest = new DataYamlLoadFasterXmlRequest(adminToken);
         Assert.assertNotNull(domainEndpoint.loadDataYamlFasterXml(loadRequest));
     }
 
