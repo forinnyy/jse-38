@@ -1,15 +1,15 @@
 package ru.forinnyy.tm.endpoint;
 
 import lombok.NonNull;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import ru.forinnyy.tm.api.endpoint.IAuthEndpoint;
 import ru.forinnyy.tm.api.endpoint.IDomainEndpoint;
 import ru.forinnyy.tm.api.service.IPropertyService;
-import ru.forinnyy.tm.dto.request.DataBackupLoadRequest;
-import ru.forinnyy.tm.dto.request.DataBinaryLoadRequest;
 import ru.forinnyy.tm.dto.request.*;
-import ru.forinnyy.tm.dto.request.UserLoginRequest;
 import ru.forinnyy.tm.marker.SoapCategory;
 import ru.forinnyy.tm.service.PropertyService;
 
