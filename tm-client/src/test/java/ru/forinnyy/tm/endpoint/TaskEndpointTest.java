@@ -31,6 +31,7 @@ public final class TaskEndpointTest {
     private static final IProjectEndpoint projectEndpoint = IProjectEndpoint.newInstance(propertyService);
 
     private static String adminToken;
+    
     private static String userToken;
 
     @BeforeClass
@@ -465,5 +466,5 @@ public final class TaskEndpointTest {
         adminRequest.setToken(adminToken);
         taskEndpoint.clearTask(adminRequest);
     }
-    
+
 }
