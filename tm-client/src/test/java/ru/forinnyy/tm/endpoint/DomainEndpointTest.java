@@ -100,4 +100,10 @@ public final class DomainEndpointTest {
         Assert.assertNotNull(domainEndpoint.loadDataYamlFasterXml(loadRequest));
     }
 
+    @AfterClass
+    public static void clearFiles() {
+        @NonNull final DataFilesDeleteAfterTestsRequest request = new DataFilesDeleteAfterTestsRequest();
+        domainEndpoint.deleteFilesAfterTests(request);
+    }
+
 }

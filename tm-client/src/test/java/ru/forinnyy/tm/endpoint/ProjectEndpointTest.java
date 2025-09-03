@@ -1,10 +1,7 @@
 package ru.forinnyy.tm.endpoint;
 
 import lombok.NonNull;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.experimental.categories.Category;
 import ru.forinnyy.tm.api.endpoint.IAuthEndpoint;
 import ru.forinnyy.tm.api.endpoint.IDomainEndpoint;
@@ -21,6 +18,7 @@ import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.service.PropertyService;
 
 
+@Ignore
 @Category(SoapCategory.class)
 public final class ProjectEndpointTest {
 

@@ -208,4 +208,14 @@ public final class DomainEndpoint extends AbstractEndpoint implements IDomainEnd
         return new DataYamlSaveFasterXmlResponse();
     }
 
+    @NonNull
+    @Override
+    @WebMethod
+    public DataFilesDeleteAfterTestsResponse deleteFilesAfterTests(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataFilesDeleteAfterTestsRequest request) {
+        getServiceLocator().getDomainService().deleteFilesAfterTests();
+        return new DataFilesDeleteAfterTestsResponse();
+    }
+
 }

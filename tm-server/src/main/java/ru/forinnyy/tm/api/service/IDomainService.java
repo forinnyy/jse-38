@@ -34,4 +34,6 @@ public interface IDomainService {
 
     void saveDataYamlFasterXml();
 
+    void deleteFilesAfterTests();
+
 }

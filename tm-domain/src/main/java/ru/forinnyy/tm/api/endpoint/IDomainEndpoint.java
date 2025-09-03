@@ -148,4 +148,11 @@ public interface IDomainEndpoint extends IEndpoint {
             @NonNull DataYamlSaveFasterXmlRequest request
     );
 
+    @NonNull
+    @WebMethod
+    DataFilesDeleteAfterTestsResponse deleteFilesAfterTests(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull DataFilesDeleteAfterTestsRequest request
+    );
+
 }

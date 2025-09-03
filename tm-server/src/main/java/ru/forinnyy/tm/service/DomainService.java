@@ -18,7 +18,9 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 
 public class DomainService implements IDomainService {
 
@@ -75,6 +77,24 @@ public class DomainService implements IDomainService {
         serviceLocator.getUserService().set(domain.getUsers());
     }
 
+    public void deleteFilesAfterTests() {
+        List<String> listFilesToDelete = Arrays.asList(
+                "backup.base64",
+                "data.base64",
+                "data.bin",
+                "data.json",
+                "data.xml",
+                "data.yaml"
+        );
+
+        for (String fileName : listFilesToDelete) {
+            File file = new File(fileName);
+
+            if (file.exists() && file.isFile()) {
+                file.delete();
+            }
+        }
+    }
 
     @Override
     @SneakyThrows
