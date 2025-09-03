@@ -209,5 +209,5 @@ public final class AuthEndpointTest {
         } catch (Exception e) {
         }
     }
-    
+
 }
