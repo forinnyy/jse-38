@@ -465,4 +465,5 @@ public final class TaskEndpointTest {
         adminRequest.setToken(adminToken);
         taskEndpoint.clearTask(adminRequest);
     }
+    
 }
