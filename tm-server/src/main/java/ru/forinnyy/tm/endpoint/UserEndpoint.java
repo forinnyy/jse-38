@@ -13,6 +13,7 @@ import ru.forinnyy.tm.model.Session;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import java.util.List;
 
 @WebService(endpointInterface = "ru.forinnyy.tm.api.endpoint.IUserEndpoint")
 public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoint {
@@ -113,6 +114,19 @@ public final class UserEndpoint extends AbstractEndpoint implements IUserEndpoin
         final String middleName = request.getMiddleName();
         getUserService().updateUser(userId, firstName, lastName, middleName);
         return new UserUpdateProfileResponse();
+    }
+
+    @NonNull
+    @Override
+    @WebMethod
+    @SneakyThrows
+    public UserListProfilesResponse listProfiles(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull final UserListProfilesRequest request
+    ) {
+        check(request, Role.ADMIN);
+        @NonNull final List<String> profiles = getUserService().listProfiles();
+        return new UserListProfilesResponse(profiles);
     }
 
 }

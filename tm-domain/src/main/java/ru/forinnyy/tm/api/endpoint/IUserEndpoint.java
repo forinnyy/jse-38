@@ -78,4 +78,11 @@ public interface IUserEndpoint extends IEndpoint {
             @NonNull UserUpdateProfileRequest request
     );
 
+    @NonNull
+    @WebMethod
+    UserListProfilesResponse listProfiles(
+            @WebParam(name = REQUEST, partName = REQUEST)
+            @NonNull UserListProfilesRequest request
+    );
+
 }

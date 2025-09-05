@@ -17,6 +17,10 @@ import ru.forinnyy.tm.exception.user.ExistsLoginException;
 import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.util.HashUtil;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 public final class UserService extends AbstractService<User, IUserRepository>
         implements IUserService {
@@ -175,6 +179,12 @@ public final class UserService extends AbstractService<User, IUserRepository>
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         final User user = findByLogin(login);
         user.setLocked(false);
+    }
+
+    @NonNull
+    @Override
+    public List<String> listProfiles() {
+        return findAll().stream().map(User::getLogin).collect(Collectors.toList());
     }
 
 }

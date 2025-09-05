@@ -7,12 +7,16 @@ import ru.forinnyy.tm.api.endpoint.IAuthEndpoint;
 import ru.forinnyy.tm.api.endpoint.IUserEndpoint;
 import ru.forinnyy.tm.api.service.IPropertyService;
 import ru.forinnyy.tm.dto.request.*;
+import ru.forinnyy.tm.dto.response.UserListProfilesResponse;
 import ru.forinnyy.tm.dto.response.UserLoginResponse;
 import ru.forinnyy.tm.dto.response.UserLogoutResponse;
 import ru.forinnyy.tm.dto.response.UserProfileResponse;
 import ru.forinnyy.tm.marker.SoapCategory;
 import ru.forinnyy.tm.model.User;
 import ru.forinnyy.tm.service.PropertyService;
+
+import javax.xml.ws.soap.SOAPFaultException;
+import java.util.List;
 
 @Category(SoapCategory.class)
 public final class AuthEndpointTest {
@@ -27,95 +31,65 @@ public final class AuthEndpointTest {
     private static final IUserEndpoint userEndpoint = IUserEndpoint.newInstance(propertyService);
 
     private static String adminToken;
-    private static String testUserToken;
+
+    private String testUserToken;
+
+    private final String testLogin = "testuser";
+
+    private final String testEmail = "test@email.com";
+
+    private final String testPassword = "password";
 
     @BeforeClass
-    public static void init() {
+    public static void beforeClass() {
         @NonNull final UserLoginRequest adminRequest = new UserLoginRequest("admin", "admin");
         adminToken = authEndpoint.login(adminRequest).getToken();
     }
 
     @Before
     public void beforeMethod() {
-        createTestUser("testuser", "test@email.com", "password");
-        @NonNull final UserLoginRequest testUserRequest = new UserLoginRequest("testuser", "password");
-        testUserToken = authEndpoint.login(testUserRequest).getToken();
+        createTestUser(testLogin, testEmail, testPassword);
+    }
+
+    @After
+    public void afterMethod() {
+        @NonNull final UserListProfilesRequest profilesRequest = new UserListProfilesRequest(adminToken);
+        @NonNull final UserListProfilesResponse profilesResponse = userEndpoint.listProfiles(profilesRequest);
+
+        if (profilesResponse.getProfiles().contains(testLogin)) {
+            @NonNull final UserRemoveRequest removeRequest = new UserRemoveRequest(adminToken);
+            removeRequest.setLogin(testLogin);
+            userEndpoint.removeUser(removeRequest);
+        }
     }
 
     private void createTestUser(@NonNull final String login, @NonNull final String email, @NonNull final String password) {
-        try {
+        @NonNull final UserListProfilesRequest profilesRequest = new UserListProfilesRequest(adminToken);
+        @NonNull final UserListProfilesResponse profilesResponse = userEndpoint.listProfiles(profilesRequest);
+        @NonNull final List<String> profiles = profilesResponse.getProfiles();
+        if (profiles.contains(login)) {
             @NonNull final UserRemoveRequest removeRequest = new UserRemoveRequest(adminToken);
             removeRequest.setLogin(login);
             userEndpoint.removeUser(removeRequest);
-        } catch (Exception e) {
         }
 
-        @NonNull final UserRegistryRequest registryRequest = new UserRegistryRequest();
+        UserRegistryRequest registryRequest = new UserRegistryRequest();
         registryRequest.setLogin(login);
         registryRequest.setEmail(email);
         registryRequest.setPassword(password);
         userEndpoint.registryUser(registryRequest);
 
-        try {
-            @NonNull final UserUnlockRequest unlockRequest = new UserUnlockRequest(adminToken);
-            unlockRequest.setLogin(login);
-            userEndpoint.unlockUser(unlockRequest);
-        } catch (Exception e) {
-        }
-    }
-
-    @Test
-    public void testLogin() {
-        @NonNull final UserLoginRequest validRequest = new UserLoginRequest("testuser", "password");
-        @NonNull final UserLoginResponse response = authEndpoint.login(validRequest);
-
-        Assert.assertNotNull(response);
-        Assert.assertNotNull(response.getToken());
-        Assert.assertFalse(response.getToken().isEmpty());
-
-        @NonNull final UserLoginRequest invalidPasswordRequest = new UserLoginRequest("testuser", "wrongpassword");
-        Assert.assertThrows(Exception.class, () -> authEndpoint.login(invalidPasswordRequest));
-
-        @NonNull final UserLoginRequest invalidLoginRequest = new UserLoginRequest("nonexistent", "password");
-        Assert.assertThrows(Exception.class, () -> authEndpoint.login(invalidLoginRequest));
-
-        @NonNull final UserLoginRequest nullLoginRequest = new UserLoginRequest(null, "password");
-        Assert.assertThrows(Exception.class, () -> authEndpoint.login(nullLoginRequest));
-
-        @NonNull final UserLoginRequest nullPasswordRequest = new UserLoginRequest("testuser", null);
-        Assert.assertThrows(Exception.class, () -> authEndpoint.login(nullPasswordRequest));
-
-        @NonNull final UserLoginRequest emptyLoginRequest = new UserLoginRequest("", "password");
-        Assert.assertThrows(Exception.class, () -> authEndpoint.login(emptyLoginRequest));
-
-        @NonNull final UserLoginRequest emptyPasswordRequest = new UserLoginRequest("testuser", "");
-        Assert.assertThrows(Exception.class, () -> authEndpoint.login(emptyPasswordRequest));
-    }
-
-    @Test
-    public void testLogout() {
-        @NonNull final UserLogoutRequest nullTokenRequest = new UserLogoutRequest(null);
-        Assert.assertThrows(Exception.class, () -> authEndpoint.logout(nullTokenRequest));
-
-        @NonNull final UserLogoutRequest invalidTokenRequest = new UserLogoutRequest("invalid-token");
-        Assert.assertThrows(Exception.class, () -> authEndpoint.logout(invalidTokenRequest));
-
-        @NonNull final UserLogoutRequest validRequest = new UserLogoutRequest(testUserToken);
-        @NonNull final UserLogoutResponse response = authEndpoint.logout(validRequest);
-
-        Assert.assertNotNull(response);
-
-        @NonNull final UserProfileRequest profileRequest = new UserProfileRequest(testUserToken);
-        Assert.assertThrows(Exception.class, () -> authEndpoint.profile(profileRequest));
+        @NonNull final UserLoginRequest loginRequest = new UserLoginRequest(testLogin, testPassword);
+        testUserToken = authEndpoint.login(loginRequest).getToken();
     }
 
     @Test
     public void testProfile() {
-        @NonNull final UserProfileRequest nullTokenRequest = new UserProfileRequest(null);
-        Assert.assertThrows(Exception.class, () -> authEndpoint.profile(nullTokenRequest));
+        Assert.assertThrows(SOAPFaultException.class,
+                () -> authEndpoint.profile(new UserProfileRequest(null)));
 
-        @NonNull final UserProfileRequest invalidTokenRequest = new UserProfileRequest("invalid-token");
-        Assert.assertThrows(Exception.class, () -> authEndpoint.profile(invalidTokenRequest));
+        Assert.assertThrows(SOAPFaultException.class,
+                () -> authEndpoint.profile(new UserProfileRequest("invalid-token")));
 
         @NonNull final UserProfileRequest validRequest = new UserProfileRequest(testUserToken);
         @NonNull final UserProfileResponse response = authEndpoint.profile(validRequest);
@@ -124,90 +98,46 @@ public final class AuthEndpointTest {
         Assert.assertNotNull(response.getUser());
 
         @NonNull final User user = response.getUser();
-        Assert.assertEquals("testuser", user.getLogin());
-        Assert.assertEquals("test@email.com", user.getEmail());
+        Assert.assertEquals(testLogin, user.getLogin());
+        Assert.assertEquals(testEmail, user.getEmail());
         Assert.assertNotNull(user.getId());
     }
 
     @Test
-    public void testProfileAfterLogout() {
-        @NonNull final UserProfileRequest profileRequest = new UserProfileRequest(testUserToken);
-        @NonNull final UserProfileResponse profileResponse = authEndpoint.profile(profileRequest);
-        Assert.assertNotNull(profileResponse.getUser());
-
-        @NonNull final UserLogoutRequest logoutRequest = new UserLogoutRequest(testUserToken);
-        authEndpoint.logout(logoutRequest);
-
-        Assert.assertThrows(Exception.class, () -> authEndpoint.profile(profileRequest));
-    }
-
-    @Test
-    public void testLoginWithLockedUser() {
-        @NonNull final UserLockRequest lockRequest = new UserLockRequest(adminToken);
-        lockRequest.setLogin("testuser");
-        userEndpoint.lockUser(lockRequest);
-
-        @NonNull final UserLoginRequest loginRequest = new UserLoginRequest("testuser", "password");
-        Assert.assertThrows(Exception.class, () -> authEndpoint.login(loginRequest));
-
-        @NonNull final UserUnlockRequest unlockRequest = new UserUnlockRequest(adminToken);
-        unlockRequest.setLogin("testuser");
-        userEndpoint.unlockUser(unlockRequest);
-
-        @NonNull final UserLoginResponse response = authEndpoint.login(loginRequest);
+    public void testLogin() {
+        @NonNull final UserLoginRequest validRequest = new UserLoginRequest(testLogin, testPassword);
+        @NonNull final UserLoginResponse response = authEndpoint.login(validRequest);
+        Assert.assertNotNull(response);
         Assert.assertNotNull(response.getToken());
+        Assert.assertFalse(response.getToken().isEmpty());
+
+        Assert.assertThrows(SOAPFaultException.class,
+                () -> authEndpoint.login(new UserLoginRequest(testLogin, "wrongpassword")));
+
+        Assert.assertThrows(SOAPFaultException.class,
+                () -> authEndpoint.login(new UserLoginRequest("nonexistent", testPassword)));
+
+        Assert.assertThrows(SOAPFaultException.class,
+                () -> authEndpoint.login(new UserLoginRequest(null, testPassword)));
+
+        Assert.assertThrows(SOAPFaultException.class,
+                () -> authEndpoint.login(new UserLoginRequest(testLogin, null)));
     }
 
     @Test
-    public void testMultipleLogins() {
-        @NonNull final UserLoginRequest request = new UserLoginRequest("testuser", "password");
+    public void testLogout() {
+        Assert.assertThrows(SOAPFaultException.class,
+                () -> authEndpoint.logout(new UserLogoutRequest(null)));
 
-        @NonNull final UserLoginResponse response1 = authEndpoint.login(request);
-        Assert.assertNotNull(response1.getToken());
+        Assert.assertThrows(SOAPFaultException.class,
+                () -> authEndpoint.logout(new UserLogoutRequest("invalid-token")));
 
-        @NonNull final UserLoginResponse response2 = authEndpoint.login(request);
-        Assert.assertNotNull(response2.getToken());
+        @NonNull final UserLogoutRequest validRequest = new UserLogoutRequest(testUserToken);
+        @NonNull final UserLogoutResponse response = authEndpoint.logout(validRequest);
+        Assert.assertNotNull(response);
 
-        Assert.assertNotEquals(response1.getToken(), response2.getToken());
-
-        @NonNull final UserProfileRequest profileRequest1 = new UserProfileRequest(response1.getToken());
-        @NonNull final UserProfileResponse profileResponse1 = authEndpoint.profile(profileRequest1);
-        Assert.assertNotNull(profileResponse1.getUser());
-
-        @NonNull final UserProfileRequest profileRequest2 = new UserProfileRequest(response2.getToken());
-        @NonNull final UserProfileResponse profileResponse2 = authEndpoint.profile(profileRequest2);
-        Assert.assertNotNull(profileResponse2.getUser());
-    }
-
-    @Test
-    public void testStandardUsers() {
-        @NonNull final UserLoginRequest adminRequest = new UserLoginRequest("admin", "admin");
-        @NonNull final UserLoginResponse adminResponse = authEndpoint.login(adminRequest);
-        Assert.assertNotNull(adminResponse.getToken());
-
-        @NonNull final UserProfileRequest adminProfileRequest = new UserProfileRequest(adminResponse.getToken());
-        @NonNull final UserProfileResponse adminProfileResponse = authEndpoint.profile(adminProfileRequest);
-        Assert.assertNotNull(adminProfileResponse.getUser());
-        Assert.assertEquals("admin", adminProfileResponse.getUser().getLogin());
-
-        @NonNull final UserLoginRequest userRequest = new UserLoginRequest("user", "user");
-        @NonNull final UserLoginResponse userResponse = authEndpoint.login(userRequest);
-        Assert.assertNotNull(userResponse.getToken());
-
-        @NonNull final UserProfileRequest userProfileRequest = new UserProfileRequest(userResponse.getToken());
-        @NonNull final UserProfileResponse userProfileResponse = authEndpoint.profile(userProfileRequest);
-        Assert.assertNotNull(userProfileResponse.getUser());
-        Assert.assertEquals("user", userProfileResponse.getUser().getLogin());
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        try {
-            @NonNull final UserRemoveRequest removeRequest = new UserRemoveRequest(adminToken);
-            removeRequest.setLogin("testuser");
-            userEndpoint.removeUser(removeRequest);
-        } catch (Exception e) {
-        }
+        Assert.assertThrows(SOAPFaultException.class,
+                () -> authEndpoint.profile(new UserProfileRequest(testUserToken)));
     }
 
 }

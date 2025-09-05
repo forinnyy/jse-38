@@ -7,6 +7,8 @@ import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.User;
 
+import java.util.List;
+
 public interface IUserService extends IService<User> {
 
     @NonNull
@@ -45,5 +47,8 @@ public interface IUserService extends IService<User> {
     void lockUserByLogin(String login) throws AbstractFieldException, AbstractEntityException;
 
     void unlockUserByLogin(String login) throws AbstractFieldException, AbstractEntityException;
+
+    @NonNull
+    List<String> listProfiles();
 
 }
