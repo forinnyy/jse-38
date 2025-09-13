@@ -40,15 +40,23 @@ public final class Bootstrap implements IServiceLocator {
     @NonNull
     private static final Logger LOGGER_LIFECYCLE = LoggerFactory.getLogger("LIFECYCLE");
 
+    @Getter
+    @NonNull
+    private final IPropertyService propertyService = new PropertyService();
+
+    @NonNull
+    private final ITaskRepository taskRepository = new TaskRepository();
+
     @NonNull
     private final IProjectRepository projectRepository = new ProjectRepository();
 
     @Getter
     @NonNull
-    private final IProjectService projectService = new ProjectService(projectRepository);
+    private final IConnectionService connectionService = new ConnectionService(propertyService);
 
+    @Getter
     @NonNull
-    private final ITaskRepository taskRepository = new TaskRepository();
+    private final IProjectService projectService = new ProjectService(connectionService);
 
     @Getter
     @NonNull
@@ -56,14 +64,10 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NonNull
-    private final ITaskService taskService = new TaskService(taskRepository);
+    private final ITaskService taskService = new TaskService(connectionService);
 
     @NonNull
-    private final IUserRepository userRepository = new UserRepository();
-
-    @Getter
-    @NonNull
-    private final IPropertyService propertyService = new PropertyService();
+    private final IUserRepository userRepository = new UserRepository(connectionService);
 
     @NonNull
     private final ISessionRepository sessionRepository = new SessionRepository();
@@ -73,7 +77,7 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NonNull
-    private final IUserService userService = new UserService(propertyService, userRepository, projectRepository, taskRepository);
+    private final IUserService userService = new UserService(propertyService, connectionService, projectRepository, taskRepository);
 
     @NonNull
     private final ISystemEndpoint systemEndpoint = new SystemEndpoint(this);

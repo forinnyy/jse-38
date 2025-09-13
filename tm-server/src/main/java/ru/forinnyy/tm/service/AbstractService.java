@@ -2,6 +2,8 @@ package ru.forinnyy.tm.service;
 
 import lombok.NonNull;
 import ru.forinnyy.tm.api.repository.IRepository;
+import ru.forinnyy.tm.api.repository.IUserRepository;
+import ru.forinnyy.tm.api.service.IConnectionService;
 import ru.forinnyy.tm.api.service.IService;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
@@ -10,7 +12,9 @@ import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.IdEmptyException;
 import ru.forinnyy.tm.exception.field.IndexIncorrectException;
 import ru.forinnyy.tm.model.AbstractModel;
+import ru.forinnyy.tm.repository.UserRepository;
 
+import java.sql.Connection;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
@@ -19,15 +23,29 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
         implements IService<M> {
 
     @NonNull
-    protected final R repository;
+    protected final IConnectionService connectionService;
 
-    public AbstractService(@NonNull final R repository) {
-        this.repository = repository;
+    public AbstractService(@NonNull IConnectionService connectionService) {
+        this.connectionService = connectionService;
+    }
+
+    @NonNull
+    public Connection getConnection() {
+        return connectionService.getConnection();
+    }
+
+    @NonNull
+    public R getRepository(@NonNull Connection connection) {
+        return new UserRepository(connection);
     }
 
     @NonNull
     @Override
     public Collection<M> add(@NonNull Collection<M> models) {
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final R repository = getRepository(connection);
+            return repository.add(models);
+        }
         return repository.add(models);
     }
 

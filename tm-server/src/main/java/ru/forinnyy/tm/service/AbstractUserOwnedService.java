@@ -2,6 +2,7 @@ package ru.forinnyy.tm.service;
 
 import lombok.NonNull;
 import ru.forinnyy.tm.api.repository.IUserOwnedRepository;
+import ru.forinnyy.tm.api.service.IConnectionService;
 import ru.forinnyy.tm.api.service.IUserOwnedService;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
@@ -20,8 +21,8 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         extends AbstractService<M, R>
         implements IUserOwnedService<M> {
 
-    public AbstractUserOwnedService(@NonNull final R repository) {
-        super(repository);
+    public AbstractUserOwnedService(@NonNull final IConnectionService connectionService) {
+        super(connectionService);
     }
 
     @Override

@@ -1,42 +1,43 @@
 package ru.forinnyy.tm.repository;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
+import ru.forinnyy.tm.api.DBConstraints;
 import ru.forinnyy.tm.api.repository.IRepository;
+import ru.forinnyy.tm.comparator.CreatedComparator;
+import ru.forinnyy.tm.comparator.StatusComparator;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.model.AbstractModel;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.*;
 
 public abstract class AbstractRepository<M extends AbstractModel> implements IRepository<M> {
 
     @NonNull
-    private final Map<String, M> models = new LinkedHashMap<>();
+    protected final Connection connection;
 
-    @Override
-    public void clear() {
-        models.clear();
+    public AbstractRepository(@NonNull final Connection connection) {
+        this.connection = connection;
+    }
+
+    protected abstract String getTableName();
+
+    @NonNull
+    protected String getSortType(@NonNull final Comparator comparator) {
+        if (comparator == CreatedComparator.INSTANCE) return DBConstraints.COLUMN_CREATED;
+        if (comparator == StatusComparator.INSTANCE) return DBConstraints.COLUMN_STATUS;
+        else return DBConstraints.COLUMN_NAME;
     }
 
     @NonNull
-    @Override
-    public List<M> findAll() {
-        return new ArrayList<>(models.values());
-    }
+    public abstract M fetch(@NonNull final ResultSet row);
 
     @NonNull
-    @Override
-    public List<M> findAll(@NonNull final Comparator<M> comparator) {
-        @NonNull final List<M> result = new ArrayList<>(models.values());
-        result.sort(comparator);
-        return result;
-    }
-
-    @NonNull
-    @Override
-    public M add(@NonNull final M model) {
-        models.put(model.getId(), model);
-        return model;
-    }
+    public abstract M add(@NonNull final M model);
 
     @NonNull
     @Override
@@ -47,9 +48,35 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
 
     @NonNull
     @Override
-    public Collection<M> set(@NonNull Collection<M> models) {
-        clear();
-        return add(models);
+    @SneakyThrows
+    public List<M> findAll() {
+        @NonNull final List<M> result = new ArrayList<>();
+        @NonNull final String sql = String.format("SELECT * FROM %s", getTableName());
+        try (@NonNull final Statement statement = connection.createStatement()) {
+            @NonNull final ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                result.add(fetch(resultSet));
+            }
+        }
+        return result;
+    }
+
+
+    @NonNull
+    @Override
+    @SneakyThrows
+    public List<M> findAll(@NonNull final Comparator<M> comparator) {
+        @NonNull final List<M> result = new ArrayList<>();
+        @NonNull String sql;
+        if (comparator == null) sql = String.format("SELECT * FROM %s", getTableName());
+        else sql = String.format("SELECT * FROM %s ORDER BY %s", getTableName(), getSortType(comparator));
+        try (@NonNull final Statement statement = connection.createStatement()) {
+            @NonNull final ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                result.add(fetch(resultSet));
+            }
+        }
+        return result;
     }
 
     @Override
@@ -57,47 +84,91 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
         return findOneById(id) != null;
     }
 
-    @NonNull
     @Override
+    @SneakyThrows
     public M findOneById(@NonNull final String id) {
-        return models.get(id);
+        @NonNull final String sql = String.format("SELECT * FROM %s WHERE id = ? LIMIT 1", getTableName());
+        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, id);
+            @NonNull final ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) return null;
+            return fetch(resultSet);
+        }
     }
 
     @Override
+    @SneakyThrows
     public M findOneByIndex(Integer index) {
-        if (index == null) return null;
-        @NonNull final List<String> list = new LinkedList<>(models.keySet());
-        final String key = list.get(index);
-        return models.get(key);
+        @NonNull final String sql = String.format("SELECT * FROM %s LIMIT ?", getTableName());
+        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, index);
+            @NonNull final ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) return null;
+            for (int i = 0; i < index - 1; i++) {
+                resultSet.next();
+            }
+            return fetch(resultSet);
+        }
     }
 
     @Override
-    public int getSize() {
-        return models.size();
+    @SneakyThrows
+    public void clear() {
+        @NonNull final String sql = String.format("DELETE FROM %s", getTableName());
+        try (@NonNull final Statement statement = connection.createStatement()) {
+            statement.executeQuery(sql);
+        }
     }
 
     @NonNull
     @Override
+    @SneakyThrows
     public M remove(@NonNull final M model) throws AbstractEntityException {
-        models.remove(model.getId());
+        @NonNull final String sql = String.format("DELETE FROM %s WHERE id = ?", getTableName());
+        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, model.getId());
+            statement.executeUpdate();
+        }
         return model;
     }
 
     @Override
-    public M removeById(@NonNull final String id) throws AbstractEntityException {
+    @SneakyThrows
+    public M removeById(@NonNull final String id) {
         final M model = findOneById(id);
         return remove(model);
     }
-    
+
     @Override
-    public M removeByIndex(@NonNull final Integer index) throws AbstractEntityException {
+    @SneakyThrows
+    public M removeByIndex(@NonNull final Integer index) {
         final M model = findOneByIndex(index);
         return remove(model);
     }
 
+    @NonNull
+    @Override
+    public Collection<M> set(@NonNull Collection<M> models) {
+        clear();
+        return add(models);
+    }
+
+    @Override
+    @SneakyThrows
+    public int getSize() {
+        @NonNull final String sql = String.format("SELECT COUNT(*) FROM %s", getTableName());
+        try (@NonNull final Statement statement = connection.createStatement()) {
+            @NonNull final ResultSet resultSet = statement.executeQuery(sql);
+            resultSet.next();
+            return resultSet.getInt("count");
+        }
+    }
+
+    @SneakyThrows
     public void removeAll(final Collection<M> collection) {
-        if (collection == null) return;
-        collection.stream().map(AbstractModel::getId).forEach(models::remove);
+        for (M model: collection) {
+            remove(model);
+        }
     }
 
 }

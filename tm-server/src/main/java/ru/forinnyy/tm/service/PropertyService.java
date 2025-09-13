@@ -88,6 +88,15 @@ public final class PropertyService implements IPropertyService {
     public static final String SESSION_TIMEOUT_DEFAULT = "10800";
 
     @NonNull
+    public static final String DATABASE_URL = "database.url";
+
+    @NonNull
+    public static final String DATABASE_USERNAME = "database.username";
+
+    @NonNull
+    public static final String DATABASE_PASSWORD = "database.password";
+
+    @NonNull
     private final Properties properties = new Properties();
 
     @SneakyThrows
@@ -117,6 +126,21 @@ public final class PropertyService implements IPropertyService {
         @NonNull final String name = getApplicationConfig();
         @NonNull final File file = new File(name);
         return file.exists();
+    }
+
+    @Override
+    public @NonNull String getDBUser() {
+        return getStringValue(DATABASE_USERNAME);
+    }
+
+    @Override
+    public @NonNull String getDBPassword() {
+        return getStringValue(DATABASE_PASSWORD);
+    }
+
+    @Override
+    public @NonNull String getDBUrl() {
+        return getStringValue(DATABASE_URL);
     }
 
     @Override

@@ -2,6 +2,7 @@ package ru.forinnyy.tm.service;
 
 import lombok.NonNull;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
+import ru.forinnyy.tm.api.service.IConnectionService;
 import ru.forinnyy.tm.api.service.IProjectService;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
@@ -9,12 +10,20 @@ import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
 import ru.forinnyy.tm.exception.field.*;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.Project;
+import ru.forinnyy.tm.repository.ProjectRepository;
+
+import java.sql.Connection;
 
 public final class ProjectService extends AbstractUserOwnedService<Project, IProjectRepository>
         implements IProjectService {
 
-    public ProjectService(@NonNull final IProjectRepository repository) {
-        super(repository);
+    public ProjectService(@NonNull final IConnectionService connectionService) {
+        super(connectionService);
+    }
+
+    @NonNull
+    public IProjectRepository getRepository(@NonNull final Connection connection) {
+        return new ProjectRepository(connection);
     }
 
     @NonNull

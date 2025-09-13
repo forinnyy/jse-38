@@ -17,4 +17,6 @@ public interface IUserRepository extends IRepository<User> {
     @NonNull
     Boolean isEmailExist(@NonNull String email);
 
+    void update(@NonNull final User user);
+
 }

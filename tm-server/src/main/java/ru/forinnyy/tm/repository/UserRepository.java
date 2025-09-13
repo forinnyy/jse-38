@@ -1,25 +1,128 @@
 package ru.forinnyy.tm.repository;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
+import ru.forinnyy.tm.api.DBConstraints;
 import ru.forinnyy.tm.api.repository.IUserRepository;
+import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.model.User;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public final class UserRepository extends AbstractRepository<User> implements IUserRepository {
 
-    @Override
-    public User findByLogin(@NonNull final String login) {
-        return findAll()
-                .stream()
-                .filter(m -> login.equals(m.getLogin()))
-                .findFirst().orElse(null);
+    public UserRepository(@NonNull final Connection connection) {
+        super(connection);
     }
 
     @Override
+    protected String getTableName() {
+        return DBConstraints.TABLE_USER;
+    }
+
+    @NonNull
+    @Override
+    @SneakyThrows
+    public User fetch(@NonNull final ResultSet row) {
+        @NonNull final User user = new User();
+        user.setId(row.getString(DBConstraints.COLUMN_ID));
+        user.setLogin(row.getString(DBConstraints.COLUMN_LOGIN));
+        user.setPasswordHash(row.getString(DBConstraints.COLUMN_PASSWORD));
+        user.setEmail(row.getString(DBConstraints.COLUMN_EMAIL));
+        user.setLocked(row.getBoolean(DBConstraints.COLUMN_LOCKED));
+        user.setFirstName(row.getString(DBConstraints.COLUMN_FIRST_NAME));
+        user.setLastName(row.getString(DBConstraints.COLUMN_LAST_NAME));
+        user.setMiddleName(row.getString(DBConstraints.COLUMN_MIDDLE_NAME));
+        user.setRole(Role.valueOf(DBConstraints.COLUMN_ROLE));
+        return user;
+    }
+
+    @NonNull
+    @Override
+    @SneakyThrows
+    public User add(@NonNull final User user) {
+        @NonNull final String sql = String.format(
+                "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                getTableName(),
+                DBConstraints.COLUMN_ID,
+                DBConstraints.COLUMN_LOGIN,
+                DBConstraints.COLUMN_PASSWORD,
+                DBConstraints.COLUMN_EMAIL,
+                DBConstraints.COLUMN_LOCKED,
+                DBConstraints.COLUMN_FIRST_NAME,
+                DBConstraints.COLUMN_LAST_NAME,
+                DBConstraints.COLUMN_MIDDLE_NAME,
+                DBConstraints.COLUMN_ROLE
+        );
+        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, user.getId());
+            statement.setString(2, user.getLogin());
+            statement.setString(3, user.getPasswordHash());
+            statement.setString(4, user.getEmail());
+            statement.setBoolean(5, user.getLocked());
+            statement.setString(6, user.getFirstName());
+            statement.setString(7, user.getLastName());
+            statement.setString(8, user.getMiddleName());
+            statement.setString(9, user.getRole().toString());
+            statement.executeUpdate();
+        }
+        return user;
+    }
+
+    @Override
+    @SneakyThrows
+    public void update(@NonNull final User user) {
+        @NonNull final String sql = String.format(
+                "UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?",
+                getTableName(),
+                DBConstraints.COLUMN_LOGIN,
+                DBConstraints.COLUMN_PASSWORD,
+                DBConstraints.COLUMN_EMAIL,
+                DBConstraints.COLUMN_LOCKED,
+                DBConstraints.COLUMN_FIRST_NAME,
+                DBConstraints.COLUMN_LAST_NAME,
+                DBConstraints.COLUMN_MIDDLE_NAME,
+                DBConstraints.COLUMN_ROLE,
+                DBConstraints.COLUMN_ID
+        );
+        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getPasswordHash());
+            statement.setString(3, user.getEmail());
+            statement.setBoolean(4, user.getLocked());
+            statement.setString(5, user.getFirstName());
+            statement.setString(6, user.getLastName());
+            statement.setString(7, user.getMiddleName());
+            statement.setString(8, user.getRole().toString());
+            statement.setString(9, user.getId());
+            statement.executeUpdate();
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public User findByLogin(@NonNull final String login) {
+        @NonNull final String sql = String.format("SELECT * FROM %s WHERE %s = ? LIMIT 1", getTableName(), DBConstraints.COLUMN_LOGIN);
+        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, login);
+            @NonNull final ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) return null;
+            return fetch(resultSet);
+        }
+    }
+
+    @Override
+    @SneakyThrows
     public User findByEmail(@NonNull final String email) {
-        return findAll()
-                .stream()
-                .filter(m -> email.equals(m.getEmail()))
-                .findFirst().orElse(null);
+        @NonNull final String sql = String.format("SELECT * FROM %s WHERE %s = ? LIMIT 1", getTableName(), DBConstraints.COLUMN_EMAIL);
+        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, email);
+            @NonNull final ResultSet resultSet = statement.executeQuery();
+            if (!resultSet.next()) return null;
+            return fetch(resultSet);
+        }
     }
 
     @NonNull

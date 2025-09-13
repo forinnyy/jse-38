@@ -50,4 +50,13 @@ public interface IPropertyService extends ISaltProvider {
     @NonNull
     Integer getSessionTimeout();
 
+    @NonNull
+    String getDBUser();
+
+    @NonNull
+    String getDBPassword();
+
+    @NonNull
+    String getDBUrl();
+
 }
