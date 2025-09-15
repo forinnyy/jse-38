@@ -41,12 +41,12 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     @NonNull
     @Override
     @SneakyThrows
-    public M add(@NonNull M model) throws AbstractEntityException {
+    public M add(@NonNull M model) {
         try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
-            model = repository.add(model);
+            final M result = repository.add(model);
             connection.commit();
-            return model;
+            return result;
         }
     }
 
@@ -56,9 +56,9 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     public Collection<M> add(@NonNull Collection<M> models) {
         try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
-            models = repository.add(models);
+            final Collection<M> result = repository.add(models);
             connection.commit();
-            return models;
+            return result;
         }
     }
 
@@ -68,9 +68,9 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     public Collection<M> set(@NonNull Collection<M> models) {
         try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
-            models = repository.set(models);
+            final Collection<M> result = repository.set(models);
             connection.commit();
-            return models;
+            return result;
         }
     }
 
@@ -163,9 +163,9 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
         if (model == null) throw new EntityNotFoundException();
         try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
-            model = repository.remove(model);
+            final M result = repository.remove(model);
             connection.commit();
-            return model;
+            return result;
         }
     }
 
@@ -187,9 +187,9 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
         if (index == null) throw new IndexIncorrectException();
         try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
-            M model = repository.removeByIndex(index);
+            final M result = repository.removeByIndex(index);
             connection.commit();
-            return model;
+            return result;
         }
     }
 

@@ -35,7 +35,9 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         if (model == null) throw new EntityNotFoundException();
         try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
-            return repository.add(userId, model);
+            final M result = repository.add(userId, model);
+            connection.commit();
+            return result;
         }
     }
 
@@ -46,6 +48,7 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             repository.clear(userId);
+            connection.commit();
         }
     }
 
@@ -84,9 +87,9 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     @SuppressWarnings("unchecked")
     public List<M> findAll(final String userId, final Sort sort) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        if (sort == null) return findAll(userId);
         try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
+            if (sort == null) return findAll(userId);
             return repository.findAll(userId, sort.getComparator());
         }
     }
@@ -141,7 +144,9 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         if (model == null) return null;
         try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
-            return repository.remove(userId, model);
+            final M result = repository.remove(userId, model);
+            connection.commit();
+            return result;
         }
     }
 
@@ -152,7 +157,9 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         if (id == null || id.isEmpty()) throw new IdEmptyException();
         try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
-            return repository.removeById(userId, id);
+            final M result = repository.removeById(userId, id);
+            connection.commit();
+            return result;
         }
     }
 
@@ -163,7 +170,9 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         if (index == null) throw new IndexIncorrectException();
         try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
-            return repository.removeByIndex(userId, index);
+            final M result = repository.removeByIndex(userId, index);
+            connection.commit();
+            return result;
         }
     }
 
@@ -174,6 +183,7 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             repository.removeAll(userId);
+            connection.commit();
         }
     }
 
