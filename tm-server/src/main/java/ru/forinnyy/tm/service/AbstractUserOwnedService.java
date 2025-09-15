@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.service;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import ru.forinnyy.tm.api.repository.IUserOwnedRepository;
 import ru.forinnyy.tm.api.service.IConnectionService;
 import ru.forinnyy.tm.api.service.IUserOwnedService;
@@ -14,6 +15,7 @@ import ru.forinnyy.tm.exception.field.UserIdEmptyException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
 
+import java.sql.Connection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -25,96 +27,190 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
         super(connectionService);
     }
 
-    @Override
-    public void clear(final String userId) throws AbstractFieldException {
-        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        repository.clear(userId);
-    }
-
     @NonNull
     @Override
-    public List<M> findAll(final String userId) throws AbstractFieldException {
-        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        return repository.findAll(userId);
-    }
-
-    @NonNull
-    @Override
-    public List<M> findAll(final String userId, final Comparator<M> comparator) throws AbstractFieldException {
-        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        if (comparator == null) return repository.findAll(userId);
-        return repository.findAll(userId, comparator);
-    }
-
-    @NonNull
-    @Override
-    public M add(final String userId, final M model) throws AbstractFieldException, AbstractEntityException {
+    @SneakyThrows
+    public M add(final String userId, final M model) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (model == null) throw new EntityNotFoundException();
-        return repository.add(userId, model);
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final R repository = getRepository(connection);
+            return repository.add(userId, model);
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
     @Override
-    public boolean existsById(final String userId, final String id) throws AbstractFieldException, AbstractUserException {
+    @SneakyThrows
+    public void clear(final String userId) throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        if (id == null || id.isEmpty()) throw new IdEmptyException();
-        return repository.existsById(userId, id);
-    }
-
-    @Override
-    public M findOneById(final String userId, final String id) throws AbstractFieldException, AbstractUserException {
-        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        if (id == null || id.isEmpty()) throw new IdEmptyException();
-        return repository.findOneById(userId, id);
-    }
-
-    @Override
-    public M findOneByIndex(final String userId, final Integer index) throws AbstractFieldException {
-        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        if (index == null) throw new IndexIncorrectException();
-        return repository.findOneByIndex(userId, index);
-    }
-
-    @Override
-    public int getSize(final String userId) throws AbstractFieldException {
-        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        return repository.getSize(userId);
-    }
-
-    @Override
-    public M remove(final String userId, final M model) throws AbstractFieldException, AbstractEntityException, AbstractUserException {
-        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        if (model == null) return null;
-        return repository.remove(userId, model);
-    }
-
-    @Override
-    public M removeById(final String userId, final String id) throws AbstractFieldException, AbstractEntityException, AbstractUserException {
-        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        if (id == null || id.isEmpty()) throw new IdEmptyException();
-        return repository.removeById(userId, id);
-    }
-
-    @Override
-    public M removeByIndex(final String userId, final Integer index) throws AbstractFieldException, AbstractEntityException {
-        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        if (index == null) throw new IndexIncorrectException();
-        return repository.removeByIndex(userId, index);
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final R repository = getRepository(connection);
+            repository.clear(userId);
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
     @NonNull
-    @SuppressWarnings("unchecked")
     @Override
-    public List<M> findAll(final String userId, final Sort sort) throws AbstractFieldException {
+    @SneakyThrows
+    public List<M> findAll(final String userId) throws AbstractFieldException {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final R repository = getRepository(connection);
+            return repository.findAll(userId);
+        }
+    }
+
+    @NonNull
+    @Override
+    @SneakyThrows
+    public List<M> findAll(final String userId, final Comparator<M> comparator) {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        if (comparator == null) {
+            try (@NonNull final Connection connection = getConnection()) {
+                @NonNull final R repository = getRepository(connection);
+                return repository.findAll(userId);
+            }
+        } else {
+            try (@NonNull final Connection connection = getConnection()) {
+                @NonNull final R repository = getRepository(connection);
+                return repository.findAll(userId, comparator);
+            }
+        }
+    }
+
+    @NonNull
+    @Override
+    @SneakyThrows
+    @SuppressWarnings("unchecked")
+    public List<M> findAll(final String userId, final Sort sort) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (sort == null) return findAll(userId);
-        return repository.findAll(userId, sort.getComparator());
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final R repository = getRepository(connection);
+            return repository.findAll(userId, sort.getComparator());
+        }
     }
 
     @Override
-    public void removeAll(final String userId) throws UserIdEmptyException {
+    @SneakyThrows
+    public M findOneById(final String userId, final String id) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        repository.removeAll(userId);
+        if (id == null || id.isEmpty()) throw new IdEmptyException();
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final R repository = getRepository(connection);
+            return repository.findOneById(userId, id);
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public M findOneByIndex(final String userId, final Integer index) {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        if (index == null) throw new IndexIncorrectException();
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final R repository = getRepository(connection);
+            return repository.findOneByIndex(userId, index);
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public int getSize(final String userId) {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final R repository = getRepository(connection);
+            return repository.getSize(userId);
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public boolean existsById(final String userId, final String id) {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        if (id == null || id.isEmpty()) throw new IdEmptyException();
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final R repository = getRepository(connection);
+            return repository.existsById(userId, id);
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public M remove(final String userId, final M model) {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        if (model == null) return null;
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final R repository = getRepository(connection);
+            return repository.remove(userId, model);
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public M removeById(final String userId, final String id) {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        if (id == null || id.isEmpty()) throw new IdEmptyException();
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final R repository = getRepository(connection);
+            return repository.removeById(userId, id);
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public M removeByIndex(final String userId, final Integer index) {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        if (index == null) throw new IndexIncorrectException();
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final R repository = getRepository(connection);
+            return repository.removeByIndex(userId, index);
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public void removeAll(final String userId) {
+        if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final R repository = getRepository(connection);
+            repository.removeAll(userId);
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
 }

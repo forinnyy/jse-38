@@ -61,7 +61,6 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
         return result;
     }
 
-
     @NonNull
     @Override
     @SneakyThrows

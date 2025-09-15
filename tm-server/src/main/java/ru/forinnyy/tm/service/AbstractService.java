@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.service;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import ru.forinnyy.tm.api.repository.IRepository;
 import ru.forinnyy.tm.api.repository.IUserRepository;
 import ru.forinnyy.tm.api.service.IConnectionService;
@@ -12,6 +13,7 @@ import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.IdEmptyException;
 import ru.forinnyy.tm.exception.field.IndexIncorrectException;
 import ru.forinnyy.tm.model.AbstractModel;
+import ru.forinnyy.tm.repository.AbstractRepository;
 import ru.forinnyy.tm.repository.UserRepository;
 
 import java.sql.Connection;
@@ -34,106 +36,206 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
         return connectionService.getConnection();
     }
 
+    protected abstract R getRepository(@NonNull Connection connection);
+
     @NonNull
-    public R getRepository(@NonNull Connection connection) {
-        return new UserRepository(connection);
+    @Override
+    @SneakyThrows
+    public M add(@NonNull final M model) throws AbstractEntityException {
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final R repository = getRepository(connection);
+            return repository.add(model);
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
     @NonNull
     @Override
+    @SneakyThrows
     public Collection<M> add(@NonNull Collection<M> models) {
-        try (@NonNull final Connection connection = getConnection()) {
+        @NonNull final Connection connection = getConnection();
+        try {
             @NonNull final R repository = getRepository(connection);
             return repository.add(models);
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
         }
-        return repository.add(models);
     }
 
     @NonNull
     @Override
+    @SneakyThrows
     public Collection<M> set(@NonNull Collection<M> models) {
-        return repository.set(models);
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final R repository = getRepository(connection);
+            return repository.set(models);
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
     @Override
+    @SneakyThrows
     public void clear() {
-        repository.clear();
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final R repository = getRepository(connection);
+            repository.clear();
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
     @NonNull
     @Override
+    @SneakyThrows
     public List<M> findAll() {
-        return repository.findAll();
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final R repository = getRepository(connection);
+            return repository.findAll();
+        }
     }
 
     @NonNull
     @Override
+    @SneakyThrows
     public List<M> findAll(final Comparator<M> comparator) {
         if (comparator == null) return findAll();
-        return repository.findAll(comparator);
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final R repository = getRepository(connection);
+            return repository.findAll(comparator);
+        }
     }
 
     @NonNull
     @Override
     @SuppressWarnings("unchecked")
+    @SneakyThrows
     public List<M> findAll(final Sort sort) {
         if (sort == null) return findAll();
-        return repository.findAll(sort.getComparator());
-    }
-
-    @NonNull
-    @Override
-    public M add(@NonNull final M model) throws AbstractEntityException {
-        return repository.add(model);
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final R repository = getRepository(connection);
+            return repository.findAll(sort.getComparator());
+        }
     }
 
     @Override
+    @SneakyThrows
     public boolean existsById(final String id) {
         if (id == null || id.isEmpty()) return false;
-        return repository.existsById(id);
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final R repository = getRepository(connection);
+            return repository.existsById(id);
+        }
     }
 
     @NonNull
     @Override
-    public M findOneById(final String id) throws AbstractFieldException {
+    @SneakyThrows
+    public M findOneById(final String id) {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
-        return repository.findOneById(id);
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final R repository = getRepository(connection);
+            return repository.findOneById(id);
+        }
     }
     
     @Override
-    public M findOneByIndex(final Integer index) throws AbstractFieldException {
+    @SneakyThrows
+    public M findOneByIndex(final Integer index) {
         if (index == null) throw new IndexIncorrectException();
-        return repository.findOneByIndex(index);
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final R repository = getRepository(connection);
+            return repository.findOneByIndex(index);
+        }
     }
 
     @Override
+    @SneakyThrows
     public int getSize() {
-        return repository.getSize();
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final R repository = getRepository(connection);
+            return repository.getSize();
+        }
     }
 
-    @NonNull
     @Override
-    public M remove(final M model) throws AbstractEntityException {
+    @SneakyThrows
+    public M remove(final M model) {
         if (model == null) throw new EntityNotFoundException();
-        return repository.remove(model);
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final R repository = getRepository(connection);
+            return repository.remove(model);
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
     @Override
-    public M removeById(final String id) throws AbstractFieldException, AbstractEntityException {
+    @SneakyThrows
+    public M removeById(final String id) {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
-        return repository.removeById(id);
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final R repository = getRepository(connection);
+            return repository.removeById(id);
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
     @Override
-    public M removeByIndex(final Integer index) throws AbstractFieldException, AbstractEntityException {
+    @SneakyThrows
+    public M removeByIndex(final Integer index) {
         if (index == null) throw new IndexIncorrectException();
-        return repository.removeByIndex(index);
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final R repository = getRepository(connection);
+            return repository.removeByIndex(index);
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
     @Override
+    @SneakyThrows
     public void removeAll(final Collection<M> collection) {
         if (collection == null || collection.isEmpty()) return;
-        repository.removeAll(collection);
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final R repository = getRepository(connection);
+            repository.removeAll(collection);
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
 }
