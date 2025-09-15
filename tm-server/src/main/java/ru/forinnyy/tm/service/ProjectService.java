@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.service;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.api.service.IConnectionService;
 import ru.forinnyy.tm.api.service.IProjectService;
@@ -28,25 +29,49 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
 
     @NonNull
     @Override
-    public Project create(final String userId, final String name) throws AbstractFieldException {
+    @SneakyThrows
+    public Project create(final String userId, final String name) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
-        return repository.create(userId, name);
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final IProjectRepository repository = getRepository(connection);
+            @NonNull final Project project = repository.create(userId, name);
+            connection.commit();
+            return project;
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
     @NonNull
     @Override
-    public Project create(final String userId, final String name, final String description) throws AbstractFieldException {
+    @SneakyThrows
+    public Project create(final String userId, final String name, final String description) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
-        return repository.create(userId, name, description);
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final IProjectRepository repository = getRepository(connection);
+            @NonNull final Project project = repository.create(userId, name, description);
+            connection.commit();
+            return project;
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
     @NonNull
     @Override
-    public Project updateById(final String userId, final String id, final String name, final String description)
-            throws AbstractFieldException, AbstractEntityException, AbstractUserException {
+    @SneakyThrows
+    public Project updateById(final String userId, final String id, final String name, final String description) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new ProjectIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
@@ -55,13 +80,26 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
         if (project == null) throw new ProjectNotFoundException();
         project.setName(name);
         project.setDescription(description);
-        return project;
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final IProjectRepository repository = getRepository(connection);
+            repository.update(project);
+            connection.commit();
+            return project;
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
     @NonNull
     @Override
-    public Project updateByIndex(final String userId, final Integer index, final String name, final String description)
-            throws AbstractFieldException, AbstractEntityException {
+    @SneakyThrows
+    public Project updateByIndex(final String userId, final Integer index, final String name, final String description) {
+        @NonNull final Connection connection = getConnection();
+        @NonNull final IProjectRepository repository = getRepository(connection);
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0 || index >= repository.getSize()) throw new IndexIncorrectException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
@@ -70,29 +108,62 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
         if (project == null) throw new ProjectNotFoundException();
         project.setName(name);
         project.setDescription(description);
-        return project;
+        try {
+            repository.update(project);
+            connection.commit();
+            return project;
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
     @NonNull
     @Override
-    public Project changeProjectStatusById(final String userId, final String id, @NonNull final Status status) throws AbstractFieldException, AbstractEntityException, AbstractUserException {
+    @SneakyThrows
+    public Project changeProjectStatusById(final String userId, final String id, @NonNull final Status status) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new ProjectIdEmptyException();
         final Project project = findOneById(userId, id);
         if (project == null) throw new ProjectNotFoundException();
         project.setStatus(status);
-        return project;
+        @NonNull final Connection connection = getConnection();
+        try {
+            @NonNull final IProjectRepository repository = getRepository(connection);
+            repository.update(project);
+            connection.commit();
+            return project;
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
     @NonNull
     @Override
-    public Project changeProjectStatusByIndex(final String userId, final Integer index, @NonNull final Status status) throws AbstractFieldException, AbstractEntityException {
+    @SneakyThrows
+    public Project changeProjectStatusByIndex(final String userId, final Integer index, @NonNull final Status status) {
+        @NonNull final Connection connection = getConnection();
+        @NonNull final IProjectRepository repository = getRepository(connection);
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null || index < 0 || index >= repository.getSize()) throw new IndexIncorrectException();
         final Project project = findOneByIndex(userId, index);
         if (project == null) throw new ProjectNotFoundException();
         project.setStatus(status);
-        return project;
+        try {
+            repository.update(project);
+            connection.commit();
+            return project;
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
 }

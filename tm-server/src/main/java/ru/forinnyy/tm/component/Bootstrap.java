@@ -44,12 +44,6 @@ public final class Bootstrap implements IServiceLocator {
     @NonNull
     private final IPropertyService propertyService = new PropertyService();
 
-    @NonNull
-    private final ITaskRepository taskRepository = new TaskRepository();
-
-    @NonNull
-    private final IProjectRepository projectRepository = new ProjectRepository();
-
     @Getter
     @NonNull
     private final IConnectionService connectionService = new ConnectionService(propertyService);
@@ -60,14 +54,11 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NonNull
-    private final IProjectTaskService projectTaskService = new ProjectTaskService(projectRepository, taskRepository);
+    private final IProjectTaskService projectTaskService = new ProjectTaskService(connectionService);
 
     @Getter
     @NonNull
     private final ITaskService taskService = new TaskService(connectionService);
-
-    @NonNull
-    private final IUserRepository userRepository = new UserRepository(connectionService);
 
     @NonNull
     private final ISessionRepository sessionRepository = new SessionRepository();

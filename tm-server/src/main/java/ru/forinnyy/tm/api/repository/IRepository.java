@@ -59,8 +59,7 @@ public interface IRepository<M extends AbstractModel> {
 
     int getSize();
 
-    @NonNull
-    M remove(@NonNull M model) throws AbstractEntityException;
+    M remove(M model) throws AbstractEntityException;
 
     M removeById(String id) throws AbstractFieldException, AbstractEntityException;
 

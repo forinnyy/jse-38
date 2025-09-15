@@ -5,6 +5,7 @@ import lombok.SneakyThrows;
 import ru.forinnyy.tm.api.DBConstraints;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.enumerated.Status;
+import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Task;
 
 import java.sql.Connection;
@@ -69,12 +70,32 @@ public final class TaskRepository extends AbstractUserOwnedRepository<Task>
         return task;
     }
 
+    @Override
+    @SneakyThrows
+    public void update(@NonNull final Task task) {
+        @NonNull final String sql = String.format(
+                "UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE %s = ?",
+                getTableName(),
+                DBConstraints.COLUMN_NAME,
+                DBConstraints.COLUMN_DESCRIPTION,
+                DBConstraints.COLUMN_STATUS,
+                DBConstraints.COLUMN_ID
+        );
+        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, task.getName());
+            statement.setString(2, task.getDescription());
+            statement.setString(3, task.getStatus().toString());
+            statement.setString(4, task.getId());
+            statement.executeUpdate();
+        }
+    }
+
     @NonNull
     @Override
     @SneakyThrows
     public Task add(@NonNull final String userId, @NonNull final Task task) {
         task.setUserId(userId);
-        return task;
+        return add(task);
     }
 
     @NonNull

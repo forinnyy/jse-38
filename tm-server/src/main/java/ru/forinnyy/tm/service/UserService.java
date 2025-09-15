@@ -92,13 +92,13 @@ public final class UserService extends AbstractService<User, IUserRepository>
             @NonNull final IUserRepository repository = getRepository(connection);
             user = repository.add(user);
             connection.commit();
+            return user;
         } catch (@NonNull final Exception e) {
             connection.rollback();
             throw e;
         } finally {
             connection.close();
         }
-        return user;
     }
 
     @NonNull
@@ -116,13 +116,13 @@ public final class UserService extends AbstractService<User, IUserRepository>
             @NonNull final IUserRepository repository = getRepository(connection);
             user = repository.add(user);
             connection.commit();
+            return user;
         } catch (@NonNull final Exception e) {
             connection.rollback();
             throw e;
         } finally {
             connection.close();
         }
-        return user;
     }
 
     @NonNull
@@ -170,7 +170,6 @@ public final class UserService extends AbstractService<User, IUserRepository>
     public User remove(@NonNull final User model) {
         @NonNull final User user = super.remove(model);
         @NonNull final String userId = user.getId();
-
         @NonNull final Connection connection = getConnection();
         try {
             @NonNull final ITaskRepository taskRepository = getTaskRepository(connection);
@@ -178,13 +177,13 @@ public final class UserService extends AbstractService<User, IUserRepository>
             taskRepository.removeAll(userId);
             projectRepository.removeAll(userId);
             connection.commit();
+            return user;
         } catch (@NonNull final Exception e) {
             connection.rollback();
             throw e;
         } finally {
             connection.close();
         }
-        return user;
     }
 
     @NonNull
