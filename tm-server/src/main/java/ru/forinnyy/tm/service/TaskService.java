@@ -38,17 +38,10 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     public List<Task> findAllByProjectId(final String userId, String projectId) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (projectId == null || projectId.isEmpty()) return Collections.emptyList();
-        @NonNull final Connection connection = getConnection();
-        try {
+
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final ITaskRepository repository = getRepository(connection);
-            @NonNull final List<Task> tasks = repository.findAllByProjectId(userId, projectId);
-            connection.commit();
-            return tasks;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
+            return repository.findAllByProjectId(userId, projectId);
         }
     }
 
@@ -59,37 +52,27 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
-        @NonNull final Connection connection = getConnection();
-        try {
+
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final ITaskRepository repository = getRepository(connection);
             @NonNull final Task task = repository.create(userId, name, description);
             connection.commit();
             return task;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
     @NonNull
     @Override
     @SneakyThrows
-    public Task create(final String userId, final String name) throws AbstractFieldException {
+    public Task create(final String userId, final String name) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
-        @NonNull final Connection connection = getConnection();
-        try {
+
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final ITaskRepository repository = getRepository(connection);
             @NonNull final Task task = repository.create(userId, name);
             connection.commit();
             return task;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -101,22 +84,20 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
         if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
-        final Task task = findOneById(userId, id);
-        if (task == null) throw new TaskNotFoundException();
-        if (!task.getUserId().equals(userId)) throw new PermissionException();
-        task.setName(name);
-        task.setDescription(description);
-        @NonNull final Connection connection = getConnection();
-        try {
+
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final ITaskRepository repository = getRepository(connection);
+
+            final Task task = repository.findOneById(userId, id);
+            if (task == null) throw new TaskNotFoundException();
+            if (!task.getUserId().equals(userId)) throw new PermissionException();
+
+            task.setName(name);
+            task.setDescription(description);
             repository.update(task);
+
             connection.commit();
             return task;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -124,26 +105,27 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     @Override
     @SneakyThrows
     public Task updateByIndex(final String userId, final Integer index, final String name, final String description) {
-        @NonNull final Connection connection = getConnection();
-        @NonNull final ITaskRepository repository = getRepository(connection);
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        if (index == null || index < 0 || index > repository.getSize()) throw new IndexIncorrectException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
-        final Task task = findOneByIndex(userId, index);
-        if (task == null) throw new TaskNotFoundException();
-        if (!task.getUserId().equals(userId)) throw new PermissionException();
-        task.setName(name);
-        task.setDescription(description);
-        try {
+
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final ITaskRepository repository = getRepository(connection);
+
+            if (index == null || index < 0 || index >= repository.getSize(userId)) {
+                throw new IndexIncorrectException();
+            }
+
+            final Task task = repository.findOneByIndex(userId, index);
+            if (task == null) throw new TaskNotFoundException();
+            if (!task.getUserId().equals(userId)) throw new PermissionException();
+
+            task.setName(name);
+            task.setDescription(description);
             repository.update(task);
+
             connection.commit();
             return task;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -153,21 +135,19 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     public Task changeTaskStatusById(final String userId, final String id, @NonNull final Status status) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new TaskIdEmptyException();
-        final Task task = findOneById(userId, id);
-        if (task == null) throw new TaskNotFoundException();
-        if (!task.getUserId().equals(userId)) throw new PermissionException();
-        task.setStatus(status);
-        @NonNull final Connection connection = getConnection();
-        try {
+
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final ITaskRepository repository = getRepository(connection);
+
+            final Task task = repository.findOneById(userId, id);
+            if (task == null) throw new TaskNotFoundException();
+            if (!task.getUserId().equals(userId)) throw new PermissionException();
+
+            task.setStatus(status);
             repository.update(task);
+
             connection.commit();
             return task;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -175,23 +155,24 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     @Override
     @SneakyThrows
     public Task changeTaskStatusByIndex(final String userId, final Integer index, @NonNull final Status status) {
-        @NonNull final Connection connection = getConnection();
-        @NonNull final ITaskRepository repository = getRepository(connection);
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        if (index == null || index < 0 || index >= repository.getSize()) throw new IndexIncorrectException();
-        final Task task = findOneByIndex(userId, index);
-        if (task == null) throw new TaskNotFoundException();
-        if (!task.getUserId().equals(userId)) throw new PermissionException();
-        task.setStatus(status);
-        try {
+
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final ITaskRepository repository = getRepository(connection);
+
+            if (index == null || index < 0 || index >= repository.getSize(userId)) {
+                throw new IndexIncorrectException();
+            }
+
+            final Task task = repository.findOneByIndex(userId, index);
+            if (task == null) throw new TaskNotFoundException();
+            if (!task.getUserId().equals(userId)) throw new PermissionException();
+
+            task.setStatus(status);
             repository.update(task);
+
             connection.commit();
             return task;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 

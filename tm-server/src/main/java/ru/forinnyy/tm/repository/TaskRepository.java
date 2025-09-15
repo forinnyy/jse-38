@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,7 +65,7 @@ public final class TaskRepository extends AbstractUserOwnedRepository<Task>
             statement.setString(4, task.getDescription());
             statement.setString(5, task.getUserId());
             statement.setString(6, task.getStatus().toString());
-            statement.setString(5, task.getProjectId());
+            statement.setString(7, task.getProjectId());
             statement.executeUpdate();
         }
         return task;
@@ -74,18 +75,22 @@ public final class TaskRepository extends AbstractUserOwnedRepository<Task>
     @SneakyThrows
     public void update(@NonNull final Task task) {
         @NonNull final String sql = String.format(
-                "UPDATE %s SET %s = ?, %s = ?, %s = ? WHERE %s = ?",
+                "UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ? AND %s = ?",
                 getTableName(),
                 DBConstraints.COLUMN_NAME,
                 DBConstraints.COLUMN_DESCRIPTION,
                 DBConstraints.COLUMN_STATUS,
-                DBConstraints.COLUMN_ID
+                DBConstraints.COLUMN_PROJECT_ID,
+                DBConstraints.COLUMN_ID,
+                DBConstraints.COLUMN_USER_ID
         );
         try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, task.getName());
             statement.setString(2, task.getDescription());
             statement.setString(3, task.getStatus().toString());
-            statement.setString(4, task.getId());
+            statement.setString(4, task.getProjectId());
+            statement.setString(5, task.getId());
+            statement.setString(6, task.getUserId());
             statement.executeUpdate();
         }
     }
@@ -100,11 +105,45 @@ public final class TaskRepository extends AbstractUserOwnedRepository<Task>
 
     @NonNull
     @Override
+    @SneakyThrows
     public List<Task> findAllByProjectId(@NonNull final String userId, @NonNull final String projectId) {
-        return findAll().stream()
-                .filter(m -> userId.equals(m.getUserId()))
-                .filter(m -> projectId.equals(m.getProjectId()))
-                .collect(Collectors.toList());
+        @NonNull final String sql = String.format(
+                "SELECT * FROM %s WHERE %s = ? AND %s = ?",
+                getTableName(),
+                DBConstraints.COLUMN_USER_ID,
+                DBConstraints.COLUMN_PROJECT_ID
+        );
+
+        @NonNull final List<Task> tasks = new ArrayList<>();
+        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, userId);
+            statement.setString(2, projectId);
+
+            try (@NonNull final ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    @NonNull final Task task = fetch(resultSet);
+                    tasks.add(task);
+                }
+            }
+        }
+        return tasks;
+    }
+
+    @Override
+    @SneakyThrows
+    public void removeAllByProjectId(@NonNull final String userId, @NonNull final String projectId) {
+        @NonNull final String sql = String.format(
+                "DELETE FROM %s WHERE %s = ? AND %s = ?",
+                getTableName(),
+                DBConstraints.COLUMN_USER_ID,
+                DBConstraints.COLUMN_PROJECT_ID
+        );
+
+        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, userId);
+            statement.setString(2, projectId);
+            statement.executeUpdate();
+        }
     }
 
     @NonNull

@@ -10,6 +10,7 @@ import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
 import ru.forinnyy.tm.exception.field.*;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
+import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.repository.ProjectRepository;
 
@@ -33,17 +34,12 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
     public Project create(final String userId, final String name) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
-        @NonNull final Connection connection = getConnection();
-        try {
+
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final IProjectRepository repository = getRepository(connection);
             @NonNull final Project project = repository.create(userId, name);
             connection.commit();
             return project;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -54,17 +50,12 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
-        @NonNull final Connection connection = getConnection();
-        try {
+
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final IProjectRepository repository = getRepository(connection);
             @NonNull final Project project = repository.create(userId, name, description);
             connection.commit();
             return project;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -76,21 +67,20 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
         if (id == null || id.isEmpty()) throw new ProjectIdEmptyException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
-        final Project project = findOneById(userId, id);
-        if (project == null) throw new ProjectNotFoundException();
-        project.setName(name);
-        project.setDescription(description);
-        @NonNull final Connection connection = getConnection();
-        try {
+
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final IProjectRepository repository = getRepository(connection);
+
+            final Project project = repository.findOneById(userId, id);
+            if (project == null) throw new ProjectNotFoundException();
+            if (!project.getUserId().equals(userId)) throw new PermissionException();
+
+            project.setName(name);
+            project.setDescription(description);
             repository.update(project);
+
             connection.commit();
             return project;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -98,25 +88,27 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
     @Override
     @SneakyThrows
     public Project updateByIndex(final String userId, final Integer index, final String name, final String description) {
-        @NonNull final Connection connection = getConnection();
-        @NonNull final IProjectRepository repository = getRepository(connection);
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        if (index == null || index < 0 || index >= repository.getSize()) throw new IndexIncorrectException();
         if (name == null || name.isEmpty()) throw new NameEmptyException();
         if (description == null || description.isEmpty()) throw new DescriptionEmptyException();
-        final Project project = findOneByIndex(userId, index);
-        if (project == null) throw new ProjectNotFoundException();
-        project.setName(name);
-        project.setDescription(description);
-        try {
+
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final IProjectRepository repository = getRepository(connection);
+
+            if (index == null || index < 0 || index >= repository.getSize(userId)) {
+                throw new IndexIncorrectException();
+            }
+
+            final Project project = repository.findOneByIndex(userId, index);
+            if (project == null) throw new ProjectNotFoundException();
+            if (!project.getUserId().equals(userId)) throw new PermissionException();
+
+            project.setName(name);
+            project.setDescription(description);
             repository.update(project);
+
             connection.commit();
             return project;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -126,20 +118,19 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
     public Project changeProjectStatusById(final String userId, final String id, @NonNull final Status status) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new ProjectIdEmptyException();
-        final Project project = findOneById(userId, id);
-        if (project == null) throw new ProjectNotFoundException();
-        project.setStatus(status);
-        @NonNull final Connection connection = getConnection();
-        try {
+
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final IProjectRepository repository = getRepository(connection);
+
+            final Project project = repository.findOneById(userId, id);
+            if (project == null) throw new ProjectNotFoundException();
+            if (!project.getUserId().equals(userId)) throw new PermissionException();
+
+            project.setStatus(status);
             repository.update(project);
+
             connection.commit();
             return project;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -147,22 +138,24 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
     @Override
     @SneakyThrows
     public Project changeProjectStatusByIndex(final String userId, final Integer index, @NonNull final Status status) {
-        @NonNull final Connection connection = getConnection();
-        @NonNull final IProjectRepository repository = getRepository(connection);
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        if (index == null || index < 0 || index >= repository.getSize()) throw new IndexIncorrectException();
-        final Project project = findOneByIndex(userId, index);
-        if (project == null) throw new ProjectNotFoundException();
-        project.setStatus(status);
-        try {
+
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final IProjectRepository repository = getRepository(connection);
+
+            if (index == null || index < 0 || index >= repository.getSize(userId)) {
+                throw new IndexIncorrectException();
+            }
+
+            final Project project = repository.findOneByIndex(userId, index);
+            if (project == null) throw new ProjectNotFoundException();
+            if (!project.getUserId().equals(userId)) throw new PermissionException();
+
+            project.setStatus(status);
             repository.update(project);
+
             connection.commit();
             return project;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 

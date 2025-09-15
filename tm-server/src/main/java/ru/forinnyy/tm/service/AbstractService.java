@@ -42,17 +42,11 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     @Override
     @SneakyThrows
     public M add(@NonNull M model) throws AbstractEntityException {
-        @NonNull final Connection connection = getConnection();
-        try {
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             model = repository.add(model);
             connection.commit();
             return model;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -60,17 +54,11 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     @Override
     @SneakyThrows
     public Collection<M> add(@NonNull Collection<M> models) {
-        @NonNull final Connection connection = getConnection();
-        try {
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             models = repository.add(models);
             connection.commit();
             return models;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -78,33 +66,21 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     @Override
     @SneakyThrows
     public Collection<M> set(@NonNull Collection<M> models) {
-        @NonNull final Connection connection = getConnection();
-        try {
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             models = repository.set(models);
             connection.commit();
             return models;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
     @Override
     @SneakyThrows
     public void clear() {
-        @NonNull final Connection connection = getConnection();
-        try {
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             repository.clear();
             connection.commit();
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -185,17 +161,11 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     @SneakyThrows
     public M remove(M model) {
         if (model == null) throw new EntityNotFoundException();
-        @NonNull final Connection connection = getConnection();
-        try {
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             model = repository.remove(model);
             connection.commit();
             return model;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -203,36 +173,23 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     @SneakyThrows
     public M removeById(final String id) {
         if (id == null || id.isEmpty()) throw new IdEmptyException();
-        @NonNull final Connection connection = getConnection();
-        try {
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             M model = repository.removeById(id);
             connection.commit();
             return model;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
-
     }
 
     @Override
     @SneakyThrows
     public M removeByIndex(final Integer index) {
         if (index == null) throw new IndexIncorrectException();
-        @NonNull final Connection connection = getConnection();
-        try {
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             M model = repository.removeByIndex(index);
             connection.commit();
             return model;
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -240,16 +197,10 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     @SneakyThrows
     public void removeAll(final Collection<M> collection) {
         if (collection == null || collection.isEmpty()) return;
-        @NonNull final Connection connection = getConnection();
-        try {
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             repository.removeAll(collection);
             connection.commit();
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 

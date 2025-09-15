@@ -33,15 +33,9 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     public M add(final String userId, final M model) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (model == null) throw new EntityNotFoundException();
-        @NonNull final Connection connection = getConnection();
-        try {
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             return repository.add(userId, model);
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -49,15 +43,9 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     @SneakyThrows
     public void clear(final String userId) throws AbstractFieldException {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        @NonNull final Connection connection = getConnection();
-        try {
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             repository.clear(userId);
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -151,15 +139,9 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     public M remove(final String userId, final M model) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (model == null) return null;
-        @NonNull final Connection connection = getConnection();
-        try {
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             return repository.remove(userId, model);
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -168,15 +150,9 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     public M removeById(final String userId, final String id) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (id == null || id.isEmpty()) throw new IdEmptyException();
-        @NonNull final Connection connection = getConnection();
-        try {
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             return repository.removeById(userId, id);
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -185,15 +161,9 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     public M removeByIndex(final String userId, final Integer index) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (index == null) throw new IndexIncorrectException();
-        @NonNull final Connection connection = getConnection();
-        try {
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             return repository.removeByIndex(userId, index);
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 
@@ -201,15 +171,9 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     @SneakyThrows
     public void removeAll(final String userId) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        @NonNull final Connection connection = getConnection();
-        try {
+        try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
             repository.removeAll(userId);
-        } catch (@NonNull final Exception e) {
-            connection.rollback();
-            throw e;
-        } finally {
-            connection.close();
         }
     }
 

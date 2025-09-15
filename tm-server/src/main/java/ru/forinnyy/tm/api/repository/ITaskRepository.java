@@ -12,6 +12,8 @@ public interface ITaskRepository extends IUserOwnedRepository<Task> {
     @NonNull
     List<Task> findAllByProjectId(@NonNull String userId, @NonNull String projectId);
 
+    void removeAllByProjectId(@NonNull String userId, @NonNull String projectId);
+
     @NonNull
     Task create(@NonNull String userId, @NonNull String name) throws AbstractFieldException;
 
