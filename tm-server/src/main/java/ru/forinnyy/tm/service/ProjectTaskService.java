@@ -1,8 +1,10 @@
 package ru.forinnyy.tm.service;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
+import ru.forinnyy.tm.api.service.IConnectionService;
 import ru.forinnyy.tm.api.service.IProjectTaskService;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
@@ -15,29 +17,44 @@ import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Task;
+import ru.forinnyy.tm.repository.ProjectRepository;
+import ru.forinnyy.tm.repository.TaskRepository;
 
+import java.sql.Connection;
 import java.util.List;
 
 public final class ProjectTaskService implements IProjectTaskService {
 
     @NonNull
-    private final IProjectRepository projectRepository;
+    protected final IConnectionService connectionService;
+
+    public ProjectTaskService(@NonNull IConnectionService connectionService) {
+        this.connectionService = connectionService;
+    }
 
     @NonNull
-    private final ITaskRepository taskRepository;
+    public Connection getConnection() {
+        return connectionService.getConnection();
+    }
 
-    public ProjectTaskService(
-            @NonNull final IProjectRepository projectRepository,
-            @NonNull final ITaskRepository taskRepository
-    ) {
-        this.projectRepository = projectRepository;
-        this.taskRepository = taskRepository;
+    @NonNull
+    public ITaskRepository getTaskRepository(@NonNull final Connection connection) {
+        return new TaskRepository(connection);
+    }
+
+    @NonNull
+    public IProjectRepository getProjectRepository(@NonNull final Connection connection) {
+        return new ProjectRepository(connection);
     }
 
     @NonNull
     @Override
-    public Task bindTaskToProject(final String userId, final String projectId, final String taskId)
-            throws AbstractFieldException, AbstractEntityException, AbstractUserException {
+    @SneakyThrows
+    public Task bindTaskToProject(final String userId, final String projectId, final String taskId) {
+        @NonNull final Connection connection = getConnection();
+        @NonNull final IProjectRepository projectRepository = getProjectRepository(connection);
+        @NonNull final ITaskRepository taskRepository = getTaskRepository(connection);
+
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
@@ -48,13 +65,26 @@ public final class ProjectTaskService implements IProjectTaskService {
         if (!project.getUserId().equals(userId)) throw new PermissionException();
         if (!task.getUserId().equals(userId)) throw new PermissionException();
         task.setProjectId(projectId);
-        return task;
+        try {
+            taskRepository.update(task);
+            connection.commit();
+            return task;
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
     @NonNull
     @Override
-    public Task unbindTaskFromProject(final String userId, final String projectId, final String taskId)
-            throws AbstractFieldException, AbstractEntityException, AbstractUserException {
+    @SneakyThrows
+    public Task unbindTaskFromProject(final String userId, final String projectId, final String taskId) {
+        @NonNull final Connection connection = getConnection();
+        @NonNull final IProjectRepository projectRepository = getProjectRepository(connection);
+        @NonNull final ITaskRepository taskRepository = getTaskRepository(connection);
+
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
         if (taskId == null || taskId.isEmpty()) throw new TaskIdEmptyException();
@@ -63,20 +93,43 @@ public final class ProjectTaskService implements IProjectTaskService {
         if (task == null) throw new TaskNotFoundException();
         if (!task.getUserId().equals(userId)) throw new PermissionException();
         task.setProjectId(null);
-        return task;
+        try {
+            taskRepository.update(task);
+            connection.commit();
+            return task;
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
     @Override
-    public void removeProjectById(final String userId, final String projectId)
-            throws AbstractFieldException, AbstractEntityException, AbstractUserException {
+    @SneakyThrows
+    public void removeProjectById(final String userId, final String projectId) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
         if (projectId == null || projectId.isEmpty()) throw new ProjectIdEmptyException();
+
+        @NonNull final Connection connection = getConnection();
+        @NonNull final IProjectRepository projectRepository = getProjectRepository(connection);
+        @NonNull final ITaskRepository taskRepository = getTaskRepository(connection);
+
         if (!projectRepository.existsById(userId, projectId)) throw new ProjectNotFoundException();
-        final Project project = projectRepository.findOneById(userId, projectId);
+        @NonNull final Project project = projectRepository.findOneById(userId, projectId);
         if (!project.getUserId().equals(userId)) throw new PermissionException();
         @NonNull final List<Task> tasks = taskRepository.findAllByProjectId(userId, projectId);
-        for (@NonNull final Task task: tasks) taskRepository.removeById(userId, task.getId());
-        projectRepository.removeById(projectId);
+
+        try {
+            for (@NonNull final Task task: tasks) taskRepository.removeById(userId, task.getId());
+            projectRepository.removeById(projectId);
+            connection.commit();
+        } catch (@NonNull final Exception e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.close();
+        }
     }
 
 }

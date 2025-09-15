@@ -68,7 +68,7 @@ public final class Bootstrap implements IServiceLocator {
 
     @Getter
     @NonNull
-    private final IUserService userService = new UserService(propertyService, connectionService, projectRepository, taskRepository);
+    private final IUserService userService = new UserService(propertyService, connectionService);
 
     @NonNull
     private final ISystemEndpoint systemEndpoint = new SystemEndpoint(this);
