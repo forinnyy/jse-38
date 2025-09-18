@@ -124,16 +124,16 @@ public final class Bootstrap implements IServiceLocator {
         @NonNull final User user = userService.create("user", "user", "user@user.ru");
         @NonNull final User admin = userService.create("admin", "admin", Role.ADMIN);
 
-        projectService.add(user.getId(), new Project("USER PROJECT", Status.IN_PROGRESS));
-        projectService.add(admin.getId(), new Project("ADMIN PROJECT", Status.NOT_STARTED));
-
-        projectService.add(test.getId(), new Project("TEST PROJECT", Status.IN_PROGRESS));
-        projectService.add(test.getId(), new Project("DEMO PROJECT", Status.NOT_STARTED));
-        projectService.add(test.getId(), new Project("ALPHA PROJECT", Status.IN_PROGRESS));
-        projectService.add(test.getId(), new Project("BETA PROJECT", Status.COMPLETED));
-
-        taskService.add(test.getId(), new Task("MEGA TASK"));
-        taskService.add(test.getId(), new Task("BETA TASK"));
+//        projectService.add(user.getId(), new Project("USER PROJECT", Status.IN_PROGRESS));
+//        projectService.add(admin.getId(), new Project("ADMIN PROJECT", Status.NOT_STARTED));
+//
+//        projectService.add(test.getId(), new Project("TEST PROJECT", Status.IN_PROGRESS));
+//        projectService.add(test.getId(), new Project("DEMO PROJECT", Status.NOT_STARTED));
+//        projectService.add(test.getId(), new Project("ALPHA PROJECT", Status.IN_PROGRESS));
+//        projectService.add(test.getId(), new Project("BETA PROJECT", Status.COMPLETED));
+//
+//        taskService.add(test.getId(), new Task("MEGA TASK"));
+//        taskService.add(test.getId(), new Task("BETA TASK"));
     }
 
     @SneakyThrows

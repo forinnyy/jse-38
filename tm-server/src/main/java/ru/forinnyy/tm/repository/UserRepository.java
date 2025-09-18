@@ -35,7 +35,13 @@ public final class UserRepository extends AbstractRepository<User> implements IU
         user.setFirstName(row.getString(DBConstraints.COLUMN_FIRST_NAME));
         user.setLastName(row.getString(DBConstraints.COLUMN_LAST_NAME));
         user.setMiddleName(row.getString(DBConstraints.COLUMN_MIDDLE_NAME));
-        user.setRole(Role.valueOf(DBConstraints.COLUMN_ROLE));
+
+        final String roleStr = row.getString(DBConstraints.COLUMN_ROLE);
+        if (roleStr != null && !roleStr.isEmpty()) {
+            user.setRole(Role.valueOf(roleStr.toUpperCase(java.util.Locale.ROOT)));
+        } else {
+            user.setRole(Role.USUAL);
+        }
         return user;
     }
 
