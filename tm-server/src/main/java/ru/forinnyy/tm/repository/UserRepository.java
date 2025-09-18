@@ -75,7 +75,7 @@ public final class UserRepository extends AbstractRepository<User> implements IU
     @SneakyThrows
     public void update(@NonNull final User user) {
         @NonNull final String sql = String.format(
-                "UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?",
+                "UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",
                 getTableName(),
                 DBConstraints.COLUMN_LOGIN,
                 DBConstraints.COLUMN_PASSWORD,

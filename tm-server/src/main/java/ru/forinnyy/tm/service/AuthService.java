@@ -50,10 +50,14 @@ public final class AuthService implements IAuthService {
     public String login(final String login, final String password) {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
+
         final User user = userService.findByLogin(login);
+        if (user == null) throw new AccessDeniedException();
         if (user.isLocked()) throw new AccessDeniedException();
+
         final String hash = HashUtil.salt(propertyService, password);
         if (!hash.equals(user.getPasswordHash())) throw new javax.security.sasl.AuthenticationException();
+
         return getToken(user);
     }
 
@@ -77,8 +81,8 @@ public final class AuthService implements IAuthService {
     private Session createSession(@NonNull final User user) {
         @NonNull final Session session = new Session();
         session.setUserId(user.getId());
-        @NonNull final Role role = user.getRole();
-        session.setRole(role);
+        session.setRole(user.getRole() != null ? user.getRole() : Role.USUAL);
+        session.setDate(new Date());
         return sessionService.add(session);
     }
 
@@ -87,22 +91,25 @@ public final class AuthService implements IAuthService {
     @SneakyThrows
     public Session validateToken(final String token) {
         if (token == null) throw new AccessDeniedException();
+
         @NonNull final String sessionKey = propertyService.getSessionKey();
-        @NonNull String json;
+        @NonNull final String json;
         try {
             json = CryptUtil.decrypt(sessionKey, token);
         } catch (@NonNull final Exception e) {
             throw new AccessDeniedException();
         }
+
         @NonNull final ObjectMapper objectMapper = new ObjectMapper();
         @NonNull final Session session = objectMapper.readValue(json, Session.class);
 
         @NonNull final Date currentDate = new Date();
         @NonNull final Date sessionDate = session.getDate();
-        final long delta = (currentDate.getTime() - sessionDate.getTime()) / 1000;
+        final long deltaSeconds = (currentDate.getTime() - sessionDate.getTime()) / 1000;
 
-        @NonNull final int timeout = propertyService.getSessionTimeout();
-        if (delta > timeout) throw new AccessDeniedException();
+        final int timeout = propertyService.getSessionTimeout();
+        if (deltaSeconds > timeout) throw new AccessDeniedException();
+
         if (!sessionService.existsById(session.getId())) throw new AccessDeniedException();
 
         return session;
@@ -117,21 +124,26 @@ public final class AuthService implements IAuthService {
 
     @NonNull
     @Override
-    public User registry(@NonNull final String login, @NonNull final String password, @NonNull final String email) throws AbstractUserException, AbstractFieldException, AbstractEntityException {
+    @SneakyThrows
+    public User registry(@NonNull final String login, @NonNull final String password, @NonNull final String email) {
         return userService.create(login, password, email);
     }
 
     @Override
     @SneakyThrows
-    public User check(String login, String password) {
+    public User check(final String login, final String password) {
         if (login == null || login.isEmpty()) throw new LoginEmptyException();
         if (password == null || password.isEmpty()) throw new PasswordEmptyException();
+
         final User user = userService.findByLogin(login);
-        final boolean locked = user.isLocked();
-        if (locked) throw new PermissionException();
+        if (user == null) throw new PermissionException();
+
+        if (user.isLocked()) throw new PermissionException();
+
         final String hash = HashUtil.salt(propertyService, password);
         if (hash == null) throw new AuthenticationException();
         if (!hash.equals(user.getPasswordHash())) throw new PermissionException();
+
         return user;
     }
 

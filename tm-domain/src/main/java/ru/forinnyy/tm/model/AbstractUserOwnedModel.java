@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class AbstractUserOwnedModel extends AbstractModel{
+public abstract class AbstractUserOwnedModel extends AbstractModel {
 
     private String userId;
 

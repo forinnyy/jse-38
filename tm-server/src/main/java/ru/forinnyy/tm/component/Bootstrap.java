@@ -61,10 +61,7 @@ public final class Bootstrap implements IServiceLocator {
     private final ITaskService taskService = new TaskService(connectionService);
 
     @NonNull
-    private final ISessionRepository sessionRepository = new SessionRepository();
-
-    @NonNull
-    private final ISessionService sessionService = new SessionService(sessionRepository);
+    private final ISessionService sessionService = new SessionService(connectionService);
 
     @Getter
     @NonNull

@@ -115,7 +115,7 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
     public void clear() {
         @NonNull final String sql = String.format("DELETE FROM %s", getTableName());
         try (@NonNull final Statement statement = connection.createStatement()) {
-            statement.executeQuery(sql);
+            statement.executeUpdate(sql);
         }
     }
 
