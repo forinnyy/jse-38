@@ -53,7 +53,7 @@ public interface IRepository<M extends AbstractModel> {
 
     boolean existsById(String id);
 
-    M findOneById(@NonNull String id) throws AbstractFieldException;
+    M findOneById(String id) throws AbstractFieldException;
 
     M findOneByIndex(Integer index) throws AbstractFieldException;
 

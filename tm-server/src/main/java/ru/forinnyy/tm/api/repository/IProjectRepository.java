@@ -13,7 +13,6 @@ public interface IProjectRepository extends IUserOwnedRepository<Project> {
     @NonNull
     Project create(@NonNull String userId, @NonNull String name, @NonNull String description) throws AbstractFieldException;
 
-    @NonNull
     @SneakyThrows
     void initTable();
 

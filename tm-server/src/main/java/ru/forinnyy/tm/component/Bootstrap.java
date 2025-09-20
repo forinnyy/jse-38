@@ -138,18 +138,22 @@ public final class Bootstrap implements IServiceLocator {
         sessionService.initTable();
     }
 
-    @SneakyThrows
-    public void start() {
+    private void initEndpoints() {
         registry(authEndpoint);
         registry(systemEndpoint);
         registry(userEndpoint);
         registry(domainEndpoint);
         registry(projectEndpoint);
         registry(taskEndpoint);
+    }
 
+    @SneakyThrows
+    public void start() {
+        initEndpoints();
         initPID();
         initTables();
         initDemoData();
+        
         LOGGER_LIFECYCLE.info("** WELCOME TO TASK-MANAGER **");
         Runtime.getRuntime().addShutdownHook(new Thread(this::prepareShutdown));
         initBackup();
