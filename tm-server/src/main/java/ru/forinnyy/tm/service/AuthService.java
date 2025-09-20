@@ -53,7 +53,7 @@ public final class AuthService implements IAuthService {
         if (user.isLocked()) throw new AccessDeniedException();
 
         final String hash = HashUtil.salt(propertyService, password);
-        if (!hash.equals(user.getPasswordHash())) throw new javax.security.sasl.AuthenticationException();
+        if (!hash.equals(user.getPasswordHash())) throw new PermissionException();
 
         return getToken(user);
     }
