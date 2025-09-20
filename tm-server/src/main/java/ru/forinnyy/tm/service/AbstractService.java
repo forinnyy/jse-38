@@ -141,9 +141,11 @@ public abstract class AbstractService<M extends AbstractModel, R extends IReposi
     @Override
     @SneakyThrows
     public M findOneByIndex(final Integer index) {
-        if (index == null) throw new IndexIncorrectException();
+        if (index == null || index < 0) throw new IndexIncorrectException();
         try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
+            final int size = repository.getSize();
+            if (index > size) throw new IndexIncorrectException();
             return repository.findOneByIndex(index);
         }
     }

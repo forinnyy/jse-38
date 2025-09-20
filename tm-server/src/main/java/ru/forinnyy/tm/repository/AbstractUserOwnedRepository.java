@@ -7,6 +7,7 @@ import ru.forinnyy.tm.api.repository.IUserOwnedRepository;
 import ru.forinnyy.tm.enumerated.Sort;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
+import ru.forinnyy.tm.exception.field.IndexIncorrectException;
 import ru.forinnyy.tm.exception.field.UserIdEmptyException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
@@ -103,19 +104,25 @@ public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedMod
             return fetch(resultSet);
         }
     }
-    
+
     @Override
     @SneakyThrows
     public M findOneByIndex(@NonNull final String userId, @NonNull final Integer index) {
-        @NonNull final String sql = String.format("SELECT * FROM %s WHERE %s = ? LIMIT ?", getTableName(), USER_ID_COLUMN);
-        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, userId);
-            statement.setInt(2, index);
-            @NonNull final ResultSet resultSet = statement.executeQuery();
-            for (int i = 0; i < index - 1; i++) {
-                resultSet.next();
+        if (userId.isEmpty() || index == null || index < 0) return null;
+
+        final String orderBy = DBConstraints.COLUMN_CREATED;
+        final String sql = String.format(
+                "SELECT * FROM %s WHERE %s = ? ORDER BY %s LIMIT 1 OFFSET ?",
+                getTableName(), USER_ID_COLUMN, orderBy
+        );
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, userId);
+            ps.setInt(2, index);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) return null;
+                return fetch(rs);
             }
-            return fetch(resultSet);
         }
     }
 

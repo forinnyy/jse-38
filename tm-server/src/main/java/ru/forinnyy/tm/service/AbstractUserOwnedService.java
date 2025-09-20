@@ -109,9 +109,11 @@ public abstract class AbstractUserOwnedService<M extends AbstractUserOwnedModel,
     @SneakyThrows
     public M findOneByIndex(final String userId, final Integer index) {
         if (userId == null || userId.isEmpty()) throw new UserIdEmptyException();
-        if (index == null) throw new IndexIncorrectException();
+        if (index == null || index < 0) throw new IndexIncorrectException();
         try (@NonNull final Connection connection = getConnection()) {
             @NonNull final R repository = getRepository(connection);
+            final int size = repository.getSize(userId);
+            if (index > size) throw new IndexIncorrectException();
             return repository.findOneByIndex(userId, index);
         }
     }

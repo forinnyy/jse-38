@@ -7,6 +7,7 @@ import ru.forinnyy.tm.api.repository.IRepository;
 import ru.forinnyy.tm.comparator.CreatedComparator;
 import ru.forinnyy.tm.comparator.StatusComparator;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
+import ru.forinnyy.tm.exception.field.IndexIncorrectException;
 import ru.forinnyy.tm.model.AbstractModel;
 
 import java.sql.Connection;
@@ -97,18 +98,24 @@ public abstract class AbstractRepository<M extends AbstractModel> implements IRe
 
     @Override
     @SneakyThrows
-    public M findOneByIndex(Integer index) {
-        @NonNull final String sql = String.format("SELECT * FROM %s LIMIT ?", getTableName());
-        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setInt(1, index);
-            @NonNull final ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) return null;
-            for (int i = 0; i < index - 1; i++) {
-                resultSet.next();
+    public M findOneByIndex(final Integer index) {
+        if (index == null || index < 0) return null;
+
+        final String orderBy = DBConstraints.COLUMN_CREATED;
+        final String sql = String.format(
+                "SELECT * FROM %s ORDER BY %s LIMIT 1 OFFSET ?",
+                getTableName(), orderBy
+        );
+
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, index);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) return null;
+                return fetch(rs);
             }
-            return fetch(resultSet);
         }
     }
+
 
     @Override
     @SneakyThrows
