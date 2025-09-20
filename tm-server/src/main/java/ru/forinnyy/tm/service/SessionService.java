@@ -26,6 +26,16 @@ public final class SessionService extends AbstractUserOwnedService<Session, ISes
 
     @Override
     @SneakyThrows
+    public void initTable() {
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final ISessionRepository repository = getRepository(connection);
+            repository.initTable();
+            connection.commit();
+        }
+    }
+
+    @Override
+    @SneakyThrows
     public void removeExpiredSessions(@NonNull final Date currentDate) {
         try (@NonNull final Connection connection = getConnection()) {
             @NonNull final ISessionRepository repository = getRepository(connection);

@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.api.service;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -22,6 +23,9 @@ public interface ITaskService extends IUserOwnedService<Task> {
 
     @NonNull
     Task changeTaskStatusByIndex(String userId, Integer index, Status status) throws AbstractFieldException, AbstractEntityException, AbstractUserException;
+
+    @SneakyThrows
+    void initTable();
 
     @NonNull
     List<Task> findAllByProjectId(String userId, String projectId) throws AbstractFieldException;

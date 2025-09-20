@@ -7,10 +7,7 @@ import ru.forinnyy.tm.api.repository.ISessionRepository;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.model.Session;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.Date;
 
 public final class SessionRepository extends AbstractUserOwnedRepository<Session> implements ISessionRepository {
@@ -23,6 +20,32 @@ public final class SessionRepository extends AbstractUserOwnedRepository<Session
     protected String getTableName() {
         return DBConstraints.TABLE_SESSION;
     }
+
+    @Override
+    @SneakyThrows
+    public void initTable() {
+        @NonNull final String sql = String.format(
+                "CREATE TABLE IF NOT EXISTS %s (" +
+                        "%s VARCHAR(36) PRIMARY KEY, " +
+                        "%s VARCHAR(36) NOT NULL, " +
+                        "%s TIMESTAMP NOT NULL, " +
+                        "%s VARCHAR(32), " +
+                        "FOREIGN KEY (%s) REFERENCES %s(%s) ON DELETE CASCADE" +
+                        ")",
+                getTableName(),
+                DBConstraints.COLUMN_ID,
+                DBConstraints.COLUMN_USER_ID,
+                DBConstraints.COLUMN_DATE,
+                DBConstraints.COLUMN_ROLE,
+                DBConstraints.COLUMN_USER_ID,
+                DBConstraints.TABLE_USER,
+                DBConstraints.COLUMN_ID
+        );
+        try (@NonNull final Statement statement = connection.createStatement()) {
+            statement.executeUpdate(sql);
+        }
+    }
+
 
     @NonNull
     @Override

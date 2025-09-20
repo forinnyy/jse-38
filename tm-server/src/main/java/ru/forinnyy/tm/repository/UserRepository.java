@@ -10,6 +10,7 @@ import ru.forinnyy.tm.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 public final class UserRepository extends AbstractRepository<User> implements IUserRepository {
 
@@ -21,6 +22,38 @@ public final class UserRepository extends AbstractRepository<User> implements IU
     protected String getTableName() {
         return DBConstraints.TABLE_USER;
     }
+
+    @Override
+    @SneakyThrows
+    public void initTable() {
+        @NonNull final String sql = String.format(
+                "CREATE TABLE IF NOT EXISTS %s (" +
+                        "%s VARCHAR(36) PRIMARY KEY, " +
+                        "%s VARCHAR(255) NOT NULL UNIQUE, " +
+                        "%s VARCHAR(255) NOT NULL, " +
+                        "%s VARCHAR(255) UNIQUE, " +
+                        "%s BOOLEAN NOT NULL DEFAULT FALSE, " +
+                        "%s VARCHAR(255), " +
+                        "%s VARCHAR(255), " +
+                        "%s VARCHAR(255), " +
+                        "%s VARCHAR(50) NOT NULL DEFAULT 'USUAL'" +
+                        ")",
+                getTableName(),
+                DBConstraints.COLUMN_ID,
+                DBConstraints.COLUMN_LOGIN,
+                DBConstraints.COLUMN_PASSWORD,
+                DBConstraints.COLUMN_EMAIL,
+                DBConstraints.COLUMN_LOCKED,
+                DBConstraints.COLUMN_FIRST_NAME,
+                DBConstraints.COLUMN_LAST_NAME,
+                DBConstraints.COLUMN_MIDDLE_NAME,
+                DBConstraints.COLUMN_ROLE
+        );
+        try (@NonNull final Statement statement = connection.createStatement()) {
+            statement.executeUpdate(sql);
+        }
+    }
+
 
     @NonNull
     @Override

@@ -2,18 +2,14 @@ package ru.forinnyy.tm.service;
 
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.api.service.IConnectionService;
 import ru.forinnyy.tm.api.service.ITaskService;
 import ru.forinnyy.tm.enumerated.Status;
-import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.TaskNotFoundException;
 import ru.forinnyy.tm.exception.field.*;
-import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.Task;
-import ru.forinnyy.tm.repository.ProjectRepository;
 import ru.forinnyy.tm.repository.TaskRepository;
 
 import java.sql.Connection;
@@ -31,6 +27,17 @@ public final class TaskService extends AbstractUserOwnedService<Task, ITaskRepos
     public ITaskRepository getRepository(@NonNull final Connection connection) {
         return new TaskRepository(connection);
     }
+
+    @Override
+    @SneakyThrows
+    public void initTable() {
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final ITaskRepository repository = getRepository(connection);
+            repository.initTable();
+            connection.commit();
+        }
+    }
+
 
     @NonNull
     @Override

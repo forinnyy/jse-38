@@ -53,6 +53,16 @@ public final class UserService extends AbstractService<User, IUserRepository>
         return new ProjectRepository(connection);
     }
 
+    @Override
+    @SneakyThrows
+    public void initTable() {
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final IUserRepository repository = getRepository(connection);
+            repository.initTable();
+            connection.commit();
+        }
+    }
+
     @NonNull
     @Override
     @SneakyThrows

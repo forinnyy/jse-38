@@ -6,10 +6,8 @@ import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.api.service.IConnectionService;
 import ru.forinnyy.tm.api.service.IProjectService;
 import ru.forinnyy.tm.enumerated.Status;
-import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
 import ru.forinnyy.tm.exception.field.*;
-import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.repository.ProjectRepository;
@@ -27,6 +25,17 @@ public final class ProjectService extends AbstractUserOwnedService<Project, IPro
     public IProjectRepository getRepository(@NonNull final Connection connection) {
         return new ProjectRepository(connection);
     }
+
+    @Override
+    @SneakyThrows
+    public void initTable() {
+        try (@NonNull final Connection connection = getConnection()) {
+            @NonNull final IProjectRepository repository = getRepository(connection);
+            repository.initTable();
+            connection.commit();
+        }
+    }
+
 
     @NonNull
     @Override

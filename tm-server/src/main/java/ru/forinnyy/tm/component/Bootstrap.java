@@ -120,9 +120,16 @@ public final class Bootstrap implements IServiceLocator {
     }
 
     private void initDemoData() throws AbstractFieldException, AbstractUserException, AbstractEntityException {
-        @NonNull final User test = userService.create("test", "test", "test@test.ru");
-        @NonNull final User user = userService.create("user", "user", "user@user.ru");
-        @NonNull final User admin = userService.create("admin", "admin", Role.ADMIN);
+
+        if (!userService.listProfiles().contains("admin")) {
+            userService.create("admin", "admin", Role.ADMIN);
+        }
+        if (!userService.listProfiles().contains("user")) {
+            userService.create("user", "user", "user@user.ru");
+        }
+        if (!userService.listProfiles().contains("test")) {
+            userService.create("test", "test", "test@test.ru");
+        }
 
 //        projectService.add(user.getId(), new Project("USER PROJECT", Status.IN_PROGRESS));
 //        projectService.add(admin.getId(), new Project("ADMIN PROJECT", Status.NOT_STARTED));
@@ -136,6 +143,13 @@ public final class Bootstrap implements IServiceLocator {
 //        taskService.add(test.getId(), new Task("BETA TASK"));
     }
 
+    private void initTables() {
+        userService.initTable();
+        projectService.initTable();
+        taskService.initTable();
+        sessionService.initTable();
+    }
+
     @SneakyThrows
     public void start() {
         registry(authEndpoint);
@@ -146,6 +160,7 @@ public final class Bootstrap implements IServiceLocator {
         registry(taskEndpoint);
 
         initPID();
+        initTables();
         initDemoData();
         LOGGER_LIFECYCLE.info("** WELCOME TO TASK-MANAGER **");
         Runtime.getRuntime().addShutdownHook(new Thread(this::prepareShutdown));

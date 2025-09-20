@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.api.service;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -9,6 +10,9 @@ import ru.forinnyy.tm.model.Project;
 
 
 public interface IProjectService extends IUserOwnedService<Project> {
+
+    @SneakyThrows
+    void initTable();
 
     @NonNull
     Project create(String userId, String name) throws AbstractFieldException;

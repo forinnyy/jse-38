@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.api.service;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
@@ -10,6 +11,9 @@ import ru.forinnyy.tm.model.User;
 import java.util.List;
 
 public interface IUserService extends IService<User> {
+
+    @SneakyThrows
+    void initTable();
 
     @NonNull
     User create(String login, String password) throws AbstractUserException, AbstractFieldException, AbstractEntityException;

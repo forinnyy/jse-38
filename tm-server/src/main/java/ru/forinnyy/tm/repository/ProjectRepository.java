@@ -6,12 +6,8 @@ import ru.forinnyy.tm.api.DBConstraints;
 import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.enumerated.Status;
 import ru.forinnyy.tm.model.Project;
-import ru.forinnyy.tm.model.Task;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.sql.*;
 
 
 public final class ProjectRepository extends AbstractUserOwnedRepository<Project>
@@ -25,6 +21,36 @@ public final class ProjectRepository extends AbstractUserOwnedRepository<Project
     protected String getTableName() {
         return DBConstraints.TABLE_PROJECT;
     }
+
+    @Override
+    @SneakyThrows
+    public void initTable() {
+        @NonNull final String sql = String.format(
+                "CREATE TABLE IF NOT EXISTS %s (" +
+                        "%s VARCHAR(36) PRIMARY KEY, " +
+                        "%s VARCHAR(255) NOT NULL, " +
+                        "%s TIMESTAMP NOT NULL, " +
+                        "%s TEXT, " +
+                        "%s VARCHAR(36) NOT NULL, " +
+                        "%s VARCHAR(32) NOT NULL, " +
+                        "FOREIGN KEY (%s) REFERENCES %s(%s) ON DELETE CASCADE" +
+                        ")",
+                getTableName(),
+                DBConstraints.COLUMN_ID,
+                DBConstraints.COLUMN_NAME,
+                DBConstraints.COLUMN_CREATED,
+                DBConstraints.COLUMN_DESCRIPTION,
+                DBConstraints.COLUMN_USER_ID,
+                DBConstraints.COLUMN_STATUS,
+                DBConstraints.COLUMN_USER_ID,
+                DBConstraints.TABLE_USER,
+                DBConstraints.COLUMN_ID
+        );
+        try (@NonNull final Statement statement = connection.createStatement()) {
+            statement.executeUpdate(sql);
+        }
+    }
+
 
     @NonNull
     @Override

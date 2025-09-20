@@ -1,6 +1,7 @@
 package ru.forinnyy.tm.api.repository;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import ru.forinnyy.tm.exception.field.LoginEmptyException;
 import ru.forinnyy.tm.exception.user.ExistsEmailException;
 import ru.forinnyy.tm.model.User;
@@ -16,6 +17,9 @@ public interface IUserRepository extends IRepository<User> {
 
     @NonNull
     Boolean isEmailExist(@NonNull String email);
+
+    @SneakyThrows
+    void initTable();
 
     void update(@NonNull final User user);
 

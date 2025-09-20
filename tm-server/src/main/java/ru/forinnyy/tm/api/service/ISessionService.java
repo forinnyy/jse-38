@@ -8,6 +8,9 @@ import java.util.Date;
 
 public interface ISessionService extends IUserOwnedService<Session> {
     @SneakyThrows
+    void initTable();
+
+    @SneakyThrows
     void removeExpiredSessions(@NonNull Date currentDate);
 
     @SneakyThrows
