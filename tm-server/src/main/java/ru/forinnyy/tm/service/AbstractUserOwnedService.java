@@ -6,13 +6,11 @@ import ru.forinnyy.tm.api.repository.IUserOwnedRepository;
 import ru.forinnyy.tm.api.service.IConnectionService;
 import ru.forinnyy.tm.api.service.IUserOwnedService;
 import ru.forinnyy.tm.enumerated.Sort;
-import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.EntityNotFoundException;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.IdEmptyException;
 import ru.forinnyy.tm.exception.field.IndexIncorrectException;
 import ru.forinnyy.tm.exception.field.UserIdEmptyException;
-import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
 
 import java.sql.Connection;

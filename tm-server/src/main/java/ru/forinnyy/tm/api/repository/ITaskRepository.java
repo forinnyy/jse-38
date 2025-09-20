@@ -3,7 +3,6 @@ package ru.forinnyy.tm.api.repository;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
-import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Task;
 
 import java.util.List;

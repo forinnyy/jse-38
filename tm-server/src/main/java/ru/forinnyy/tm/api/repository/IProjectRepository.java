@@ -4,7 +4,6 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.model.Project;
-import ru.forinnyy.tm.model.User;
 
 public interface IProjectRepository extends IUserOwnedRepository<Project> {
 

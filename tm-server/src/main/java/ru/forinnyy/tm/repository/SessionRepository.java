@@ -8,7 +8,6 @@ import ru.forinnyy.tm.enumerated.Role;
 import ru.forinnyy.tm.model.Session;
 
 import java.sql.*;
-import java.util.Date;
 
 public final class SessionRepository extends AbstractUserOwnedRepository<Session> implements ISessionRepository {
 
@@ -97,50 +96,6 @@ public final class SessionRepository extends AbstractUserOwnedRepository<Session
     public Session add(@NonNull final String userId, @NonNull final Session session) {
         session.setUserId(userId);
         return add(session);
-    }
-
-    @Override
-    @SneakyThrows
-    public Session findOneById(@NonNull final String id) {
-        @NonNull final String sql = String.format(
-                "SELECT * FROM %s WHERE %s = ? LIMIT 1",
-                getTableName(),
-                DBConstraints.COLUMN_ID
-        );
-        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, id);
-            @NonNull final ResultSet resultSet = statement.executeQuery();
-            if (!resultSet.next()) return null;
-            return fetch(resultSet);
-        }
-    }
-
-    @Override
-    @SneakyThrows
-    public void removeExpiredSessions(@NonNull final Date currentDate) {
-        @NonNull final String sql = String.format(
-                "DELETE FROM %s WHERE %s < ?",
-                getTableName(),
-                DBConstraints.COLUMN_DATE
-        );
-        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setTimestamp(1, new Timestamp(currentDate.getTime()));
-            statement.executeUpdate();
-        }
-    }
-
-    @Override
-    @SneakyThrows
-    public void removeAllByUserId(@NonNull final String userId) {
-        @NonNull final String sql = String.format(
-                "DELETE FROM %s WHERE %s = ?",
-                getTableName(),
-                DBConstraints.COLUMN_USER_ID
-        );
-        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, userId);
-            statement.executeUpdate();
-        }
     }
 
 }

@@ -3,18 +3,13 @@ package ru.forinnyy.tm.service;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import ru.forinnyy.tm.api.repository.IRepository;
-import ru.forinnyy.tm.api.repository.IUserRepository;
 import ru.forinnyy.tm.api.service.IConnectionService;
 import ru.forinnyy.tm.api.service.IService;
 import ru.forinnyy.tm.enumerated.Sort;
-import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.EntityNotFoundException;
-import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.IdEmptyException;
 import ru.forinnyy.tm.exception.field.IndexIncorrectException;
 import ru.forinnyy.tm.model.AbstractModel;
-import ru.forinnyy.tm.repository.AbstractRepository;
-import ru.forinnyy.tm.repository.UserRepository;
 
 import java.sql.Connection;
 import java.util.Collection;

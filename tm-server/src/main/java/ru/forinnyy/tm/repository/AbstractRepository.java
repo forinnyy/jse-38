@@ -7,14 +7,16 @@ import ru.forinnyy.tm.api.repository.IRepository;
 import ru.forinnyy.tm.comparator.CreatedComparator;
 import ru.forinnyy.tm.comparator.StatusComparator;
 import ru.forinnyy.tm.exception.entity.AbstractEntityException;
-import ru.forinnyy.tm.exception.field.IndexIncorrectException;
 import ru.forinnyy.tm.model.AbstractModel;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 
 public abstract class AbstractRepository<M extends AbstractModel> implements IRepository<M> {
 

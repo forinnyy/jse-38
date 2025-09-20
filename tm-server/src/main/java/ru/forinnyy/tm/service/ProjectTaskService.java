@@ -6,14 +6,11 @@ import ru.forinnyy.tm.api.repository.IProjectRepository;
 import ru.forinnyy.tm.api.repository.ITaskRepository;
 import ru.forinnyy.tm.api.service.IConnectionService;
 import ru.forinnyy.tm.api.service.IProjectTaskService;
-import ru.forinnyy.tm.exception.entity.AbstractEntityException;
 import ru.forinnyy.tm.exception.entity.ProjectNotFoundException;
 import ru.forinnyy.tm.exception.entity.TaskNotFoundException;
-import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.ProjectIdEmptyException;
 import ru.forinnyy.tm.exception.field.TaskIdEmptyException;
 import ru.forinnyy.tm.exception.field.UserIdEmptyException;
-import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.exception.user.PermissionException;
 import ru.forinnyy.tm.model.Project;
 import ru.forinnyy.tm.model.Task;
@@ -21,7 +18,6 @@ import ru.forinnyy.tm.repository.ProjectRepository;
 import ru.forinnyy.tm.repository.TaskRepository;
 
 import java.sql.Connection;
-import java.util.List;
 
 public final class ProjectTaskService implements IProjectTaskService {
 

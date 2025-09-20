@@ -7,7 +7,6 @@ import ru.forinnyy.tm.exception.field.AbstractFieldException;
 import ru.forinnyy.tm.exception.field.UserIdEmptyException;
 import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
-import ru.forinnyy.tm.model.User;
 
 import java.util.Comparator;
 import java.util.List;

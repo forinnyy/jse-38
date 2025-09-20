@@ -5,11 +5,6 @@ import lombok.SneakyThrows;
 import ru.forinnyy.tm.api.DBConstraints;
 import ru.forinnyy.tm.api.repository.IUserOwnedRepository;
 import ru.forinnyy.tm.enumerated.Sort;
-import ru.forinnyy.tm.exception.entity.AbstractEntityException;
-import ru.forinnyy.tm.exception.field.AbstractFieldException;
-import ru.forinnyy.tm.exception.field.IndexIncorrectException;
-import ru.forinnyy.tm.exception.field.UserIdEmptyException;
-import ru.forinnyy.tm.exception.user.AbstractUserException;
 import ru.forinnyy.tm.model.AbstractUserOwnedModel;
 
 import java.sql.Connection;
@@ -18,7 +13,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public abstract class AbstractUserOwnedRepository<M extends AbstractUserOwnedModel>
         extends AbstractRepository<M>
