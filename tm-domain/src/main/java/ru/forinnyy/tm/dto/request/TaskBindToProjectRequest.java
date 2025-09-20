@@ -13,8 +13,6 @@ public final class TaskBindToProjectRequest extends AbstractUserRequest {
 
     private String projectId;
 
-    private String token;
-
     public TaskBindToProjectRequest(String token) {
         super(token);
     }
