@@ -153,7 +153,7 @@ public final class Bootstrap implements IServiceLocator {
         initPID();
         initTables();
         initDemoData();
-        
+
         LOGGER_LIFECYCLE.info("** WELCOME TO TASK-MANAGER **");
         Runtime.getRuntime().addShutdownHook(new Thread(this::prepareShutdown));
         initBackup();
