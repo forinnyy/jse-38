@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public final class Application {
 
-    public static void main(final String... args) throws AbstractException, AuthenticationException, IOException {
+    public static void main(final String... args) {
         @NonNull final Bootstrap bootstrap = new Bootstrap();
         bootstrap.run(args);
     }
