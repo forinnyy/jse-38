@@ -15,7 +15,6 @@ import ru.forinnyy.tm.exception.field.IndexIncorrectException;
 import ru.forinnyy.tm.marker.UnitCategory;
 import ru.forinnyy.tm.model.AbstractModel;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;

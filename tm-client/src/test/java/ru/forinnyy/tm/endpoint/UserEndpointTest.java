@@ -7,7 +7,9 @@ import ru.forinnyy.tm.api.endpoint.IAuthEndpoint;
 import ru.forinnyy.tm.api.endpoint.IUserEndpoint;
 import ru.forinnyy.tm.api.service.IPropertyService;
 import ru.forinnyy.tm.dto.request.*;
-import ru.forinnyy.tm.dto.response.*;
+import ru.forinnyy.tm.dto.response.UserListProfilesResponse;
+import ru.forinnyy.tm.dto.response.UserRemoveResponse;
+import ru.forinnyy.tm.dto.response.UserUpdateProfileResponse;
 import ru.forinnyy.tm.marker.SoapCategory;
 import ru.forinnyy.tm.service.PropertyService;
 

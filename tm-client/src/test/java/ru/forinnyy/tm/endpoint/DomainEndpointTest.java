@@ -1,7 +1,10 @@
 package ru.forinnyy.tm.endpoint;
 
 import lombok.NonNull;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import ru.forinnyy.tm.api.endpoint.IAuthEndpoint;
 import ru.forinnyy.tm.api.endpoint.IDomainEndpoint;
