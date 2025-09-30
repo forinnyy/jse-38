@@ -26,6 +26,7 @@ public final class UserEndpointTest {
     private static final IUserEndpoint userEndpoint = IUserEndpoint.newInstance(propertyService);
 
     private static String adminToken;
+
     private String testUserToken;
 
     private final String testUserLogin = "testuser";

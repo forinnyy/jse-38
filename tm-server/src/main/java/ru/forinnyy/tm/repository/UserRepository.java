@@ -82,7 +82,7 @@ public final class UserRepository extends AbstractRepository<User> implements IU
     @Override
     @SneakyThrows
     public User add(@NonNull final User user) {
-        @NonNull final String sql = String.format(
+        final String sql = String.format(
                 "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 getTableName(),
                 DBConstraints.COLUMN_ID,
@@ -95,11 +95,18 @@ public final class UserRepository extends AbstractRepository<User> implements IU
                 DBConstraints.COLUMN_MIDDLE_NAME,
                 DBConstraints.COLUMN_ROLE
         );
-        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getId());
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getPasswordHash());
-            statement.setString(4, user.getEmail());
+
+            final String email = user.getEmail();
+            if (email == null || email.trim().isEmpty()) {
+                statement.setNull(4, java.sql.Types.VARCHAR);
+            } else {
+                statement.setString(4, email.trim());
+            }
+
             statement.setBoolean(5, user.getLocked());
             statement.setString(6, user.getFirstName());
             statement.setString(7, user.getLastName());
@@ -113,7 +120,7 @@ public final class UserRepository extends AbstractRepository<User> implements IU
     @Override
     @SneakyThrows
     public void update(@NonNull final User user) {
-        @NonNull final String sql = String.format(
+        final String sql = String.format(
                 "UPDATE %s SET %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ?, %s = ? WHERE %s = ?",
                 getTableName(),
                 DBConstraints.COLUMN_LOGIN,
@@ -126,10 +133,17 @@ public final class UserRepository extends AbstractRepository<User> implements IU
                 DBConstraints.COLUMN_ROLE,
                 DBConstraints.COLUMN_ID
         );
-        try (@NonNull final PreparedStatement statement = connection.prepareStatement(sql)) {
+        try (final PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setString(1, user.getLogin());
             statement.setString(2, user.getPasswordHash());
-            statement.setString(3, user.getEmail());
+
+            final String email = user.getEmail();
+            if (email == null || email.trim().isEmpty()) {
+                statement.setNull(3, java.sql.Types.VARCHAR);
+            } else {
+                statement.setString(3, email.trim());
+            }
+
             statement.setBoolean(4, user.getLocked());
             statement.setString(5, user.getFirstName());
             statement.setString(6, user.getLastName());
@@ -139,6 +153,7 @@ public final class UserRepository extends AbstractRepository<User> implements IU
             statement.executeUpdate();
         }
     }
+
 
     @Override
     @SneakyThrows

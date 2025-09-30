@@ -149,10 +149,12 @@ public final class Bootstrap implements IServiceLocator {
 
     @SneakyThrows
     public void start() {
-        initEndpoints();
-        initPID();
         initTables();
         initDemoData();
+        initEndpoints();
+        initPID();
+
+
 
         LOGGER_LIFECYCLE.info("** WELCOME TO TASK-MANAGER **");
         Runtime.getRuntime().addShutdownHook(new Thread(this::prepareShutdown));
